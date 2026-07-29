@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v12";
+const CACHE_NAME = "zeitreise-v13";
 const APP_SHELL = [
   "/",
   "/manifest.webmanifest",

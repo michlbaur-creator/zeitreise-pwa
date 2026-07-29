@@ -70,9 +70,21 @@ const collectionOverlays: Partial<
     src: "/assets/episode1/scene14/overlay-nebel-v1.png",
     className: "collection-overlay-mist",
   },
+  15: {
+    src: "/assets/episode1/scene14/overlay-nebel-v1.png",
+    className: "collection-overlay-mist collection-overlay-mist-coast",
+  },
   16: {
     src: "/assets/episode1/scene16/overlay-wassersplash-v1.png",
     className: "collection-overlay-splash",
+  },
+  17: {
+    src: "/assets/episode1/scene14/overlay-nebel-v1.png",
+    className: "collection-overlay-mist collection-overlay-mist-swamp",
+  },
+  18: {
+    src: "/assets/episode1/scene14/overlay-nebel-v1.png",
+    className: "collection-overlay-mist collection-overlay-mist-dawn",
   },
   19: {
     src: "/assets/episode1/scene19/overlay-meteor-v1.png",
@@ -287,6 +299,36 @@ export function SceneVisual({
               <img
                 className="scene-one-surface-background"
                 src="/assets/episode1/scene01/hintergrund-vulkanische-kueste-neu-v1.png"
+                alt=""
+                draggable={false}
+              />
+              <img
+                className="scene-one-layer scene-one-glutspalten"
+                src="/assets/episode1/scene01/overlay-glutspalten.png"
+                alt=""
+                draggable={false}
+              />
+              <img
+                className="scene-one-layer scene-one-lavafontaene"
+                src="/assets/episode1/scene01/overlay-lavafontaene.png"
+                alt=""
+                draggable={false}
+              />
+              <img
+                className="scene-one-layer scene-one-dampf"
+                src="/assets/episode1/scene01/overlay-dampf.png"
+                alt=""
+                draggable={false}
+              />
+              <img
+                className="scene-one-layer scene-one-rauch"
+                src="/assets/episode1/scene01/overlay-rauch.png"
+                alt=""
+                draggable={false}
+              />
+              <img
+                className="scene-one-layer scene-one-asche"
+                src="/assets/episode1/scene01/overlay-asche-funken.png"
                 alt=""
                 draggable={false}
               />

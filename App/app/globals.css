@@ -549,6 +549,33 @@ button:disabled {
   animation: collection-mist 16s ease-in-out infinite;
 }
 
+.collection-overlay-mist-coast {
+  left: -10%;
+  bottom: -24%;
+  width: 74%;
+  opacity: 0.14;
+  animation-duration: 19s;
+}
+
+.collection-overlay-mist-swamp {
+  right: -13%;
+  left: auto;
+  bottom: -29%;
+  width: 78%;
+  opacity: 0.16;
+  animation-duration: 21s;
+  animation-direction: alternate-reverse;
+}
+
+.collection-overlay-mist-dawn {
+  right: -8%;
+  left: auto;
+  bottom: -32%;
+  width: 68%;
+  opacity: 0.12;
+  animation-duration: 23s;
+}
+
 .collection-overlay-splash {
   right: 9%;
   bottom: 5%;
@@ -868,10 +895,44 @@ button:disabled {
 .scene-ten-background,
 .scene-eleven-background,
 .scene-generated-background {
+  z-index: 0;
   width: 100%;
   height: 100%;
   inset: 0;
   object-fit: cover;
+}
+
+.scene-five-background,
+.scene-six-background,
+.scene-seven-background,
+.scene-eight-background,
+.scene-nine-background,
+.scene-ten-background,
+.scene-eleven-background,
+.scene-generated-background {
+  animation: recovered-image-breathe 19s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.scene-visual.is-playing .scene-five-background,
+.scene-visual.is-playing .scene-six-background,
+.scene-visual.is-playing .scene-seven-background,
+.scene-visual.is-playing .scene-eight-background,
+.scene-visual.is-playing .scene-nine-background,
+.scene-visual.is-playing .scene-ten-background,
+.scene-visual.is-playing .scene-eleven-background,
+.scene-visual.is-playing .scene-generated-background {
+  animation-play-state: running;
+}
+
+.scene-six-background,
+.scene-nine-background,
+.scene-generated-13 .scene-generated-background,
+.scene-generated-15 .scene-generated-background,
+.scene-generated-18 .scene-generated-background,
+.scene-generated-21 .scene-generated-background {
+  animation-direction: alternate-reverse;
 }
 
 .scene-four-background {
@@ -917,6 +978,127 @@ button:disabled {
 
 .scene-generated-20 .scene-generated-background {
   filter: saturate(0.64) contrast(1.06) brightness(0.78);
+}
+
+.scene-five-media::before,
+.scene-six-media::before,
+.scene-seven-media::before,
+.scene-nine-media::before,
+.scene-ten-media::before,
+.scene-eleven-media::before,
+.scene-generated-12::before,
+.scene-generated-13::before {
+  position: absolute;
+  z-index: 1;
+  inset: -18%;
+  background:
+    linear-gradient(
+      108deg,
+      transparent 24%,
+      rgba(172, 211, 207, 0.02) 34%,
+      rgba(177, 221, 215, 0.14) 44%,
+      transparent 57%
+    ),
+    linear-gradient(
+      102deg,
+      transparent 54%,
+      rgba(203, 226, 209, 0.1) 64%,
+      transparent 74%
+    );
+  filter: blur(10px);
+  content: "";
+  opacity: 0.48;
+  pointer-events: none;
+  transform-origin: 50% 0;
+  animation: recovered-light-shafts 17s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  will-change: opacity, transform;
+}
+
+.scene-five-media::after,
+.scene-six-media::after,
+.scene-seven-media::after,
+.scene-nine-media::after,
+.scene-ten-media::after,
+.scene-eleven-media::after,
+.scene-generated-12::after,
+.scene-generated-13::after {
+  position: absolute;
+  z-index: 2;
+  inset: -22%;
+  background-image:
+    radial-gradient(circle, rgba(222, 232, 212, 0.5) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(188, 218, 210, 0.36) 0 1.2px, transparent 2px),
+    radial-gradient(circle, rgba(217, 226, 194, 0.25) 0 0.8px, transparent 1.6px);
+  background-position:
+    17px 24px,
+    62px 91px,
+    128px 47px;
+  background-size:
+    83px 97px,
+    139px 151px,
+    181px 167px;
+  content: "";
+  opacity: 0.34;
+  pointer-events: none;
+  animation: recovered-underwater-particles 21s linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.scene-eight-media::before {
+  position: absolute;
+  z-index: 1;
+  inset: -10%;
+  background:
+    radial-gradient(circle at 52% 46%, rgba(112, 194, 216, 0.18), transparent 38%),
+    radial-gradient(circle at 73% 31%, rgba(226, 205, 126, 0.1), transparent 24%);
+  content: "";
+  opacity: 0.5;
+  pointer-events: none;
+  animation: recovered-atmosphere-breathe 11s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.scene-generated-17::before,
+.scene-generated-18::before,
+.scene-generated-21::before,
+.scene-generated-22::before {
+  position: absolute;
+  z-index: 1;
+  inset: -12%;
+  background:
+    radial-gradient(circle at 72% 24%, rgba(246, 213, 151, 0.2), transparent 24%),
+    linear-gradient(112deg, transparent 38%, rgba(238, 222, 180, 0.08) 51%, transparent 63%);
+  content: "";
+  opacity: 0.44;
+  pointer-events: none;
+  animation: recovered-daylight 15s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .scene-five-media::before,
+.scene-visual.is-playing .scene-six-media::before,
+.scene-visual.is-playing .scene-seven-media::before,
+.scene-visual.is-playing .scene-eight-media::before,
+.scene-visual.is-playing .scene-nine-media::before,
+.scene-visual.is-playing .scene-ten-media::before,
+.scene-visual.is-playing .scene-eleven-media::before,
+.scene-visual.is-playing .scene-generated-12::before,
+.scene-visual.is-playing .scene-generated-13::before,
+.scene-visual.is-playing .scene-generated-17::before,
+.scene-visual.is-playing .scene-generated-18::before,
+.scene-visual.is-playing .scene-generated-21::before,
+.scene-visual.is-playing .scene-generated-22::before,
+.scene-visual.is-playing .scene-five-media::after,
+.scene-visual.is-playing .scene-six-media::after,
+.scene-visual.is-playing .scene-seven-media::after,
+.scene-visual.is-playing .scene-nine-media::after,
+.scene-visual.is-playing .scene-ten-media::after,
+.scene-visual.is-playing .scene-eleven-media::after,
+.scene-visual.is-playing .scene-generated-12::after,
+.scene-visual.is-playing .scene-generated-13::after {
+  animation-play-state: running;
 }
 
 .scene-two-layer,
@@ -1305,6 +1487,58 @@ button:disabled {
   }
   50% {
     transform: translate3d(-8%, -6%, 0) scale(1.08);
+  }
+}
+
+@keyframes recovered-image-breathe {
+  0% {
+    transform: translate3d(-0.7%, 0.35%, 0) scale(1.018);
+  }
+  100% {
+    transform: translate3d(0.9%, -0.55%, 0) scale(1.045);
+  }
+}
+
+@keyframes recovered-light-shafts {
+  0% {
+    opacity: 0.28;
+    transform: translate3d(-3%, -1%, 0) rotate(-1deg) scale(0.96);
+  }
+  100% {
+    opacity: 0.58;
+    transform: translate3d(5%, 3%, 0) rotate(1.6deg) scale(1.06);
+  }
+}
+
+@keyframes recovered-underwater-particles {
+  from {
+    transform: translate3d(-2%, 5%, 0);
+  }
+  to {
+    transform: translate3d(4%, -9%, 0);
+  }
+}
+
+@keyframes recovered-atmosphere-breathe {
+  0%,
+  100% {
+    opacity: 0.34;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes recovered-daylight {
+  0% {
+    opacity: 0.25;
+    transform: translate3d(-2%, 1%, 0) scale(0.96);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translate3d(3%, -2%, 0) scale(1.06);
   }
 }
 
