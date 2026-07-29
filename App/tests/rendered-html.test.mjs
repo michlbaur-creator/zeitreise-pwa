@@ -228,6 +228,10 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
   assert.match(app, /Hintergrundatmosphäre \$\{/);
   assert.match(app, /const \[ambientEnabled, setAmbientEnabled\] = useState\(false\)/);
   assert.match(app, /activateAmbientSound\(\)/);
+  assert.match(app, /zeitreise-update=\$\{Date\.now\(\)\}/);
+  assert.match(app, /window\.setInterval\(checkForUpdate, 3 \* 60 \* 1000\)/);
+  assert.match(app, /updateViaCache: "none"/);
+  assert.match(app, /zeitreise-resume-after-update/);
 });
 
 test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {

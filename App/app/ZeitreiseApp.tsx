@@ -160,6 +160,19 @@ function loadStoredNumbers(key: string) {
   }
 }
 
+function loadStoredSceneIndex() {
+  try {
+    const value = Number(
+      window.localStorage.getItem("zeitreise-current-scene") ?? "0",
+    );
+    return Number.isInteger(value) && value >= 0 && value < scenes.length
+      ? value
+      : 0;
+  } catch {
+    return 0;
+  }
+}
+
 export default function ZeitreiseApp() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -184,6 +197,9 @@ export default function ZeitreiseApp() {
   const [ambientEnabled, setAmbientEnabled] = useState(false);
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isPlayingRef = useRef(false);
+  const updateWaitingRef = useRef(false);
+  const updateReloadingRef = useRef(false);
 
   const scene = scenes[currentIndex];
   const narrationPath = narrationTracks[scene.id];
@@ -232,10 +248,16 @@ export default function ZeitreiseApp() {
 
     window.queueMicrotask(() => {
       if (cancelled) return;
-      setCurrentIndex(0);
+      setCurrentIndex(loadStoredSceneIndex());
       setCorrectScenes(loadStoredNumbers("zeitreise-correct-scenes"));
       setDiscoveredByScene(loadStoredRecord("zeitreise-discoveries"));
       setIsOnline(window.navigator.onLine);
+      if (
+        window.localStorage.getItem("zeitreise-resume-after-update") === "1"
+      ) {
+        window.localStorage.removeItem("zeitreise-resume-after-update");
+        setIntroOpen(false);
+      }
       setIsReady(true);
     });
 
@@ -251,7 +273,9 @@ export default function ZeitreiseApp() {
     window.addEventListener("beforeinstallprompt", onInstallPrompt);
 
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => {
+      navigator.serviceWorker
+        .register("/sw.js", { updateViaCache: "none" })
+        .catch(() => {
         // Die lokale Vorschau funktioniert auch ohne installierten Service Worker.
       });
     }
@@ -267,6 +291,94 @@ export default function ZeitreiseApp() {
   useEffect(() => {
     progressRef.current = progress;
   }, [progress]);
+
+  useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
+
+  const reloadForUpdate = useCallback(() => {
+    if (updateReloadingRef.current) return;
+    updateReloadingRef.current = true;
+    window.localStorage.setItem("zeitreise-resume-after-update", "1");
+    window.location.reload();
+  }, []);
+
+  useEffect(() => {
+    let disposed = false;
+    let checking = false;
+
+    const checkForUpdate = async () => {
+      if (checking || !window.navigator.onLine) return;
+      checking = true;
+
+      try {
+        const response = await fetch(`/?zeitreise-update=${Date.now()}`, {
+          method: "HEAD",
+          cache: "no-store",
+        });
+        if (!response.ok || disposed) return;
+
+        const serverModified = response.headers.get("last-modified") ?? "";
+        const signature =
+          response.headers.get("etag") ||
+          serverModified ||
+          response.headers.get("content-length") ||
+          "";
+        const knownSignature =
+          window.localStorage.getItem("zeitreise-app-version") ?? "";
+        const serverTime = Date.parse(serverModified);
+        const pageTime = Date.parse(document.lastModified);
+        const pageIsOlder =
+          Number.isFinite(serverTime) &&
+          Number.isFinite(pageTime) &&
+          serverTime > pageTime + 1000;
+        const versionChanged =
+          Boolean(knownSignature) &&
+          Boolean(signature) &&
+          knownSignature !== signature;
+
+        if (signature) {
+          window.localStorage.setItem("zeitreise-app-version", signature);
+        }
+
+        const registration = await navigator.serviceWorker?.getRegistration();
+        await registration?.update();
+
+        if (!pageIsOlder && !versionChanged) return;
+        if (isPlayingRef.current) {
+          updateWaitingRef.current = true;
+        } else {
+          reloadForUpdate();
+        }
+      } catch {
+        // Ohne Verbindung bleibt die bereits gespeicherte App vollständig nutzbar.
+      } finally {
+        checking = false;
+      }
+    };
+
+    const checkWhenVisible = () => {
+      if (document.visibilityState === "visible") void checkForUpdate();
+    };
+
+    void checkForUpdate();
+    const timer = window.setInterval(checkForUpdate, 3 * 60 * 1000);
+    window.addEventListener("focus", checkForUpdate);
+    window.addEventListener("pageshow", checkForUpdate);
+    document.addEventListener("visibilitychange", checkWhenVisible);
+
+    return () => {
+      disposed = true;
+      window.clearInterval(timer);
+      window.removeEventListener("focus", checkForUpdate);
+      window.removeEventListener("pageshow", checkForUpdate);
+      document.removeEventListener("visibilitychange", checkWhenVisible);
+    };
+  }, [reloadForUpdate]);
+
+  useEffect(() => {
+    if (!isPlaying && updateWaitingRef.current) reloadForUpdate();
+  }, [isPlaying, reloadForUpdate]);
 
   useEffect(() => {
     if (!isPlaying || narrationPath) return;
