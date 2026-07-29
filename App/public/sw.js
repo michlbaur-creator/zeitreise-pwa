@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v13";
+const CACHE_NAME = "zeitreise-v14";
 const APP_SHELL = [
   "/",
   "/manifest.webmanifest",
@@ -48,16 +48,16 @@ const APP_SHELL = [
   "/assets/episode1/scene13/sprecher-cedar-v2.mp3",
   "/assets/episode1/scene14/hintergrund-erste-landpflanzen-v1.png",
   "/assets/episode1/scene14/overlay-nebel-v1.png",
-  "/assets/episode1/scene14/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene14/sprecher-cedar-v3.mp3",
   "/assets/episode1/scene15/hintergrund-erste-landtiere-v1.png",
-  "/assets/episode1/scene15/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene15/sprecher-cedar-v3.mp3",
   "/assets/episode1/scene16/hintergrund-tiktaalik-v1.png",
   "/assets/episode1/scene16/overlay-wassersplash-v1.png",
   "/assets/episode1/scene16/sprecher-cedar-v2.mp3",
   "/assets/episode1/scene17/hintergrund-amniotenei-v1.png",
-  "/assets/episode1/scene17/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene17/sprecher-cedar-v3.mp3",
   "/assets/episode1/scene18/hintergrund-dinosaurier-v1.png",
-  "/assets/episode1/scene18/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene18/sprecher-cedar-v3.mp3",
   "/assets/episode1/scene19/hintergrund-asteroid-morgen-v1.png",
   "/assets/episode1/scene19/overlay-meteor-v1.png",
   "/assets/episode1/scene19/sprecher-cedar-v2.mp3",

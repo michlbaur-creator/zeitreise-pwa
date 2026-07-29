@@ -827,11 +827,11 @@ export const scenes: Scene[] = [
   {
     id: 14,
     title: "Der Sprung an Land",
-    duration: 35,
-    durationLabel: "ca. 35 Sekunden",
+    duration: 40,
+    durationLabel: "ca. 40 Sekunden",
     timeLabel: "Vor etwa 470 Millionen Jahren",
     speaker:
-      "Heute würdest du an diesem grünen Fleck auf einem feuchten Felsen vermutlich achtlos vorbeigehen. Damals ist er eine Sensation: Erste Pflanzen besiedeln dauerhaft das Land. Noch gibt es weder Blüten noch Bäume, nicht einmal Gras. Nur kleine grüne Pioniere. Bescheiden im Auftritt, gewaltig in der Wirkung: Sie schaffen Nahrung und Lebensräume für die Tiere, die ihnen bald folgen.",
+      "Irgendwann schaut sich eine kleine Pflanze das Festland an und denkt sich: „Sieht eigentlich ganz gemütlich aus.“ Mutig! Denn hier oben gibt’s weder Bademeister noch Nachschub aus dem Meer. Aber der Plan geht auf. Immer mehr Pflanzen ziehen an Land und machen aus grauen Felsen langsam eine grüne Welt. Ganz nebenbei bereiten sie das größte Buffet der Erdgeschichte vor.",
     theme: "shore",
     setting:
       "Flache Meeresküste mit nackten, feuchten Felsen, kleinen Wassermulden, grünlichen Algenmatten und niedrigen, moosähnlichen Pflanzen. Es gibt keine Bäume, Blumen oder Gräser. Das Land wirkt weit, ruhig und fast leer.",
@@ -898,11 +898,11 @@ export const scenes: Scene[] = [
   {
     id: 15,
     title: "Die ersten Tiere an Land",
-    duration: 35,
-    durationLabel: "ca. 35 Sekunden",
+    duration: 45,
+    durationLabel: "ca. 45 Sekunden",
     timeLabel: "Vor etwa 430 Millionen Jahren",
     speaker:
-      "Psst … hast du die kleine Bewegung gesehen? Zwischen den Pflanzen krabbelt ein früher Gliederfüßer. Klein, unscheinbar und doch ein echter Pionier. Pflanzen und Algen bieten ihm Nahrung und Schutz; das feuchte Ufer bewahrt ihn vor dem Austrocknen. Das Land ist nicht länger leer. Seine neuen Bewohner sind nur so klein, dass du schon sehr genau hinschauen musst.",
+      "Wo’s etwas zu futtern gibt, dauert’s bekanntlich nicht lange … Kaum haben die Pflanzen das Land begrünt, stehen auch schon die ersten Gäste vor der Tür. Zugegeben – besonders elegant sieht das noch nicht aus. Eher wie: „Laufen? Muss ich das erst üben?“ Aber genau mit diesen wackeligen ersten Schritten beginnt eine völlig neue Erfolgsgeschichte.",
     theme: "shore",
     setting:
       "Dieselbe Küste wie in Szene 14, etwa 30 bis 40 Millionen Jahre später. Die grünen Pflanzenteppiche sind dichter. Zwischen den feuchten Steinen wachsen einfache Moose und niedrige Farnverwandte. Kleine frühe Gliederfüßer bewegen sich zwischen den Pflanzen.",
@@ -1054,7 +1054,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 40 Sekunden",
     timeLabel: "Vor etwa 320 Millionen Jahren",
     speaker:
-      "Manchmal verändert eine gute Verpackung alles. Bei den frühen Amnioten ist es ein Ei mit schützenden Hüllen. Der Embryo bringt darin Wasser und Nährstoffe gewissermaßen gleich mit. So muss die Fortpflanzung nicht mehr im offenen Wasser stattfinden. Wenn du später Dinosaurier, Vögel oder Säugetiere siehst, steckt hinter ihrem Erfolg auch diese unscheinbare, aber entscheidende Neuerung.",
+      "Der erste Ausflug an Land hat offenbar Spaß gemacht. Jetzt wollen manche Tiere gleich ganz umziehen. Die Amphibien sind schon ziemlich mutig … fürs Kinderzimmer brauchen sie aber immer noch Wasser. Die Reptilien lösen das Problem ziemlich clever: Sie bringen ihr eigenes „Kinderzimmer“ einfach mit – das Ei. Nicht schlecht, Natur. Wirklich nicht schlecht.",
     theme: "egg",
     setting:
       "Üppiger Sumpfwald mit riesigen Schachtelhalmen und Farnen. Große Libellen ziehen vorbei. Ein kleines, echsenähnliches Tier sucht am Waldboden vorsichtig einen geeigneten Platz und beginnt zu graben.",
@@ -1126,11 +1126,11 @@ export const scenes: Scene[] = [
   {
     id: 18,
     title: "Die Herrscher der Erde",
-    duration: 45,
-    durationLabel: "ca. 45 Sekunden",
+    duration: 60,
+    durationLabel: "ca. 60 Sekunden",
     timeLabel: "Vor etwa 230 Millionen Jahren",
     speaker:
-      "Bei Dinosauriern denkst du vielleicht sofort an Tyrannosaurus rex. Der erscheint allerdings erst sehr viel später. Zunächst gibt es kleinere Arten, dann entsteht eine enorme Vielfalt: Pflanzenfresser, Jäger, gepanzerte Formen und riesige Langhälse. Fast 170 Millionen Jahre lang prägen Dinosaurier die Erde. Und ganz verschwunden sind sie nie: Aus einem ihrer Zweige gehen die Vögel hervor.",
+      "Tadaaa! Jetzt betreten die absoluten Superstars der Urzeit die Bühne. Willkommen im Zeitalter der Giganten! Hier läuft alles herum – von winzigen Jägern bis zu Pflanzenfressern, die locker aus dem dritten Stock die Dachrinne putzen könnten. Und weißt du was? Die Dinosaurier bleiben nicht ein paar Jahre … nicht ein paar Millionen Jahre … sondern fast 170 Millionen Jahre. Dagegen ist die Menschheit gerade erst eingezogen.",
     theme: "dinosaurs",
     setting:
       "Sonnenaufgang über einer weiten Flusslandschaft mit Nadelbäumen, Ginkgos und Baumfarnen. Leichter Morgennebel liegt über dem Wasser. Ein ruhiger Pflanzenfresser tritt zwischen den Bäumen hervor; weitere Tiere folgen. Die Szene wirkt wie eine Naturdokumentation, nicht wie ein Monsterfilm.",

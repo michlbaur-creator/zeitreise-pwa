@@ -691,8 +691,8 @@ export default function ZeitreiseApp() {
           {panel === "sprecher" ? (
             <section className="panel-section" role="tabpanel">
               <div className="section-label">
-                <span>Sprechertext – Fassung 1.1</span>
-                <i>warm · leicht humorvoll</i>
+                <span>Sprechertext – Fassung 1.2</span>
+                <i>warm · deutlich humorvoller</i>
               </div>
               <blockquote>{scene.speaker}</blockquote>
               <div className={`missing-note ${narrationPath ? "is-ready" : ""}`}>
@@ -929,7 +929,7 @@ export default function ZeitreiseApp() {
         </div>
         <p>
           Inhaltliche Grundlage: Muster-Episode V1.0 · Sprechertexte Fassung
-          1.1 · KI-Stimme {narrationVoice.displayName}
+          1.2 · KI-Stimme {narrationVoice.displayName}
         </p>
       </footer>
     </main>

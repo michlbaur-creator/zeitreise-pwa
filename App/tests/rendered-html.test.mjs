@@ -53,6 +53,10 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
   assert.equal((source.match(/^\s+speaker:$/gm) ?? []).length, 22);
   assert.equal((source.match(/^\s+timeLabel:/gm) ?? []).length, 22);
   assert.equal((source.match(/correctIndex:\s+\d+,/g) ?? []).length, 20);
+  assert.match(source, /weder Bademeister noch Nachschub aus dem Meer/);
+  assert.match(source, /Laufen\? Muss ich das erst üben\?/);
+  assert.match(source, /ihr eigenes „Kinderzimmer“ einfach mit/);
+  assert.match(source, /aus dem dritten Stock die Dachrinne putzen/);
 });
 
 test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async () => {
@@ -110,9 +114,10 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
   await Promise.all(
     Array.from({ length: 22 }, (_, index) => {
       const scene = String(index + 1).padStart(2, "0");
+      const version = [14, 15, 17, 18].includes(index + 1) ? "v3" : "v2";
       return access(
         new URL(
-          `../public/assets/episode1/scene${scene}/sprecher-cedar-v2.mp3`,
+          `../public/assets/episode1/scene${scene}/sprecher-cedar-${version}.mp3`,
           import.meta.url,
         ),
       );
@@ -158,7 +163,11 @@ test("legt Cedar verbindlich fest und verknüpft alle 22 Sprecherdateien", async
   assert.match(narration, /voice: "cedar"/);
   assert.equal(
     (narration.match(/sprecher-cedar-v2\.mp3/g) ?? []).length,
-    22,
+    18,
+  );
+  assert.equal(
+    (narration.match(/sprecher-cedar-v3\.mp3/g) ?? []).length,
+    4,
   );
   assert.match(narration, /sprecher-micha-test-v1\.m4a/);
   assert.match(narration, /sprecher-rosi-test-v1\.m4a/);

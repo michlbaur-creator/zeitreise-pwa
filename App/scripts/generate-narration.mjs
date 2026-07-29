@@ -56,7 +56,7 @@ async function generateScene(apiKey, scene) {
     "episode1",
     `scene${String(scene.id).padStart(2, "0")}`,
   );
-  const destination = join(folder, "sprecher-cedar-v2.mp3");
+  const destination = join(folder, "sprecher-cedar-v3.mp3");
 
   if (await hasUsableAudio(destination)) {
     process.stdout.write(
@@ -101,9 +101,23 @@ async function generateScene(apiKey, scene) {
 
 const apiKey = parseApiKey(await readFile(envPath, "utf8"));
 const scenes = parseScenes(await readFile(sourcePath, "utf8"));
+const requestedIds = new Set(
+  process.argv
+    .slice(2)
+    .map(Number)
+    .filter((id) => Number.isInteger(id) && id >= 1 && id <= 22),
+);
+if (!requestedIds.size) {
+  throw new Error(
+    "Bitte mindestens eine Szenennummer angeben, zum Beispiel: node scripts/generate-narration.mjs 14 15",
+  );
+}
+const selectedScenes = scenes.filter((scene) => requestedIds.has(scene.id));
 
-for (const scene of scenes) {
+for (const scene of selectedScenes) {
   await generateScene(apiKey, scene);
 }
 
-process.stdout.write("Alle Cedar-Sprecherdateien sind vorhanden.\n");
+process.stdout.write(
+  `${selectedScenes.length} Cedar-Sprecherdateien sind vorhanden.\n`,
+);
