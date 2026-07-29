@@ -192,11 +192,10 @@ export default function ZeitreiseApp() {
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
 
-  useAmbientSound(scene.theme, isPlaying, ambientEnabled);
+  useAmbientSound(scene.id, scene.theme, isPlaying, ambientEnabled);
 
   useEffect(() => {
     if (!introOpen) return;
-    setIntroReady(false);
     const timer = window.setTimeout(() => setIntroReady(true), 7600);
     return () => window.clearTimeout(timer);
   }, [introOpen]);
@@ -424,6 +423,7 @@ export default function ZeitreiseApp() {
   const replayIntro = () => {
     audioRef.current?.pause();
     goToScene(0);
+    setIntroReady(false);
     setIntroClosing(false);
     setIntroOpen(true);
   };

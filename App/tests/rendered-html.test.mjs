@@ -201,3 +201,22 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(styles, /height: clamp\(380px, calc\(100svh - 350px\), 620px\)/);
   assert.match(styles, /@media \(min-width: 761px\) and \(max-height: 900px\)/);
 });
+
+test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {
+  const audio = await readFile(
+    new URL("../app/audio/useAmbientSound.ts", import.meta.url),
+    "utf8",
+  );
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 22);
+  assert.match(audio, /1: \["eruption", "steam"\]/);
+  assert.match(audio, /4: \["bubbles", "steam", "waves"\]/);
+  assert.match(audio, /18: \["footsteps", "insects", "roar"\]/);
+  assert.match(audio, /19: \["impact", "insects", "roar"\]/);
+  assert.match(audio, /22: \["birds", "waves"\]/);
+  assert.match(app, /useAmbientSound\(scene\.id, scene\.theme/);
+});
