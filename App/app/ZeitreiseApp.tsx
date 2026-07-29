@@ -607,11 +607,14 @@ export default function ZeitreiseApp() {
               className={`sound-control ${ambientEnabled ? "is-on" : ""}`}
               type="button"
               aria-pressed={ambientEnabled}
+              aria-label={`Hintergrundatmosphäre ${
+                ambientEnabled ? "ausschalten" : "einschalten"
+              }`}
               onClick={() => setAmbientEnabled((value) => !value)}
               title="Leise Hintergrundatmosphäre ein- oder ausschalten"
             >
               <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span>
-              Atmosphäre
+              <span className="sound-label">Atmosphäre</span>
             </button>
             <label className="scrubber">
               <span className="sr-only">Position in der Szene</span>

@@ -202,6 +202,28 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(styles, /@media \(min-width: 761px\) and \(max-height: 900px\)/);
 });
 
+test("optimiert Film und Bedienung für Smartphones", async () => {
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(styles, /bottom: max\(7px, env\(safe-area-inset-bottom\)\)/);
+  assert.match(styles, /aspect-ratio: 16 \/ 9/);
+  assert.match(styles, /-webkit-line-clamp: 2/);
+  assert.match(styles, /@media \(max-width: 390px\)/);
+  assert.match(
+    styles,
+    /@media \(max-width: 760px\) and \(orientation: landscape\) and \(max-height: 500px\)/,
+  );
+  assert.match(app, /className="sound-label">Atmosphäre/);
+  assert.match(app, /Hintergrundatmosphäre \$\{/);
+});
+
 test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {
   const audio = await readFile(
     new URL("../app/audio/useAmbientSound.ts", import.meta.url),
