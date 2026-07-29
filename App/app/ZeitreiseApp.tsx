@@ -1,12 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
 import { SceneVisual } from "./components/SceneVisual";
-import { narrationTracks, narrationVoice } from "./data/narration";
-import { scenes, totalDuration } from "./data/scenes";
+import {
+  humanNarrationSamples,
+  narrationTracks,
+  narrationVoice,
+} from "./data/narration";
+import { scenes } from "./data/scenes";
 
 type Panel = "sprecher" | "interaktion" | "produktion";
+type HumanVoice = keyof typeof humanNarrationSamples;
 
 type InstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -24,13 +29,122 @@ function formatTime(seconds: number) {
   return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
-function loadStoredNumber(key: string, fallback: number) {
-  try {
-    const value = Number(window.localStorage.getItem(key));
-    return Number.isFinite(value) ? value : fallback;
-  } catch {
-    return fallback;
-  }
+const earthMilestones = [
+  {
+    sceneId: 1,
+    label: "Erde entsteht",
+    age: "4,6 Mrd.",
+    symbol: "◎",
+    color: "#e08a38",
+  },
+  {
+    sceneId: 3,
+    label: "Erste Ozeane",
+    age: "4,4 Mrd.",
+    symbol: "≋",
+    color: "#43b8d0",
+  },
+  {
+    sceneId: 5,
+    label: "Erstes Leben",
+    age: "3,5 Mrd.",
+    symbol: "✧",
+    color: "#9bc94a",
+  },
+  {
+    sceneId: 8,
+    label: "Sauerstoff",
+    age: "2,4 Mrd.",
+    symbol: "O₂",
+    color: "#6fbcd3",
+  },
+  {
+    sceneId: 18,
+    label: "Dinosaurier",
+    age: "230 Mio.",
+    symbol: "◇",
+    color: "#d96251",
+  },
+  {
+    sceneId: 21,
+    label: "Säugetiere",
+    age: "66 Mio.",
+    symbol: "●",
+    color: "#c78a4e",
+  },
+  {
+    sceneId: 22,
+    label: "Heute",
+    age: "Jetzt",
+    symbol: "✦",
+    color: "#e0ad54",
+  },
+] as const;
+
+function EarthTimeline({
+  sceneId,
+  timeLabel,
+  onSelect,
+}: {
+  sceneId: number;
+  timeLabel?: string;
+  onSelect: (sceneIndex: number) => void;
+}) {
+  let activeMilestone = 0;
+
+  earthMilestones.forEach((milestone, index) => {
+    if (sceneId >= milestone.sceneId) activeMilestone = index;
+  });
+
+  const travelled =
+    earthMilestones.length > 1
+      ? (activeMilestone / (earthMilestones.length - 1)) * 100
+      : 0;
+  const activeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    activeButtonRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeMilestone]);
+
+  return (
+    <nav className="earth-timeline" aria-label="Navigation durch die Erdgeschichte">
+      <div className="earth-timeline-current">
+        <span>Du bist hier</span>
+        <strong>{timeLabel ?? earthMilestones[activeMilestone].age}</strong>
+      </div>
+      <div className="earth-timeline-scroll">
+        <div className="earth-timeline-track" aria-hidden="true">
+          <span style={{ width: `${travelled}%` }} />
+        </div>
+        <div className="earth-timeline-stops">
+          {earthMilestones.map((milestone, index) => (
+            <button
+              type="button"
+              className={index === activeMilestone ? "is-current" : ""}
+              style={
+                {
+                  "--milestone-color": milestone.color,
+                } as React.CSSProperties
+              }
+              onClick={() => onSelect(milestone.sceneId - 1)}
+              aria-current={index === activeMilestone ? "step" : undefined}
+              aria-label={`${milestone.label}, ${milestone.age}`}
+              ref={index === activeMilestone ? activeButtonRef : undefined}
+              key={milestone.label}
+            >
+              <i aria-hidden="true">{milestone.symbol}</i>
+              <span>{milestone.label}</span>
+              <small>{milestone.age}</small>
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
 }
 
 function loadStoredRecord(key: string) {
@@ -55,7 +169,11 @@ export default function ZeitreiseApp() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [panel, setPanel] = useState<Panel>("sprecher");
+  const [panel, setPanel] = useState<Panel>("interaktion");
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [introOpen, setIntroOpen] = useState(true);
+  const [introReady, setIntroReady] = useState(false);
+  const [introClosing, setIntroClosing] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizChecked, setQuizChecked] = useState(false);
@@ -69,21 +187,37 @@ export default function ZeitreiseApp() {
     useState<InstallPromptEvent | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [ambientEnabled, setAmbientEnabled] = useState(true);
+  const [humanVoice, setHumanVoice] = useState<HumanVoice>("micha");
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const scene = scenes[currentIndex];
-  const narrationPath = narrationTracks[scene.id];
+  const usesHumanSample = scene.id === 14;
+  const narrationPath = usesHumanSample
+    ? humanNarrationSamples[humanVoice]
+    : narrationTracks[scene.id];
+  const narrationDisplayName = usesHumanSample
+    ? humanVoice === "micha"
+      ? "Micha"
+      : "Rosi"
+    : narrationVoice.displayName;
   const discovered = discoveredByScene[String(scene.id)] ?? [];
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
 
   useAmbientSound(scene.theme, isPlaying, ambientEnabled);
 
-  const quizCount = useMemo(
-    () => scenes.filter((entry) => entry.quiz).length,
-    [],
-  );
+  useEffect(() => {
+    if (!introOpen) return;
+    setIntroReady(false);
+    const timer = window.setTimeout(() => setIntroReady(true), 7600);
+    return () => window.clearTimeout(timer);
+  }, [introOpen]);
+
+  useEffect(() => {
+    document.body.classList.toggle("cinematic-intro-active", introOpen);
+    return () => document.body.classList.remove("cinematic-intro-active");
+  }, [introOpen]);
 
   const goToScene = useCallback(
     (nextIndex: number) => {
@@ -107,10 +241,7 @@ export default function ZeitreiseApp() {
 
     window.queueMicrotask(() => {
       if (cancelled) return;
-      const storedIndex = loadStoredNumber("zeitreise-current-scene", 0);
-      setCurrentIndex(
-        Math.min(scenes.length - 1, Math.max(0, Math.floor(storedIndex))),
-      );
+      setCurrentIndex(0);
       setCorrectScenes(loadStoredNumbers("zeitreise-correct-scenes"));
       setDiscoveredByScene(loadStoredRecord("zeitreise-discoveries"));
       setIsOnline(window.navigator.onLine);
@@ -257,6 +388,14 @@ export default function ZeitreiseApp() {
     }
   };
 
+  const chooseHumanVoice = (voice: HumanVoice) => {
+    audioRef.current?.pause();
+    setHumanVoice(voice);
+    setIsPlaying(false);
+    setProgress(0);
+    progressRef.current = 0;
+  };
+
   const checkQuiz = () => {
     if (selectedOption === null || !scene.quiz) return;
     setQuizChecked(true);
@@ -284,23 +423,96 @@ export default function ZeitreiseApp() {
     setInstallPrompt(null);
   };
 
+  const startJourney = () => {
+    goToScene(0);
+    setIntroClosing(true);
+    setIsPlaying(true);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {
+        setIsPlaying(false);
+      });
+    }
+    window.setTimeout(() => {
+      setIntroOpen(false);
+      setIntroClosing(false);
+    }, 720);
+  };
+
+  const replayIntro = () => {
+    audioRef.current?.pause();
+    goToScene(0);
+    setIntroClosing(false);
+    setIntroOpen(true);
+  };
+
   return (
     <main className="app-shell">
+      {introOpen ? (
+        <section
+          className={`cinematic-intro ${introReady ? "is-ready" : ""} ${introClosing ? "is-leaving" : ""}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Der Beginn der Zeitreise"
+        >
+          <div className="intro-image intro-stars" aria-hidden="true" />
+          <div className="intro-image intro-planet" aria-hidden="true" />
+          <div className="intro-image intro-surface" aria-hidden="true" />
+          <div className="intro-shade" aria-hidden="true" />
+
+          <div className="intro-title">
+            <span>Episode 1</span>
+            <h2>Zeitreise</h2>
+            <p>Die Geschichte des Lebens</p>
+          </div>
+
+          <div className="intro-story" aria-live="polite">
+            <p>Wir verlassen unsere Zeit.</p>
+            <strong>Unsere Reise beginnt vor 4,6 Milliarden Jahren.</strong>
+          </div>
+
+          <div className="intro-time-machine" aria-hidden="true">
+            <div className="intro-time-labels">
+              <span>Heute</span>
+              <span>500 Mio.</span>
+              <span>1 Mrd.</span>
+              <span>3 Mrd.</span>
+              <span>4,6 Mrd.</span>
+            </div>
+            <div className="intro-time-rail">
+              <i />
+            </div>
+          </div>
+
+          <div className="intro-entry">
+            {introReady ? (
+              <button type="button" onClick={startJourney}>
+                Reise beginnen
+                <span aria-hidden="true">→</span>
+              </button>
+            ) : (
+              <span>Die Zeitmaschine fährt hoch …</span>
+            )}
+          </div>
+        </section>
+      ) : null}
+
       <header className="app-header">
         <div className="brand-lockup">
           <div className="brand-mark" aria-hidden="true">
             <span />
           </div>
           <div>
-            <p className="eyebrow">Episode 1 · Technische Vorschau</p>
+            <p className="eyebrow">Episode 1</p>
             <h1>
               Zeitreise <span>Die Geschichte des Lebens</span>
             </h1>
           </div>
         </div>
         <div className="header-actions">
-          <span className="local-badge">Nur lokal</span>
-          <span className="voice-badge">KI-Stimme {narrationVoice.displayName}</span>
+          <button className="quiet-button intro-replay" type="button" onClick={replayIntro}>
+            Anfang ansehen
+          </button>
           {installPrompt ? (
             <button className="quiet-button" type="button" onClick={install}>
               App installieren
@@ -309,49 +521,11 @@ export default function ZeitreiseApp() {
         </div>
       </header>
 
-      <section className="episode-overview" aria-label="Episodenübersicht">
-        <div>
-          <p>Von der jungen Erde bis heute</p>
-          <span>
-            22 Szenen · rund {formatTime(totalDuration)} Minuten · finale Texte
-            unverändert
-          </span>
-        </div>
-        <div className="episode-progress">
-          <span>{correctScenes.length} Quizfragen beantwortet</span>
-          <div
-            className="episode-progress-track"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={quizCount}
-            aria-valuenow={correctScenes.length}
-            aria-label="Beantwortete Quizfragen"
-          >
-            <i
-              style={{
-                width: `${(correctScenes.length / quizCount) * 100}%`,
-              }}
-            />
-          </div>
-        </div>
-      </section>
-
-      <nav className="scene-timeline" aria-label="Alle 22 Szenen">
-        <div className="timeline-line" aria-hidden="true" />
-        {scenes.map((entry, index) => (
-          <button
-            type="button"
-            className={`timeline-stop ${index === currentIndex ? "is-current" : ""} ${correctScenes.includes(entry.id) ? "is-complete" : ""}`}
-            onClick={() => goToScene(index)}
-            aria-current={index === currentIndex ? "step" : undefined}
-            aria-label={`Szene ${entry.id}: ${entry.title}`}
-            title={entry.title}
-            key={entry.id}
-          >
-            <span>{twoDigits(entry.id)}</span>
-          </button>
-        ))}
-      </nav>
+      <EarthTimeline
+        sceneId={scene.id}
+        timeLabel={scene.timeLabel}
+        onSelect={goToScene}
+      />
 
       <div className="workspace">
         <section className="player-column">
@@ -364,7 +538,7 @@ export default function ZeitreiseApp() {
             </div>
             <div className="scene-facts">
               <span>{scene.durationLabel}</span>
-              <span>{scene.motions.length} Bewegungen</span>
+              <span>{scene.timeLabel}</span>
             </div>
           </div>
 
@@ -373,7 +547,7 @@ export default function ZeitreiseApp() {
             isPlaying={isPlaying}
             progress={progress}
             hasNarration={Boolean(narrationPath)}
-            narrationVoiceName={narrationVoice.displayName}
+            narrationVoiceName={narrationDisplayName}
             activeHotspot={activeHotspot}
             onHotspot={(index) =>
               setActiveHotspot((value) => (value === index ? null : index))
@@ -385,7 +559,7 @@ export default function ZeitreiseApp() {
 
           {narrationPath ? (
             <audio
-              key={scene.id}
+              key={`${scene.id}-${narrationPath}`}
               ref={audioRef}
               src={narrationPath}
               preload="metadata"
@@ -426,6 +600,33 @@ export default function ZeitreiseApp() {
                 ×
               </button>
             </aside>
+          ) : null}
+
+          {usesHumanSample ? (
+            <section className="voice-comparison" aria-label="Stimmenvergleich">
+              <div>
+                <span>Unsere Stimmenprobe</span>
+                <strong>Wer erzählt diese Szene?</strong>
+              </div>
+              <div className="voice-options" role="group" aria-label="Stimme auswählen">
+                <button
+                  type="button"
+                  className={humanVoice === "micha" ? "is-active" : ""}
+                  onClick={() => chooseHumanVoice("micha")}
+                  aria-pressed={humanVoice === "micha"}
+                >
+                  Micha
+                </button>
+                <button
+                  type="button"
+                  className={humanVoice === "rosi" ? "is-active" : ""}
+                  onClick={() => chooseHumanVoice("rosi")}
+                  aria-pressed={humanVoice === "rosi"}
+                >
+                  Rosi
+                </button>
+              </div>
+            </section>
           ) : null}
 
           <div className="player-controls">
@@ -489,9 +690,22 @@ export default function ZeitreiseApp() {
           <p className="keyboard-hint">
             Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert
           </p>
+          <button
+            className={`details-toggle ${detailsOpen ? "is-open" : ""}`}
+            type="button"
+            onClick={() => setDetailsOpen((value) => !value)}
+            aria-expanded={detailsOpen}
+            aria-controls="scene-details"
+          >
+            <span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span>
+            <i aria-hidden="true">{detailsOpen ? "−" : "+"}</i>
+          </button>
         </section>
 
-        <aside className="content-panel">
+        <aside
+          id="scene-details"
+          className={`content-panel ${detailsOpen ? "is-open" : ""}`}
+        >
           <div className="panel-tabs" role="tablist" aria-label="Szeneninhalt">
             <button
               type="button"
@@ -500,7 +714,7 @@ export default function ZeitreiseApp() {
               className={panel === "sprecher" ? "is-active" : ""}
               onClick={() => setPanel("sprecher")}
             >
-              Sprechertext
+              Text lesen
             </button>
             <button
               type="button"
@@ -509,7 +723,7 @@ export default function ZeitreiseApp() {
               className={panel === "interaktion" ? "is-active" : ""}
               onClick={() => setPanel("interaktion")}
             >
-              Interaktion
+              Entdecken &amp; Quiz
             </button>
             <button
               type="button"
@@ -518,7 +732,7 @@ export default function ZeitreiseApp() {
               className={panel === "produktion" ? "is-active" : ""}
               onClick={() => setPanel("produktion")}
             >
-              Regie & Medien
+              Werkstatt
             </button>
           </div>
 
@@ -533,12 +747,16 @@ export default function ZeitreiseApp() {
                 <span aria-hidden="true">{narrationPath ? "●" : "○"}</span>
                 <div>
                   <strong>
-                    {narrationPath
+                    {usesHumanSample
+                      ? `Persönliche Sprachprobe von ${narrationDisplayName}`
+                      : narrationPath
                       ? `KI-Sprecheraufnahme ${narrationVoice.displayName} vorhanden`
                       : `KI-Stimme ${narrationVoice.displayName} ausgewählt`}
                   </strong>
                   <p>
-                    {narrationPath
+                    {usesHumanSample
+                      ? "Diese Aufnahme stammt von Micha oder Rosi und wurde nicht künstlich erzeugt."
+                      : narrationPath
                       ? "Diese Szene wird mit einer KI-generierten Stimme gesprochen."
                       : "Die Stimme ist verbindlich festgelegt; die Audiodatei dieser Szene steht noch aus."}
                   </p>
@@ -705,8 +923,9 @@ export default function ZeitreiseApp() {
                 <div>
                   <dt>Sprecherstimme</dt>
                   <dd>
-                    {narrationVoice.provider} {narrationVoice.displayName} ·{" "}
-                    {narrationVoice.disclosure} · {narrationVoice.direction}
+                    {usesHumanSample
+                      ? `${narrationDisplayName} · persönliche Sprachprobe`
+                      : `${narrationVoice.provider} ${narrationVoice.displayName} · ${narrationVoice.disclosure} · ${narrationVoice.direction}`}
                   </dd>
                 </div>
                 <div>
@@ -787,8 +1006,9 @@ export default function ZeitreiseApp() {
             : "Offline-Modus aktiv"}
         </div>
         <p>
-          Inhaltliche Grundlage: Muster-Episode V1.0 · Sprecherstimme
-          KI-generiert ({narrationVoice.provider} {narrationVoice.displayName})
+          Inhaltliche Grundlage: Muster-Episode V1.0 · persönliche
+          Sprecherproben von Micha und Rosi · übrige Szenen vorläufig{" "}
+          {narrationVoice.displayName}
         </p>
       </footer>
     </main>

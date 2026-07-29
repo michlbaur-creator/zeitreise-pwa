@@ -204,11 +204,6 @@ export function SceneVisual({
   const impactBlackout =
     scene.id === 19 && progress >= 0.585 && progress < 0.63;
   const showEnding = scene.id === 22 && progress >= 0.72;
-  const showTimeRockIntro = isSceneOne && progress < 0.18;
-  const sceneOneIntroOpacity = Math.min(
-    1,
-    Math.max(0, 1 - progress / 0.16),
-  );
   const sceneOneCosmosOpacity = Math.min(
     1,
     Math.max(0, 1 - (progress - 0.24) / 0.12),
@@ -250,7 +245,6 @@ export function SceneVisual({
       style={
         isSceneOne
           ? ({
-              "--scene-one-intro-opacity": sceneOneIntroOpacity,
               "--scene-one-cosmos-opacity": sceneOneCosmosOpacity,
               "--scene-one-planet-opacity": sceneOnePlanetOpacity,
               "--scene-one-surface-opacity": sceneOneSurfaceOpacity,
@@ -468,7 +462,7 @@ export function SceneVisual({
             ) : null}
           </div>
         ) : null}
-        {!isSceneOne || showTimeRockIntro ? (
+        {!isSceneOne ? (
           <>
             <div className="world-sun" aria-hidden="true" />
             <div className="world-haze" aria-hidden="true" />
@@ -506,13 +500,6 @@ export function SceneVisual({
           />
         ))}
       </div>
-
-      {showTimeRockIntro ? (
-        <div className="sequence-card sequence-card-intro">
-          <span>Platzhalter · Zeitfelsen und Kinderhand fehlen</span>
-          <strong>Warmes, goldenes Schimmern</strong>
-        </div>
-      ) : null}
 
       {showEnding ? (
         <div className="ending-title" aria-live="polite">

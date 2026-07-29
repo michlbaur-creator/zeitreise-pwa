@@ -145,7 +145,8 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
   assert.match(visual, /Neuanfang · Vorschau/);
   assert.match(visual, /Säugetiere · Vorschau/);
   assert.match(visual, /Zeitfelsen · Finale/);
-  assert.match(visual, /Zeitfelsen und Kinderhand fehlen/);
+  assert.doesNotMatch(visual, /Zeitfelsen und Kinderhand fehlen/);
+  assert.match(visual, /hintergrund-feuerplanet-v1\.png/);
 });
 
 test("legt Cedar verbindlich fest und verknüpft alle 22 Sprecherdateien", async () => {
@@ -158,5 +159,19 @@ test("legt Cedar verbindlich fest und verknüpft alle 22 Sprecherdateien", async
   assert.equal(
     (narration.match(/sprecher-cedar-v1\.mp3/g) ?? []).length,
     22,
+  );
+  assert.match(narration, /sprecher-micha-test-v1\.m4a/);
+  assert.match(narration, /sprecher-rosi-test-v1\.m4a/);
+  await access(
+    new URL(
+      "../public/assets/episode1/scene14/sprecher-micha-test-v1.m4a",
+      import.meta.url,
+    ),
+  );
+  await access(
+    new URL(
+      "../public/assets/episode1/scene14/sprecher-rosi-test-v1.m4a",
+      import.meta.url,
+    ),
   );
 });

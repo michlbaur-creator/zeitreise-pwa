@@ -1,0 +1,9 @@
+.DS_Store
+**/.DS_Store
+
+# Private Ausgangsaufnahmen bleiben im Austauschordner; die freigegebenen
+# Testkopien liegen gezielt bei Szene 14.
+/Austausch/*.m4a
+
+# Das Projekt verwendet die bereits vorhandene npm-Sperrdatei.
+/App/pnpm-lock.yaml

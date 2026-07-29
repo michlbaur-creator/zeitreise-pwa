@@ -34,3 +34,8 @@ export const narrationTracks: Record<number, string> = {
   21: "/assets/episode1/scene21/sprecher-cedar-v1.mp3",
   22: "/assets/episode1/scene22/sprecher-cedar-v1.mp3",
 };
+
+export const humanNarrationSamples = {
+  micha: "/assets/episode1/scene14/sprecher-micha-test-v1.m4a",
+  rosi: "/assets/episode1/scene14/sprecher-rosi-test-v1.m4a",
+} as const;
