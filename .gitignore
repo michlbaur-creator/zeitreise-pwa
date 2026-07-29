@@ -5,5 +5,4 @@
 # Testkopien liegen gezielt bei Szene 14.
 /Austausch/*.m4a
 
-# Das Projekt verwendet die bereits vorhandene npm-Sperrdatei.
-/App/pnpm-lock.yaml
+# Die Paketliste für pnpm wird mit dem Projekt gespeichert.
