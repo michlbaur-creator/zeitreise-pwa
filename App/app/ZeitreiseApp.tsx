@@ -767,30 +767,6 @@ export default function ZeitreiseApp() {
 
           {panel === "interaktion" ? (
             <section className="panel-section interactions" role="tabpanel">
-              {scene.hotspots.length ? (
-                <div className="interaction-block">
-                  <div className="section-label">
-                    <span>Hotspots</span>
-                    <i>{scene.hotspots.length}</i>
-                  </div>
-                  <div className="hotspot-list">
-                    {scene.hotspots.map((hotspot, index) => (
-                      <button
-                        type="button"
-                        onClick={() => setActiveHotspot(index)}
-                        key={hotspot.label}
-                      >
-                        <span>{index + 1}</span>
-                        <div>
-                          <strong>{hotspot.label}</strong>
-                          {hotspot.title ? <small>{hotspot.title}</small> : null}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
               {scene.discovery ? (
                 <div className="interaction-block discovery-panel">
                   <div className="section-label">
@@ -898,12 +874,12 @@ export default function ZeitreiseApp() {
                 </div>
               ) : null}
 
-              {!scene.hotspots.length && !scene.discovery && !scene.quiz ? (
+              {!scene.discovery && !scene.quiz ? (
                 <div className="empty-interaction">
-                  <span>Keine Interaktion festgelegt</span>
+                  <span>Kein Zusatzinhalt vorgesehen</span>
                   <p>
-                    Für diese Szene enthält die verbindliche Fassung weder
-                    Hotspot noch Quiz oder Entdeckerauftrag.
+                    Die anklickbaren Punkte findest du direkt im Bild. Für
+                    diese Szene ist kein zusätzliches Quiz vorgesehen.
                   </p>
                 </div>
               ) : null}
