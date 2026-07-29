@@ -69,7 +69,7 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
     "scene01/hintergrund-feuerplanet-v1.png",
     "scene01/hintergrund-sternsystem-v1.png",
     "scene01/hintergrund-vulkanische-kueste-neu-v1.png",
-    "scene01/sprecher-cedar-v2.mp3",
+    "scene01/sprecher-micha-v1.m4a",
     "scene01/overlay-dampf.png",
     "scene01/overlay-rauch.png",
     "scene01/overlay-glutspalten.png",
@@ -118,7 +118,15 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
   await Promise.all(
     Array.from({ length: 22 }, (_, index) => {
       const scene = String(index + 1).padStart(2, "0");
-      const version = [14, 15, 17, 18].includes(index + 1) ? "v3" : "v2";
+      if (index + 1 <= 14) {
+        return access(
+          new URL(
+            `../public/assets/episode1/scene${scene}/sprecher-micha-v1.m4a`,
+            import.meta.url,
+          ),
+        );
+      }
+      const version = [15, 17, 18].includes(index + 1) ? "v3" : "v2";
       return access(
         new URL(
           `../public/assets/episode1/scene${scene}/sprecher-cedar-${version}.mp3`,
@@ -158,7 +166,7 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
   assert.match(visual, /hintergrund-feuerplanet-v1\.png/);
 });
 
-test("legt Cedar verbindlich fest und verknüpft alle 22 Sprecherdateien", async () => {
+test("verknüpft Michas Aufnahmen für Szene 1 bis 14 und Cedar für den Rest", async () => {
   const narration = await readFile(
     new URL("../app/data/narration.ts", import.meta.url),
     "utf8",
@@ -166,13 +174,19 @@ test("legt Cedar verbindlich fest und verknüpft alle 22 Sprecherdateien", async
   assert.match(narration, /model: "gpt-4o-mini-tts"/);
   assert.match(narration, /voice: "cedar"/);
   assert.equal(
+    (narration.match(/sprecher-micha-v1\.m4a/g) ?? []).length,
+    14,
+  );
+  assert.equal(
     (narration.match(/sprecher-cedar-v2\.mp3/g) ?? []).length,
-    18,
+    5,
   );
   assert.equal(
     (narration.match(/sprecher-cedar-v3\.mp3/g) ?? []).length,
-    4,
+    3,
   );
+  assert.match(narration, /displayName: "Micha"/);
+  assert.match(narration, /narrationVoiceForScene/);
   assert.match(narration, /sprecher-micha-test-v1\.m4a/);
   assert.match(narration, /sprecher-rosi-test-v1\.m4a/);
   await access(

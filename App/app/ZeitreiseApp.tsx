@@ -3,7 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
 import { SceneVisual } from "./components/SceneVisual";
-import { narrationTracks, narrationVoice } from "./data/narration";
+import {
+  narrationTracks,
+  narrationVoice,
+  narrationVoiceForScene,
+} from "./data/narration";
 import { scenes } from "./data/scenes";
 
 type Panel = "sprecher" | "interaktion" | "produktion";
@@ -203,7 +207,11 @@ export default function ZeitreiseApp() {
 
   const scene = scenes[currentIndex];
   const narrationPath = narrationTracks[scene.id];
-  const narrationDisplayName = narrationVoice.displayName;
+  const activeNarrationVoice = narrationVoiceForScene(scene.id);
+  const narrationDisplayName =
+    scene.id <= 14
+      ? activeNarrationVoice.displayName
+      : `KI-Stimme ${activeNarrationVoice.displayName}`;
   const discovered = discoveredByScene[String(scene.id)] ?? [];
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
@@ -838,13 +846,15 @@ export default function ZeitreiseApp() {
                 <div>
                   <strong>
                     {narrationPath
-                      ? `KI-Sprecheraufnahme ${narrationVoice.displayName} vorhanden`
-                      : `KI-Stimme ${narrationVoice.displayName} ausgewählt`}
+                      ? `Sprecheraufnahme ${activeNarrationVoice.displayName} vorhanden`
+                      : `Stimme ${activeNarrationVoice.displayName} ausgewählt`}
                   </strong>
                   <p>
                     {narrationPath
-                      ? "Diese Szene wird mit einer KI-generierten Stimme gesprochen."
-                      : "Die Stimme ist verbindlich festgelegt; die Audiodatei dieser Szene steht noch aus."}
+                      ? scene.id <= 14
+                        ? "Diese Szene wurde von Micha persönlich eingesprochen."
+                        : "Diese Szene wird vorläufig mit der KI-Stimme Cedar gesprochen."
+                      : "Die Stimme ist festgelegt; die Audiodatei dieser Szene steht noch aus."}
                   </p>
                 </div>
               </div>
@@ -985,7 +995,7 @@ export default function ZeitreiseApp() {
                 <div>
                   <dt>Sprecherstimme</dt>
                   <dd>
-                    {`${narrationVoice.provider} ${narrationVoice.displayName} · ${narrationVoice.disclosure} · ${narrationVoice.direction}`}
+                    {`${activeNarrationVoice.provider} ${activeNarrationVoice.displayName} · ${activeNarrationVoice.disclosure} · ${activeNarrationVoice.direction}`}
                   </dd>
                 </div>
                 <div>
@@ -1067,7 +1077,8 @@ export default function ZeitreiseApp() {
         </div>
         <p>
           Inhaltliche Grundlage: Muster-Episode V1.0 · Sprechertexte Fassung
-          1.2 · KI-Stimme {narrationVoice.displayName}
+          1.2 · Stimme Micha (Szenen 1–14) · KI-Stimme{" "}
+          {narrationVoice.displayName} (Szenen 15–22)
         </p>
       </footer>
     </main>

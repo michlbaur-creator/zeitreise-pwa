@@ -10,21 +10,38 @@ export const narrationVoice = {
     "Warm, klar und natürlich. Neugierig, freundlich und leicht humorvoll, niemals belehrend. Direkte Du-Ansprache, ruhiges mittleres Tempo, deutliche Aussprache und kurze natürliche Pausen.",
 } as const;
 
+export const michaNarrationVoice = {
+  provider: "Originalaufnahme",
+  model: "persönlich eingesprochen",
+  voice: "micha",
+  displayName: "Micha",
+  displayLabel: "Micha",
+  character: "Persönlich · warm und natürlich",
+  language: "Deutsch",
+  disclosure: "persönlich eingesprochen",
+  direction:
+    "Natürlich, freundlich und humorvoll. Direkte Du-Ansprache mit persönlichen Betonungen und Sprechpausen.",
+} as const;
+
+export function narrationVoiceForScene(sceneId: number) {
+  return sceneId <= 14 ? michaNarrationVoice : narrationVoice;
+}
+
 export const narrationTracks: Record<number, string> = {
-  1: "/assets/episode1/scene01/sprecher-cedar-v2.mp3",
-  2: "/assets/episode1/scene02/sprecher-cedar-v2.mp3",
-  3: "/assets/episode1/scene03/sprecher-cedar-v2.mp3",
-  4: "/assets/episode1/scene04/sprecher-cedar-v2.mp3",
-  5: "/assets/episode1/scene05/sprecher-cedar-v2.mp3",
-  6: "/assets/episode1/scene06/sprecher-cedar-v2.mp3",
-  7: "/assets/episode1/scene07/sprecher-cedar-v2.mp3",
-  8: "/assets/episode1/scene08/sprecher-cedar-v2.mp3",
-  9: "/assets/episode1/scene09/sprecher-cedar-v2.mp3",
-  10: "/assets/episode1/scene10/sprecher-cedar-v2.mp3",
-  11: "/assets/episode1/scene11/sprecher-cedar-v2.mp3",
-  12: "/assets/episode1/scene12/sprecher-cedar-v2.mp3",
-  13: "/assets/episode1/scene13/sprecher-cedar-v2.mp3",
-  14: "/assets/episode1/scene14/sprecher-cedar-v3.mp3",
+  1: "/assets/episode1/scene01/sprecher-micha-v1.m4a",
+  2: "/assets/episode1/scene02/sprecher-micha-v1.m4a",
+  3: "/assets/episode1/scene03/sprecher-micha-v1.m4a",
+  4: "/assets/episode1/scene04/sprecher-micha-v1.m4a",
+  5: "/assets/episode1/scene05/sprecher-micha-v1.m4a",
+  6: "/assets/episode1/scene06/sprecher-micha-v1.m4a",
+  7: "/assets/episode1/scene07/sprecher-micha-v1.m4a",
+  8: "/assets/episode1/scene08/sprecher-micha-v1.m4a",
+  9: "/assets/episode1/scene09/sprecher-micha-v1.m4a",
+  10: "/assets/episode1/scene10/sprecher-micha-v1.m4a",
+  11: "/assets/episode1/scene11/sprecher-micha-v1.m4a",
+  12: "/assets/episode1/scene12/sprecher-micha-v1.m4a",
+  13: "/assets/episode1/scene13/sprecher-micha-v1.m4a",
+  14: "/assets/episode1/scene14/sprecher-micha-v1.m4a",
   15: "/assets/episode1/scene15/sprecher-cedar-v3.mp3",
   16: "/assets/episode1/scene16/sprecher-cedar-v2.mp3",
   17: "/assets/episode1/scene17/sprecher-cedar-v3.mp3",

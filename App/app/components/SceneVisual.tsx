@@ -606,8 +606,8 @@ export function SceneVisual({
       <div className="subtitle" aria-live="polite">
         <span>
           {hasNarration
-            ? `Sprechertext · KI-Stimme ${narrationVoiceName}`
-            : `Sprechertext · ${narrationVoiceName}-Aufnahme ausstehend`}
+            ? `Sprechertext · ${narrationVoiceName}`
+            : `Sprechertext · Aufnahme ${narrationVoiceName} ausstehend`}
         </span>
         <p>{parts[partIndex]}</p>
       </div>

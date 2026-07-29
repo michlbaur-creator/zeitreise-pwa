@@ -62,8 +62,8 @@ export const scenes: Scene[] = [
   {
     id: 1,
     title: "Die junge Erde",
-    duration: 25,
-    durationLabel: "25 s",
+    duration: 33,
+    durationLabel: "ca. 33 Sekunden",
     timeLabel: "Vor mehr als 4 Milliarden Jahren",
     speaker:
       "Du landest auf der jungen Erde – und dein Reisebüro hat eindeutig die Warnhinweise vergessen. Der Boden glüht, Vulkane husten Asche, und aus allen Ritzen dampft es. Meer? Wald? Kiosk? Fehlanzeige. Hier gibt es nur Feuer, Gestein und eine ziemlich ungemütliche Atmosphäre. Kaum zu glauben: Aus diesem chaotischen Glutball wird einmal dein Zuhause.",
@@ -124,8 +124,8 @@ export const scenes: Scene[] = [
   {
     id: 2,
     title: "Die Erde kühlt langsam ab",
-    duration: 22,
-    durationLabel: "ca. 22 Sekunden",
+    duration: 34,
+    durationLabel: "ca. 34 Sekunden",
     timeLabel: "Vor etwa 4,4 Milliarden Jahren",
     speaker:
       "Zum Glück hat selbst ein Glutball irgendwann genug vom Dauerkochen. Die Erde kühlt ab, Wasserdampf sammelt sich in dicken Wolken – und dann öffnet der Himmel sämtliche Schleusen. Es regnet immer wieder, über gewaltige Zeiträume. Auf heißem Gestein zischt das Wasser sofort los. Deine Regenjacke? Nett gemeint. Aber völlig chancenlos.",
@@ -189,8 +189,8 @@ export const scenes: Scene[] = [
   {
     id: 3,
     title: "Die ersten Ozeane entstehen",
-    duration: 24,
-    durationLabel: "ca. 24 Sekunden",
+    duration: 30,
+    durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor etwa 4,4 Milliarden Jahren",
     speaker:
       "Der Regen findet jede Mulde. Aus Pfützen werden Seen, aus Seen Meere und schließlich riesige Ozeane. Noch kein Fisch, kein Seetang, nicht einmal eine freche Qualle. Trotzdem ist das Wasser ein Volltreffer: Stoffe können sich darin lösen, begegnen und reagieren. Die Bühne ist fertig. Jetzt fehlt nur noch das Leben – eine Kleinigkeit.",
@@ -254,8 +254,8 @@ export const scenes: Scene[] = [
   {
     id: 4,
     title: "Die Ursuppe - Wo alles begann",
-    duration: 28,
-    durationLabel: "ca. 28 Sekunden",
+    duration: 38,
+    durationLabel: "ca. 38 Sekunden",
     timeLabel: "Vor etwa 4 Milliarden Jahren",
     speaker:
       "Willkommen in der berühmten Ursuppe. Klingt nach Mittagessen, schmeckt aber vermutlich scheußlich. Im warmen Wasser treiben Mineralstoffe und einfache Moleküle; Blitze, Vulkanwärme und Sonnenlicht liefern Energie für immer neue Verbindungen. Eine fertige Zelle springt dabei nicht plötzlich aus dem Topf. Wie Chemie tatsächlich zu Leben wurde, bleibt eines der spannendsten Rätsel der Forschung.",
@@ -319,8 +319,8 @@ export const scenes: Scene[] = [
   {
     id: 5,
     title: "Die erste Zelle",
-    duration: 30,
-    durationLabel: "ca. 30 Sekunden",
+    duration: 52,
+    durationLabel: "ca. 52 Sekunden",
     timeLabel: "Vor mindestens 3,5 Milliarden Jahren",
     speaker:
       "Jetzt bitte sehr, sehr klein denken. Zwischen Mineralien bilden sich winzige Bläschen mit membranähnlichen Hüllen – gewissermaßen Einzimmerwohnungen für chemische Reaktionen. Drinnen können Stoffe zusammenbleiben, draußen herrscht das übliche Urmeer-Chaos. Wie daraus die erste echte Zelle entstand, wissen wir nicht genau. Aber irgendwann kann sich etwas erhalten und vermehren. Glückwunsch, Erde: Du hast Leben!",
@@ -384,8 +384,8 @@ export const scenes: Scene[] = [
   {
     id: 6,
     title: "Das Leben breitet sich aus",
-    duration: 26,
-    durationLabel: "ca. 26 Sekunden",
+    duration: 32,
+    durationLabel: "ca. 32 Sekunden",
     timeLabel: "Vor etwa 3,5 Milliarden Jahren",
     speaker:
       "Die erste Zelle ist kaum da, schon entdeckt sie den ältesten Wachstumstrick der Welt: teilen. Aus einer werden zwei, aus zwei vier – und niemand muss dafür einen Bauantrag stellen. Manche Zellen kleben an Felsen, andere treiben durchs Wasser. Noch ist alles mikroskopisch klein. Aber das Leben hat offenbar nicht vor, eine seltene Erscheinung zu bleiben.",
@@ -435,8 +435,8 @@ export const scenes: Scene[] = [
   {
     id: 7,
     title: "Die Erfinder des Sauerstoffs",
-    duration: 30,
-    durationLabel: "ca. 30 Sekunden",
+    duration: 37,
+    durationLabel: "ca. 37 Sekunden",
     timeLabel: "Vor mindestens 2,4 Milliarden Jahren",
     speaker:
       "Diese unscheinbaren Teppiche sind echte Erfinder: Cyanobakterien. Sie nutzen Licht, Wasser und Kohlendioxid, bauen daraus energiereiche Stoffe und geben Sauerstoff ab – anfangs Bläschen für Bläschen. Für dich ist Sauerstoff selbstverständlich. Damals ist er eine völlig neue Zutat im planetarischen Kochstudio. Und wie bei neuen Zutaten üblich, verträgt sie längst nicht jeder.",
@@ -493,8 +493,8 @@ export const scenes: Scene[] = [
   {
     id: 8,
     title: "Die Sauerstoff-Revolution",
-    duration: 30,
-    durationLabel: "ca. 30 Sekunden",
+    duration: 34,
+    durationLabel: "ca. 34 Sekunden",
     timeLabel: "Vor etwa 2,4 Milliarden Jahren",
     speaker:
       "Der neue Sauerstoff hat zunächst alle Hände voll zu tun: Im Meer reagiert er mit gelöstem Eisen und anderen Stoffen. Erst viel später sammelt er sich in der Luft. Für viele damalige Mikroben ist er pures Gift; andere lernen, mit ihm besonders viel Energie zu gewinnen. Die Erde wechselt ihre Atmosphäre – ohne Rücksicht auf die bisherigen Mieter.",
@@ -544,8 +544,8 @@ export const scenes: Scene[] = [
   {
     id: 9,
     title: "Die Revolution in der Zelle",
-    duration: 32,
-    durationLabel: "ca. 32 Sekunden",
+    duration: 47,
+    durationLabel: "ca. 47 Sekunden",
     timeLabel: "Vor etwa 1,8 Milliarden Jahren",
     speaker:
       "Jetzt passiert etwas, das jede WG-Beratung begeistert hätte. Eine größere Zelle nimmt ein Bakterium auf – und verdaut es ausnahmsweise nicht. Das Bakterium liefert reichlich Energie, die große Zelle bietet Schutz und Verpflegung. Beide bleiben zusammen. Aus den Nachfahren der kleinen Mitbewohner werden Mitochondrien, die Kraftwerke deiner Zellen. Diese Zweck-WG läuft bis heute.",
@@ -604,8 +604,8 @@ export const scenes: Scene[] = [
   {
     id: 10,
     title: "Die ersten komplexen Lebewesen",
-    duration: 30,
-    durationLabel: "ca. 30 Sekunden",
+    duration: 41,
+    durationLabel: "ca. 41 Sekunden",
     timeLabel: "Vor etwa 1,5 Milliarden Jahren",
     speaker:
       "Mit der neuen Energie werden Zellen zu kleinen Wunderpaketen. Manche jagen, andere betreiben Fotosynthese, wieder andere bauen Kolonien. Einen Chef oder Bauplan gibt es nicht. Zufällige erbliche Veränderungen liefern Varianten, natürliche Auslese sortiert. Das dauert viele Generationen – aber Evolution hat keinen Feierabend. So füllt sich das Meer mit immer neuen Formen und Fähigkeiten.",
@@ -670,8 +670,8 @@ export const scenes: Scene[] = [
   {
     id: 11,
     title: "Zusammen geht mehr - Die ersten Vielzeller",
-    duration: 30,
-    durationLabel: "ca. 30 Sekunden",
+    duration: 38,
+    durationLabel: "ca. 38 Sekunden",
     timeLabel: "Vor mehr als 1 Milliarde Jahren",
     speaker:
       "Bei der nächsten Teilung sagen manche Zellen offenbar: „Ach, bleib doch noch.“ Sie hängen zusammen, tauschen Signale aus und verteilen Aufgaben. Eine kümmert sich ums Bewegen, eine andere um Nahrung oder Schutz. Plötzlich muss nicht mehr jede Zelle alles allein schaffen. So entstehen Vielzeller – Teamarbeit, lange bevor irgendjemand das erste Sitzungsprotokoll erfand.",
@@ -724,8 +724,8 @@ export const scenes: Scene[] = [
   {
     id: 12,
     title: "Die ersten Tiere",
-    duration: 32,
-    durationLabel: "ca. 32 Sekunden",
+    duration: 35,
+    durationLabel: "ca. 35 Sekunden",
     timeLabel: "Vor rund 570 Millionen Jahren",
     speaker:
       "Wenn du jetzt ins Meer tauchst, wirkt es wie eine Ausstellung sehr weicher Sofakissen. Manche Wesen sehen aus wie Blätter, andere wie Matten oder gerippte Scheiben. Augen, Beine und Zähne? Noch nicht im Sortiment. Einige sind wahrscheinlich Tiere, andere geben Forschenden bis heute Rätsel auf. Willkommen in der Ediacara-Welt – fremdartig, weich und ziemlich rätselhaft.",
@@ -772,8 +772,8 @@ export const scenes: Scene[] = [
   {
     id: 13,
     title: "Die Kambrische Explosion",
-    duration: 35,
-    durationLabel: "ca. 35 Sekunden",
+    duration: 41,
+    durationLabel: "ca. 41 Sekunden",
     timeLabel: "Vor rund 540 Millionen Jahren",
     speaker:
       "Und nun wird das Meer zur großen Erfinderwerkstatt. In geologisch kurzer Zeit erscheinen viele neue Körperformen: Augen, Panzer, Greifarme und harte Schalen. Wer fressen will, muss Beute finden; wer nicht gefressen werden will, braucht wirksamen Schutz. Dieses evolutionäre Wettrüsten heißt Kambrische Explosion. Keine Sorge: Es knallt nicht – außer vielleicht beim Abendessen.",
@@ -827,8 +827,8 @@ export const scenes: Scene[] = [
   {
     id: 14,
     title: "Der Sprung an Land",
-    duration: 40,
-    durationLabel: "ca. 40 Sekunden",
+    duration: 35,
+    durationLabel: "ca. 35 Sekunden",
     timeLabel: "Vor etwa 470 Millionen Jahren",
     speaker:
       "Irgendwann schaut sich eine kleine Pflanze das Festland an und denkt sich: „Sieht eigentlich ganz gemütlich aus.“ Mutig! Denn hier oben gibt’s weder Bademeister noch Nachschub aus dem Meer. Aber der Plan geht auf. Immer mehr Pflanzen ziehen an Land und machen aus grauen Felsen langsam eine grüne Welt. Ganz nebenbei bereiten sie das größte Buffet der Erdgeschichte vor.",
