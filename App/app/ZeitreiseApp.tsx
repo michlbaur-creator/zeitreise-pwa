@@ -3,15 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
 import { SceneVisual } from "./components/SceneVisual";
-import {
-  humanNarrationSamples,
-  narrationTracks,
-  narrationVoice,
-} from "./data/narration";
+import { narrationTracks, narrationVoice } from "./data/narration";
 import { scenes } from "./data/scenes";
 
 type Panel = "sprecher" | "interaktion" | "produktion";
-type HumanVoice = keyof typeof humanNarrationSamples;
 
 type InstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -187,20 +182,12 @@ export default function ZeitreiseApp() {
     useState<InstallPromptEvent | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [ambientEnabled, setAmbientEnabled] = useState(true);
-  const [humanVoice, setHumanVoice] = useState<HumanVoice>("micha");
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const scene = scenes[currentIndex];
-  const usesHumanSample = scene.id === 14;
-  const narrationPath = usesHumanSample
-    ? humanNarrationSamples[humanVoice]
-    : narrationTracks[scene.id];
-  const narrationDisplayName = usesHumanSample
-    ? humanVoice === "micha"
-      ? "Micha"
-      : "Rosi"
-    : narrationVoice.displayName;
+  const narrationPath = narrationTracks[scene.id];
+  const narrationDisplayName = narrationVoice.displayName;
   const discovered = discoveredByScene[String(scene.id)] ?? [];
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
@@ -386,14 +373,6 @@ export default function ZeitreiseApp() {
     ) {
       audio.currentTime = safe * audio.duration;
     }
-  };
-
-  const chooseHumanVoice = (voice: HumanVoice) => {
-    audioRef.current?.pause();
-    setHumanVoice(voice);
-    setIsPlaying(false);
-    setProgress(0);
-    progressRef.current = 0;
   };
 
   const checkQuiz = () => {
@@ -602,33 +581,6 @@ export default function ZeitreiseApp() {
             </aside>
           ) : null}
 
-          {usesHumanSample ? (
-            <section className="voice-comparison" aria-label="Stimmenvergleich">
-              <div>
-                <span>Unsere Stimmenprobe</span>
-                <strong>Wer erzählt diese Szene?</strong>
-              </div>
-              <div className="voice-options" role="group" aria-label="Stimme auswählen">
-                <button
-                  type="button"
-                  className={humanVoice === "micha" ? "is-active" : ""}
-                  onClick={() => chooseHumanVoice("micha")}
-                  aria-pressed={humanVoice === "micha"}
-                >
-                  Micha
-                </button>
-                <button
-                  type="button"
-                  className={humanVoice === "rosi" ? "is-active" : ""}
-                  onClick={() => chooseHumanVoice("rosi")}
-                  aria-pressed={humanVoice === "rosi"}
-                >
-                  Rosi
-                </button>
-              </div>
-            </section>
-          ) : null}
-
           <div className="player-controls">
             <button
               className="round-control"
@@ -739,24 +691,20 @@ export default function ZeitreiseApp() {
           {panel === "sprecher" ? (
             <section className="panel-section" role="tabpanel">
               <div className="section-label">
-                <span>Sprechertext – final</span>
-                <i>unverändert</i>
+                <span>Sprechertext – Fassung 1.1</span>
+                <i>warm · leicht humorvoll</i>
               </div>
               <blockquote>{scene.speaker}</blockquote>
               <div className={`missing-note ${narrationPath ? "is-ready" : ""}`}>
                 <span aria-hidden="true">{narrationPath ? "●" : "○"}</span>
                 <div>
                   <strong>
-                    {usesHumanSample
-                      ? `Persönliche Sprachprobe von ${narrationDisplayName}`
-                      : narrationPath
+                    {narrationPath
                       ? `KI-Sprecheraufnahme ${narrationVoice.displayName} vorhanden`
                       : `KI-Stimme ${narrationVoice.displayName} ausgewählt`}
                   </strong>
                   <p>
-                    {usesHumanSample
-                      ? "Diese Aufnahme stammt von Micha oder Rosi und wurde nicht künstlich erzeugt."
-                      : narrationPath
+                    {narrationPath
                       ? "Diese Szene wird mit einer KI-generierten Stimme gesprochen."
                       : "Die Stimme ist verbindlich festgelegt; die Audiodatei dieser Szene steht noch aus."}
                   </p>
@@ -899,9 +847,7 @@ export default function ZeitreiseApp() {
                 <div>
                   <dt>Sprecherstimme</dt>
                   <dd>
-                    {usesHumanSample
-                      ? `${narrationDisplayName} · persönliche Sprachprobe`
-                      : `${narrationVoice.provider} ${narrationVoice.displayName} · ${narrationVoice.disclosure} · ${narrationVoice.direction}`}
+                    {`${narrationVoice.provider} ${narrationVoice.displayName} · ${narrationVoice.disclosure} · ${narrationVoice.direction}`}
                   </dd>
                 </div>
                 <div>
@@ -982,9 +928,8 @@ export default function ZeitreiseApp() {
             : "Offline-Modus aktiv"}
         </div>
         <p>
-          Inhaltliche Grundlage: Muster-Episode V1.0 · persönliche
-          Sprecherproben von Micha und Rosi · übrige Szenen vorläufig{" "}
-          {narrationVoice.displayName}
+          Inhaltliche Grundlage: Muster-Episode V1.0 · Sprechertexte Fassung
+          1.1 · KI-Stimme {narrationVoice.displayName}
         </p>
       </footer>
     </main>

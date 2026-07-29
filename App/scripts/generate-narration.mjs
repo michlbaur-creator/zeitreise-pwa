@@ -56,7 +56,7 @@ async function generateScene(apiKey, scene) {
     "episode1",
     `scene${String(scene.id).padStart(2, "0")}`,
   );
-  const destination = join(folder, "sprecher-cedar-v1.mp3");
+  const destination = join(folder, "sprecher-cedar-v2.mp3");
 
   if (await hasUsableAudio(destination)) {
     process.stdout.write(
