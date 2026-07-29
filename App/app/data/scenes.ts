@@ -66,7 +66,7 @@ export const scenes: Scene[] = [
     durationLabel: "25 s",
     timeLabel: "Vor mehr als 4 Milliarden Jahren",
     speaker:
-      "Stell dir vor, du landest auf der Erde kurz nach ihrer Entstehung. Für einen Spaziergang ist das ein ziemlich ungünstiger Zeitpunkt: Unter dir glüht Gestein, Vulkane schleudern heiße Gase und Asche in die Luft. Wasser, Pflanzen oder Tiere suchst du vergeblich. Unsere Geschichte beginnt auf einem jungen Planeten, der mit der heutigen Erde noch wenig gemeinsam hat.",
+      "Du landest auf der jungen Erde – und dein Reisebüro hat eindeutig die Warnhinweise vergessen. Der Boden glüht, Vulkane husten Asche, und aus allen Ritzen dampft es. Meer? Wald? Kiosk? Fehlanzeige. Hier gibt es nur Feuer, Gestein und eine ziemlich ungemütliche Atmosphäre. Kaum zu glauben: Aus diesem chaotischen Glutball wird einmal dein Zuhause.",
     theme: "volcanic",
     setting:
       "Hintergrund: bg_ep01_s01.jpg. Bildinhalt: Langsame Kamerafahrt (Zoom-In 8 %).",
@@ -128,7 +128,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 22 Sekunden",
     timeLabel: "Vor etwa 4,4 Milliarden Jahren",
     speaker:
-      "Zum Glück bleibt die Erde nicht ewig so heiß. Ihre Oberfläche kühlt ab, in der dichten Atmosphäre sammelt sich Wasserdampf, und gewaltige Wolken entstehen. Dann beginnt es zu regnen – nicht nur bis morgen, sondern über sehr lange Zeiträume immer wieder. Das Wasser prasselt auf Gestein und Lava. Deine Regenjacke dürfte dabei trotzdem ziemlich schnell aufgeben.",
+      "Zum Glück hat selbst ein Glutball irgendwann genug vom Dauerkochen. Die Erde kühlt ab, Wasserdampf sammelt sich in dicken Wolken – und dann öffnet der Himmel sämtliche Schleusen. Es regnet immer wieder, über gewaltige Zeiträume. Auf heißem Gestein zischt das Wasser sofort los. Deine Regenjacke? Nett gemeint. Aber völlig chancenlos.",
     theme: "rain",
     setting:
       "Derselbe Küstenabschnitt wie Szene 1. Die Vulkanlandschaft wirkt bereits etwas ruhiger. Weniger Eruptionen, dafür dichter Wasserdampf. Im Vordergrund glühen noch einzelne Lavafelder, am Horizont steigen Dampfsäulen auf. Die ersten dunklen Wolken bilden sich.",
@@ -193,7 +193,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 24 Sekunden",
     timeLabel: "Vor etwa 4,4 Milliarden Jahren",
     speaker:
-      "Vor dir sammelt sich das Regenwasser in Senken. Aus Seen werden Meere, und schließlich bedecken gewaltige Ozeane einen großen Teil der Erde. Noch schwimmt kein Fisch darin; nicht einmal eine Alge ist zu sehen. Doch jetzt besitzt die Erde etwas Entscheidendes: flüssiges Wasser. Darin können sich Stoffe lösen und miteinander reagieren. Die Bühne ist bereit – nur die Hauptdarsteller fehlen noch.",
+      "Der Regen findet jede Mulde. Aus Pfützen werden Seen, aus Seen Meere und schließlich riesige Ozeane. Noch kein Fisch, kein Seetang, nicht einmal eine freche Qualle. Trotzdem ist das Wasser ein Volltreffer: Stoffe können sich darin lösen, begegnen und reagieren. Die Bühne ist fertig. Jetzt fehlt nur noch das Leben – eine Kleinigkeit.",
     theme: "ocean",
     setting:
       "Derselbe Küstenabschnitt wie in den beiden vorherigen Szenen. Der Dauerregen hält an. Große Bereiche der erkalteten Lava stehen bereits unter Wasser. Im Vordergrund bilden sich kleine Seen, im Hintergrund vereinigen sie sich zu einem gewaltigen Urmeer. Über dem Wasser ziehen dichte Wolken, einzelne Sonnenstrahlen brechen erstmals durch.",
@@ -258,7 +258,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 28 Sekunden",
     timeLabel: "Vor etwa 4 Milliarden Jahren",
     speaker:
-      "Schau genau hin: Noch lebt hier nichts. Im warmen Wasser treiben Mineralstoffe und einfache Moleküle. Blitze, Vulkanwärme und Sonnenlicht liefern Energie, sodass immer komplexere Verbindungen entstehen können. Eine fertige Zelle hüpft natürlich nicht plötzlich aus der Ursuppe. Wie aus Chemie der erste Schritt zum Leben wurde, ist bis heute eine der großen offenen Fragen.",
+      "Willkommen in der berühmten Ursuppe. Klingt nach Mittagessen, schmeckt aber vermutlich scheußlich. Im warmen Wasser treiben Mineralstoffe und einfache Moleküle; Blitze, Vulkanwärme und Sonnenlicht liefern Energie für immer neue Verbindungen. Eine fertige Zelle springt dabei nicht plötzlich aus dem Topf. Wie Chemie tatsächlich zu Leben wurde, bleibt eines der spannendsten Rätsel der Forschung.",
     theme: "lagoon",
     setting:
       "Derselbe Küstenabschnitt - Millionen Jahre später. Die Vulkane sind nur noch vereinzelt aktiv. Im Vordergrund befindet sich eine flache, warme Lagune. Das Wasser wirkt leicht grünlich bis bräunlich durch gelöste Mineralien. Kleine Felsen ragen aus dem Wasser. Im Hintergrund steigt vereinzelt Dampf auf. Die Sonne steht tief und taucht die Szene in warmes, goldenes Licht.",
@@ -323,7 +323,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor mindestens 3,5 Milliarden Jahren",
     speaker:
-      "Jetzt wird es winzig – so winzig, dass du ohne Mikroskop keine Chance hättest. Zwischen Mineralien können sich membranähnliche Bläschen bilden. Solche Hüllen grenzen ein Inneres von der Umgebung ab und erleichtern chemische Reaktionen. Wie daraus erste echte Zellen entstanden, wissen wir nicht genau. Doch irgendwann gibt es etwas, das sich erhalten und vermehren kann: Leben.",
+      "Jetzt bitte sehr, sehr klein denken. Zwischen Mineralien bilden sich winzige Bläschen mit membranähnlichen Hüllen – gewissermaßen Einzimmerwohnungen für chemische Reaktionen. Drinnen können Stoffe zusammenbleiben, draußen herrscht das übliche Urmeer-Chaos. Wie daraus die erste echte Zelle entstand, wissen wir nicht genau. Aber irgendwann kann sich etwas erhalten und vermehren. Glückwunsch, Erde: Du hast Leben!",
     theme: "micro",
     setting:
       "Unter der Wasseroberfläche einer flachen, warmen Lagune dringt Sonnenlicht in weichen Strahlen durch das Wasser. Kleine Mineralpartikel schweben langsam umher. Im Vordergrund liegen poröse Lavagesteine und Mineralkristalle. Die Szene wirkt ruhig und geheimnisvoll.",
@@ -388,7 +388,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 26 Sekunden",
     timeLabel: "Vor etwa 3,5 Milliarden Jahren",
     speaker:
-      "Du siehst eine einzelne Zelle. Nicht gerade spektakulär – bis sie ihren entscheidenden Trick zeigt: Sie wächst und teilt sich. Aus einer werden zwei, aus zwei vier, und bald wird es im Urmeer erstaunlich voll. Manche Zellen haften an Felsen, andere treiben frei im Wasser. Das Leben ist noch einfach, aber es breitet sich aus.",
+      "Die erste Zelle ist kaum da, schon entdeckt sie den ältesten Wachstumstrick der Welt: teilen. Aus einer werden zwei, aus zwei vier – und niemand muss dafür einen Bauantrag stellen. Manche Zellen kleben an Felsen, andere treiben durchs Wasser. Noch ist alles mikroskopisch klein. Aber das Leben hat offenbar nicht vor, eine seltene Erscheinung zu bleiben.",
     theme: "micro",
     setting:
       "Die Kamera bleibt unter Wasser. Zahlreiche einfache Einzeller schweben durch das Bild. Einige teilen sich, andere treiben mit der Strömung. Im Hintergrund erkennt man poröse Gesteine, an denen sich erste Biofilme bilden. Die Szene wirkt lebendiger, ohne überladen zu sein.",
@@ -439,7 +439,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor mindestens 2,4 Milliarden Jahren",
     speaker:
-      "Vor dir arbeiten winzige Sonnenkraftwerke: Cyanobakterien. Sie nutzen Licht, Wasser und Kohlendioxid, um energiereiche Stoffe aufzubauen. Dabei entsteht Sauerstoff, zunächst nur in kleinen Bläschen. Du atmest dieses Gas gerade ganz selbstverständlich ein. Für die damalige Erde ist es jedoch eine völlig neue Zutat – und sie wird fast alles verändern.",
+      "Diese unscheinbaren Teppiche sind echte Erfinder: Cyanobakterien. Sie nutzen Licht, Wasser und Kohlendioxid, bauen daraus energiereiche Stoffe und geben Sauerstoff ab – anfangs Bläschen für Bläschen. Für dich ist Sauerstoff selbstverständlich. Damals ist er eine völlig neue Zutat im planetarischen Kochstudio. Und wie bei neuen Zutaten üblich, verträgt sie längst nicht jeder.",
     theme: "oxygen",
     setting:
       "Flaches Urmeer mit grünlich-bläulichen Cyanobakterienmatten und niedrigen Stromatolithen. Das Wasser ist klarer als zuvor. Winzige Sauerstoffbläschen steigen langsam zur Oberfläche. Die Szene soll Zuversicht ausstrahlen.",
@@ -497,7 +497,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor etwa 2,4 Milliarden Jahren",
     speaker:
-      "Was du hier siehst, verändert die ganze Erde. Der Sauerstoff gelangt nicht sofort in die Luft, sondern reagiert zunächst mit gelösten Stoffen und Gesteinen im Meer. Erst nach sehr langer Zeit sammelt er sich in der Atmosphäre. Für viele Mikroorganismen ist er giftig, andere nutzen ihn zur Energiegewinnung. Später entsteht die schützende Ozonschicht. Die Erde bekommt buchstäblich neue Luft.",
+      "Der neue Sauerstoff hat zunächst alle Hände voll zu tun: Im Meer reagiert er mit gelöstem Eisen und anderen Stoffen. Erst viel später sammelt er sich in der Luft. Für viele damalige Mikroben ist er pures Gift; andere lernen, mit ihm besonders viel Energie zu gewinnen. Die Erde wechselt ihre Atmosphäre – ohne Rücksicht auf die bisherigen Mieter.",
     theme: "atmosphere",
     setting:
       "Zum ersten Mal sehen wir die Erde aus größerer Entfernung. Über Millionen von Jahren verändert sich die Atmosphäre. Der Himmel wirkt zunächst diesig und gelblich. Mit fortschreitender Zeit wird er heller und schließlich tiefblau. Die Ozeane spiegeln das Licht, während die Vulkanaktivität weiter zurückgeht.",
@@ -548,7 +548,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 32 Sekunden",
     timeLabel: "Vor etwa 1,8 Milliarden Jahren",
     speaker:
-      "Pass auf: Jetzt beginnt eine der folgenreichsten Wohngemeinschaften der Erdgeschichte. Eine größere Zelle nimmt ein Bakterium auf, verdaut es aber nicht. Beide profitieren voneinander und bleiben zusammen. Aus den Nachfahren solcher Bakterien werden im Lauf der Evolution die Mitochondrien – die Kraftwerke fast aller Zellen in deinem Körper. Eine Zweck-WG, die seit mehr als einer Milliarde Jahren bestens läuft.",
+      "Jetzt passiert etwas, das jede WG-Beratung begeistert hätte. Eine größere Zelle nimmt ein Bakterium auf – und verdaut es ausnahmsweise nicht. Das Bakterium liefert reichlich Energie, die große Zelle bietet Schutz und Verpflegung. Beide bleiben zusammen. Aus den Nachfahren der kleinen Mitbewohner werden Mitochondrien, die Kraftwerke deiner Zellen. Diese Zweck-WG läuft bis heute.",
     theme: "micro",
     setting:
       "Mikroskopische Unterwasserwelt mit einfachen Bakterien und einer größeren Zelle im Mittelpunkt. Eine kleinere Bakterienzelle wird aufgenommen, aber nicht verdaut. Die Farben bleiben natürlich: leicht grünlich, warmes Sonnenlicht, ruhiges Wasser.",
@@ -608,7 +608,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor etwa 1,5 Milliarden Jahren",
     speaker:
-      "Mit solchen komplexeren Zellen wird das Leben vielseitiger. Du siehst Formen, die sich bewegen, Nahrung aufnehmen oder Kolonien bilden. Die Evolution folgt dabei keinem Bauplan und probiert nicht bewusst herum. Zufällige erbliche Veränderungen und natürliche Auslese genügen. Über viele Generationen entstehen daraus immer neue Fähigkeiten und Lebensweisen – ganz ohne Projektleitung.",
+      "Mit der neuen Energie werden Zellen zu kleinen Wunderpaketen. Manche jagen, andere betreiben Fotosynthese, wieder andere bauen Kolonien. Einen Chef oder Bauplan gibt es nicht. Zufällige erbliche Veränderungen liefern Varianten, natürliche Auslese sortiert. Das dauert viele Generationen – aber Evolution hat keinen Feierabend. So füllt sich das Meer mit immer neuen Formen und Fähigkeiten.",
     theme: "micro",
     setting:
       "Ein flaches Meer voller mikroskopischer Vielfalt. Unterschiedliche Einzeller sind kugelförmig, länglich, mit Geißeln oder feinen Fortsätzen. Einige schweben frei, andere gleiten über den Meeresboden. Die Welt wirkt lebendig und abwechslungsreich.",
@@ -674,7 +674,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor mehr als 1 Milliarde Jahren",
     speaker:
-      "Manche Zellen trennen sich nach der Teilung nicht mehr vollständig. Sie bleiben zusammen, verständigen sich und teilen Aufgaben untereinander auf. Du kannst dir das wie ein Team vorstellen, in dem nicht jede Zelle alles können muss. So entstehen vielzellige Lebewesen. Teamarbeit ist also keine moderne Erfindung – die Evolution kennt sie schon seit sehr langer Zeit.",
+      "Bei der nächsten Teilung sagen manche Zellen offenbar: „Ach, bleib doch noch.“ Sie hängen zusammen, tauschen Signale aus und verteilen Aufgaben. Eine kümmert sich ums Bewegen, eine andere um Nahrung oder Schutz. Plötzlich muss nicht mehr jede Zelle alles allein schaffen. So entstehen Vielzeller – Teamarbeit, lange bevor irgendjemand das erste Sitzungsprotokoll erfand.",
     theme: "oxygen",
     setting:
       "Flaches Urmeer. Verschiedene Einzeller schweben im Vordergrund. Einige bleiben nach der Zellteilung miteinander verbunden und bilden kleine Zellverbände. Erste einfache fadenförmige Algen bewegen sich sanft in der Strömung. Das Wasser wirkt klar und lichtdurchflutet.",
@@ -728,7 +728,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 32 Sekunden",
     timeLabel: "Vor rund 570 Millionen Jahren",
     speaker:
-      "Wenn du hier schnorcheln könntest, würdest du vermutlich fragen: Sind das wirklich Tiere? Einige wahrscheinlich ja, andere lassen sich bis heute schwer einordnen. Sie haben weder Zähne noch Augen noch Beine und erinnern an Kissen, Blätter oder gerippte Matten. Willkommen in der Ediacara-Welt – einem Meer voller großer, weicher und ziemlich rätselhafter Lebewesen.",
+      "Wenn du jetzt ins Meer tauchst, wirkt es wie eine Ausstellung sehr weicher Sofakissen. Manche Wesen sehen aus wie Blätter, andere wie Matten oder gerippte Scheiben. Augen, Beine und Zähne? Noch nicht im Sortiment. Einige sind wahrscheinlich Tiere, andere geben Forschenden bis heute Rätsel auf. Willkommen in der Ediacara-Welt – fremdartig, weich und ziemlich rätselhaft.",
     theme: "ediacara",
     setting:
       "Flacher Meeresboden mit Schwämmen, einfachen Nesseltieren und weichen, ungewöhnlich geformten Organismen der Ediacara-Fauna. Alles wirkt fremdartig, aber friedlich.",
@@ -776,7 +776,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 35 Sekunden",
     timeLabel: "Vor rund 540 Millionen Jahren",
     speaker:
-      "Und plötzlich … nein, eigentlich nicht plötzlich. Evolution braucht Zeit. Geologisch gesehen nimmt die Vielfalt der Tiere nun jedoch erstaunlich schnell zu. Im Meer erscheinen Augen, Panzer, Greifarme und viele neue Körperformen. Räuber verfolgen Beute, andere Tiere graben im Boden oder schützen sich mit harten Schalen. Du erlebst die sogenannte Kambrische Explosion – ohne dass dabei etwas explodiert.",
+      "Und nun wird das Meer zur großen Erfinderwerkstatt. In geologisch kurzer Zeit erscheinen viele neue Körperformen: Augen, Panzer, Greifarme und harte Schalen. Wer fressen will, muss Beute finden; wer nicht gefressen werden will, braucht wirksamen Schutz. Dieses evolutionäre Wettrüsten heißt Kambrische Explosion. Keine Sorge: Es knallt nicht – außer vielleicht beim Abendessen.",
     theme: "cambrian",
     setting:
       "Trilobiten laufen über den Meeresboden. Anomalocaris gleitet durchs Wasser. Würmer graben sich ein. Stachelhäuter, frühe Gliederfüßer und zahlreiche unbekannte Arten bevölkern das Meer. Die Szene soll Ehrfurcht auslösen.",

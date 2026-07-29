@@ -181,7 +181,7 @@ export default function ZeitreiseApp() {
   const [installPrompt, setInstallPrompt] =
     useState<InstallPromptEvent | null>(null);
   const [isReady, setIsReady] = useState(false);
-  const [ambientEnabled, setAmbientEnabled] = useState(true);
+  const [ambientEnabled, setAmbientEnabled] = useState(false);
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -192,7 +192,12 @@ export default function ZeitreiseApp() {
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
 
-  useAmbientSound(scene.id, scene.theme, isPlaying, ambientEnabled);
+  const activateAmbientSound = useAmbientSound(
+    scene.id,
+    scene.theme,
+    isPlaying,
+    ambientEnabled,
+  );
 
   useEffect(() => {
     if (!introOpen) return;
@@ -360,6 +365,17 @@ export default function ZeitreiseApp() {
       if (audioRef.current) audioRef.current.currentTime = 0;
     }
     setIsPlaying((value) => !value);
+  };
+
+  const toggleAmbientSound = () => {
+    if (ambientEnabled) {
+      setAmbientEnabled(false);
+      return;
+    }
+
+    void activateAmbientSound().then((activated) => {
+      if (activated) setAmbientEnabled(true);
+    });
   };
 
   const seek = (next: number) => {
@@ -610,8 +626,12 @@ export default function ZeitreiseApp() {
               aria-label={`Hintergrundatmosphäre ${
                 ambientEnabled ? "ausschalten" : "einschalten"
               }`}
-              onClick={() => setAmbientEnabled((value) => !value)}
-              title="Leise Hintergrundatmosphäre ein- oder ausschalten"
+              onClick={toggleAmbientSound}
+              title={
+                ambientEnabled
+                  ? "Hintergrundatmosphäre ausschalten"
+                  : "Hintergrundatmosphäre einschalten"
+              }
             >
               <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span>
               <span className="sound-label">Atmosphäre</span>

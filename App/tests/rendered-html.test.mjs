@@ -54,6 +54,10 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
   assert.equal((source.match(/^\s+timeLabel:/gm) ?? []).length, 22);
   assert.equal((source.match(/correctIndex:\s+\d+,/g) ?? []).length, 20);
   assert.match(source, /weder Bademeister noch Nachschub aus dem Meer/);
+  assert.match(source, /dein Reisebüro hat eindeutig die Warnhinweise vergessen/);
+  assert.match(source, /niemand muss dafür einen Bauantrag stellen/);
+  assert.match(source, /das erste Sitzungsprotokoll erfand/);
+  assert.match(source, /außer vielleicht beim Abendessen/);
   assert.match(source, /Laufen\? Muss ich das erst üben\?/);
   assert.match(source, /ihr eigenes „Kinderzimmer“ einfach mit/);
   assert.match(source, /aus dem dritten Stock die Dachrinne putzen/);
@@ -222,6 +226,8 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
   );
   assert.match(app, /className="sound-label">Atmosphäre/);
   assert.match(app, /Hintergrundatmosphäre \$\{/);
+  assert.match(app, /const \[ambientEnabled, setAmbientEnabled\] = useState\(false\)/);
+  assert.match(app, /activateAmbientSound\(\)/);
 });
 
 test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {
@@ -240,5 +246,7 @@ test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async (
   assert.match(audio, /18: \["footsteps", "insects", "roar"\]/);
   assert.match(audio, /19: \["impact", "insects", "roar"\]/);
   assert.match(audio, /22: \["birds", "waves"\]/);
-  assert.match(app, /useAmbientSound\(scene\.id, scene\.theme/);
+  assert.match(app, /const activateAmbientSound = useAmbientSound\(/);
+  assert.match(audio, /const activate = useCallback/);
+  assert.match(audio, /return activate/);
 });

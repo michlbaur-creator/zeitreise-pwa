@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { SceneTheme } from "../data/scenes";
 
 type SoundEvent =
@@ -453,9 +453,9 @@ export function useAmbientSound(
   isPlaying: boolean,
   enabled: boolean,
 ) {
-  useEffect(() => {
-    if (!isPlaying || !enabled) return;
+  const contextRef = useRef<AudioContext | null>(null);
 
+  const activate = useCallback(async () => {
     const AudioContextClass =
       window.AudioContext ??
       (
@@ -464,9 +464,24 @@ export function useAmbientSound(
         }
       ).webkitAudioContext;
 
-    if (!AudioContextClass) return;
+    if (!AudioContextClass) return false;
 
-    const context = new AudioContextClass();
+    const context = contextRef.current ?? new AudioContextClass();
+    contextRef.current = context;
+
+    if (context.state === "suspended") {
+      await context.resume();
+    }
+
+    return context.state === "running";
+  }, []);
+
+  useEffect(() => {
+    if (!isPlaying || !enabled) return;
+
+    const context = contextRef.current;
+    if (!context || context.state === "closed") return;
+
     const profile = profiles[theme];
     const whiteNoise = createNoiseBuffer(context, 4, "white");
     const brownNoise = createNoiseBuffer(context, 4, "brown");
@@ -485,7 +500,7 @@ export function useAmbientSound(
     filter.frequency.value = profile.frequency;
     filter.Q.value = 0.65;
     bed.gain.value = profile.level;
-    master.gain.value = 0.82;
+    master.gain.value = 1.05;
     movement.type = "sine";
     movement.frequency.value = profile.movement;
     movementGain.gain.value = profile.level * 0.26;
@@ -525,7 +540,6 @@ export function useAmbientSound(
       timers.add(timer);
     };
 
-    void context.resume();
     persistentNodes.forEach((node) => node.start());
     (sceneEvents[sceneId] ?? []).forEach(scheduleEvent);
 
@@ -539,7 +553,19 @@ export function useAmbientSound(
           // Der Knoten kann beim Szenenwechsel bereits beendet sein.
         }
       });
-      void context.close();
     };
   }, [enabled, isPlaying, sceneId, theme]);
+
+  useEffect(
+    () => () => {
+      const context = contextRef.current;
+      contextRef.current = null;
+      if (context && context.state !== "closed") {
+        void context.close();
+      }
+    },
+    [],
+  );
+
+  return activate;
 }
