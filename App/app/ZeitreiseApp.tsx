@@ -207,11 +207,11 @@ export default function ZeitreiseApp() {
   }, [introOpen]);
 
   const goToScene = useCallback(
-    (nextIndex: number) => {
+    (nextIndex: number, playImmediately = false) => {
       if (nextIndex < 0 || nextIndex >= scenes.length) return;
       audioRef.current?.pause();
       setCurrentIndex(nextIndex);
-      setIsPlaying(false);
+      setIsPlaying(playImmediately);
       setProgress(0);
       progressRef.current = 0;
       setActiveHotspot(null);
@@ -311,7 +311,10 @@ export default function ZeitreiseApp() {
       }
 
       if (event.key === "ArrowRight") {
-        goToScene(Math.min(scenes.length - 1, currentIndex + 1));
+        goToScene(
+          Math.min(scenes.length - 1, currentIndex + 1),
+          currentIndex < scenes.length - 1,
+        );
       }
       if (event.key === "ArrowLeft") {
         goToScene(Math.max(0, currentIndex - 1));
@@ -630,13 +633,13 @@ export default function ZeitreiseApp() {
               {formatTime(scene.duration)}
             </span>
             <button
-              className="round-control"
+              className="next-control"
               type="button"
-              onClick={() => goToScene(currentIndex + 1)}
+              onClick={() => goToScene(currentIndex + 1, true)}
               disabled={currentIndex === scenes.length - 1}
               aria-label="Nächste Szene"
             >
-              →
+              Weiter <span aria-hidden="true">→</span>
             </button>
           </div>
           <p className="keyboard-hint">

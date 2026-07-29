@@ -184,3 +184,20 @@ test("legt Cedar verbindlich fest und verknüpft alle 22 Sprecherdateien", async
     ),
   );
 });
+
+test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", async () => {
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(app, /goToScene\(currentIndex \+ 1, true\)/);
+  assert.match(app, /className="next-control"/);
+  assert.match(app, /Weiter <span aria-hidden="true">→<\/span>/);
+  assert.match(styles, /height: clamp\(380px, calc\(100svh - 350px\), 620px\)/);
+  assert.match(styles, /@media \(min-width: 761px\) and \(max-height: 900px\)/);
+});
