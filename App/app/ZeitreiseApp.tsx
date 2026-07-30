@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
+import { FinalEpisodeQuiz } from "./components/FinalEpisodeQuiz";
 import { SceneVisual } from "./components/SceneVisual";
+import { SiteFooter } from "./components/SiteFooter";
 import {
   narrationTracks,
   narrationVoice,
@@ -79,6 +81,11 @@ const earthMilestones = [
     color: "#e0ad54",
   },
 ] as const;
+
+const finalQuizSceneIds = new Set([1, 3, 5, 8, 11, 14, 17, 19, 21]);
+const finalQuizScenes = scenes.filter((scene) =>
+  finalQuizSceneIds.has(scene.id),
+);
 
 function EarthTimeline({
   sceneId,
@@ -731,13 +738,34 @@ export default function ZeitreiseApp() {
               ←
             </button>
             <button
-              className="play-control"
+              className={`play-control ${isPlaying ? "is-playing" : ""} ${progress >= 1 ? "is-replay" : ""}`}
               type="button"
               onClick={togglePlayback}
               aria-label={isPlaying ? "Szene pausieren" : "Szene abspielen"}
             >
-              <span aria-hidden="true">{isPlaying ? "Ⅱ" : "▶"}</span>
-              {isPlaying ? "Pause" : progress >= 1 ? "Neu starten" : "Abspielen"}
+              <span
+                className="play-orb"
+                style={
+                  {
+                    "--play-progress": `${progress * 100}%`,
+                  } as React.CSSProperties
+                }
+                aria-hidden="true"
+              >
+                <i />
+              </span>
+              <span className="play-label">
+                {isPlaying
+                  ? "Pause"
+                  : progress >= 1
+                    ? "Noch einmal"
+                    : "Szene starten"}
+              </span>
+              <span className="play-wave" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
             </button>
             <button
               className={`sound-control ${ambientEnabled ? "is-on" : ""}`}
@@ -1068,19 +1096,14 @@ export default function ZeitreiseApp() {
         </aside>
       </div>
 
-      <footer className="app-footer">
-        <div>
-          <span className={`connection-dot ${isOnline ? "" : "is-offline"}`} />
-          {isOnline
-            ? "Lokale Vorschau bereit · nach dem ersten Laden auch ohne Verbindung nutzbar"
-            : "Offline-Modus aktiv"}
-        </div>
-        <p>
-          Inhaltliche Grundlage: Muster-Episode V1.0 · Sprechertexte Fassung
-          1.2 · Stimme Micha (Szenen 1–14) · KI-Stimme{" "}
-          {narrationVoice.displayName} (Szenen 15–22)
-        </p>
-      </footer>
+      {scene.id === scenes.length && progress >= 0.995 ? (
+        <FinalEpisodeQuiz scenes={finalQuizScenes} />
+      ) : null}
+
+      <SiteFooter
+        isOnline={isOnline}
+        productionNote={`Muster-Episode V1.0 · Stimme Micha (Szenen 1–14) · KI-Stimme ${narrationVoice.displayName} (Szenen 15–22)`}
+      />
     </main>
   );
 }

@@ -53,6 +53,15 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
   assert.equal((source.match(/^\s+speaker:$/gm) ?? []).length, 22);
   assert.equal((source.match(/^\s+timeLabel:/gm) ?? []).length, 22);
   assert.equal((source.match(/correctIndex:\s+\d+,/g) ?? []).length, 20);
+  const answerPositions = [
+    ...source.matchAll(/correctIndex:\s+(\d+),/g),
+  ].map((match) => Number(match[1]));
+  assert.deepEqual(
+    [0, 1, 2, 3].map(
+      (position) => answerPositions.filter((value) => value === position).length,
+    ),
+    [5, 5, 5, 5],
+  );
   assert.match(source, /weder Bademeister noch Nachschub aus dem Meer/);
   assert.match(source, /dein Reisebüro hat eindeutig die Warnhinweise vergessen/);
   assert.match(source, /niemand muss dafür einen Bauantrag stellen/);
@@ -216,6 +225,9 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(app, /goToScene\(currentIndex \+ 1, true\)/);
   assert.match(app, /className="next-control"/);
   assert.match(app, /Weiter <span aria-hidden="true">→<\/span>/);
+  assert.match(app, /className="play-orb"/);
+  assert.match(app, /className="play-wave"/);
+  assert.match(app, /"Szene starten"/);
   assert.match(styles, /height: clamp\(380px, calc\(100svh - 350px\), 620px\)/);
   assert.match(styles, /@media \(min-width: 761px\) and \(max-height: 900px\)/);
 });
@@ -246,6 +258,54 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
   assert.match(app, /window\.setInterval\(checkForUpdate, 3 \* 60 \* 1000\)/);
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-resume-after-update/);
+});
+
+test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () => {
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const finalQuiz = await readFile(
+    new URL("../app/components/FinalEpisodeQuiz.tsx", import.meta.url),
+    "utf8",
+  );
+  const footer = await readFile(
+    new URL("../app/components/SiteFooter.tsx", import.meta.url),
+    "utf8",
+  );
+  const about = await readFile(
+    new URL("../app/ueber/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const imprint = await readFile(
+    new URL("../app/impressum/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const worker = await readFile(
+    new URL("../public/sw.js", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(app, /new Set\(\[1, 3, 5, 8, 11, 14, 17, 19, 21\]\)/);
+  assert.match(app, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} \/>/);
+  assert.match(finalQuiz, /Das große Episode-1-Quiz/);
+  assert.match(finalQuiz, /Frage \{questionIndex \+ 1\} von/);
+  assert.match(footer, /Über mich/);
+  assert.match(footer, /Impressum &amp; Datenschutz/);
+  assert.match(footer, /mibaur@me\.com/);
+  assert.match(about, /Hallo, ich bin Micha\./);
+  assert.match(about, /michael-baur-garten\.jpg/);
+  assert.match(imprint, /Nordeckerweg 22E/);
+  assert.match(imprint, /keine Werbung und kein/);
+  assert.match(worker, /zeitreise-v17/);
+  assert.match(worker, /"\/ueber\/"/);
+  assert.match(worker, /"\/impressum\/"/);
+  await access(
+    new URL(
+      "../public/assets/site/michael-baur-garten.jpg",
+      import.meta.url,
+    ),
+  );
 });
 
 test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {

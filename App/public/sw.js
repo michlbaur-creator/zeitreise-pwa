@@ -1,9 +1,12 @@
-const CACHE_NAME = "zeitreise-v16";
+const CACHE_NAME = "zeitreise-v17";
 const APP_SHELL = [
   "/",
+  "/ueber/",
+  "/impressum/",
   "/manifest.webmanifest",
   "/icon-192.png",
   "/icon-512.png",
+  "/assets/site/michael-baur-garten.jpg",
   "/assets/episode1/scene01/hintergrund-vulkanische-kueste.png",
   "/assets/episode1/scene01/hintergrund-vulkanische-kueste-neu-v1.png",
   "/assets/episode1/scene01/hintergrund-sternsystem-v1.png",
@@ -103,10 +106,16 @@ self.addEventListener("fetch", (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("/", copy));
+          caches
+            .open(CACHE_NAME)
+            .then((cache) => cache.put(requestUrl.pathname, copy));
           return response;
         })
-        .catch(() => caches.match("/")),
+        .catch(
+          async () =>
+            (await caches.match(requestUrl.pathname)) ??
+            (await caches.match("/")),
+        ),
     );
     return;
   }

@@ -107,14 +107,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Wie sah die Erde unmittelbar nach ihrer Entstehung aus?",
+      question:
+        "Welche Beschreibung passt am besten zur Erde kurz nach ihrer Entstehung?",
       options: [
-        "Von Wäldern bedeckt",
-        "Von einem riesigen Ozean bedeckt",
-        "Glühend heiß mit vielen Vulkanen",
-        "Voller Dinosaurier",
+        "Eine ruhige Welt mit stabilen Kontinenten und Sauerstoff",
+        "Eine heiße Welt mit dünner Kruste, Einschlägen und starkem Vulkanismus",
+        "Ein vollständig vereister Planet unter einer dichten Ozonschicht",
+        "Eine wasserreiche Welt mit ersten Algenmatten",
       ],
-      correctIndex: 2,
+      correctIndex: 1,
     },
     transition:
       "Der Kamerazoom läuft weiter. Der Bildschirm verdunkelt sich langsam. Leichter Dampfschleier zieht auf. Überblendung in EP01_S02.",
@@ -170,14 +171,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum konnte es überhaupt regnen?",
+      question:
+        "Welcher Vorgang verwandelte den Wasserdampf der frühen Atmosphäre in Regen?",
       options: [
-        "Weil Pflanzen Wasser verdunsteten.",
-        "Weil es bereits Meere gab.",
-        "Weil Wasserdampf in der Atmosphäre abkühlte und kondensierte.",
-        "Weil der Mond Wasser auf die Erde zog.",
+        "Vulkanische Gase spalteten den Wasserdampf in Tropfen.",
+        "Die Schwerkraft des Mondes zog Wasser aus dem Erdinneren.",
+        "Salzkristalle pressten Wasser aus den Wolken.",
+        "Beim Abkühlen kondensierte Wasserdampf zu flüssigem Wasser.",
       ],
-      correctIndex: 2,
+      correctIndex: 3,
     },
     transition:
       "Die Regentropfen werden dichter. Die Kamera blickt weiter in Richtung Horizont. Das Bild blendet langsam in Szene 3 - Der erste Ozean über, in der aus dem langen Regen allmählich eine wasserbedeckte Erde entsteht.",
@@ -237,14 +239,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Was war die wichtigste Bedeutung der ersten Ozeane?",
+      question:
+        "Warum waren die ersten Ozeane für die Entstehung des Lebens chemisch so wichtig?",
       options: [
-        "Sie entstanden erst nach den Dinosauriern.",
-        "Sie bestanden ausschließlich aus Süßwasser.",
-        "Sie schufen die Voraussetzung für die Entstehung des Lebens.",
-        "Sie bedeckten nur kleine Gebirgsseen.",
+        "Wasser löste viele Stoffe und bot Raum für zahlreiche Reaktionen.",
+        "Das Meer erzeugte sofort freien Sauerstoff.",
+        "Salzwasser verhinderte jede schädliche Strahlung.",
+        "Die Ozeane bestanden bereits aus organischen Zellen.",
       ],
-      correctIndex: 2,
+      correctIndex: 0,
     },
     transition:
       "Die Kamera folgt der Wasseroberfläche langsam in Richtung Horizont. Das Bild wird heller. Eine sanfte Überblendung führt in Szene 4 - Die Ursuppe, wo im warmen Flachwasser die ersten komplexen chemischen Verbindungen entstehen.",
@@ -302,12 +305,13 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Welche Stoffe brauchten die ersten chemischen Reaktionen?",
+      question:
+        "Welche Kombination konnte die chemische Entwicklung in der „Ursuppe“ antreiben?",
       options: [
-        "Dinosaurier und Pflanzen",
-        "Nur Sauerstoff",
-        "Wasser, gelöste Stoffe und Energie",
-        "Fische und Algen",
+        "Nur reines Wasser ohne weitere Stoffe",
+        "Fertige Zellen und reichlich Sauerstoff",
+        "Wasser, einfache gelöste Stoffe und Energiequellen",
+        "Mineralien, aber weder Wärme noch Strahlung",
       ],
       correctIndex: 2,
     },
@@ -365,14 +369,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Was unterschied die ersten Zellen von den Molekülen davor?",
+      question:
+        "Welcher Schritt machte aus frei treibenden Molekülen eine frühe, eigenständige Zelle?",
       options: [
-        "Sie waren bereits Tiere.",
-        "Sie konnten fliegen.",
-        "Sie waren durch eine Membran von ihrer Umgebung abgegrenzt.",
-        "Sie bestanden aus Stein.",
+        "Sie entwickelte sofort einen Zellkern.",
+        "Sie begann, sichtbares Licht auszusenden.",
+        "Sie baute eine harte Schale aus Kalk.",
+        "Eine Membran grenzte einen eigenen Reaktionsraum von der Umgebung ab.",
       ],
-      correctIndex: 2,
+      correctIndex: 3,
     },
     transition:
       "Die Kamera verfolgt eine einzelne Zelle. Langsamer Zoom. Die Zelle treibt in dunkleres Wasser. Plötzlich erscheinen mehrere ähnliche Zellen.",
@@ -425,9 +430,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Wie vermehrten sich die ersten Einzeller?",
-      options: ["Durch Samen", "Durch Eier", "Durch Zellteilung", "Gar nicht"],
-      correctIndex: 2,
+      question:
+        "Was musste ein früher Einzeller vor der Teilung zuerst zuverlässig erledigen?",
+      options: [
+        "Seine Erbinformation kopieren und anschließend die Zelle teilen",
+        "Pollen und Samen bilden",
+        "Einen zweiten Zellkern von außen aufnehmen",
+        "Seine Membran vollständig auflösen",
+      ],
+      correctIndex: 0,
     },
     mediaNote:
       "Zum ersten Mal entstehen kleine Zellkolonien. Einige Zellen haften an einem Felsen. Andere treiben frei im Wasser. Langsame Zellteilungen sorgen für Bewegung, ohne hektisch zu wirken.",
@@ -481,9 +492,9 @@ export const scenes: Scene[] = [
     ],
     quiz: {
       question:
-        "Welches Gas entstand bei der Photosynthese der Cyanobakterien?",
-      options: ["Stickstoff", "Kohlendioxid", "Sauerstoff", "Methan"],
-      correctIndex: 2,
+        "Welches zunächst unscheinbare „Abfallprodukt“ der Cyanobakterien veränderte später den ganzen Planeten?",
+      options: ["Methan", "Sauerstoff", "Stickstoff", "Schwefeldioxid"],
+      correctIndex: 1,
     },
     transition:
       "Die Kamera folgt einer Sauerstoffblase bis an die Wasseroberfläche. Beim Platzen der Blase wechselt die Perspektive. Wir verlassen erstmals das Meer und blicken in den Himmel.",
@@ -527,14 +538,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum war der Anstieg des Sauerstoffs so bedeutsam?",
+      question:
+        "Welche Folge der Sauerstoffanreicherung trifft am ehesten zu?",
       options: [
-        "Er machte die Ozeane salzig.",
-        "Er ließ den Mond entstehen.",
-        "Er veränderte die Atmosphäre und ermöglichte später komplexes Leben.",
-        "Er kühlte die Sonne ab.",
+        "Sie machte alle damaligen Lebewesen sofort größer.",
+        "Sie verwandelte Meerwasser in Süßwasser.",
+        "Sie beendete jede Form von Vulkanismus.",
+        "Sie setzte viele anaerobe Organismen unter Druck und ermöglichte später energiereicheres Leben.",
       ],
-      correctIndex: 2,
+      correctIndex: 3,
     },
     directorNote:
       "Szene 8 beendet den ersten großen Akt. Der Übergang zur mikroskopischen Zellwelt von Szene 9 erfolgt langsam und ohne neue Erklärungsebene.",
@@ -587,14 +599,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Was entstand aus der aufgenommenen Bakterienzelle?",
+      question:
+        "Welches heutige Zellorganell geht wahrscheinlich auf ein aufgenommenes Bakterium zurück?",
       options: [
-        "Der Zellkern",
-        "Die Zellwand",
         "Das Mitochondrium",
-        "Der Zellsaft",
+        "Die Zellwand",
+        "Der Zellkern",
+        "Die Vakuole",
       ],
-      correctIndex: 2,
+      correctIndex: 0,
     },
     transition:
       "Die Kamera zoomt langsam aus der Zelle heraus. Immer mehr ähnliche Zellen erscheinen. Die Welt wirkt plötzlich vielfältiger.",
@@ -651,12 +664,12 @@ export const scenes: Scene[] = [
     ],
     quiz: {
       question:
-        "Was unterscheidet Eukaryoten von den ersten einfachen Zellen?",
+        "Welche Zellorganisation ist typisch für Eukaryoten, aber nicht für Bakterien?",
       options: [
-        "Sie bestehen aus Stein.",
-        "Sie leben nur an Land.",
-        "Sie besitzen einen Zellkern und weitere Zellorganellen.",
-        "Sie können nicht wachsen.",
+        "Eine Zellmembran und Erbmaterial",
+        "Die Fähigkeit, Stoffe aus der Umgebung aufzunehmen",
+        "Ein Zellkern und weitere membranumhüllte Organellen",
+        "Die Vermehrung durch Zellteilung",
       ],
       correctIndex: 2,
     },
@@ -709,14 +722,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum war Vielzelligkeit ein Vorteil?",
+      question:
+        "Welcher Vorteil entsteht, wenn Zellen eines Vielzellers unterschiedliche Aufgaben übernehmen?",
       options: [
-        "Mehr Beine",
-        "Mehr Augen",
-        "Arbeitsteilung zwischen den Zellen",
-        "Schnellere Fortbewegung",
+        "Jede Zelle kann nun unabhängig vom Rest leben.",
+        "Spezialisierung ermöglicht eine wirksame Arbeitsteilung.",
+        "Der Organismus braucht keine Energie mehr.",
+        "Alle Zellen werden automatisch gleich groß.",
       ],
-      correctIndex: 2,
+      correctIndex: 1,
     },
     transition:
       "Die Zellverbände werden größer. Aus den kleinen Kolonien entstehen die ersten einfachen Tiere.",
@@ -758,13 +772,14 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Wodurch unterschieden sich diese Tiere von späteren?",
+      question:
+        "Warum hinterließen viele Ediacara-Lebewesen nur schwer deutbare Fossilien?",
       options: [
-        "Sie konnten fliegen.",
-        "Sie lebten an Land.",
-        "Sie waren sehr einfach gebaut und meist weich.",
+        "Sie waren meist weich und besaßen kaum harte, gut erhaltungsfähige Teile.",
+        "Sie lebten ausschließlich in der Luft.",
+        "Ihre Körper bestanden nur aus flüssigem Wasser.",
       ],
-      correctIndex: 2,
+      correctIndex: 0,
     },
     transition:
       "Der Meeresboden wird plötzlich lebendiger. Immer mehr unterschiedliche Tiere erscheinen.",
@@ -812,14 +827,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Was geschah während der Kambrischen Explosion?",
+      question:
+        "Warum ist der Ausdruck „Kambrische Explosion“ ein wenig irreführend?",
       options: [
-        "Die Dinosaurier entstanden.",
-        "Die Erde kühlte sich ab.",
-        "Die Vielfalt der Tierformen nahm stark zu.",
-        "Die ersten Wälder entstanden.",
+        "Damals explodierten besonders viele Vulkane.",
+        "Das Ereignis betraf nur Pflanzen an Land.",
+        "Alle heutigen Tierarten entstanden an einem einzigen Tag.",
+        "Viele Tierbaupläne wurden über Millionen Jahre vielfältiger – nicht in einem Augenblick.",
       ],
-      correctIndex: 2,
+      correctIndex: 3,
     },
     transition:
       "Die Kamera folgt einem Trilobiten. Er verschwindet hinter einem Felsen. Beim Auftauchen hat sich die Welt erneut verändert.",
@@ -869,12 +885,13 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum war die Besiedlung des Landes so wichtig?",
+      question:
+        "Welche Veränderung lösten die ersten Landpflanzen besonders langfristig aus?",
       options: [
-        "Weil dort bereits Dinosaurier lebten.",
-        "Weil das Meer verschwand.",
-        "Weil dadurch völlig neue Lebensräume entstanden.",
-        "Weil Pflanzen dort schneller schwimmen konnten.",
+        "Sie ließen die Ozeane verschwinden.",
+        "Sie machten Tiere sofort unabhängig vom Wasser.",
+        "Sie schufen Böden, Nahrung und neue Lebensräume an Land.",
+        "Sie stoppten die Bewegung der Kontinente.",
       ],
       correctIndex: 2,
     },
@@ -943,14 +960,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum konnten Tiere jetzt an Land leben?",
+      question:
+        "Warum folgten die ersten kleinen Tiere den Pflanzen an Land?",
       options: [
-        "Weil dort schon Wälder standen.",
-        "Weil Dinosaurier sie beschützten.",
-        "Weil Pflanzen bereits Lebensraum und Nahrung boten.",
-        "Weil das Meer verschwunden war.",
+        "Pflanzen boten Nahrung, Schutz und strukturierte Lebensräume.",
+        "An Land gab es keine Fressfeinde und keine Trockenheit.",
+        "Das Meer hatte seinen gesamten Sauerstoff verloren.",
+        "Die Tiere besaßen bereits wasserdichte Eier.",
       ],
-      correctIndex: 2,
+      correctIndex: 0,
     },
     discovery: {
       label: "Forscherauftrag",
@@ -1018,14 +1036,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum ist Tiktaalik so berühmt?",
+      question:
+        "Welche Merkmalskombination macht Tiktaalik zu einem wichtigen Übergangsfossil?",
       options: [
-        "Er war der erste Dinosaurier.",
-        "Er konnte bereits fliegen.",
-        "Er zeigt Merkmale von Fischen und frühen Landwirbeltieren.",
-        "Er lebte schon zusammen mit dem Menschen.",
+        "Federn und ein zahnloser Schnabel",
+        "Fischmerkmale sowie kräftige, stützfähige Flossen und ein beweglicher Hals",
+        "Ein Amniotenei und vollständig trockene Haut",
+        "Säugetierzähne und ein Fell",
       ],
-      correctIndex: 2,
+      correctIndex: 1,
     },
     discovery: {
       label: "Forscherblick",
@@ -1098,14 +1117,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum war das Amniotenei so revolutionär?",
+      question:
+        "Welche Leistung des Amnioteneis war für das dauerhafte Leben an Land entscheidend?",
       options: [
-        "Es war größer als frühere Eier.",
-        "Es konnte schwimmen.",
-        "Es ermöglichte die Fortpflanzung unabhängig vom Wasser.",
-        "Es schlüpfte schneller.",
+        "Es machte den Embryo völlig unabhängig von Sauerstoff.",
+        "Es enthielt bereits fertige Nahrung für das erwachsene Tier.",
+        "Es konnte jahrelang ohne Entwicklung liegen bleiben.",
+        "Es schützte und versorgte den Embryo in einer eigenen wässrigen Umgebung.",
       ],
-      correctIndex: 2,
+      correctIndex: 3,
     },
     discovery: {
       label: "Forscherblick",
@@ -1178,12 +1198,13 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Wie lange beherrschten Dinosaurier ungefähr die Erde?",
+      question:
+        "Welche Zeitspanne kommt der Vorherrschaft der Dinosaurier am nächsten?",
       options: [
-        "etwa 10 Millionen Jahre",
-        "etwa 50 Millionen Jahre",
-        "rund 170 Millionen Jahre",
-        "bis heute",
+        "Etwa 10 Millionen Jahre",
+        "Etwa 50 Millionen Jahre",
+        "Rund 170 Millionen Jahre",
+        "Mehr als eine Milliarde Jahre",
       ],
       correctIndex: 2,
     },
@@ -1260,12 +1281,13 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum war der Asteroid so folgenschwer?",
+      question:
+        "Warum wirkte der Asteroideneinschlag weit über den Einschlagsort hinaus?",
       options: [
-        "Er ließ alle Ozeane verdampfen.",
-        "Er zerstörte nur den Einschlagsort.",
-        "Er veränderte das Klima weltweit und brachte viele Nahrungsketten zum Zusammenbruch.",
-        "Er spaltete die Erde in zwei Hälften.",
+        "Er schob die Erde dauerhaft näher an die Sonne.",
+        "Er verwandelte alle Ozeane gleichzeitig in Lava.",
+        "Staub und Aerosole veränderten weltweit Licht, Klima und Nahrungsketten.",
+        "Er beseitigte nur große Tiere, ohne Pflanzen zu beeinflussen.",
       ],
       correctIndex: 2,
     },
@@ -1369,14 +1391,15 @@ export const scenes: Scene[] = [
       },
     ],
     quiz: {
-      question: "Warum konnten sich Säugetiere jetzt stark ausbreiten?",
+      question:
+        "Welche ökologische Chance nutzten Säugetiere nach dem Massenaussterben?",
       options: [
-        "Weil sie plötzlich fliegen konnten.",
-        "Weil alle anderen Tiere verschwanden.",
-        "Weil viele ökologische Nischen frei wurden.",
-        "Weil die Erde kleiner wurde.",
+        "Sie brauchten plötzlich weder Nahrung noch Wärme.",
+        "Viele frei gewordene ökologische Nischen konnten neu besetzt werden.",
+        "Alle Säugetiere wurden gleichzeitig zu großen Pflanzenfressern.",
+        "Sie verdrängten die noch lebenden Dinosaurier innerhalb weniger Tage.",
       ],
-      correctIndex: 2,
+      correctIndex: 1,
     },
     discovery: {
       label: "Forscherblick",
