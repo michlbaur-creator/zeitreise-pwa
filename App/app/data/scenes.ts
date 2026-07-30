@@ -1462,7 +1462,7 @@ export const scenes: Scene[] = [
     directorNote:
       "Im Abschluss wird kein Mensch gezeigt. Sichtbar ist nur die Kinderhand am Zeitfelsen. Damit schließt sich der Kreis zum Beginn der Episode.",
     mediaNote:
-      "Die Hand liegt auf dem Zeitfelsen. Der Felsen beginnt ganz leicht zu leuchten. Keine große Animation. Nur ein warmes, goldenes Schimmern. Langsam erscheint der Schriftzug „Zeitreise - Die Geschichte des Lebens“. Darunter: Episode 2 „Das Zeitalter der Giganten“.",
+      "Die Hand liegt auf dem Zeitfelsen. Der Felsen beginnt ganz leicht zu leuchten. Keine große Animation. Nur ein warmes, goldenes Schimmern. Langsam erscheint der Schriftzug „Zeitreise - Die Geschichte des Lebens“. Darunter: Episode 2 „Der Weg zum Menschen“.",
   },
 ];
 

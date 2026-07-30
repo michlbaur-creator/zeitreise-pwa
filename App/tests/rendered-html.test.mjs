@@ -72,6 +72,24 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
   assert.match(source, /aus dem dritten Stock die Dachrinne putzen/);
 });
 
+test("kündigt als zweite Episode den Weg zum Menschen an", async () => {
+  const visual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const sceneData = await readFile(
+    new URL("../app/data/scenes.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(visual, /Episode 2 „Der Weg zum Menschen“/);
+  assert.match(sceneData, /Episode 2 „Der Weg zum Menschen“/);
+  assert.doesNotMatch(
+    visual,
+    /Episode 2 „Das Zeitalter der Giganten“/,
+  );
+});
+
 test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async () => {
   const assetPaths = [
     "scene01/hintergrund-vulkanische-kueste.png",
@@ -297,7 +315,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v28/);
+  assert.match(worker, /zeitreise-v29/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
