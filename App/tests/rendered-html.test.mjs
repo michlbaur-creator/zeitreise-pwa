@@ -297,7 +297,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v26/);
+  assert.match(worker, /zeitreise-v27/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
@@ -345,7 +345,12 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
   assert.match(tree, /window\.location\.hash\.slice\(1\)/);
   assert.match(treePage, /<AnimalFamilyTree \/>/);
   assert.match(treePage, /Orientierung durch das Tierreich/);
+  assert.match(treePage, /href="\/\?weiter=1"/);
+  assert.match(treePage, /Die entscheidenden Stationen/);
+  assert.match(treePage, /href="#rueckkehr-ins-meer"/);
   assert.match(footer, /href="\/tierstammbaum\/"/);
+  assert.match(app, /new URLSearchParams\(window\.location\.search\)/);
+  assert.match(app, /setIntroOpen\(false\)/);
 });
 
 test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {

@@ -282,11 +282,17 @@ export default function ZeitreiseApp() {
       setCorrectScenes(loadStoredNumbers("zeitreise-correct-scenes"));
       setDiscoveredByScene(loadStoredRecord("zeitreise-discoveries"));
       setIsOnline(window.navigator.onLine);
+      const continueJourney =
+        new URLSearchParams(window.location.search).get("weiter") === "1";
       if (
+        continueJourney ||
         window.localStorage.getItem("zeitreise-resume-after-update") === "1"
       ) {
         window.localStorage.removeItem("zeitreise-resume-after-update");
         setIntroOpen(false);
+      }
+      if (continueJourney) {
+        window.history.replaceState(null, "", window.location.pathname);
       }
       setIsReady(true);
     });

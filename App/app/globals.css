@@ -5112,6 +5112,87 @@ button:disabled {
   line-height: 1.5;
 }
 
+.family-tree-learning-path {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.24fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  padding: 20px clamp(24px, 5vw, 62px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(6, 11, 10, 0.32);
+}
+
+.family-tree-learning-path > p {
+  margin: 0;
+}
+
+.family-tree-learning-path > p span,
+.family-tree-learning-path > p strong {
+  display: block;
+}
+
+.family-tree-learning-path > p span {
+  margin-bottom: 4px;
+  color: var(--amber);
+  font-size: 0.57rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.family-tree-learning-path > p strong {
+  color: #dde5df;
+  font-family: "Iowan Old Style", Georgia, serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.family-tree-learning-path > div {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.family-tree-learning-path a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.018);
+  color: #c6d0c9;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.family-tree-learning-path a:hover {
+  border-color: rgba(216, 170, 98, 0.48);
+  background: rgba(216, 170, 98, 0.07);
+  color: var(--amber-soft);
+}
+
+.family-tree-learning-path a i {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(104, 185, 202, 0.3);
+  border-radius: 50%;
+  color: #68b9ca;
+  font-size: 0.56rem;
+  font-style: normal;
+  place-items: center;
+}
+
 .family-tree-page-content {
   padding: clamp(24px, 5vw, 62px);
   border-top: 1px solid var(--line);
@@ -6452,6 +6533,25 @@ body.cinematic-intro-active {
   .family-tree-page-hero aside > span {
     grid-row: 1 / span 2;
     margin: 0;
+  }
+
+  .family-tree-learning-path {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    padding: 18px 20px;
+  }
+
+  .family-tree-learning-path > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .family-tree-learning-path a {
+    min-height: 50px;
+    touch-action: manipulation;
+  }
+
+  .family-tree-learning-path a:last-child {
+    grid-column: 1 / -1;
   }
 
   .family-tree-page-content {

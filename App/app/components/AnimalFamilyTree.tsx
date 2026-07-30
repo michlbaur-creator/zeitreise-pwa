@@ -249,7 +249,7 @@ export function AnimalFamilyTree() {
         </div>
       </article>
 
-      <aside className="family-tree-return">
+      <aside className="family-tree-return" id="rueckkehr-ins-meer">
         <span aria-hidden="true">↩</span>
         <p>
           <strong>Übrigens: Manche gingen zurück ins Meer.</strong>
