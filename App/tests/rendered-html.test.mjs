@@ -297,7 +297,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v20/);
+  assert.match(worker, /zeitreise-v22/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
   await access(
@@ -327,4 +327,19 @@ test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async (
   assert.match(app, /const activateAmbientSound = useAmbientSound\(/);
   assert.match(audio, /const activate = useCallback/);
   assert.match(audio, /return activate/);
+});
+
+test("erzählt die Endosymbiose als synchronisierte Animation", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function EndosymbiosisAnimation/);
+  assert.match(sceneVisual, /Aufgenommen – aber nicht verdaut/);
+  assert.match(sceneVisual, /endo-mitochondrion/);
+  assert.match(
+    sceneVisual,
+    /<EndosymbiosisAnimation progress=\{progress\} \/>/,
+  );
 });

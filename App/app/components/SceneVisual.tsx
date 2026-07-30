@@ -138,7 +138,6 @@ const atmosphereProfiles: Partial<
   6: { className: "atmosphere-cell-colony", particles: 9 },
   7: { className: "atmosphere-oxygen-bubbles", particles: 12 },
   8: { className: "atmosphere-oxygen-shift", particles: 3 },
-  9: { className: "atmosphere-endosymbiosis", particles: 3 },
   10: { className: "atmosphere-micro-swim", particles: 8 },
   11: { className: "atmosphere-cell-team", particles: 8 },
   12: { className: "atmosphere-seafloor-drift", particles: 6 },
@@ -229,6 +228,240 @@ function motionClass(motion: string) {
 
 function narrationParts(text: string) {
   return text.split(/(?<=[.!?])\s+/).filter(Boolean);
+}
+
+function phaseProgress(progress: number, start: number, end: number) {
+  const value = Math.min(1, Math.max(0, (progress - start) / (end - start)));
+  return value * value * (3 - 2 * value);
+}
+
+function EndosymbiosisAnimation({ progress }: { progress: number }) {
+  const approach = phaseProgress(progress, 0.04, 0.24);
+  const engulf = phaseProgress(progress, 0.2, 0.43);
+  const partnership = phaseProgress(progress, 0.42, 0.7);
+  const mitochondrion = phaseProgress(progress, 0.6, 0.82);
+  const division = phaseProgress(progress, 0.82, 0.98);
+  const bacteriumX =
+    790 - approach * 302 - engulf * 74 - division * 118;
+  const bacteriumY = 304 - approach * 18 + engulf * 24;
+  const bacteriumRotation = -8 + approach * 15 - engulf * 5;
+  const membraneStretch = 1 + Math.sin(engulf * Math.PI) * 0.22;
+  const captureOpacity = Math.sin(engulf * Math.PI);
+  const mainCellX = 350 - division * 118;
+  const secondCellX = 350 + division * 322;
+  const cellScale = 1 - division * 0.12;
+  const energyOpacity =
+    Math.max(partnership, mitochondrion) * (1 - division * 0.82);
+  const phaseLabel =
+    progress < 0.2
+      ? "Ein Bakterium nähert sich"
+      : progress < 0.43
+        ? "Aufgenommen – aber nicht verdaut"
+        : progress < 0.7
+          ? "Schutz gegen Energie"
+          : progress < 0.84
+            ? "Aus Mitbewohnern werden Mitochondrien"
+            : "Die Partnerschaft wird weitervererbt";
+
+  return (
+    <div
+      className="endosymbiosis-story"
+      role="img"
+      aria-label="Animation der Endosymbiose: Eine größere Zelle nimmt ein Bakterium auf. Beide bleiben zusammen und teilen sich später gemeinsam."
+    >
+      <span className="endosymbiosis-phase">{phaseLabel}</span>
+      <svg
+        className="endosymbiosis-svg"
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <radialGradient id="endo-cytoplasm" cx="42%" cy="37%" r="68%">
+            <stop offset="0%" stopColor="#b9d4ae" stopOpacity="0.5" />
+            <stop offset="56%" stopColor="#547d66" stopOpacity="0.34" />
+            <stop offset="100%" stopColor="#173c37" stopOpacity="0.18" />
+          </radialGradient>
+          <radialGradient id="endo-nucleus" cx="38%" cy="34%" r="68%">
+            <stop offset="0%" stopColor="#d7dca9" stopOpacity="0.62" />
+            <stop offset="100%" stopColor="#557b62" stopOpacity="0.34" />
+          </radialGradient>
+          <linearGradient id="endo-bacterium" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#e8c875" stopOpacity="0.94" />
+            <stop offset="52%" stopColor="#b6753e" stopOpacity="0.94" />
+            <stop offset="100%" stopColor="#733d29" stopOpacity="0.96" />
+          </linearGradient>
+          <filter id="endo-cell-glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="7" result="blur" />
+            <feColorMatrix
+              in="blur"
+              type="matrix"
+              values="0.5 0 0 0 0.22  0 0.8 0 0 0.45  0 0 0.6 0 0.35  0 0 0 0.7 0"
+            />
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="endo-energy-glow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <g id="endo-cell-body">
+            <ellipse
+              className="endo-cell-halo"
+              rx="165"
+              ry="148"
+              fill="#8fc4a3"
+              opacity="0.12"
+            />
+            <ellipse
+              className="endo-cell-membrane"
+              rx="142"
+              ry="126"
+              fill="url(#endo-cytoplasm)"
+              stroke="#c4dfbf"
+              strokeOpacity="0.66"
+              strokeWidth="5"
+            />
+            <ellipse
+              rx="118"
+              ry="104"
+              fill="none"
+              stroke="#eff0c6"
+              strokeOpacity="0.13"
+              strokeWidth="2"
+              strokeDasharray="5 12"
+            />
+            <ellipse
+              cx="-34"
+              cy="-9"
+              rx="46"
+              ry="41"
+              fill="url(#endo-nucleus)"
+              stroke="#d9e3ba"
+              strokeOpacity="0.34"
+              strokeWidth="3"
+            />
+            <circle cx="-47" cy="-20" r="8" fill="#edf0c4" opacity="0.3" />
+            <circle cx="57" cy="-57" r="8" fill="#cbdca9" opacity="0.28" />
+            <circle cx="73" cy="49" r="11" fill="#a6ca99" opacity="0.22" />
+            <circle cx="-71" cy="64" r="7" fill="#d1d8a5" opacity="0.24" />
+          </g>
+          <g id="endo-mitochondrion">
+            <rect
+              x="-47"
+              y="-20"
+              width="94"
+              height="40"
+              rx="20"
+              fill="url(#endo-bacterium)"
+              stroke="#f2d58c"
+              strokeOpacity="0.72"
+              strokeWidth="3"
+            />
+            <path
+              d="M-30 -7 C-19 9 -7 -12 4 4 S27 -6 34 8"
+              fill="none"
+              stroke="#5b2f24"
+              strokeOpacity="0.9"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <path
+              d="M-27 8 C-15 -6 -4 12 8 -4 S28 8 34 -7"
+              fill="none"
+              stroke="#f3c46c"
+              strokeOpacity="0.46"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </g>
+        </defs>
+
+        <g
+          className="endo-primary-cell"
+          transform={`translate(${mainCellX} 300) scale(${cellScale}) scale(${membraneStretch} 1)`}
+        >
+          <use href="#endo-cell-body" />
+        </g>
+
+        <path
+          className="endo-capture-wave"
+          d="M470 224 C560 210 604 256 612 300 C604 350 553 388 470 373"
+          fill="none"
+          stroke="#c9e1bf"
+          strokeWidth="13"
+          strokeLinecap="round"
+          opacity={captureOpacity * 0.8}
+          transform={`translate(${engulf * -65} 0)`}
+        />
+
+        <g
+          className="endo-bacterium"
+          transform={`translate(${bacteriumX} ${bacteriumY}) rotate(${bacteriumRotation}) scale(${1 - engulf * 0.14})`}
+        >
+          <use href="#endo-mitochondrion" />
+          <path
+            className="endo-flagellum"
+            d="M47 0 C78 -31 94 29 128 2"
+            fill="none"
+            stroke="#ebd398"
+            strokeOpacity={Math.max(0, 0.65 - engulf)}
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+        </g>
+
+        <g
+          className="endo-energy"
+          opacity={energyOpacity}
+          filter="url(#endo-energy-glow)"
+        >
+          {[
+            [463, 244],
+            [501, 270],
+            [493, 337],
+            [451, 361],
+            [422, 263],
+            [526, 311],
+          ].map(([cx, cy], index) => (
+            <circle
+              cx={cx}
+              cy={cy}
+              r={4 + (index % 3)}
+              fill={index % 2 ? "#f1d473" : "#b7e0a6"}
+              key={`${cx}-${cy}`}
+              style={{ animationDelay: `${index * -0.42}s` }}
+            />
+          ))}
+        </g>
+
+        <g
+          className="endo-second-cell"
+          opacity={division}
+          transform={`translate(${secondCellX} 300) scale(${0.76 + division * 0.12})`}
+        >
+          <use href="#endo-cell-body" />
+          <g transform="translate(66 20) rotate(8) scale(.75)">
+            <use href="#endo-mitochondrion" />
+          </g>
+        </g>
+
+        <path
+          className="endo-division-bridge"
+          d={`M${mainCellX + 122} 300 C${mainCellX + 188} 260 ${secondCellX - 188} 340 ${secondCellX - 122} 300`}
+          fill="none"
+          stroke="#b9d8b2"
+          strokeOpacity={division * (1 - division) * 2.4}
+          strokeWidth="13"
+          strokeLinecap="round"
+        />
+      </svg>
+    </div>
+  );
 }
 
 export function SceneVisual({
@@ -511,14 +744,17 @@ export function SceneVisual({
           </div>
         ) : null}
         {isSceneNine ? (
-          <div className="scene-nine-media" aria-hidden="true">
-            <img
-              className="scene-nine-background"
-              src="/assets/episode1/scene09/hintergrund-endosymbiose-v1.png"
-              alt=""
-              draggable={false}
-            />
-          </div>
+          <>
+            <div className="scene-nine-media" aria-hidden="true">
+              <img
+                className="scene-nine-background"
+                src="/assets/episode1/scene09/hintergrund-endosymbiose-v1.png"
+                alt=""
+                draggable={false}
+              />
+            </div>
+            <EndosymbiosisAnimation progress={progress} />
+          </>
         ) : null}
         {isSceneTen ? (
           <div className="scene-ten-media" aria-hidden="true">
