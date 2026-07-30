@@ -16,6 +16,7 @@ export function SiteFooter({
         </div>
         <nav aria-label="Fußnavigation">
           <Link href="/">Zur Zeitreise</Link>
+          <Link href="/tierstammbaum/">Tierstammbaum</Link>
           <Link href="/ueber/">Über mich</Link>
           <Link href="/impressum/">Impressum &amp; Datenschutz</Link>
           <a href="mailto:mibaur@me.com">Kontakt</a>

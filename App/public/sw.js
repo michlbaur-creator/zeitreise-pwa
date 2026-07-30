@@ -1,6 +1,7 @@
-const CACHE_NAME = "zeitreise-v25";
+const CACHE_NAME = "zeitreise-v26";
 const APP_SHELL = [
   "/",
+  "/tierstammbaum/",
   "/ueber/",
   "/impressum/",
   "/manifest.webmanifest",

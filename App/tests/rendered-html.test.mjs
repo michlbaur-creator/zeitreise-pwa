@@ -297,7 +297,8 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v25/);
+  assert.match(worker, /zeitreise-v26/);
+  assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
   await access(
@@ -317,8 +318,19 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
     new URL("../app/components/AnimalFamilyTree.tsx", import.meta.url),
     "utf8",
   );
+  const treePage = await readFile(
+    new URL("../app/tierstammbaum/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const footer = await readFile(
+    new URL("../app/components/SiteFooter.tsx", import.meta.url),
+    "utf8",
+  );
 
-  assert.match(app, /scene\.id === 12 \? <AnimalFamilyTree \/>/);
+  assert.match(app, /12: \{ label: "Tierstammbaum", group: "tierreich" \}/);
+  assert.match(app, /16: \{ label: "Fische & Amphibien", group: "amphibien" \}/);
+  assert.match(app, /18: \{ label: "Reptilien & Vögel", group: "reptilien" \}/);
+  assert.match(app, /href=\{`\/tierstammbaum\/#\$\{familyTreeLink\.group\}`\}/);
   assert.match(tree, /Der Stammbaum der Tiere/);
   assert.match(tree, /Nesseltiere/);
   assert.match(tree, /Fische/);
@@ -330,6 +342,10 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
     tree,
     /https:\/\/fauna\.mibaso\.de\/interaktiv\/stammbaum\.html/,
   );
+  assert.match(tree, /window\.location\.hash\.slice\(1\)/);
+  assert.match(treePage, /<AnimalFamilyTree \/>/);
+  assert.match(treePage, /Orientierung durch das Tierreich/);
+  assert.match(footer, /href="\/tierstammbaum\/"/);
 });
 
 test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {

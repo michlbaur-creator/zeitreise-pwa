@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
-import { AnimalFamilyTree } from "./components/AnimalFamilyTree";
 import { FinalEpisodeQuiz } from "./components/FinalEpisodeQuiz";
 import { SceneVisual } from "./components/SceneVisual";
 import { SiteFooter } from "./components/SiteFooter";
@@ -87,6 +87,19 @@ const finalQuizSceneIds = new Set([1, 3, 5, 8, 11, 14, 17, 19, 21]);
 const finalQuizScenes = scenes.filter((scene) =>
   finalQuizSceneIds.has(scene.id),
 );
+
+const familyTreeSceneLinks: Record<
+  number,
+  { label: string; group: string }
+> = {
+  12: { label: "Tierstammbaum", group: "tierreich" },
+  13: { label: "Frühe Tierlinien", group: "nesseltiere" },
+  15: { label: "Gliederfüßer", group: "gliederfuesser" },
+  16: { label: "Fische & Amphibien", group: "amphibien" },
+  17: { label: "Nabeltiere", group: "amnioten" },
+  18: { label: "Reptilien & Vögel", group: "reptilien" },
+  21: { label: "Säugetiere", group: "saeugetiere" },
+};
 
 function EarthTimeline({
   sceneId,
@@ -223,6 +236,7 @@ export default function ZeitreiseApp() {
   const discovered = discoveredByScene[String(scene.id)] ?? [];
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
+  const familyTreeLink = familyTreeSceneLinks[scene.id];
 
   const activateAmbientSound = useAmbientSound(
     scene.id,
@@ -665,6 +679,14 @@ export default function ZeitreiseApp() {
             <div className="scene-facts">
               <span>{scene.durationLabel}</span>
               <span>{scene.timeLabel}</span>
+              {familyTreeLink ? (
+                <Link
+                  className="scene-tree-link"
+                  href={`/tierstammbaum/#${familyTreeLink.group}`}
+                >
+                  {familyTreeLink.label} <i aria-hidden="true">↗</i>
+                </Link>
+              ) : null}
             </div>
           </div>
 
@@ -824,13 +846,7 @@ export default function ZeitreiseApp() {
             aria-expanded={detailsOpen}
             aria-controls="scene-details"
           >
-            <span>
-              {detailsOpen
-                ? "Zusatzwissen schließen"
-                : scene.id === 12
-                  ? "Tierstammbaum entdecken"
-                  : "Mehr entdecken"}
-            </span>
+            <span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span>
             <i aria-hidden="true">{detailsOpen ? "−" : "+"}</i>
           </button>
         </section>
@@ -934,8 +950,6 @@ export default function ZeitreiseApp() {
                   </ul>
                 </div>
               ) : null}
-
-              {scene.id === 12 ? <AnimalFamilyTree /> : null}
 
               {scene.quiz ? (
                 <div className="interaction-block quiz-panel">

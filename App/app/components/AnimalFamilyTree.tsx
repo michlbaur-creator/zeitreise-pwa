@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FamilyTreeNode = {
   id: string;
@@ -159,6 +159,17 @@ export function AnimalFamilyTree() {
   const [selectedId, setSelectedId] = useState("tierreich");
   const selected = nodeById.get(selectedId) ?? nodes[0];
 
+  useEffect(() => {
+    const selectFromHash = () => {
+      const id = window.location.hash.slice(1);
+      if (nodeById.has(id)) setSelectedId(id);
+    };
+
+    selectFromHash();
+    window.addEventListener("hashchange", selectFromHash);
+    return () => window.removeEventListener("hashchange", selectFromHash);
+  }, []);
+
   return (
     <div className="interaction-block animal-family-tree">
       <div className="section-label">
@@ -178,6 +189,7 @@ export function AnimalFamilyTree() {
         </div>
         <button
           type="button"
+          id="tierreich"
           className={selectedId === "tierreich" ? "is-selected" : ""}
           onClick={() => setSelectedId("tierreich")}
           aria-pressed={selectedId === "tierreich"}
@@ -208,6 +220,7 @@ export function AnimalFamilyTree() {
                 return (
                   <button
                     type="button"
+                    id={id}
                     className={selectedId === id ? "is-selected" : ""}
                     onClick={() => setSelectedId(id)}
                     aria-pressed={selectedId === id}
