@@ -585,30 +585,30 @@ button:disabled {
 }
 
 .collection-overlay-meteor {
-  top: -7%;
-  right: -14%;
-  width: 48%;
+  top: -10%;
+  right: -17%;
+  width: 58%;
   opacity: 0;
-  animation: collection-meteor 15s ease-in-out 1 both;
+  animation: collection-meteor 12s ease-in-out infinite both;
 }
 
 .collection-overlay-dust {
   left: 6%;
   bottom: -23%;
-  width: 69%;
-  opacity: 0.2;
-  animation: collection-dust 18s ease-in-out infinite;
+  width: 78%;
+  opacity: 0.3;
+  animation: collection-dust 13s ease-in-out infinite;
 }
 
 .collection-overlay-shadow {
   z-index: 4;
-  top: -16%;
-  left: -20%;
-  width: 82%;
+  top: -18%;
+  left: -24%;
+  width: 102%;
   opacity: 0;
   filter: grayscale(1) brightness(0.38) contrast(1.16);
   mix-blend-mode: multiply;
-  animation: collection-shadow 19s ease-in-out infinite;
+  animation: collection-shadow 13s ease-in-out infinite;
 }
 
 .collection-overlay-shadow-impact {
@@ -618,23 +618,23 @@ button:disabled {
 
 .collection-overlay-ash-cloud {
   z-index: 4;
-  right: -20%;
-  bottom: -36%;
-  width: 58%;
-  opacity: 0.11;
-  filter: grayscale(1) brightness(0.58);
+  right: -16%;
+  bottom: -31%;
+  width: 72%;
+  opacity: 0.22;
+  filter: grayscale(1) brightness(0.66);
   mix-blend-mode: screen;
-  animation: collection-ash-cloud 24s ease-in-out infinite alternate;
+  animation: collection-ash-cloud 15s ease-in-out infinite alternate;
 }
 
 .collection-overlay-clearing-mist {
   z-index: 5;
-  left: -18%;
-  bottom: -40%;
-  width: 52%;
-  opacity: 0.13;
+  left: -14%;
+  bottom: -35%;
+  width: 68%;
+  opacity: 0.22;
   filter: grayscale(1) brightness(0.78);
-  animation: collection-clearing-mist 22s ease-in-out infinite alternate;
+  animation: collection-clearing-mist 14s ease-in-out infinite alternate;
 }
 
 .scene-visual.is-paused .collection-overlay {
@@ -680,10 +680,10 @@ button:disabled {
     transform: translate3d(34%, -26%, 0) rotate(-5deg) scale(0.72);
   }
   28% {
-    opacity: 0.74;
+    opacity: 0.94;
   }
   64% {
-    opacity: 0.82;
+    opacity: 0.98;
     transform: translate3d(-74%, 62%, 0) rotate(-5deg) scale(1);
   }
   74%,
@@ -712,10 +712,10 @@ button:disabled {
     transform: translate3d(-24%, -8%, 0) scale(1.06);
   }
   30% {
-    opacity: 0.13;
+    opacity: 0.24;
   }
   62% {
-    opacity: 0.19;
+    opacity: 0.36;
   }
   78%,
   100% {
@@ -726,22 +726,22 @@ button:disabled {
 
 @keyframes collection-ash-cloud {
   0% {
-    opacity: 0.08;
+    opacity: 0.14;
     transform: translate3d(8%, 7%, 0) scale(0.9);
   }
   100% {
-    opacity: 0.17;
+    opacity: 0.31;
     transform: translate3d(-19%, -8%, 0) scale(1.1);
   }
 }
 
 @keyframes collection-clearing-mist {
   0% {
-    opacity: 0.16;
+    opacity: 0.28;
     transform: translate3d(-8%, 5%, 0) scale(1.08);
   }
   100% {
-    opacity: 0.06;
+    opacity: 0.1;
     transform: translate3d(18%, -9%, 0) scale(0.94);
   }
 }
@@ -845,13 +845,13 @@ button:disabled {
 }
 
 .atmosphere-first-cell .atmosphere-particle {
-  width: calc(18px + var(--particle-index) * 5px);
-  height: calc(18px + var(--particle-index) * 5px);
-  border: 1px solid rgba(192, 223, 194, 0.34);
+  width: calc(30px + var(--particle-index) * 8px);
+  height: calc(30px + var(--particle-index) * 8px);
+  border: 1.5px solid rgba(192, 223, 194, 0.52);
   border-radius: 48% 52% 46% 54%;
   background:
-    radial-gradient(circle at 42% 44%, rgba(227, 239, 196, 0.32) 0 7%, transparent 9%),
-    radial-gradient(circle, rgba(126, 175, 141, 0.16), rgba(47, 91, 77, 0.04));
+    radial-gradient(circle at 42% 44%, rgba(227, 239, 196, 0.5) 0 7%, transparent 10%),
+    radial-gradient(circle, rgba(126, 175, 141, 0.26), rgba(47, 91, 77, 0.06));
   box-shadow:
     inset 0 0 10px rgba(202, 232, 198, 0.15),
     0 0 12px rgba(157, 209, 181, 0.08);
@@ -862,12 +862,12 @@ button:disabled {
 
 .atmosphere-cell-colony .atmosphere-particle,
 .atmosphere-cell-team .atmosphere-particle {
-  width: calc(9px + var(--particle-index) * 1.5px);
-  height: calc(9px + var(--particle-index) * 1.5px);
-  border: 1px solid rgba(177, 213, 171, 0.32);
+  width: calc(14px + var(--particle-index) * 2px);
+  height: calc(14px + var(--particle-index) * 2px);
+  border: 1px solid rgba(177, 213, 171, 0.5);
   border-radius: 50%;
-  background: rgba(96, 151, 112, 0.13);
-  box-shadow: 11px 5px 0 -2px rgba(96, 151, 112, 0.1);
+  background: rgba(96, 151, 112, 0.22);
+  box-shadow: 15px 7px 0 -2px rgba(96, 151, 112, 0.18);
   animation: atmosphere-colony
     calc(9s + var(--particle-index) * 0.7s) ease-in-out infinite alternate;
 }
@@ -901,9 +901,9 @@ button:disabled {
 }
 
 .atmosphere-endosymbiosis .atmosphere-particle {
-  width: calc(24px + var(--particle-index) * 12px);
-  height: calc(24px + var(--particle-index) * 12px);
-  border: 1px solid rgba(177, 211, 170, 0.34);
+  width: calc(42px + var(--particle-index) * 16px);
+  height: calc(42px + var(--particle-index) * 16px);
+  border: 1.5px solid rgba(177, 211, 170, 0.5);
   border-radius: 48% 52% 46% 54%;
   background: radial-gradient(
     circle at 43% 46%,
@@ -919,18 +919,18 @@ button:disabled {
 }
 
 .atmosphere-micro-swim .atmosphere-particle {
-  width: calc(12px + var(--particle-index) * 2px);
-  height: calc(7px + var(--particle-index) * 0.8px);
-  border: 1px solid rgba(171, 207, 166, 0.28);
+  width: calc(19px + var(--particle-index) * 2.6px);
+  height: calc(10px + var(--particle-index) * 1.1px);
+  border: 1px solid rgba(171, 207, 166, 0.48);
   border-radius: 55% 45% 52% 48%;
-  background: rgba(104, 158, 122, 0.1);
+  background: rgba(104, 158, 122, 0.2);
   animation: atmosphere-micro-swim
     calc(12s + var(--particle-index) * 1.1s) ease-in-out infinite alternate;
 }
 
 .atmosphere-seafloor-drift .atmosphere-particle {
-  width: calc(12px + var(--particle-index) * 4px);
-  height: calc(34px + var(--particle-index) * 6px);
+  width: calc(18px + var(--particle-index) * 5px);
+  height: calc(48px + var(--particle-index) * 8px);
   border-radius: 62% 38% 58% 42%;
   background: linear-gradient(
     90deg,
@@ -944,8 +944,8 @@ button:disabled {
 }
 
 .atmosphere-cambrian-life .atmosphere-particle {
-  width: calc(21px + var(--particle-index) * 5px);
-  height: calc(7px + var(--particle-index) * 1.2px);
+  width: calc(31px + var(--particle-index) * 6px);
+  height: calc(10px + var(--particle-index) * 1.5px);
   border-radius: 46%;
   background: repeating-linear-gradient(
     90deg,
@@ -959,11 +959,11 @@ button:disabled {
 
 .atmosphere-land-spores .atmosphere-particle,
 .atmosphere-forest-life .atmosphere-particle {
-  width: calc(2px + var(--particle-index) * 0.35px);
-  height: calc(2px + var(--particle-index) * 0.35px);
+  width: calc(4px + var(--particle-index) * 0.42px);
+  height: calc(4px + var(--particle-index) * 0.42px);
   border-radius: 50%;
-  background: rgba(226, 217, 169, 0.48);
-  box-shadow: 0 0 5px rgba(226, 217, 169, 0.22);
+  background: rgba(238, 224, 159, 0.72);
+  box-shadow: 0 0 8px rgba(238, 224, 159, 0.42);
   animation: atmosphere-spore-drift
     calc(9s + var(--particle-index) * 0.9s) ease-in-out infinite;
   animation-delay: calc(var(--particle-index) * -1.3s);
@@ -987,25 +987,63 @@ button:disabled {
 .atmosphere-land-crawlers .atmosphere-particle {
   top: auto;
   bottom: calc(13% + var(--particle-index) * 7%);
-  width: calc(18px + var(--particle-index) * 4px);
-  height: 6px;
+  width: calc(28px + var(--particle-index) * 5px);
+  height: 9px;
   border-radius: 999px;
   background: repeating-linear-gradient(
     90deg,
-    rgba(43, 30, 18, 0.72) 0 3px,
-    rgba(103, 75, 42, 0.66) 3px 5px
+    rgba(26, 19, 12, 0.9) 0 4px,
+    rgba(145, 108, 62, 0.82) 4px 7px
   );
-  box-shadow: -4px 3px 0 -2px rgba(25, 19, 13, 0.48);
+  border: 1px solid rgba(218, 181, 116, 0.2);
+  box-shadow: -4px 3px 0 -2px rgba(25, 19, 13, 0.68);
+  filter: drop-shadow(0 2px 2px rgba(8, 7, 5, 0.72));
   animation: atmosphere-land-crawl
     calc(13s + var(--particle-index) * 2s) ease-in-out infinite;
   animation-delay: calc(var(--particle-index) * -4s);
 }
 
+.atmosphere-land-crawlers .atmosphere-particle::before {
+  position: absolute;
+  right: 2px;
+  bottom: -7px;
+  left: 2px;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 5px,
+    rgba(35, 25, 15, 0.9) 5px 7px,
+    transparent 7px 11px
+  );
+  content: "";
+  transform: skewX(-18deg);
+}
+
+.atmosphere-land-crawlers .atmosphere-particle::after {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  width: 14px;
+  height: 9px;
+  border-top: 2px solid rgba(77, 55, 31, 0.9);
+  border-radius: 50%;
+  content: "";
+  transform: rotate(-17deg);
+}
+
 .atmosphere-swamp-life .atmosphere-particle,
 .atmosphere-egg-and-insects .atmosphere-particle {
-  width: 20px;
-  height: 8px;
-  background: rgba(41, 50, 35, 0.52);
+  width: 36px;
+  height: 14px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(25, 31, 22, 0.94) 0 15%, transparent 17%),
+    linear-gradient(
+      90deg,
+      rgba(205, 191, 143, 0.7),
+      rgba(47, 57, 40, 0.82) 47% 53%,
+      rgba(205, 191, 143, 0.7)
+    );
+  filter: drop-shadow(0 2px 2px rgba(8, 10, 7, 0.66));
   clip-path: polygon(
     0 48%,
     40% 0,
@@ -1059,9 +1097,9 @@ button:disabled {
 }
 
 .atmosphere-dinosaur-scale .atmosphere-particle {
-  width: 42px;
-  height: 13px;
-  background: rgba(26, 29, 24, 0.38);
+  width: 72px;
+  height: 22px;
+  background: rgba(20, 22, 18, 0.56);
   clip-path: polygon(
     0 50%,
     42% 19%,
@@ -1099,9 +1137,9 @@ button:disabled {
 }
 
 .atmosphere-present-life .atmosphere-particle {
-  width: 18px;
-  height: 9px;
-  background: rgba(226, 207, 151, 0.5);
+  width: 28px;
+  height: 14px;
+  background: rgba(235, 211, 142, 0.72);
   clip-path: polygon(
     0 50%,
     39% 8%,
@@ -1189,26 +1227,26 @@ button:disabled {
   0%,
   18%,
   100% {
-    opacity: 0.14;
+    opacity: 0.22;
     transform: translate3d(-10px, 8px, 0) scale(0.72);
   }
   52% {
-    opacity: 0.46;
+    opacity: 0.7;
     transform: translate3d(8px, -7px, 0) scale(1.18, 0.82);
   }
   74% {
-    opacity: 0.32;
+    opacity: 0.52;
     transform: translate3d(15px, -12px, 0) scale(0.86);
   }
 }
 
 @keyframes atmosphere-colony {
   0% {
-    opacity: 0.16;
+    opacity: 0.24;
     transform: translate3d(-9px, 7px, 0) scale(0.76);
   }
   100% {
-    opacity: 0.48;
+    opacity: 0.68;
     transform: translate3d(14px, -12px, 0) scale(1.22);
   }
 }
@@ -1237,44 +1275,44 @@ button:disabled {
 
 @keyframes atmosphere-endosymbiosis {
   0% {
-    opacity: 0.18;
+    opacity: 0.26;
     transform: translate3d(-24px, 10px, 0) scale(0.78);
   }
   100% {
-    opacity: 0.46;
+    opacity: 0.68;
     transform: translate3d(24px, -8px, 0) scale(1.06);
   }
 }
 
 @keyframes atmosphere-micro-swim {
   0% {
-    opacity: 0.14;
+    opacity: 0.22;
     transform: translate3d(-34px, 10px, 0) rotate(-8deg);
   }
   100% {
-    opacity: 0.48;
+    opacity: 0.68;
     transform: translate3d(42px, -16px, 0) rotate(7deg);
   }
 }
 
 @keyframes atmosphere-seafloor-sway {
   0% {
-    opacity: 0.12;
+    opacity: 0.22;
     transform: rotate(-5deg) translateY(4px);
   }
   100% {
-    opacity: 0.34;
+    opacity: 0.56;
     transform: rotate(6deg) translateY(-4px);
   }
 }
 
 @keyframes atmosphere-seafloor-crawl {
   0% {
-    opacity: 0.16;
+    opacity: 0.24;
     transform: translate3d(-28px, 8px, 0) rotate(-3deg);
   }
   100% {
-    opacity: 0.44;
+    opacity: 0.68;
     transform: translate3d(54px, -10px, 0) rotate(4deg);
   }
 }
@@ -1285,7 +1323,7 @@ button:disabled {
     transform: translate3d(-16px, 28px, 0);
   }
   28% {
-    opacity: 0.52;
+    opacity: 0.82;
   }
   100% {
     opacity: 0;
@@ -1300,10 +1338,10 @@ button:disabled {
     transform: translate3d(-80px, 4px, 0) rotate(-4deg);
   }
   26% {
-    opacity: 0.52;
+    opacity: 0.76;
   }
   76% {
-    opacity: 0.48;
+    opacity: 0.7;
   }
   92%,
   100% {
@@ -1314,11 +1352,11 @@ button:disabled {
 
 @keyframes atmosphere-insect-flight {
   0% {
-    opacity: 0.14;
+    opacity: 0.24;
     transform: translate3d(-46px, 22px, 0) rotate(-9deg) scale(0.76);
   }
   100% {
-    opacity: 0.48;
+    opacity: 0.72;
     transform: translate3d(86px, -38px, 0) rotate(7deg) scale(1.08);
   }
 }
@@ -1358,10 +1396,10 @@ button:disabled {
     transform: translate3d(-130px, 40px, 0) scale(0.7);
   }
   20% {
-    opacity: 0.22;
+    opacity: 0.4;
   }
   78% {
-    opacity: 0.32;
+    opacity: 0.58;
   }
   100% {
     opacity: 0;
@@ -1382,11 +1420,11 @@ button:disabled {
 
 @keyframes atmosphere-butterfly {
   0% {
-    opacity: 0.12;
+    opacity: 0.22;
     transform: translate3d(-35px, 18px, 0) rotate(-10deg) scale(0.72);
   }
   100% {
-    opacity: 0.58;
+    opacity: 0.82;
     transform: translate3d(64px, -42px, 0) rotate(8deg) scale(1.08);
   }
 }
@@ -1633,7 +1671,7 @@ button:disabled {
 .scene-ten-background,
 .scene-eleven-background,
 .scene-generated-background {
-  animation: recovered-image-breathe 19s ease-in-out infinite alternate;
+  animation: recovered-image-breathe 14s ease-in-out infinite alternate;
   animation-play-state: paused;
   will-change: transform;
 }
@@ -2215,10 +2253,10 @@ button:disabled {
 
 @keyframes recovered-image-breathe {
   0% {
-    transform: translate3d(-0.7%, 0.35%, 0) scale(1.018);
+    transform: translate3d(-1.4%, 0.8%, 0) scale(1.025);
   }
   100% {
-    transform: translate3d(0.9%, -0.55%, 0) scale(1.045);
+    transform: translate3d(1.8%, -1.1%, 0) scale(1.085);
   }
 }
 

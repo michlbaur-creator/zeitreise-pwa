@@ -297,7 +297,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v18/);
+  assert.match(worker, /zeitreise-v20/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
   await access(
