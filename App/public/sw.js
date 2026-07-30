@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v17";
+const CACHE_NAME = "zeitreise-v18";
 const APP_SHELL = [
   "/",
   "/ueber/",
@@ -60,12 +60,15 @@ const APP_SHELL = [
   "/assets/episode1/scene17/hintergrund-amniotenei-v1.png",
   "/assets/episode1/scene17/sprecher-cedar-v3.mp3",
   "/assets/episode1/scene18/hintergrund-dinosaurier-v1.png",
+  "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
   "/assets/episode1/scene18/sprecher-cedar-v3.mp3",
   "/assets/episode1/scene19/hintergrund-asteroid-morgen-v1.png",
   "/assets/episode1/scene19/overlay-meteor-v1.png",
   "/assets/episode1/scene19/sprecher-cedar-v2.mp3",
   "/assets/episode1/scene20/hintergrund-nach-einschlag-v1.png",
   "/assets/episode1/scene20/overlay-staubwolke-v1.png",
+  "/assets/episode1/scene20/overlay-aschewolke-v1.png",
+  "/assets/episode1/scene20/overlay-nebel-lichtet-v1.png",
   "/assets/episode1/scene20/sprecher-cedar-v2.mp3",
   "/assets/episode1/scene21/hintergrund-saeugetiere-v1.png",
   "/assets/episode1/scene21/sprecher-cedar-v2.mp3",

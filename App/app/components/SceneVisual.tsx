@@ -63,37 +63,93 @@ const generatedBackgrounds: Partial<Record<number, string>> = {
   22: "/assets/episode1/scene22/hintergrund-zeitfelsen-heute-v1.png",
 };
 
-const collectionOverlays: Partial<
-  Record<number, { src: string; className: string }>
+type CollectionOverlay = {
+  src: string;
+  className: string;
+};
+
+const collectionOverlays: Partial<Record<number, CollectionOverlay[]>> = {
+  14: [
+    {
+      src: "/assets/episode1/scene14/overlay-nebel-v1.png",
+      className: "collection-overlay-mist",
+    },
+  ],
+  15: [
+    {
+      src: "/assets/episode1/scene14/overlay-nebel-v1.png",
+      className: "collection-overlay-mist collection-overlay-mist-coast",
+    },
+  ],
+  16: [
+    {
+      src: "/assets/episode1/scene16/overlay-wassersplash-v1.png",
+      className: "collection-overlay-splash",
+    },
+  ],
+  17: [
+    {
+      src: "/assets/episode1/scene14/overlay-nebel-v1.png",
+      className: "collection-overlay-mist collection-overlay-mist-swamp",
+    },
+  ],
+  18: [
+    {
+      src: "/assets/episode1/scene14/overlay-nebel-v1.png",
+      className: "collection-overlay-mist collection-overlay-mist-dawn",
+    },
+    {
+      src: "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
+      className: "collection-overlay-shadow",
+    },
+  ],
+  19: [
+    {
+      src: "/assets/episode1/scene19/overlay-meteor-v1.png",
+      className: "collection-overlay-meteor",
+    },
+    {
+      src: "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
+      className: "collection-overlay-shadow collection-overlay-shadow-impact",
+    },
+  ],
+  20: [
+    {
+      src: "/assets/episode1/scene20/overlay-staubwolke-v1.png",
+      className: "collection-overlay-dust",
+    },
+    {
+      src: "/assets/episode1/scene20/overlay-aschewolke-v1.png",
+      className: "collection-overlay-ash-cloud",
+    },
+    {
+      src: "/assets/episode1/scene20/overlay-nebel-lichtet-v1.png",
+      className: "collection-overlay-clearing-mist",
+    },
+  ],
+};
+
+const atmosphereProfiles: Partial<
+  Record<number, { className: string; particles: number }>
 > = {
-  14: {
-    src: "/assets/episode1/scene14/overlay-nebel-v1.png",
-    className: "collection-overlay-mist",
-  },
-  15: {
-    src: "/assets/episode1/scene14/overlay-nebel-v1.png",
-    className: "collection-overlay-mist collection-overlay-mist-coast",
-  },
-  16: {
-    src: "/assets/episode1/scene16/overlay-wassersplash-v1.png",
-    className: "collection-overlay-splash",
-  },
-  17: {
-    src: "/assets/episode1/scene14/overlay-nebel-v1.png",
-    className: "collection-overlay-mist collection-overlay-mist-swamp",
-  },
-  18: {
-    src: "/assets/episode1/scene14/overlay-nebel-v1.png",
-    className: "collection-overlay-mist collection-overlay-mist-dawn",
-  },
-  19: {
-    src: "/assets/episode1/scene19/overlay-meteor-v1.png",
-    className: "collection-overlay-meteor",
-  },
-  20: {
-    src: "/assets/episode1/scene20/overlay-staubwolke-v1.png",
-    className: "collection-overlay-dust",
-  },
+  3: { className: "atmosphere-ocean-light", particles: 3 },
+  4: { className: "atmosphere-lagoon-bubbles", particles: 6 },
+  5: { className: "atmosphere-first-cell", particles: 3 },
+  6: { className: "atmosphere-cell-colony", particles: 7 },
+  7: { className: "atmosphere-oxygen-bubbles", particles: 9 },
+  8: { className: "atmosphere-oxygen-shift", particles: 2 },
+  9: { className: "atmosphere-endosymbiosis", particles: 2 },
+  10: { className: "atmosphere-micro-swim", particles: 6 },
+  11: { className: "atmosphere-cell-team", particles: 5 },
+  12: { className: "atmosphere-seafloor-drift", particles: 4 },
+  13: { className: "atmosphere-cambrian-life", particles: 4 },
+  14: { className: "atmosphere-land-spores", particles: 9 },
+  15: { className: "atmosphere-land-crawlers", particles: 3 },
+  16: { className: "atmosphere-swamp-life", particles: 4 },
+  17: { className: "atmosphere-egg-and-insects", particles: 4 },
+  18: { className: "atmosphere-dinosaur-scale", particles: 2 },
+  21: { className: "atmosphere-forest-life", particles: 6 },
+  22: { className: "atmosphere-present-life", particles: 7 },
 };
 
 const subjectLabels: Record<Scene["theme"], string[]> = {
@@ -208,7 +264,8 @@ export function SceneVisual({
   const isSceneTen = scene.id === 10;
   const isSceneEleven = scene.id === 11;
   const generatedBackground = generatedBackgrounds[scene.id];
-  const collectionOverlay = collectionOverlays[scene.id];
+  const sceneCollectionOverlays = collectionOverlays[scene.id] ?? [];
+  const atmosphereProfile = atmosphereProfiles[scene.id];
   const recoveredMediaState = mediaStates[scene.id];
   const hasRecoveredMedia = Boolean(recoveredMediaState);
   const impactFlash =
@@ -494,14 +551,35 @@ export function SceneVisual({
               alt=""
               draggable={false}
             />
-            {collectionOverlay ? (
+            {sceneCollectionOverlays.map((overlay) => (
               <img
-                className={`collection-overlay ${collectionOverlay.className}`}
-                src={collectionOverlay.src}
+                className={`collection-overlay ${overlay.className}`}
+                src={overlay.src}
                 alt=""
                 draggable={false}
+                key={`${scene.id}-${overlay.className}`}
               />
-            ) : null}
+            ))}
+          </div>
+        ) : null}
+        {atmosphereProfile ? (
+          <div
+            className={`scene-atmosphere ${atmosphereProfile.className}`}
+            aria-hidden="true"
+          >
+            {Array.from({ length: atmosphereProfile.particles }, (_, index) => (
+              <span
+                className="atmosphere-particle"
+                style={
+                  {
+                    "--particle-index": index,
+                    "--particle-left": `${11 + ((index * 19) % 78)}%`,
+                    "--particle-top": `${16 + ((index * 27) % 62)}%`,
+                  } as CSSProperties
+                }
+                key={`${scene.id}-atmosphere-${index}`}
+              />
+            ))}
           </div>
         ) : null}
         {!isSceneOne ? (
