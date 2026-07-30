@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
+import { AnimalFamilyTree } from "./components/AnimalFamilyTree";
 import { FinalEpisodeQuiz } from "./components/FinalEpisodeQuiz";
 import { SceneVisual } from "./components/SceneVisual";
 import { SiteFooter } from "./components/SiteFooter";
@@ -823,7 +824,13 @@ export default function ZeitreiseApp() {
             aria-expanded={detailsOpen}
             aria-controls="scene-details"
           >
-            <span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span>
+            <span>
+              {detailsOpen
+                ? "Zusatzwissen schließen"
+                : scene.id === 12
+                  ? "Tierstammbaum entdecken"
+                  : "Mehr entdecken"}
+            </span>
             <i aria-hidden="true">{detailsOpen ? "−" : "+"}</i>
           </button>
         </section>
@@ -927,6 +934,8 @@ export default function ZeitreiseApp() {
                   </ul>
                 </div>
               ) : null}
+
+              {scene.id === 12 ? <AnimalFamilyTree /> : null}
 
               {scene.quiz ? (
                 <div className="interaction-block quiz-panel">

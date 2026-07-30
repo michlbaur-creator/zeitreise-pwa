@@ -297,7 +297,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v24/);
+  assert.match(worker, /zeitreise-v25/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
   await access(
@@ -305,6 +305,30 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
       "../public/assets/site/michael-baur-garten.jpg",
       import.meta.url,
     ),
+  );
+});
+
+test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const tree = await readFile(
+    new URL("../app/components/AnimalFamilyTree.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(app, /scene\.id === 12 \? <AnimalFamilyTree \/>/);
+  assert.match(tree, /Der Stammbaum der Tiere/);
+  assert.match(tree, /Nesseltiere/);
+  assert.match(tree, /Fische/);
+  assert.match(tree, /Amphibien/);
+  assert.match(tree, /Reptilien/);
+  assert.match(tree, /Vögel/);
+  assert.match(tree, /Manche gingen zurück ins Meer/);
+  assert.match(
+    tree,
+    /https:\/\/fauna\.mibaso\.de\/interaktiv\/stammbaum\.html/,
   );
 });
 
