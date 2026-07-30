@@ -754,6 +754,128 @@ button:disabled {
   pointer-events: none;
 }
 
+.binary-fission-story {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.binary-fission-story::before {
+  position: absolute;
+  inset: 5% 7% 7%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(113, 170, 119, 0.24),
+    rgba(30, 74, 67, 0.09) 52%,
+    transparent 74%
+  );
+  filter: blur(12px);
+  content: "";
+}
+
+.binary-fission-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  filter: drop-shadow(0 14px 25px rgba(2, 15, 12, 0.4));
+}
+
+.binary-fission-phase {
+  position: absolute;
+  z-index: 2;
+  top: 12%;
+  left: 50%;
+  max-width: min(72%, 430px);
+  padding: 6px 12px;
+  border: 1px solid rgba(224, 226, 177, 0.32);
+  border-radius: 999px;
+  background: rgba(7, 25, 21, 0.74);
+  box-shadow: 0 8px 22px rgba(2, 13, 10, 0.28);
+  color: rgba(245, 233, 188, 0.96);
+  font-size: clamp(0.64rem, 1.2vw, 0.8rem);
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  line-height: 1.25;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.binary-main-cell,
+.binary-daughter-cell,
+.binary-cell-colony,
+.binary-dna {
+  transition:
+    opacity 150ms linear,
+    transform 150ms linear;
+}
+
+.binary-cell-outline {
+  filter: url("#fission-glow");
+}
+
+.binary-dna {
+  filter: drop-shadow(0 0 7px rgba(242, 211, 112, 0.58));
+}
+
+.binary-cell-halo {
+  animation: binary-cell-breathe 4.2s ease-in-out infinite;
+  animation-play-state: paused;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.binary-cytoplasm-dot {
+  animation: binary-particle-drift 3.2s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scene-visual.is-playing .binary-cell-halo,
+.scene-visual.is-playing .binary-cytoplasm-dot {
+  animation-play-state: running;
+}
+
+@keyframes binary-cell-breathe {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes binary-particle-drift {
+  from {
+    transform: translate(-3px, -2px) scale(0.86);
+  }
+  to {
+    transform: translate(4px, 3px) scale(1.16);
+  }
+}
+
+@media (max-width: 620px) {
+  .binary-fission-phase {
+    top: 3rem;
+    max-width: 76%;
+    padding: 5px 9px;
+    font-size: 0.58rem;
+    letter-spacing: 0.02em;
+  }
+
+  .binary-fission-svg {
+    transform: scale(1.08);
+  }
+}
+
 .endosymbiosis-story {
   position: absolute;
   z-index: 8;

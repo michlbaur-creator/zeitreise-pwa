@@ -297,7 +297,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v22/);
+  assert.match(worker, /zeitreise-v24/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
   await access(
@@ -341,5 +341,21 @@ test("erzählt die Endosymbiose als synchronisierte Animation", async () => {
   assert.match(
     sceneVisual,
     /<EndosymbiosisAnimation progress=\{progress\} \/>/,
+  );
+});
+
+test("zeigt die Zellteilung als biologisch nachvollziehbare Animation", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function BinaryFissionAnimation/);
+  assert.match(sceneVisual, /Die Erbinformation wird kopiert/);
+  assert.match(sceneVisual, /Die Zellmembran schnürt sich ein/);
+  assert.match(sceneVisual, /Aus zwei werden vier/);
+  assert.match(
+    sceneVisual,
+    /<BinaryFissionAnimation progress=\{progress\} \/>/,
   );
 });

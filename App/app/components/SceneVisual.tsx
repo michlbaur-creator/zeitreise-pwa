@@ -135,7 +135,6 @@ const atmosphereProfiles: Partial<
   3: { className: "atmosphere-ocean-light", particles: 5 },
   4: { className: "atmosphere-lagoon-bubbles", particles: 8 },
   5: { className: "atmosphere-first-cell", particles: 4 },
-  6: { className: "atmosphere-cell-colony", particles: 9 },
   7: { className: "atmosphere-oxygen-bubbles", particles: 12 },
   8: { className: "atmosphere-oxygen-shift", particles: 3 },
   10: { className: "atmosphere-micro-swim", particles: 8 },
@@ -233,6 +232,227 @@ function narrationParts(text: string) {
 function phaseProgress(progress: number, start: number, end: number) {
   const value = Math.min(1, Math.max(0, (progress - start) / (end - start)));
   return value * value * (3 - 2 * value);
+}
+
+function binaryCellPath(
+  centerX: number,
+  centerY: number,
+  width: number,
+  height: number,
+  pinch: number,
+) {
+  const left = centerX - width / 2;
+  const right = centerX + width / 2;
+  const top = centerY - height / 2;
+  const bottom = centerY + height / 2;
+
+  return [
+    `M ${left + 72} ${top}`,
+    `C ${left + 26} ${top} ${left} ${centerY - 48} ${left} ${centerY}`,
+    `C ${left} ${centerY + 48} ${left + 26} ${bottom} ${left + 72} ${bottom}`,
+    `L ${centerX - 88} ${bottom}`,
+    `C ${centerX - 48} ${bottom} ${centerX - 28} ${bottom - pinch} ${centerX} ${bottom - pinch}`,
+    `C ${centerX + 28} ${bottom - pinch} ${centerX + 48} ${bottom} ${centerX + 88} ${bottom}`,
+    `L ${right - 72} ${bottom}`,
+    `C ${right - 26} ${bottom} ${right} ${centerY + 48} ${right} ${centerY}`,
+    `C ${right} ${centerY - 48} ${right - 26} ${top} ${right - 72} ${top}`,
+    `L ${centerX + 88} ${top}`,
+    `C ${centerX + 48} ${top} ${centerX + 28} ${top + pinch} ${centerX} ${top + pinch}`,
+    `C ${centerX - 28} ${top + pinch} ${centerX - 48} ${top} ${centerX - 88} ${top}`,
+    "Z",
+  ].join(" ");
+}
+
+function BinaryFissionAnimation({ progress }: { progress: number }) {
+  const replicate = phaseProgress(progress, 0.04, 0.24);
+  const elongate = phaseProgress(progress, 0.18, 0.43);
+  const constrict = phaseProgress(progress, 0.4, 0.68);
+  const separate = phaseProgress(progress, 0.64, 0.8);
+  const multiply = phaseProgress(progress, 0.78, 0.98);
+  const cellWidth = 275 + elongate * 165;
+  const dnaDistance = 14 + replicate * 28 + elongate * 70;
+  const mainCellOpacity = 1 - separate;
+  const daughterOpacity = separate * (1 - multiply * 0.82);
+  const colonyOpacity = multiply;
+  const daughterDistance = 120 + separate * 96;
+  const phaseLabel =
+    progress < 0.24
+      ? "Die Erbinformation wird kopiert"
+      : progress < 0.44
+        ? "Die Kopien wandern auseinander"
+        : progress < 0.69
+          ? "Die Zellmembran schnürt sich ein"
+          : progress < 0.82
+            ? "Zwei Tochterzellen entstehen"
+            : "Aus zwei werden vier – das Leben breitet sich aus";
+
+  const colonyCells = [
+    { x: 295, y: 246, rotation: -8 },
+    { x: 430, y: 354, rotation: 7 },
+    { x: 570, y: 245, rotation: 6 },
+    { x: 705, y: 354, rotation: -7 },
+  ];
+
+  return (
+    <div
+      className="binary-fission-story"
+      role="img"
+      aria-label="Animation der Zellteilung: Die Zelle kopiert ihre Erbinformation, zieht beide Kopien auseinander, schnürt sich ein und bildet zwei Tochterzellen."
+    >
+      <span className="binary-fission-phase">{phaseLabel}</span>
+      <svg
+        className="binary-fission-svg"
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <radialGradient id="fission-cytoplasm" cx="42%" cy="34%" r="75%">
+            <stop offset="0%" stopColor="#d6d5a5" stopOpacity="0.55" />
+            <stop offset="52%" stopColor="#719f78" stopOpacity="0.42" />
+            <stop offset="100%" stopColor="#244e48" stopOpacity="0.35" />
+          </radialGradient>
+          <linearGradient id="fission-membrane" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#dfddb0" stopOpacity="0.9" />
+            <stop offset="55%" stopColor="#9bc49b" stopOpacity="0.88" />
+            <stop offset="100%" stopColor="#5c8a77" stopOpacity="0.84" />
+          </linearGradient>
+          <filter id="fission-glow" x="-40%" y="-60%" width="180%" height="220%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <g id="fission-dna">
+            <path
+              d="M-32 0 C-27 -27 18 -31 31 -7 C44 17 5 34 -22 20 C-43 9 -38 -13 -19 -18 C2 -24 23 -7 19 11"
+              fill="none"
+              stroke="#f1d176"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <circle cx="-8" cy="-3" r="35" fill="#e5cf72" opacity="0.07" />
+          </g>
+          <g id="fission-daughter-cell">
+            <ellipse
+              rx="106"
+              ry="78"
+              fill="url(#fission-cytoplasm)"
+              stroke="url(#fission-membrane)"
+              strokeWidth="6"
+            />
+            <ellipse
+              rx="88"
+              ry="62"
+              fill="none"
+              stroke="#eef0c8"
+              strokeOpacity="0.17"
+              strokeWidth="2"
+              strokeDasharray="5 11"
+            />
+            <g className="binary-dna" transform="scale(.78)">
+              <use href="#fission-dna" />
+            </g>
+            <circle cx="-61" cy="-29" r="7" fill="#d4d8a3" opacity="0.28" />
+            <circle cx="58" cy="28" r="9" fill="#acd09e" opacity="0.23" />
+          </g>
+        </defs>
+
+        <g className="binary-main-cell" opacity={mainCellOpacity}>
+          <path
+            className="binary-cell-halo"
+            d={binaryCellPath(500, 300, cellWidth + 30, 202, constrict * 68)}
+            fill="#9bc59b"
+            opacity="0.12"
+          />
+          <path
+            className="binary-cell-outline"
+            d={binaryCellPath(500, 300, cellWidth, 174, constrict * 62)}
+            fill="url(#fission-cytoplasm)"
+            stroke="url(#fission-membrane)"
+            strokeWidth="7"
+          />
+          <path
+            d={binaryCellPath(500, 300, cellWidth - 28, 142, constrict * 50)}
+            fill="none"
+            stroke="#eef0c8"
+            strokeOpacity="0.13"
+            strokeWidth="2"
+            strokeDasharray="5 13"
+          />
+
+          <g
+            className="binary-dna binary-dna-original"
+            opacity={1 - replicate}
+            transform="translate(500 300)"
+          >
+            <use href="#fission-dna" />
+          </g>
+          <g
+            className="binary-dna binary-dna-copy"
+            opacity={replicate}
+            transform={`translate(${500 - dnaDistance} 300)`}
+          >
+            <use href="#fission-dna" />
+          </g>
+          <g
+            className="binary-dna binary-dna-copy"
+            opacity={replicate}
+            transform={`translate(${500 + dnaDistance} 300) rotate(180)`}
+          >
+            <use href="#fission-dna" />
+          </g>
+
+          {[
+            [-118, -39, 7],
+            [-74, 47, 10],
+            [52, -45, 8],
+            [119, 40, 6],
+          ].map(([x, y, radius], index) => (
+            <circle
+              className="binary-cytoplasm-dot"
+              cx={500 + x - elongate * Math.sign(x) * 22}
+              cy={300 + y}
+              r={radius}
+              fill={index % 2 ? "#c5d39a" : "#91c18d"}
+              opacity="0.24"
+              key={`${x}-${y}`}
+              style={{ animationDelay: `${index * -0.7}s` }}
+            />
+          ))}
+        </g>
+
+        <g
+          className="binary-daughter-cell"
+          opacity={daughterOpacity}
+          transform={`translate(${500 - daughterDistance} 300) rotate(-5)`}
+        >
+          <use href="#fission-daughter-cell" />
+        </g>
+        <g
+          className="binary-daughter-cell"
+          opacity={daughterOpacity}
+          transform={`translate(${500 + daughterDistance} 300) rotate(5)`}
+        >
+          <use href="#fission-daughter-cell" />
+        </g>
+
+        <g className="binary-cell-colony" opacity={colonyOpacity}>
+          {colonyCells.map(({ x, y, rotation }, index) => (
+            <g
+              className="binary-colony-cell"
+              transform={`translate(${x} ${y}) rotate(${rotation}) scale(.67)`}
+              key={`${x}-${y}`}
+              style={{ animationDelay: `${index * -0.55}s` }}
+            >
+              <use href="#fission-daughter-cell" />
+            </g>
+          ))}
+        </g>
+      </svg>
+    </div>
+  );
 }
 
 function EndosymbiosisAnimation({ progress }: { progress: number }) {
@@ -714,14 +934,17 @@ export function SceneVisual({
           </div>
         ) : null}
         {isSceneSix ? (
-          <div className="scene-six-media" aria-hidden="true">
-            <img
-              className="scene-six-background"
-              src="/assets/episode1/scene06/hintergrund-ausbreitung-leben-v1.png"
-              alt=""
-              draggable={false}
-            />
-          </div>
+          <>
+            <div className="scene-six-media" aria-hidden="true">
+              <img
+                className="scene-six-background"
+                src="/assets/episode1/scene06/hintergrund-ausbreitung-leben-v1.png"
+                alt=""
+                draggable={false}
+              />
+            </div>
+            <BinaryFissionAnimation progress={progress} />
+          </>
         ) : null}
         {isSceneSeven ? (
           <div className="scene-seven-media" aria-hidden="true">
