@@ -297,7 +297,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v27/);
+  assert.match(worker, /zeitreise-v28/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
@@ -322,6 +322,10 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
     new URL("../app/tierstammbaum/page.tsx", import.meta.url),
     "utf8",
   );
+  const focus = await readFile(
+    new URL("../app/components/AnimalEvolutionFocus.tsx", import.meta.url),
+    "utf8",
+  );
   const footer = await readFile(
     new URL("../app/components/SiteFooter.tsx", import.meta.url),
     "utf8",
@@ -344,10 +348,19 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
   );
   assert.match(tree, /window\.location\.hash\.slice\(1\)/);
   assert.match(treePage, /<AnimalFamilyTree \/>/);
+  assert.match(treePage, /<AnimalEvolutionFocus \/>/);
   assert.match(treePage, /Orientierung durch das Tierreich/);
   assert.match(treePage, /href="\/\?weiter=1"/);
   assert.match(treePage, /Die entscheidenden Stationen/);
   assert.match(treePage, /href="#rueckkehr-ins-meer"/);
+  assert.match(treePage, /href="#fisch-landgang"/);
+  assert.match(focus, /Von Flossen zu vier Gliedmaßen/);
+  assert.match(focus, /Tiktaalik/);
+  assert.match(focus, /nicht\s+zwingend ihr direkter Vorfahr/);
+  assert.match(focus, /Ichthyosaurier/);
+  assert.match(focus, /Meeresschildkröten/);
+  assert.match(focus, /Wale/);
+  assert.match(focus, /Das nennt man Konvergenz/);
   assert.match(footer, /href="\/tierstammbaum\/"/);
   assert.match(app, /new URLSearchParams\(window\.location\.search\)/);
   assert.match(app, /setIntroOpen\(false\)/);

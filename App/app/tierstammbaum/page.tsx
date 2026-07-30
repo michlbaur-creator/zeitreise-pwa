@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AnimalEvolutionFocus } from "../components/AnimalEvolutionFocus";
 import { AnimalFamilyTree } from "../components/AnimalFamilyTree";
 import { SiteFooter } from "../components/SiteFooter";
 
@@ -53,11 +54,11 @@ export default function AnimalFamilyTreePage() {
             <strong>Die entscheidenden Stationen</strong>
           </p>
           <div>
-            <Link href="#fische">
+            <Link href="#fisch-landgang">
               <i>1</i>
               <span>Fische</span>
             </Link>
-            <Link href="#amphibien">
+            <Link href="#fisch-landgang">
               <i>2</i>
               <span>Landgang &amp; Amphibien</span>
             </Link>
@@ -78,6 +79,7 @@ export default function AnimalFamilyTreePage() {
 
         <div className="family-tree-page-content">
           <AnimalFamilyTree />
+          <AnimalEvolutionFocus />
         </div>
       </article>
 

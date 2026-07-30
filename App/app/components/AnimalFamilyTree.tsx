@@ -249,12 +249,12 @@ export function AnimalFamilyTree() {
         </div>
       </article>
 
-      <aside className="family-tree-return" id="rueckkehr-ins-meer">
+      <aside className="family-tree-return">
         <span aria-hidden="true">↩</span>
         <p>
           <strong>Übrigens: Manche gingen zurück ins Meer.</strong>
           Ichthyosaurier, Meeresschildkröten und Wale stammen jeweils von
-          Landwirbeltieren ab. Evolution kennt also auch den Rückweg.
+          Landwirbeltieren ab. Unten verfolgen wir diesen Rückweg genauer.
         </p>
       </aside>
 
