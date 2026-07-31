@@ -257,7 +257,7 @@ export default function ZeitreiseApp() {
 
   useEffect(() => {
     if (!introOpen) return;
-    const timer = window.setTimeout(() => setIntroReady(true), 7600);
+    const timer = window.setTimeout(() => setIntroReady(true), 10400);
     return () => window.clearTimeout(timer);
   }, [introOpen]);
 
@@ -647,7 +647,7 @@ export default function ZeitreiseApp() {
     window.setTimeout(() => {
       setIntroOpen(false);
       setIntroClosing(false);
-    }, 720);
+    }, 1120);
   };
 
   const replayIntro = () => {
@@ -789,10 +789,15 @@ export default function ZeitreiseApp() {
 
           {narrationPath ? (
             <audio
-              key={`${scene.id}-${narrationPath}`}
               ref={audioRef}
               src={narrationPath}
               preload="metadata"
+              autoPlay={isPlaying}
+              onCanPlay={(event) => {
+                const audio = event.currentTarget;
+                if (!isPlaying || !audio.paused) return;
+                audio.play().catch(() => setIsPlaying(false));
+              }}
               onTimeUpdate={(event) => {
                 const audio = event.currentTarget;
                 if (!Number.isFinite(audio.duration) || audio.duration <= 0) {

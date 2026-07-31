@@ -244,6 +244,9 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   );
 
   assert.match(app, /goToScene\(currentIndex \+ 1, true\)/);
+  assert.doesNotMatch(app, /key=\{`\$\{scene\.id\}-\$\{narrationPath\}`\}/);
+  assert.match(app, /autoPlay=\{isPlaying\}/);
+  assert.match(app, /onCanPlay=\{\(event\) =>/);
   assert.match(app, /className="next-control"/);
   assert.match(app, /Weiter <span aria-hidden="true">→<\/span>/);
   assert.match(app, /className="play-orb"/);
@@ -251,6 +254,9 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(app, /"Szene starten"/);
   assert.match(styles, /height: clamp\(380px, calc\(100svh - 350px\), 620px\)/);
   assert.match(styles, /@media \(min-width: 761px\) and \(max-height: 900px\)/);
+  assert.match(styles, /animation: intro-stars 11s ease-in-out both/);
+  assert.match(styles, /transition: opacity 1100ms ease/);
+  assert.match(app, /setIntroReady\(true\), 10400/);
 });
 
 test("optimiert Film und Bedienung für Smartphones", async () => {
@@ -329,7 +335,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(imprint, /keine Werbung und kein/);
   assert.match(imprint, /className="info-simple-footer"/);
   assert.match(imprint, /Zurück zur Zeitreise/);
-  assert.match(worker, /zeitreise-v36/);
+  assert.match(worker, /zeitreise-v37/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);

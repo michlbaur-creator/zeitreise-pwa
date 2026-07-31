@@ -6470,7 +6470,7 @@ body.cinematic-intro-active {
   background: #020403;
   color: #fffaf0;
   opacity: 1;
-  transition: opacity 700ms ease;
+  transition: opacity 1100ms ease;
 }
 
 .cinematic-intro.is-leaving {
@@ -6495,17 +6495,17 @@ body.cinematic-intro-active {
 
 .intro-stars {
   background-image: url("/assets/episode1/scene01/hintergrund-sternsystem-v1.png");
-  animation: intro-stars 8s ease-in-out both;
+  animation: intro-stars 11s ease-in-out both;
 }
 
 .intro-planet {
   background-image: url("/assets/episode1/scene01/hintergrund-feuerplanet-v1.png");
-  animation: intro-planet 8s ease-in-out both;
+  animation: intro-planet 11s ease-in-out both;
 }
 
 .intro-surface {
   background-image: url("/assets/episode1/scene01/hintergrund-vulkanische-kueste-neu-v1.png");
-  animation: intro-surface 8s ease-in-out both;
+  animation: intro-surface 11s ease-in-out both;
 }
 
 .intro-shade {
@@ -6527,7 +6527,7 @@ body.cinematic-intro-active {
 .intro-title {
   top: clamp(28px, 7vh, 76px);
   left: clamp(24px, 6vw, 96px);
-  animation: intro-title 7.6s ease both;
+  animation: intro-title 10.6s ease both;
 }
 
 .intro-title span {
@@ -6575,7 +6575,7 @@ body.cinematic-intro-active {
   font-size: clamp(0.86rem, 1.7vw, 1.15rem);
   font-weight: 700;
   letter-spacing: 0.08em;
-  animation: intro-story-one 7.6s ease both;
+  animation: intro-story-one 10.6s ease both;
 }
 
 .intro-story strong {
@@ -6584,7 +6584,7 @@ body.cinematic-intro-active {
   font-size: clamp(1.42rem, 3.4vw, 3.25rem);
   font-weight: 500;
   line-height: 1.08;
-  animation: intro-story-two 7.6s ease both;
+  animation: intro-story-two 10.6s ease both;
 }
 
 .intro-time-machine {
@@ -6642,7 +6642,7 @@ body.cinematic-intro-active {
   box-shadow:
     0 0 0 6px rgba(224, 173, 84, 0.17),
     0 0 28px 8px rgba(224, 173, 84, 0.67);
-  animation: intro-time-travel 7.4s cubic-bezier(0.62, 0.03, 0.22, 1) 0.2s both;
+  animation: intro-time-travel 10.4s cubic-bezier(0.62, 0.03, 0.22, 1) 0.25s both;
   transform: translate(-50%, -50%);
 }
 
@@ -6684,36 +6684,36 @@ body.cinematic-intro-active {
 
 @keyframes intro-stars {
   0% { opacity: 0; transform: scale(1.09); }
-  5%, 31% { opacity: 1; }
-  43%, 100% { opacity: 0; transform: scale(1.01); }
+  6%, 34% { opacity: 1; }
+  51%, 100% { opacity: 0; transform: scale(1.01); }
 }
 
 @keyframes intro-planet {
-  0%, 27% { opacity: 0; transform: scale(1.08); }
-  39%, 62% { opacity: 1; }
-  72%, 100% { opacity: 0; transform: scale(1.01); }
+  0%, 32% { opacity: 0; transform: scale(1.08); }
+  49%, 66% { opacity: 1; }
+  83%, 100% { opacity: 0; transform: scale(1.01); }
 }
 
 @keyframes intro-surface {
-  0%, 59% { opacity: 0; transform: scale(1.07); }
-  72%, 100% { opacity: 1; transform: scale(1); }
+  0%, 65% { opacity: 0; transform: scale(1.07); }
+  82%, 100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes intro-title {
   0%, 7% { opacity: 0; transform: translateY(12px); }
-  17%, 48% { opacity: 1; transform: translateY(0); }
-  60%, 100% { opacity: 0; transform: translateY(-8px); }
+  18%, 47% { opacity: 1; transform: translateY(0); }
+  64%, 100% { opacity: 0; transform: translateY(-8px); }
 }
 
 @keyframes intro-story-one {
-  0%, 26% { opacity: 0; transform: translateY(8px); }
-  36%, 55% { opacity: 1; transform: translateY(0); }
-  67%, 100% { opacity: 0; transform: translateY(-5px); }
+  0%, 28% { opacity: 0; transform: translateY(8px); }
+  42%, 58% { opacity: 1; transform: translateY(0); }
+  73%, 100% { opacity: 0; transform: translateY(-5px); }
 }
 
 @keyframes intro-story-two {
-  0%, 53% { opacity: 0; transform: translateY(9px); }
-  66%, 100% { opacity: 1; transform: translateY(0); }
+  0%, 57% { opacity: 0; transform: translateY(9px); }
+  74%, 100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes intro-time-travel {
