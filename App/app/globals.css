@@ -4132,10 +4132,6 @@ button:disabled {
     background 160ms ease;
 }
 
-.quiz-options button:hover {
-  border-color: rgba(216, 170, 98, 0.36);
-}
-
 .quiz-options button > span {
   display: grid;
   width: 26px;
@@ -4149,15 +4145,15 @@ button:disabled {
 }
 
 .quiz-options button.is-selected {
-  border-color: rgba(216, 170, 98, 0.55);
-  background: rgba(216, 170, 98, 0.08);
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.018);
   color: var(--ink);
 }
 
 .quiz-options button.is-selected > span {
-  border-color: var(--amber);
-  background: var(--amber);
-  color: #18140e;
+  border-color: var(--line);
+  background: transparent;
+  color: var(--faint);
 }
 
 .quiz-options button.is-correct {
@@ -4165,9 +4161,26 @@ button:disabled {
   background: rgba(141, 180, 151, 0.1);
 }
 
+.quiz-options button.is-correct > span {
+  border-color: var(--green);
+  background: var(--green);
+  color: #111914;
+}
+
 .quiz-options button.is-wrong {
   border-color: rgba(213, 135, 121, 0.58);
   background: rgba(213, 135, 121, 0.08);
+}
+
+.quiz-options button.is-wrong > span {
+  border-color: #d58779;
+  background: #d58779;
+  color: #1d1110;
+}
+
+.quiz-options button:focus-visible,
+.final-quiz-options button:focus-visible {
+  outline-color: rgba(111, 188, 211, 0.72);
 }
 
 .check-answer {
@@ -5319,10 +5332,6 @@ button:disabled {
   text-align: left;
 }
 
-.final-quiz-options button:hover {
-  border-color: rgba(216, 170, 98, 0.44);
-}
-
 .final-quiz-options button > span {
   display: grid;
   width: 30px;
@@ -5336,15 +5345,15 @@ button:disabled {
 }
 
 .final-quiz-options button.is-selected {
-  border-color: rgba(216, 170, 98, 0.58);
-  background: rgba(216, 170, 98, 0.09);
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.025);
   color: var(--ink);
 }
 
 .final-quiz-options button.is-selected > span {
-  border-color: var(--amber);
-  background: var(--amber);
-  color: #17130e;
+  border-color: var(--line-strong);
+  background: transparent;
+  color: var(--faint);
 }
 
 .final-quiz-options button.is-correct {
@@ -5352,9 +5361,21 @@ button:disabled {
   background: rgba(141, 180, 151, 0.12);
 }
 
+.final-quiz-options button.is-correct > span {
+  border-color: var(--green);
+  background: var(--green);
+  color: #111914;
+}
+
 .final-quiz-options button.is-wrong {
   border-color: rgba(213, 135, 121, 0.62);
   background: rgba(213, 135, 121, 0.1);
+}
+
+.final-quiz-options button.is-wrong > span {
+  border-color: #d58779;
+  background: #d58779;
+  color: #1d1110;
 }
 
 .final-quiz-actions {

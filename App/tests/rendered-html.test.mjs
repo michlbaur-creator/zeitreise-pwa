@@ -348,7 +348,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v39/);
+  assert.match(worker, /zeitreise-v40/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
