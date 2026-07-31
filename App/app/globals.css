@@ -3951,31 +3951,6 @@ button:disabled {
   line-height: 1.62;
 }
 
-.missing-note {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 11px;
-  margin-top: 23px;
-  padding: 14px;
-  border: 1px solid rgba(216, 170, 98, 0.18);
-  border-radius: 12px;
-  background: rgba(216, 170, 98, 0.055);
-}
-
-.missing-note > span {
-  color: var(--amber);
-  font-size: 1.4rem;
-  line-height: 0.8;
-}
-
-.missing-note strong {
-  display: block;
-  margin-bottom: 3px;
-  color: var(--amber-soft);
-  font-size: 0.73rem;
-}
-
-.missing-note p,
 .asset-status,
 .discovery-panel > p,
 .empty-interaction p {
@@ -3983,16 +3958,6 @@ button:disabled {
   color: var(--muted);
   font-size: 0.74rem;
   line-height: 1.52;
-}
-
-.missing-note.is-ready {
-  border-color: rgba(141, 180, 151, 0.3);
-  background: rgba(141, 180, 151, 0.07);
-}
-
-.missing-note.is-ready > span,
-.missing-note.is-ready strong {
-  color: #b8d5bf;
 }
 
 .interaction-block + .interaction-block {
@@ -4741,7 +4706,7 @@ button:disabled {
   gap: 8px;
   padding: 0 5px;
   color: #dce5df;
-  font-size: 0.67rem;
+  font-size: 0.73rem;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -4777,7 +4742,7 @@ button:disabled {
   background: rgba(255, 255, 255, 0.02);
   color: var(--muted);
   cursor: pointer;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   line-height: 1.3;
   text-align: left;
 }
@@ -4805,8 +4770,20 @@ button:disabled {
 }
 
 .family-tree-quiz fieldset > p {
+  display: grid;
+  gap: 3px;
   margin: 8px 2px 0;
-  font-size: 0.56rem;
+  font-size: 0.63rem;
+  line-height: 1.45;
+}
+
+.family-tree-quiz fieldset > p strong,
+.family-tree-quiz fieldset > p span {
+  display: block;
+}
+
+.family-tree-quiz fieldset > p strong {
+  font-size: 0.66rem;
 }
 
 .family-tree-quiz fieldset > p.is-correct {
@@ -7499,8 +7476,16 @@ body.cinematic-intro-active {
     padding: 11px 9px;
   }
 
+  .family-tree-quiz legend {
+    font-size: 0.76rem;
+  }
+
   .family-tree-quiz fieldset > div {
     grid-template-columns: 1fr;
+  }
+
+  .family-tree-quiz fieldset button {
+    font-size: 0.69rem;
   }
 
   .family-tree-reward {

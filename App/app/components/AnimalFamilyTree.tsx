@@ -164,33 +164,39 @@ const tierIndexByNodeId = new Map(
 
 const treeQuiz = [
   {
-    question:
-      "Welche Aussage beschreibt Schwämme im Vergleich zu den meisten anderen Tieren am besten?",
+    question: "Fangfrage: Welche Aussage über Schwämme ist falsch?",
     options: [
-      "Sie besitzen weder echte Organe noch ein Nervensystem.",
-      "Sie besitzen ein einfaches Nervennetz.",
-      "Sie tragen ein Außenskelett aus Chitin.",
+      "Viele spezialisierte Zellen arbeiten zusammen.",
+      "Sie filtrieren Nahrungsteilchen aus dem Wasser.",
+      "Sie besitzen echte Organe und ein Nervensystem.",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
+    explanation:
+      "Schwämme sind vielzellig, besitzen aber weder echte Organe noch ein Nervensystem.",
   },
   {
-    question: "Welche Kombination ist typisch für Nesseltiere?",
+    question:
+      "Korallen und Quallen sehen völlig verschieden aus. Welche gemeinsame Neuerung verrät ihre Verwandtschaft?",
     options: [
       "Mantel und muskulöser Fuß",
       "Nervennetz und Nesselzellen",
       "Wirbelsäule und Kiemen",
     ],
     correctIndex: 1,
+    explanation:
+      "Beide gehören zu den Nesseltieren und besitzen ein Nervennetz sowie charakteristische Nesselzellen.",
   },
   {
     question:
       "Welcher gemeinsame Grundbauplan verbindet Schnecken, Muscheln und Tintenfische?",
     options: [
+      "Mantel und muskulöser Fuß",
       "Wassergefäßsystem und Stacheln",
       "Außenskelett und Gelenkbeine",
-      "Mantel und muskulöser Fuß",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
+    explanation:
+      "Zum gemeinsamen Grundbauplan der Weichtiere gehören Mantel und muskulöser Fuß – auch wenn beide stark umgebildet sein können.",
   },
   {
     question:
@@ -201,55 +207,68 @@ const treeQuiz = [
       "Nesselzellen und Nervennetz",
     ],
     correctIndex: 0,
+    explanation:
+      "Das schützende Außenskelett und bewegliche Gelenkbeine ermöglichten sehr unterschiedliche Lebensweisen.",
   },
   {
     question:
-      "Warum stehen Stachelhäuter im Stammbaum näher bei Wirbeltieren, als ihr Aussehen vermuten lässt?",
+      "Fangfrage: Warum stehen Stachelhäuter den Wirbeltieren näher, als ihr Aussehen vermuten lässt?",
     options: [
       "Beide besitzen als Erwachsene fünf Arme.",
-      "Beide gehören entwicklungsgeschichtlich zu den Neumündern.",
       "Beide besitzen ein Außenskelett.",
+      "Beide gehören entwicklungsgeschichtlich zu den Neumündern.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
+    explanation:
+      "Entscheidend ist die frühe Embryonalentwicklung: Stachelhäuter und Wirbeltiere gehören beide zu den Neumündern.",
   },
   {
     question:
       "Warum sind „Fische“ keine sauber abgeschlossene Abstammungsgruppe?",
     options: [
       "Weil alle Fische später zu Amphibien wurden.",
-      "Weil Fische keinen gemeinsamen Vorfahren besitzen.",
       "Weil aus frühen fischartigen Wirbeltieren auch Landwirbeltiere hervorgingen.",
+      "Weil Fische keinen gemeinsamen Vorfahren besitzen.",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
+    explanation:
+      "Nimmt man alle Nachfahren früher fischartiger Wirbeltiere ernst, gehören auch die Landwirbeltiere in diesen Ast.",
   },
   {
     question:
-      "Welche Abhängigkeit vom Wasser blieb bei frühen Amphibien bestehen?",
+      "Fangfrage: Ein frühes Wirbeltier besitzt bereits vier Gliedmaßen. Was folgt daraus noch nicht?",
     options: [
-      "Fortpflanzung und Entwicklung",
-      "Atmung ausschließlich durch Kiemen",
-      "Fortbewegung ausschließlich mit Flossen",
+      "Sein Körper kann an Land abgestützt werden.",
+      "Seine Fortpflanzung ist vom Wasser unabhängig.",
+      "Es gehört zur Entwicklungslinie der Vierfüßer.",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
+    explanation:
+      "Vier Gliedmaßen erleichtern den Landgang, doch Eier und Larven früher Amphibien blieben weiterhin ans Wasser gebunden.",
   },
   {
     question:
       "Welche Neuerung machte Amnioten bei der Fortpflanzung unabhängiger vom Wasser?",
     options: [
-      "Ein Außenskelett",
       "Ein geschütztes Ei mit Embryonalhüllen",
+      "Ein Außenskelett",
       "Ein Wassergefäßsystem",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
+    explanation:
+      "Embryonalhüllen und später eine schützende Eischale ermöglichten die Entwicklung fern von offenen Gewässern.",
   },
   {
-    question: "Welche Aussage über Vögel ist richtig?",
+    question:
+      "Letzte Fangfrage: Wo sitzen die Vögel im vereinfachten Tierstammbaum?",
     options: [
       "Vögel stehen außerhalb des Tierstammbaums.",
       "Vögel bilden einen Ast neben allen Reptilien.",
       "Vögel sind lebende Nachfahren einer Dinosaurierlinie.",
     ],
     correctIndex: 2,
+    explanation:
+      "Vögel entstanden innerhalb der Dinosaurier und gehören damit mitten in den Reptilienast.",
   },
 ];
 
@@ -513,9 +532,14 @@ export function AnimalFamilyTree() {
             </div>
             {activeQuizAnswer !== null ? (
               <p className={activeQuizIsCorrect ? "is-correct" : "is-wrong"}>
-                {activeQuizIsCorrect
-                  ? "Richtig – dieser Ast sitzt!"
-                  : "Noch nicht – schau noch einmal genau hin."}
+                <strong>
+                  {activeQuizIsCorrect
+                    ? "Richtig."
+                    : "Noch nicht – schau noch einmal genau hin."}
+                </strong>
+                {activeQuizIsCorrect ? (
+                  <span>{activeQuiz.explanation}</span>
+                ) : null}
               </p>
             ) : null}
           </fieldset>

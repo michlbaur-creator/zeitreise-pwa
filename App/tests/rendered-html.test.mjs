@@ -320,7 +320,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(imprint, /keine Werbung und kein/);
   assert.match(imprint, /className="info-simple-footer"/);
   assert.match(imprint, /Zurück zur Zeitreise/);
-  assert.match(worker, /zeitreise-v32/);
+  assert.match(worker, /zeitreise-v33/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
@@ -380,6 +380,8 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
   assert.match(tree, /Stammbaum-Entdecker/);
   assert.match(tree, /Taraaa!/);
   assert.equal((tree.match(/correctIndex: \d,/g) ?? []).length, 9);
+  assert.equal((tree.match(/explanation:/g) ?? []).length, 9);
+  assert.match(tree, /Fangfrage/);
   assert.match(treePage, /<AnimalFamilyTree \/>/);
   assert.match(treePage, /<AnimalEvolutionFocus \/>/);
   assert.match(treePage, /href="\/\?weiter=1"/);
@@ -400,6 +402,9 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
   assert.match(app, /setIntroOpen\(false\)/);
   assert.match(app, /Tierstammbaum &amp; Stationen/);
   assert.doesNotMatch(app, />\s*Werkstatt\s*</);
+  assert.doesNotMatch(app, /Sprechertext – Fassung/);
+  assert.doesNotMatch(app, /warm · deutlich humorvoller/);
+  assert.doesNotMatch(app, /className=\{`missing-note/);
 });
 
 test("vervollständigt die Entdeckungen in Szene 18", async () => {

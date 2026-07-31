@@ -881,28 +881,7 @@ export default function ZeitreiseApp() {
 
           {panel === "sprecher" ? (
             <section className="panel-section">
-              <div className="section-label">
-                <span>Sprechertext – Fassung 1.2</span>
-                <i>warm · deutlich humorvoller</i>
-              </div>
               <blockquote>{scene.speaker}</blockquote>
-              <div className={`missing-note ${narrationPath ? "is-ready" : ""}`}>
-                <span aria-hidden="true">{narrationPath ? "●" : "○"}</span>
-                <div>
-                  <strong>
-                    {narrationPath
-                      ? `Sprecheraufnahme ${activeNarrationVoice.displayName} vorhanden`
-                      : `Stimme ${activeNarrationVoice.displayName} ausgewählt`}
-                  </strong>
-                  <p>
-                    {narrationPath
-                      ? scene.id <= 14
-                        ? "Diese Szene wurde von Micha persönlich eingesprochen."
-                        : "Diese Szene wird vorläufig mit der KI-Stimme Cedar gesprochen."
-                      : "Die Stimme ist festgelegt; die Audiodatei dieser Szene steht noch aus."}
-                  </p>
-                </div>
-              </div>
             </section>
           ) : null}
 
