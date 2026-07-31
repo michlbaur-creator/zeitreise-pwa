@@ -4243,6 +4243,154 @@ button:disabled {
   --tree-gold: #dfad61;
 }
 
+.family-tree-quest {
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid rgba(223, 173, 97, 0.3);
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 95% 8%, rgba(223, 173, 97, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(104, 185, 202, 0.055), transparent 58%),
+    rgba(7, 12, 11, 0.58);
+}
+
+.family-tree-quest.is-complete {
+  border-color: rgba(155, 198, 90, 0.36);
+  background:
+    radial-gradient(circle at 95% 8%, rgba(155, 198, 90, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(104, 185, 202, 0.055), transparent 58%),
+    rgba(7, 12, 11, 0.58);
+}
+
+.family-tree-quest-heading,
+.family-tree-quiz-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.family-tree-quest-heading p,
+.family-tree-quiz-heading p {
+  margin: 0 0 4px;
+  color: var(--tree-gold);
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.family-tree-quest-heading h2,
+.family-tree-quiz-heading h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(1.15rem, 2.6vw, 1.65rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.family-tree-quest-heading > strong,
+.family-tree-quiz-heading > strong {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(223, 173, 97, 0.42);
+  border-radius: 50%;
+  color: var(--amber-soft);
+  font-family: "Iowan Old Style", Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 0.8;
+  place-content: center;
+  text-align: center;
+}
+
+.family-tree-quest-heading > strong span {
+  color: var(--faint);
+  font-family: inherit;
+  font-size: 0.56rem;
+}
+
+.family-tree-quest-progress {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 15px;
+}
+
+.family-tree-quest-progress > span {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--faint);
+  font-size: 0.55rem;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.family-tree-quest-progress > span i {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: 0.52rem;
+  font-style: normal;
+  place-items: center;
+}
+
+.family-tree-quest-progress > span.is-found {
+  border-color: rgba(155, 198, 90, 0.28);
+  background: rgba(155, 198, 90, 0.055);
+  color: #c7d9b3;
+}
+
+.family-tree-quest-progress > span.is-found i {
+  border-color: rgba(155, 198, 90, 0.4);
+  background: rgba(155, 198, 90, 0.1);
+  color: var(--tree-green);
+}
+
+.family-tree-quest-start {
+  display: flex;
+  width: 100%;
+  min-height: 47px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
+  border: 1px solid rgba(223, 173, 97, 0.42);
+  border-radius: 12px;
+  background: rgba(223, 173, 97, 0.1);
+  color: var(--amber-soft);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.family-tree-quest-start span {
+  font-size: 0.9rem;
+  transition: transform 180ms ease;
+}
+
+.family-tree-quest-start:hover span {
+  transform: translateX(3px);
+}
+
+.family-tree-quest-hint {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 0.65rem;
+  line-height: 1.45;
+}
+
 .family-tree-intro {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(150px, 0.28fr);
@@ -4377,6 +4525,11 @@ button:disabled {
   transform: rotate(45deg);
 }
 
+.family-tree-tier.is-locked {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.014), transparent 55%);
+}
+
 .family-tree-tier > header {
   display: flex;
   align-items: center;
@@ -4395,6 +4548,43 @@ button:disabled {
   font-size: 0.58rem;
   font-weight: 800;
   place-items: center;
+}
+
+.family-tree-reveal {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px dashed rgba(223, 173, 97, 0.3);
+  border-radius: 12px;
+  background: rgba(223, 173, 97, 0.045);
+  color: var(--amber-soft);
+  cursor: pointer;
+  text-align: left;
+}
+
+.family-tree-reveal > span {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: rgba(223, 173, 97, 0.11);
+  font-size: 0.78rem;
+  place-items: center;
+}
+
+.family-tree-reveal strong {
+  font-size: 0.64rem;
+}
+
+.family-tree-reveal:disabled {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--faint);
+  cursor: default;
+  opacity: 0.62;
 }
 
 .family-tree-tier header strong,
@@ -4541,6 +4731,195 @@ button:disabled {
   color: var(--muted);
   font-size: 0.72rem;
   line-height: 1.52;
+}
+
+.family-tree-quiz {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(155, 198, 90, 0.28);
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 94% 3%, rgba(155, 198, 90, 0.1), transparent 30%),
+    rgba(7, 12, 11, 0.52);
+}
+
+.family-tree-quiz-heading > strong {
+  width: auto;
+  min-width: 72px;
+  height: 48px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border-color: rgba(155, 198, 90, 0.35);
+  color: var(--tree-green);
+  font-size: 1rem;
+}
+
+.family-tree-quiz-heading > strong span {
+  display: block;
+  margin-top: 3px;
+  color: var(--faint);
+  font-family: sans-serif;
+  font-size: 0.48rem;
+  font-weight: 700;
+}
+
+.family-tree-quiz-questions {
+  display: grid;
+  gap: 11px;
+  margin-top: 16px;
+}
+
+.family-tree-quiz fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.family-tree-quiz legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 5px;
+  color: #dce5df;
+  font-size: 0.67rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.family-tree-quiz legend span {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(104, 185, 202, 0.32);
+  border-radius: 50%;
+  color: var(--tree-blue);
+  font-size: 0.53rem;
+  place-items: center;
+}
+
+.family-tree-quiz fieldset > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.family-tree-quiz fieldset button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  min-height: 48px;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.58rem;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.family-tree-quiz fieldset button > span {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: 0.53rem;
+  place-items: center;
+}
+
+.family-tree-quiz fieldset button.is-correct {
+  border-color: rgba(155, 198, 90, 0.46);
+  background: rgba(155, 198, 90, 0.08);
+  color: #c8dcb1;
+}
+
+.family-tree-quiz fieldset button.is-wrong {
+  border-color: rgba(220, 122, 103, 0.42);
+  background: rgba(220, 122, 103, 0.07);
+  color: #e2a99d;
+}
+
+.family-tree-quiz fieldset > p {
+  margin: 8px 2px 0;
+  font-size: 0.56rem;
+}
+
+.family-tree-quiz fieldset > p.is-correct {
+  color: #c8dcb1;
+}
+
+.family-tree-quiz fieldset > p.is-wrong {
+  color: #e2a99d;
+}
+
+.family-tree-quiz-again {
+  margin: 13px 0 0;
+  color: #e2a99d;
+  font-size: 0.62rem;
+  text-align: center;
+}
+
+.family-tree-reward {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 13px;
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid rgba(223, 173, 97, 0.46);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 12% 50%, rgba(223, 173, 97, 0.15), transparent 24%),
+    rgba(223, 173, 97, 0.07);
+  box-shadow: 0 0 32px rgba(223, 173, 97, 0.07);
+}
+
+.family-tree-reward > span {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(223, 173, 97, 0.54);
+  border-radius: 50%;
+  background: rgba(223, 173, 97, 0.12);
+  color: var(--amber-soft);
+  font-size: 1.25rem;
+  place-items: center;
+}
+
+.family-tree-reward p,
+.family-tree-reward strong,
+.family-tree-reward small {
+  display: block;
+}
+
+.family-tree-reward p {
+  margin: 0 0 2px;
+  color: var(--tree-gold);
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.family-tree-reward strong {
+  color: var(--amber-soft);
+  font-family: "Iowan Old Style", Georgia, serif;
+  font-size: 1.16rem;
+  font-weight: 500;
+}
+
+.family-tree-reward small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.59rem;
+  line-height: 1.4;
 }
 
 .family-tree-return {
@@ -6949,6 +7328,49 @@ body.cinematic-intro-active {
 
   .family-tree-page-content {
     padding: 22px 12px 28px;
+  }
+
+  .family-tree-quest,
+  .family-tree-quiz {
+    padding: 14px 12px;
+    border-radius: 14px;
+  }
+
+  .family-tree-quest-heading h2,
+  .family-tree-quiz-heading h3 {
+    font-size: 1.15rem;
+  }
+
+  .family-tree-quest-heading > strong {
+    width: 47px;
+    height: 47px;
+  }
+
+  .family-tree-quest-progress {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .family-tree-quest-progress > span {
+    min-height: 42px;
+  }
+
+  .family-tree-quest-start,
+  .family-tree-reveal,
+  .family-tree-quiz fieldset button {
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+
+  .family-tree-quiz fieldset {
+    padding: 11px 9px;
+  }
+
+  .family-tree-quiz fieldset > div {
+    grid-template-columns: 1fr;
+  }
+
+  .family-tree-reward {
+    padding: 13px 11px;
   }
 
   .about-page {

@@ -154,16 +154,71 @@ const tiers = [
 ];
 
 const nodeById = new Map(nodes.map((node) => [node.id, node]));
+const tierIndexByNodeId = new Map(
+  tiers.flatMap((tier, tierIndex) =>
+    tier.ids.map((id) => [id, tierIndex] as const),
+  ),
+);
+
+const treeQuiz = [
+  {
+    question: "Welche Tiergruppe besitzt die namensgebenden Nesselzellen?",
+    options: ["Schwämme", "Nesseltiere", "Weichtiere"],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Welche Neuerung machte Amnioten bei der Fortpflanzung unabhängiger vom Wasser?",
+    options: [
+      "Ein geschütztes Ei mit Embryonalhüllen",
+      "Ein Außenskelett",
+      "Kiemen und Flossen",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question: "Welche Aussage über Vögel ist richtig?",
+    options: [
+      "Vögel stehen außerhalb des Tierstammbaums.",
+      "Vögel bilden einen Ast neben allen Reptilien.",
+      "Vögel sind lebende Nachfahren einer Dinosaurierlinie.",
+    ],
+    correctIndex: 2,
+  },
+];
 
 export function AnimalFamilyTree() {
   const [selectedId, setSelectedId] = useState("tierreich");
+  const [revealedTierCount, setRevealedTierCount] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState<(number | null)[]>(
+    () => treeQuiz.map(() => null),
+  );
   const selected = nodeById.get(selectedId) ?? nodes[0];
+  const allTiersRevealed = revealedTierCount === tiers.length;
+  const correctAnswerCount = quizAnswers.filter(
+    (answer, index) => answer === treeQuiz[index].correctIndex,
+  ).length;
+  const quizComplete = quizAnswers.every((answer) => answer !== null);
+  const quizWon = quizComplete && correctAnswerCount === treeQuiz.length;
+
+  const revealTier = (tierIndex: number) => {
+    if (tierIndex > revealedTierCount) return;
+    setRevealedTierCount((current) => Math.max(current, tierIndex + 1));
+    const firstNodeId = tiers[tierIndex]?.ids[0];
+    if (firstNodeId) setSelectedId(firstNodeId);
+  };
 
   useEffect(() => {
     const selectFromHash = () => {
       const id = window.location.hash.slice(1);
       if (nodeById.has(id)) {
         setSelectedId(id);
+        const tierIndex = tierIndexByNodeId.get(id);
+        if (tierIndex !== undefined) {
+          setRevealedTierCount((current) =>
+            Math.max(current, tierIndex + 1),
+          );
+        }
         window.requestAnimationFrame(() => {
           document.getElementById(id)?.scrollIntoView({
             behavior: "smooth",
@@ -178,7 +233,15 @@ export function AnimalFamilyTree() {
       if (!(target instanceof Element)) return;
       const anchor = target.closest<HTMLAnchorElement>('a[href^="#"]');
       const id = anchor?.getAttribute("href")?.slice(1) ?? "";
-      if (nodeById.has(id)) setSelectedId(id);
+      if (nodeById.has(id)) {
+        setSelectedId(id);
+        const tierIndex = tierIndexByNodeId.get(id);
+        if (tierIndex !== undefined) {
+          setRevealedTierCount((current) =>
+            Math.max(current, tierIndex + 1),
+          );
+        }
+      }
     };
 
     selectFromHash();
@@ -192,6 +255,60 @@ export function AnimalFamilyTree() {
 
   return (
     <div className="interaction-block animal-family-tree">
+      <section
+        className={`family-tree-quest ${
+          allTiersRevealed ? "is-complete" : ""
+        }`}
+        aria-labelledby="family-tree-quest-title"
+      >
+        <div className="family-tree-quest-heading">
+          <div>
+            <p>Entdeckungsaufgabe</p>
+            <h2 id="family-tree-quest-title">
+              {allTiersRevealed
+                ? "Alle vier Äste sind sichtbar"
+                : "Öffne den Stammbaum Ast für Ast"}
+            </h2>
+          </div>
+          <strong aria-label={`${revealedTierCount} von 4 Ästen entdeckt`}>
+            {revealedTierCount}<span>/4</span>
+          </strong>
+        </div>
+
+        <div
+          className="family-tree-quest-progress"
+          aria-label="Fortschritt der Entdeckungsaufgabe"
+        >
+          {tiers.map((tier, tierIndex) => (
+            <span
+              className={tierIndex < revealedTierCount ? "is-found" : ""}
+              key={tier.label}
+            >
+              <i aria-hidden="true">
+                {tierIndex < revealedTierCount ? "✓" : tierIndex + 1}
+              </i>
+              {tier.label}
+            </span>
+          ))}
+        </div>
+
+        {revealedTierCount === 0 ? (
+          <button
+            type="button"
+            className="family-tree-quest-start"
+            onClick={() => revealTier(0)}
+          >
+            Entdeckungsreise starten <span aria-hidden="true">→</span>
+          </button>
+        ) : (
+          <p className="family-tree-quest-hint">
+            {allTiersRevealed
+              ? "Sehr gut. Jetzt wartet unter dem Stammbaum das Abschlussquiz."
+              : "Tippe die Tiergruppen an und öffne danach den nächsten Ast."}
+          </p>
+        )}
+      </section>
+
       <div className="family-tree-intro">
         <div>
           <h1>Der Stammbaum der Tiere</h1>
@@ -211,7 +328,12 @@ export function AnimalFamilyTree() {
 
       <div className="family-tree-map">
         {tiers.map((tier, tierIndex) => (
-          <section className="family-tree-tier" key={tier.label}>
+          <section
+            className={`family-tree-tier ${
+              tierIndex < revealedTierCount ? "is-revealed" : "is-locked"
+            }`}
+            key={tier.label}
+          >
             <header>
               <span>{twoDigits(tierIndex + 1)}</span>
               <div>
@@ -219,44 +341,156 @@ export function AnimalFamilyTree() {
                 <small>{tier.note}</small>
               </div>
             </header>
-            <div
-              className={`family-tree-nodes family-tree-nodes-${tier.ids.length}`}
-            >
-              {tier.ids.map((id) => {
-                const node = nodeById.get(id);
-                if (!node) return null;
+            {tierIndex < revealedTierCount ? (
+              <div
+                className={`family-tree-nodes family-tree-nodes-${tier.ids.length}`}
+              >
+                {tier.ids.map((id) => {
+                  const node = nodeById.get(id);
+                  if (!node) return null;
 
-                return (
-                  <button
-                    type="button"
-                    id={id}
-                    className={selectedId === id ? "is-selected" : ""}
-                    onClick={() => setSelectedId(id)}
-                    aria-pressed={selectedId === id}
-                    key={id}
-                  >
-                    <span aria-hidden="true">{node.symbol}</span>
-                    <strong>{node.name}</strong>
-                    {node.scientific ? <small>{node.scientific}</small> : null}
-                  </button>
-                );
-              })}
-            </div>
+                  return (
+                    <button
+                      type="button"
+                      id={id}
+                      className={selectedId === id ? "is-selected" : ""}
+                      onClick={() => setSelectedId(id)}
+                      aria-pressed={selectedId === id}
+                      key={id}
+                    >
+                      <span aria-hidden="true">{node.symbol}</span>
+                      <strong>{node.name}</strong>
+                      {node.scientific ? <small>{node.scientific}</small> : null}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="family-tree-reveal"
+                disabled={tierIndex > revealedTierCount}
+                onClick={() => revealTier(tierIndex)}
+              >
+                <span aria-hidden="true">
+                  {tierIndex === revealedTierCount ? "＋" : "· · ·"}
+                </span>
+                <strong>
+                  {tierIndex === revealedTierCount
+                    ? "Diesen Ast aufdecken"
+                    : "Noch verborgen"}
+                </strong>
+              </button>
+            )}
           </section>
         ))}
       </div>
 
-      <article className="family-tree-detail" aria-live="polite">
-        <div className="family-tree-detail-symbol" aria-hidden="true">
-          {selected.symbol}
-        </div>
-        <div>
-          <p>{selected.scientific ?? "Gemeinsamer Ursprung aller Tiere"}</p>
-          <h4>{selected.name}</h4>
-          <strong>{selected.innovation}</strong>
-          <span>{selected.description}</span>
-        </div>
-      </article>
+      {revealedTierCount > 0 ? (
+        <article className="family-tree-detail" aria-live="polite">
+          <div className="family-tree-detail-symbol" aria-hidden="true">
+            {selected.symbol}
+          </div>
+          <div>
+            <p>{selected.scientific ?? "Gemeinsamer Ursprung aller Tiere"}</p>
+            <h4>{selected.name}</h4>
+            <strong>{selected.innovation}</strong>
+            <span>{selected.description}</span>
+          </div>
+        </article>
+      ) : null}
+
+      {allTiersRevealed ? (
+        <section className="family-tree-quiz" aria-labelledby="tree-quiz-title">
+          <div className="family-tree-quiz-heading">
+            <div>
+              <p>Dein Abschlussquiz</p>
+              <h3 id="tree-quiz-title">Drei Fragen bis zur Auszeichnung</h3>
+            </div>
+            <strong>
+              {correctAnswerCount}<span>/3 richtig</span>
+            </strong>
+          </div>
+
+          <div className="family-tree-quiz-questions">
+            {treeQuiz.map((item, questionIndex) => {
+              const answer = quizAnswers[questionIndex];
+
+              return (
+                <fieldset key={item.question}>
+                  <legend>
+                    <span>{questionIndex + 1}</span>
+                    {item.question}
+                  </legend>
+                  <div>
+                    {item.options.map((option, optionIndex) => {
+                      const isSelected = answer === optionIndex;
+                      const isCorrect =
+                        isSelected && optionIndex === item.correctIndex;
+                      const isWrong =
+                        isSelected && optionIndex !== item.correctIndex;
+
+                      return (
+                        <button
+                          type="button"
+                          className={`${isCorrect ? "is-correct" : ""} ${
+                            isWrong ? "is-wrong" : ""
+                          }`}
+                          aria-pressed={isSelected}
+                          onClick={() =>
+                            setQuizAnswers((current) =>
+                              current.map((value, index) =>
+                                index === questionIndex ? optionIndex : value,
+                              ),
+                            )
+                          }
+                          key={option}
+                        >
+                          <span aria-hidden="true">
+                            {isCorrect ? "✓" : isWrong ? "×" : optionIndex + 1}
+                          </span>
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {answer !== null ? (
+                    <p
+                      className={
+                        answer === item.correctIndex
+                          ? "is-correct"
+                          : "is-wrong"
+                      }
+                    >
+                      {answer === item.correctIndex
+                        ? "Richtig!"
+                        : "Noch nicht – probiere eine andere Antwort."}
+                    </p>
+                  ) : null}
+                </fieldset>
+              );
+            })}
+          </div>
+
+          {quizWon ? (
+            <div className="family-tree-reward" role="status">
+              <span aria-hidden="true">★</span>
+              <div>
+                <p>Auszeichnung freigeschaltet</p>
+                <strong>Stammbaum-Entdecker</strong>
+                <small>
+                  Du hast alle vier Äste geöffnet und das Abschlussquiz gelöst.
+                </small>
+              </div>
+            </div>
+          ) : quizComplete ? (
+            <p className="family-tree-quiz-again">
+              {correctAnswerCount} von 3 richtig – korrigiere noch die markierte
+              Antwort.
+            </p>
+          ) : null}
+        </section>
+      ) : null}
 
       <a
         className="family-tree-fauna-link"
