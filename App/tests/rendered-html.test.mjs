@@ -63,13 +63,32 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
     [5, 5, 5, 5],
   );
   assert.match(source, /weder Bademeister noch Nachschub aus dem Meer/);
-  assert.match(source, /dein Reisebüro hat eindeutig die Warnhinweise vergessen/);
+  assert.match(source, /Tadaa! Du landest auf der jungen Erde/);
   assert.match(source, /niemand muss dafür einen Bauantrag stellen/);
   assert.match(source, /das erste Sitzungsprotokoll erfand/);
-  assert.match(source, /außer vielleicht beim Abendessen/);
+  assert.match(source, /es ging einfach alles verdammt schnell/);
   assert.match(source, /Laufen\? Muss ich das erst üben\?/);
-  assert.match(source, /ihr eigenes „Kinderzimmer“ einfach mit/);
+  assert.match(source, /ihr eigenes Kinderzimmer einfach mit/);
   assert.match(source, /aus dem dritten Stock die Dachrinne putzen/);
+});
+
+test("synchronisiert die Texteinblendungen mit Michas Aufnahmen", async () => {
+  const captions = await readFile(
+    new URL("../app/data/captions.ts", import.meta.url),
+    "utf8",
+  );
+  const visual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal((captions.match(/^\s{2}\d+: \[$/gm) ?? []).length, 22);
+  assert.equal((captions.match(/\{ at: 0,/g) ?? []).length, 22);
+  assert.match(captions, /Vulkane husten Asche/);
+  assert.match(captions, /Kambrische Explosion/);
+  assert.match(captions, /Superstars der Urzeit/);
+  assert.match(visual, /captionTracks\[scene\.id\]/);
+  assert.match(visual, /progress >= cue\.at/);
 });
 
 test("kündigt als zweite Episode den Weg zum Menschen an", async () => {
@@ -304,7 +323,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(imprint, /keine Werbung und kein/);
   assert.match(imprint, /className="info-simple-footer"/);
   assert.match(imprint, /Zurück zur Zeitreise/);
-  assert.match(worker, /zeitreise-v34/);
+  assert.match(worker, /zeitreise-v35/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);

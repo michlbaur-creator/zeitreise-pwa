@@ -67,7 +67,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 33 Sekunden",
     timeLabel: "Vor mehr als 4 Milliarden Jahren",
     speaker:
-      "Du landest auf der jungen Erde – und dein Reisebüro hat eindeutig die Warnhinweise vergessen. Der Boden glüht, Vulkane husten Asche, und aus allen Ritzen dampft es. Meer? Wald? Kiosk? Fehlanzeige. Hier gibt es nur Feuer, Gestein und eine ziemlich ungemütliche Atmosphäre. Kaum zu glauben: Aus diesem chaotischen Glutball wird einmal dein Zuhause.",
+      "Tadaa! Du landest auf der jungen Erde. Was ist das? Der Boden glüht, Vulkane husten Asche, und aus allen Ritzen dampft es. Meer? Wald? Kiosk? Fehlanzeige. Hier gibt es nur Feuer, Gestein und eine ziemlich ungemütliche Atmosphäre. Kaum zu glauben: Aus diesem chaotischen Glutball wird einmal dein Zuhause.",
     theme: "volcanic",
     setting:
       "Hintergrund: bg_ep01_s01.jpg. Bildinhalt: Langsame Kamerafahrt (Zoom-In 8 %).",
@@ -126,11 +126,11 @@ export const scenes: Scene[] = [
   {
     id: 2,
     title: "Die Erde kühlt langsam ab",
-    duration: 34,
-    durationLabel: "ca. 34 Sekunden",
+    duration: 30,
+    durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor etwa 4,4 Milliarden Jahren",
     speaker:
-      "Zum Glück hat selbst ein Glutball irgendwann genug vom Dauerkochen. Die Erde kühlt ab, Wasserdampf sammelt sich in dicken Wolken – und dann öffnet der Himmel sämtliche Schleusen. Es regnet immer wieder, über gewaltige Zeiträume. Auf heißem Gestein zischt das Wasser sofort los. Deine Regenjacke? Nett gemeint. Aber völlig chancenlos.",
+      "Aber zum Glück hat selbst ein Glutball irgendwann genug vom Dauerkochen. Die Erde kühlt ab, Wasserdampf sammelt sich in dicken, dicken Wolken – und dann öffnet der Himmel sämtliche Schleusen. Es regnet immer wieder, immer wieder über einen gewaltigen Zeitraum. Auf heißem Stein zischt das Wasser sofort los.",
     theme: "rain",
     setting:
       "Derselbe Küstenabschnitt wie Szene 1. Die Vulkanlandschaft wirkt bereits etwas ruhiger. Weniger Eruptionen, dafür dichter Wasserdampf. Im Vordergrund glühen noch einzelne Lavafelder, am Horizont steigen Dampfsäulen auf. Die ersten dunklen Wolken bilden sich.",
@@ -192,11 +192,11 @@ export const scenes: Scene[] = [
   {
     id: 3,
     title: "Die ersten Ozeane entstehen",
-    duration: 30,
-    durationLabel: "ca. 30 Sekunden",
+    duration: 38,
+    durationLabel: "ca. 38 Sekunden",
     timeLabel: "Vor etwa 4,4 Milliarden Jahren",
     speaker:
-      "Der Regen findet jede Mulde. Aus Pfützen werden Seen, aus Seen Meere und schließlich riesige Ozeane. Noch kein Fisch, kein Seetang, nicht einmal eine freche Qualle. Trotzdem ist das Wasser ein Volltreffer: Stoffe können sich darin lösen, begegnen und reagieren. Die Bühne ist fertig. Jetzt fehlt nur noch das Leben – eine Kleinigkeit.",
+      "Jetzt wird es richtig nass. Der Regen findet jede Mulde. Aus Pfützen werden Seen, aus Seen Meere und schließlich riesige Ozeane. Noch kein Fisch, kein Seetang, nicht einmal eine freche Qualle. Trotzdem: Das ist ein Volltreffer. Stoffe können sich darin lösen, begegnen und später miteinander reagieren. Die Bühne ist bereitet. Jetzt fehlt nur noch eine Kleinigkeit: das Leben.",
     theme: "ocean",
     setting:
       "Derselbe Küstenabschnitt wie in den beiden vorherigen Szenen. Der Dauerregen hält an. Große Bereiche der erkalteten Lava stehen bereits unter Wasser. Im Vordergrund bilden sich kleine Seen, im Hintergrund vereinigen sie sich zu einem gewaltigen Urmeer. Über dem Wasser ziehen dichte Wolken, einzelne Sonnenstrahlen brechen erstmals durch.",
@@ -258,11 +258,11 @@ export const scenes: Scene[] = [
   {
     id: 4,
     title: "Die Ursuppe - Wo alles begann",
-    duration: 38,
-    durationLabel: "ca. 38 Sekunden",
+    duration: 34,
+    durationLabel: "ca. 34 Sekunden",
     timeLabel: "Vor etwa 4 Milliarden Jahren",
     speaker:
-      "Willkommen in der berühmten Ursuppe. Klingt nach Mittagessen, schmeckt aber vermutlich scheußlich. Im warmen Wasser treiben Mineralstoffe und einfache Moleküle; Blitze, Vulkanwärme und Sonnenlicht liefern Energie für immer neue Verbindungen. Eine fertige Zelle springt dabei nicht plötzlich aus dem Topf. Wie Chemie tatsächlich zu Leben wurde, bleibt eines der spannendsten Rätsel der Forschung.",
+      "Willkommen in der berühmten Ursuppe. Klingt nach Mittagessen, schmeckt aber vermutlich nicht ganz so gut. Im warmen Wasser treiben Mineralstoffe und einfache Moleküle. Blitze, Vulkanwärme und Sonnenlicht liefern Energie für immer neue Verbindungen. Eine fertige Zelle springt dabei nicht plötzlich aus dem Topf. Wie Chemie tatsächlich zu Leben wurde, bleibt eines der spannendsten Rätsel der Forschung.",
     theme: "lagoon",
     setting:
       "Derselbe Küstenabschnitt - Millionen Jahre später. Die Vulkane sind nur noch vereinzelt aktiv. Im Vordergrund befindet sich eine flache, warme Lagune. Das Wasser wirkt leicht grünlich bis bräunlich durch gelöste Mineralien. Kleine Felsen ragen aus dem Wasser. Im Hintergrund steigt vereinzelt Dampf auf. Die Sonne steht tief und taucht die Szene in warmes, goldenes Licht.",
@@ -328,7 +328,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 52 Sekunden",
     timeLabel: "Vor mindestens 3,5 Milliarden Jahren",
     speaker:
-      "Jetzt bitte sehr, sehr klein denken. Zwischen Mineralien bilden sich winzige Bläschen mit membranähnlichen Hüllen – gewissermaßen Einzimmerwohnungen für chemische Reaktionen. Drinnen können Stoffe zusammenbleiben, draußen herrscht das übliche Urmeer-Chaos. Wie daraus die erste echte Zelle entstand, wissen wir nicht genau. Aber irgendwann kann sich etwas erhalten und vermehren. Glückwunsch, Erde: Du hast Leben!",
+      "Und jetzt musst du sehr, sehr klein denken. Zwischen Mineralien bilden sich winzige Bläschen mit membranähnlichen Hüllen – sozusagen Einzimmerwohnungen für chemische Reaktionen. Darin können Stoffe zusammenbleiben, obwohl draußen das übliche Urmeerchaos tobt. Wie daraus die erste echte Zelle entstand, wissen wir leider nicht so ganz genau. Aber wir wissen: Irgendwann konnte sich etwas erhalten und vermehren. Glückwunsch, liebe Erde! Du hast Leben!",
     theme: "micro",
     setting:
       "Unter der Wasseroberfläche einer flachen, warmen Lagune dringt Sonnenlicht in weichen Strahlen durch das Wasser. Kleine Mineralpartikel schweben langsam umher. Im Vordergrund liegen poröse Lavagesteine und Mineralkristalle. Die Szene wirkt ruhig und geheimnisvoll.",
@@ -394,7 +394,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 32 Sekunden",
     timeLabel: "Vor etwa 3,5 Milliarden Jahren",
     speaker:
-      "Die erste Zelle ist kaum da, schon entdeckt sie den ältesten Wachstumstrick der Welt: teilen. Aus einer werden zwei, aus zwei vier – und niemand muss dafür einen Bauantrag stellen. Manche Zellen kleben an Felsen, andere treiben durchs Wasser. Noch ist alles mikroskopisch klein. Aber das Leben hat offenbar nicht vor, eine seltene Erscheinung zu bleiben.",
+      "Die erste Zelle ist kaum da, schon entdeckt sie den ältesten Wachstumstrick der Welt: Teilen, vermehren. Aus einer werden zwei, aus zwei vier und so weiter und so weiter – und niemand muss dafür einen Bauantrag stellen. Manche Zellen kleben an Felsen, andere treiben durchs Wasser. Noch ist alles mikroskopisch klein, aber das Leben hat offenbar nicht vor, eine seltene Erscheinung zu bleiben.",
     theme: "micro",
     setting:
       "Die Kamera bleibt unter Wasser. Zahlreiche einfache Einzeller schweben durch das Bild. Einige teilen sich, andere treiben mit der Strömung. Im Hintergrund erkennt man poröse Gesteine, an denen sich erste Biofilme bilden. Die Szene wirkt lebendiger, ohne überladen zu sein.",
@@ -451,7 +451,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 37 Sekunden",
     timeLabel: "Vor mindestens 2,4 Milliarden Jahren",
     speaker:
-      "Diese unscheinbaren Teppiche sind echte Erfinder: Cyanobakterien. Sie nutzen Licht, Wasser und Kohlendioxid, bauen daraus energiereiche Stoffe und geben Sauerstoff ab – anfangs Bläschen für Bläschen. Für dich ist Sauerstoff selbstverständlich. Damals ist er eine völlig neue Zutat im planetarischen Kochstudio. Und wie bei neuen Zutaten üblich, verträgt sie längst nicht jeder.",
+      "Die unscheinbaren Teppiche, die du hier siehst, sind echte Erfinder: Cyanobakterien. Sie nutzen Licht, Wasser und Kohlendioxid, bauen daraus energiereiche Stoffe und geben Sauerstoff ab. Anfangs Bläschen für Bläschen. Für dich und für uns ist Sauerstoff eine Selbstverständlichkeit. Damals ist er eine völlig neue Zutat im planetarischen Kochstudio. Und wie bei neuen Zutaten üblich, verträgt sie längst nicht jeder.",
     theme: "oxygen",
     setting:
       "Flaches Urmeer mit grünlich-bläulichen Cyanobakterienmatten und niedrigen Stromatolithen. Das Wasser ist klarer als zuvor. Winzige Sauerstoffbläschen steigen langsam zur Oberfläche. Die Szene soll Zuversicht ausstrahlen.",
@@ -509,7 +509,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 34 Sekunden",
     timeLabel: "Vor etwa 2,4 Milliarden Jahren",
     speaker:
-      "Der neue Sauerstoff hat zunächst alle Hände voll zu tun: Im Meer reagiert er mit gelöstem Eisen und anderen Stoffen. Erst viel später sammelt er sich in der Luft. Für viele damalige Mikroben ist er pures Gift; andere lernen, mit ihm besonders viel Energie zu gewinnen. Die Erde wechselt ihre Atmosphäre – ohne Rücksicht auf die bisherigen Mieter.",
+      "Der neu gebackene Sauerstoff hat jetzt erst einmal alle Hände voll zu tun. Im Meer reagiert er mit gelöstem Eisen und anderen Stoffen. Erst viel, viel später sammelt er sich in der Luft. Für viele damalige Mikroben ist er das pure Gift. Viele sterben. Andere lernen, mit ihm besonders viel Energie zu gewinnen. Die Erde wechselt ihre Atmosphäre – ohne Rücksicht auf die bisherigen Mieter.",
     theme: "atmosphere",
     setting:
       "Zum ersten Mal sehen wir die Erde aus größerer Entfernung. Über Millionen von Jahren verändert sich die Atmosphäre. Der Himmel wirkt zunächst diesig und gelblich. Mit fortschreitender Zeit wird er heller und schließlich tiefblau. Die Ozeane spiegeln das Licht, während die Vulkanaktivität weiter zurückgeht.",
@@ -561,7 +561,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 47 Sekunden",
     timeLabel: "Vor etwa 1,8 Milliarden Jahren",
     speaker:
-      "Jetzt passiert etwas, das jede WG-Beratung begeistert hätte. Eine größere Zelle nimmt ein Bakterium auf – und verdaut es ausnahmsweise nicht. Das Bakterium liefert reichlich Energie, die große Zelle bietet Schutz und Verpflegung. Beide bleiben zusammen. Aus den Nachfahren der kleinen Mitbewohner werden Mitochondrien, die Kraftwerke deiner Zellen. Diese Zweck-WG läuft bis heute.",
+      "Und jetzt passiert etwas völlig Verrücktes. Eine größere Zelle nimmt ein Bakterium auf und verdaut es ausnahmsweise nicht. Das Bakterium liefert reichlich Energie, die große Zelle bietet Schutz und Verpflegung. Also bleiben sie zusammen. Aus den Nachfahren der kleinen Mitbewohner werden später die Mitochondrien – die Kraftwerke auch deiner Zellen. Die haben wir immer noch in uns. Denn diese Zweck-WG läuft tatsächlich bis heute. Und zwar: Sie läuft super.",
     theme: "micro",
     setting:
       "Mikroskopische Unterwasserwelt mit einfachen Bakterien und einer größeren Zelle im Mittelpunkt. Eine kleinere Bakterienzelle wird aufgenommen, aber nicht verdaut. Die Farben bleiben natürlich: leicht grünlich, warmes Sonnenlicht, ruhiges Wasser.",
@@ -622,7 +622,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 41 Sekunden",
     timeLabel: "Vor etwa 1,5 Milliarden Jahren",
     speaker:
-      "Mit der neuen Energie werden Zellen zu kleinen Wunderpaketen. Manche jagen, andere betreiben Fotosynthese, wieder andere bauen Kolonien. Einen Chef oder Bauplan gibt es nicht. Zufällige erbliche Veränderungen liefern Varianten, natürliche Auslese sortiert. Das dauert viele Generationen – aber Evolution hat keinen Feierabend. So füllt sich das Meer mit immer neuen Formen und Fähigkeiten.",
+      "Mit dieser neuen Energie werden Zellen zu kleinen Wunderpaketen. Manche jagen, andere betreiben Fotosynthese, wieder andere bauen ganze Kolonien. Einen Chef oder Bauplan gibt es nicht. Zufällige erbliche Veränderungen liefern Varianten. Ganz wichtig: Die natürliche Auslese sortiert das Ganze. Das dauert viele, viele Generationen. Aber Evolution hat eben keinen Feierabend. So füllt sich das Meer mit immer neuen Formen und Fähigkeiten.",
     theme: "micro",
     setting:
       "Ein flaches Meer voller mikroskopischer Vielfalt. Unterschiedliche Einzeller sind kugelförmig, länglich, mit Geißeln oder feinen Fortsätzen. Einige schweben frei, andere gleiten über den Meeresboden. Die Welt wirkt lebendig und abwechslungsreich.",
@@ -688,7 +688,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 38 Sekunden",
     timeLabel: "Vor mehr als 1 Milliarde Jahren",
     speaker:
-      "Bei der nächsten Teilung sagen manche Zellen offenbar: „Ach, bleib doch noch.“ Sie hängen zusammen, tauschen Signale aus und verteilen Aufgaben. Eine kümmert sich ums Bewegen, eine andere um Nahrung oder Schutz. Plötzlich muss nicht mehr jede Zelle alles allein schaffen. So entstehen Vielzeller – Teamarbeit, lange bevor irgendjemand das erste Sitzungsprotokoll erfand.",
+      "Und bei der nächsten Teilung sagen manche Zellen anscheinend: „Ach, bleibt doch noch.“ Sie hängen tatsächlich zusammen, tauschen Signale aus und verteilen Aufgaben. Eine Zelle kümmert sich ums Bewegen, eine andere um Nahrung oder Schutz. Plötzlich muss nicht mehr jede Zelle alles alleine schaffen. So entstehen Vielzeller. Teamarbeit, lange bevor irgendjemand das erste Sitzungsprotokoll erfand.",
     theme: "oxygen",
     setting:
       "Flaches Urmeer. Verschiedene Einzeller schweben im Vordergrund. Einige bleiben nach der Zellteilung miteinander verbunden und bilden kleine Zellverbände. Erste einfache fadenförmige Algen bewegen sich sanft in der Strömung. Das Wasser wirkt klar und lichtdurchflutet.",
@@ -743,7 +743,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 35 Sekunden",
     timeLabel: "Vor rund 570 Millionen Jahren",
     speaker:
-      "Wenn du jetzt ins Meer tauchst, wirkt es wie eine Ausstellung sehr weicher Sofakissen. Manche Wesen sehen aus wie Blätter, andere wie Matten oder gerippte Scheiben. Augen, Beine und Zähne? Noch nicht im Sortiment. Einige sind wahrscheinlich Tiere, andere geben Forschenden bis heute Rätsel auf. Willkommen in der Ediacara-Welt – fremdartig, weich und ziemlich rätselhaft.",
+      "Schau dir das Bild an. Wenn du jetzt ins Meer tauchst, wirkt es wie eine Ausstellung sehr weicher Sofakissen. Manche Wesen sehen aus wie Blätter, andere wie Matten oder gerippte Scheiben. Augen, Beine und Zähne? Noch nicht im Sortiment. Einige sind wahrscheinlich Tiere, andere geben Forschenden bis heute Rätsel auf. Willkommen in der Ediacara-Welt – fremdartig, weich und bis heute ziemlich rätselhaft.",
     theme: "ediacara",
     setting:
       "Flacher Meeresboden mit Schwämmen, einfachen Nesseltieren und weichen, ungewöhnlich geformten Organismen der Ediacara-Fauna. Alles wirkt fremdartig, aber friedlich.",
@@ -792,7 +792,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 41 Sekunden",
     timeLabel: "Vor rund 540 Millionen Jahren",
     speaker:
-      "Und nun wird das Meer zur großen Erfinderwerkstatt. In geologisch kurzer Zeit erscheinen viele neue Körperformen: Augen, Panzer, Greifarme und harte Schalen. Wer fressen will, muss Beute finden; wer nicht gefressen werden will, braucht wirksamen Schutz. Dieses evolutionäre Wettrüsten heißt Kambrische Explosion. Keine Sorge: Es knallt nicht – außer vielleicht beim Abendessen.",
+      "Und jetzt wird das Meer zur großen Erfinderwerkstatt. In geologisch relativ kurzer Zeit erscheinen viele neue Körperformen. Es gibt plötzlich so etwas wie Augen, Panzer, Greifarme und harte Schalen. Wer fressen will, muss Beute finden. Wer nicht gefressen werden will, braucht wirksamen Schutz. Dieses evolutionäre Wettrüsten heißt Kambrische Explosion. Keine Sorge, es knallt nichts – aber es ging einfach alles verdammt schnell.",
     theme: "cambrian",
     setting:
       "Trilobiten laufen über den Meeresboden. Anomalocaris gleitet durchs Wasser. Würmer graben sich ein. Stachelhäuter, frühe Gliederfüßer und zahlreiche unbekannte Arten bevölkern das Meer. Die Szene soll Ehrfurcht auslösen.",
@@ -848,7 +848,7 @@ export const scenes: Scene[] = [
     durationLabel: "ca. 35 Sekunden",
     timeLabel: "Vor etwa 470 Millionen Jahren",
     speaker:
-      "Irgendwann schaut sich eine kleine Pflanze das Festland an und denkt sich: „Sieht eigentlich ganz gemütlich aus.“ Mutig! Denn hier oben gibt’s weder Bademeister noch Nachschub aus dem Meer. Aber der Plan geht auf. Immer mehr Pflanzen ziehen an Land und machen aus grauen Felsen langsam eine grüne Welt. Ganz nebenbei bereiten sie das größte Buffet der Erdgeschichte vor.",
+      "Und irgendwann schaut sich eine kleine Pflanze das Festland an und denkt sich: „Puh, sieht eigentlich ganz gemütlich aus.“ Ganz schön mutig, denn hier oben gibt es weder Bademeister noch Nachschub aus dem Meer. Aber der Plan geht auf: Immer mehr Pflanzen ziehen an Land und machen aus grauen Felsen langsam eine grüne Welt. Ganz nebenbei bereiten sie das größte Buffet der Erdgeschichte vor.",
     theme: "shore",
     setting:
       "Flache Meeresküste mit nackten, feuchten Felsen, kleinen Wassermulden, grünlichen Algenmatten und niedrigen, moosähnlichen Pflanzen. Es gibt keine Bäume, Blumen oder Gräser. Das Land wirkt weit, ruhig und fast leer.",
@@ -916,11 +916,11 @@ export const scenes: Scene[] = [
   {
     id: 15,
     title: "Die ersten Tiere an Land",
-    duration: 45,
-    durationLabel: "ca. 45 Sekunden",
+    duration: 34,
+    durationLabel: "ca. 34 Sekunden",
     timeLabel: "Vor etwa 430 Millionen Jahren",
     speaker:
-      "Wo’s etwas zu futtern gibt, dauert’s bekanntlich nicht lange … Kaum haben die Pflanzen das Land begrünt, stehen auch schon die ersten Gäste vor der Tür. Zugegeben – besonders elegant sieht das noch nicht aus. Eher wie: „Laufen? Muss ich das erst üben?“ Aber genau mit diesen wackeligen ersten Schritten beginnt eine völlig neue Erfolgsgeschichte.",
+      "Und wo es etwas zu futtern gibt, da dauert es bekanntlich nicht lange. Kaum haben die Pflanzen das Land begrünt, stehen auch schon die ersten Gäste vor der Tür. Zugegeben, besonders elegant sieht das jetzt noch nicht aus. Eher so wie: „Laufen? Muss ich das erst üben?“ Aber genau mit diesen wackeligen allerersten Schritten beginnt eine völlig neue Erfolgsgeschichte.",
     theme: "shore",
     setting:
       "Dieselbe Küste wie in Szene 14, etwa 30 bis 40 Millionen Jahre später. Die grünen Pflanzenteppiche sind dichter. Zwischen den feuchten Steinen wachsen einfache Moose und niedrige Farnverwandte. Kleine frühe Gliederfüßer bewegen sich zwischen den Pflanzen.",
@@ -991,11 +991,11 @@ export const scenes: Scene[] = [
   {
     id: 16,
     title: "Der große Schritt - Wirbeltiere erobern das Land",
-    duration: 40,
-    durationLabel: "ca. 40 Sekunden",
+    duration: 37,
+    durationLabel: "ca. 37 Sekunden",
     timeLabel: "Devon, vor etwa 375 Millionen Jahren",
     speaker:
-      "Jetzt wird es spannend. Dieser Fisch wirkt, als hätte er für das Flachwasser eine Sonderausstattung bekommen: einen beweglichen Hals, kräftige Flossen und stabile Rippen. Tiktaalik kann sich im seichten Wasser abstützen und möglicherweise über schlammigen Grund bewegen. Er ist nicht das erste Tier an Land. Aber an ihm erkennst du, wie sich aus Fischmerkmalen schrittweise die Bauweise früher Landwirbeltiere entwickelt.",
+      "Okay, aber jetzt wird es richtig spannend. Dieser Fisch hat offenbar eine ziemlich verrückte Idee. Er möchte das Wasser verlassen. Stell dir vor, deine Vorfahren hätten ihr ganzes Leben im Meer verbracht und plötzlich kommt einer auf die Idee: „Da drüben auf dem Land schaue ich mich mal um.“ Verrückt? Vielleicht. Aber genau solche mutigen Experimente haben die Evolution vorangebracht. Aus solchen Pionieren entwickeln sich später Amphibien, Reptilien, Dinosaurier, Säugetiere und irgendwann sogar wir Menschen.",
     theme: "swamp",
     setting:
       "Flaches Sumpfufer mit meterhohen Schachtelhalmen, Bärlappgewächsen, großen Farnen, kleinen Tümpeln und schlammigen Inseln. Ein Tiktaalik hebt im Flachwasser vorsichtig den Kopf und stemmt sich über den schlammigen Grund.",
@@ -1070,11 +1070,11 @@ export const scenes: Scene[] = [
   {
     id: 17,
     title: "Das Ei, das die Welt veränderte",
-    duration: 40,
-    durationLabel: "ca. 40 Sekunden",
+    duration: 30,
+    durationLabel: "ca. 30 Sekunden",
     timeLabel: "Vor etwa 320 Millionen Jahren",
     speaker:
-      "Der erste Ausflug an Land hat offenbar Spaß gemacht. Jetzt wollen manche Tiere gleich ganz umziehen. Die Amphibien sind schon ziemlich mutig … fürs Kinderzimmer brauchen sie aber immer noch Wasser. Die Reptilien lösen das Problem ziemlich clever: Sie bringen ihr eigenes „Kinderzimmer“ einfach mit – das Ei. Nicht schlecht, Natur. Wirklich nicht schlecht.",
+      "Und der erste Ausflug an Land hat offenbar richtig Spaß gemacht. Jetzt wollen manche Tiere gleich ganz umziehen. Die Amphibien sind schon ziemlich mutig. Für das Kinderzimmer brauchen sie aber immer noch Wasser. Die Reptilien lösen das Problem ziemlich clever. Sie bringen ihr eigenes Kinderzimmer einfach mit: das Ei! Nicht schlecht, Natur. Wirklich nicht schlecht!",
     theme: "egg",
     setting:
       "Üppiger Sumpfwald mit riesigen Schachtelhalmen und Farnen. Große Libellen ziehen vorbei. Ein kleines, echsenähnliches Tier sucht am Waldboden vorsichtig einen geeigneten Platz und beginnt zu graben.",
@@ -1147,11 +1147,11 @@ export const scenes: Scene[] = [
   {
     id: 18,
     title: "Die Herrscher der Erde",
-    duration: 60,
-    durationLabel: "ca. 60 Sekunden",
+    duration: 43,
+    durationLabel: "ca. 43 Sekunden",
     timeLabel: "Vor etwa 230 Millionen Jahren",
     speaker:
-      "Tadaaa! Jetzt betreten die absoluten Superstars der Urzeit die Bühne. Willkommen im Zeitalter der Giganten! Hier läuft alles herum – von winzigen Jägern bis zu Pflanzenfressern, die locker aus dem dritten Stock die Dachrinne putzen könnten. Und weißt du was? Die Dinosaurier bleiben nicht ein paar Jahre … nicht ein paar Millionen Jahre … sondern fast 170 Millionen Jahre. Dagegen ist die Menschheit gerade erst eingezogen.",
+      "Tada! Jetzt betreten die absoluten Superstars der Urzeit die Bühne. Willkommen im Zeitalter der Giganten. Hier läuft nun alles herum: von winzigen Jägern bis zu Pflanzenfressern, die locker aus dem dritten Stock die Dachrinne putzen könnten. Alles Mögliche ist vertreten. Und weißt du was? Die Dinosaurier bleiben nicht ein paar Jahre, nicht ein paar Millionen Jahre, sondern fast 170 Millionen Jahre. Dagegen ist die Menschheit gerade erst mal eingezogen.",
     theme: "dinosaurs",
     setting:
       "Sonnenaufgang über einer weiten Flusslandschaft mit Nadelbäumen, Ginkgos und Baumfarnen. Leichter Morgennebel liegt über dem Wasser. Ein ruhiger Pflanzenfresser tritt zwischen den Bäumen hervor; weitere Tiere folgen. Die Szene wirkt wie eine Naturdokumentation, nicht wie ein Monsterfilm.",
@@ -1243,11 +1243,11 @@ export const scenes: Scene[] = [
   {
     id: 19,
     title: "Der Tag, an dem sich alles änderte",
-    duration: 50,
-    durationLabel: "ca. 50 Sekunden",
+    duration: 44,
+    durationLabel: "ca. 44 Sekunden",
     timeLabel: "Vor etwa 66 Millionen Jahren",
     speaker:
-      "Es beginnt wie ein gewöhnlicher Morgen. Du siehst Tiere am Wasser und einen winzigen Lichtpunkt am Himmel. Doch dieser Punkt ist ein mehrere Kilometer großer Asteroid. Er schlägt im Gebiet des heutigen Mexiko ein. Staub und Ruß verdunkeln die Atmosphäre, Pflanzen sterben, Nahrungsketten brechen zusammen. Viele Tiergruppen verschwinden. Nicht alle Dinosaurier: Die Vögel überleben – für die übrigen endet hier ihre Zeit.",
+      "Es ist ein ganz gewöhnlicher Morgen. Keines dieser Tiere ahnt, dass sich heute alles – aber auch wirklich alles – verändern wird. Hoch oben am Himmel erscheint ein winziger Lichtpunkt. Zunächst wirkt er harmlos, doch dieser Brocken ist mehrere Kilometer groß. Er rast schneller und schneller auf die Erde zu – schneller als eine Gewehrkugel fliegt. Wenige Minuten später schlägt er im Gebiet des heutigen Mexiko ein. In diesem Moment endet das Zeitalter der Dinosaurier. Gleichzeitig beginnt ein völlig neues Kapitel der Erdgeschichte.",
     theme: "impact",
     setting:
       "Dieselbe Flusslandschaft wie zuvor an einem friedlichen frühen Morgen. Eine kleine Herde frisst am Waldrand, ein Jungtier spielt im flachen Wasser, Flugsaurier gleiten lautlos. Ganz weit oben erscheint ein winziger heller Punkt.",
@@ -1325,11 +1325,11 @@ export const scenes: Scene[] = [
   {
     id: 20,
     title: "Eine neue Chance",
-    duration: 35,
-    durationLabel: "ca. 35 Sekunden",
+    duration: 42,
+    durationLabel: "ca. 42 Sekunden",
     timeLabel: "Vor etwa 65 Millionen Jahren",
     speaker:
-      "Nach der Katastrophe wirkt die Erde beinahe leer. Doch wenn du genau hinsiehst, raschelt es unter einem Baumstamm. Kleine Säugetiere haben überlebt. Sie brauchen wenig Nahrung, können sich verstecken und kommen mit wechselnden Bedingungen zurecht. Nun werden viele Lebensräume frei. Aus diesen unscheinbaren Überlebenden entwickeln sich im Lauf der Zeit unzählige neue Formen. Manchmal beginnt etwas Großes tatsächlich sehr klein.",
+      "Nach der Katastrophe wirkt die Erde gähnend leer. Aber nicht ganz leer. Denn wenn du genau hinguckst, dann siehst du irgendwo ein kleines Tierchen. Es ist ein Säugetier. Denn jetzt kommt die Stunde der Säugetiere. Ganz klein, ganz unscheinbar. Während die Dinos Millionen Jahre die Erde beherrschten, führten sie eher ein Schattendasein. Aber jetzt beginnt ihre große Zeit.",
     theme: "ash",
     setting:
       "Dieselbe Landschaft nach der Katastrophe. Viele Bäume sind abgestorben, der Himmel ist grau, umgestürzte Stämme liegen herum. Unter einem Baumstamm kommt ein kleines, mausgroßes Säugetier vorsichtig hervor, schnuppert und verschwindet wieder.",
@@ -1361,11 +1361,11 @@ export const scenes: Scene[] = [
   {
     id: 21,
     title: "Ein kleiner Schritt für ein Säugetier ...",
-    duration: 40,
-    durationLabel: "ca. 40 Sekunden",
+    duration: 33,
+    durationLabel: "ca. 33 Sekunden",
     timeLabel: "Vor etwa 60 Millionen Jahren",
     speaker:
-      "Dieses kleine Säugetier hättest du bisher wahrscheinlich kaum beachtet. Es ist winzig und unscheinbar – aber seine Verwandtschaft steht vor einer großen Zukunft. Manche Säugetiere leben später in Bäumen, andere im Wasser oder in offenen Landschaften. Und unter ihren fernen Nachkommen entsteht schließlich eine Art, die Werkzeuge baut, Feuer nutzt und Fragen über ihre eigene Geschichte stellt. Kommt dir das bekannt vor?",
+      "Diese Säugetiere sind zunächst winzig und unscheinbar, aber sie stehen vor einer riesengroßen Zukunft. Manche Säuger leben später in Bäumen, andere im Wasser oder in offenen Landschaften. Sie sind extrem anpassungsfähig. Und unter ihren fernen Nachkommen entsteht schließlich eine Art, die Werkzeuge baut, Feuer nutzt und Fragen über ihre eigene Geschichte stellt. Kommt dir das irgendwie bekannt vor?",
     theme: "forest",
     setting:
       "Beginn auf dem unveränderten Zeitfelsen. Die Umgebung ist wieder lebendig: blauer Himmel, junge Wälder, Blütenpflanzen und Vogelstimmen. Unter den Wurzeln kommt ein kleines, neugieriges Säugetier hervor, nicht größer als ein Eichhörnchen.",
@@ -1434,11 +1434,11 @@ export const scenes: Scene[] = [
   {
     id: 22,
     title: "Ein Wimpernschlag",
-    duration: 50,
-    durationLabel: "ca. 50 Sekunden",
+    duration: 54,
+    durationLabel: "ca. 54 Sekunden",
     timeLabel: "Heute",
     speaker:
-      "Viereinhalb Milliarden Jahre – kaum vorstellbar, oder? Aus glühendem Gestein wurden Ozeane; aus einfachen Zellen entstand eine überwältigende Vielfalt. Dinosaurier kamen und gingen, Säugetiere nutzten neue Chancen, und irgendwann wurdest auch du Teil dieser Geschichte. Nicht als Endpunkt der Evolution, sondern als Teil eines ihrer vielen Zweige. Deine Hand liegt wieder auf dem Zeitfelsen. Die Reise endet hier. Der nächste Zeitsprung wartet.",
+      "Viereinhalb Milliarden Jahre. Kaum vorstellbar, oder? Aus glühendem Gestein wurden Ozeane. Aus winzigen Zellen entstand die unglaubliche Vielfalt des Lebens. Dinosaurier kamen und gingen, Säugetiere übernahmen die Bühne. Und irgendwann erschien ein Wesen, das begann, Fragen zu stellen: Warum gibt es Berge? Warum singen Vögel? Warum blühen Blumen? Warum bin ich überhaupt hier? Vielleicht ist genau das die erstaunlichste Entwicklung der ganzen Erdgeschichte: dass die Natur ein Lebewesen hervorgebracht hat, das neugierig genug ist, ihre Geschichte zu entdecken. Und genau diese Reise beginnt für uns jetzt erst richtig.",
     theme: "present",
     setting:
       "Gegenwart am Zeitfelsen. Gras wächst zwischen den Steinen, Blumen blühen, Schmetterlinge fliegen, ein Buntspecht klopft an einem Baum und im Hintergrund glitzert das Meer. Nur eine Kinderhand legt sich auf den Zeitfelsen. Der Kreis schließt sich.",

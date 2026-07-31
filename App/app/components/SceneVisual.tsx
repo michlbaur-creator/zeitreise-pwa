@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import { captionTracks } from "../data/captions";
 import type { Scene } from "../data/scenes";
 
 type SceneVisualProps = {
@@ -697,10 +698,15 @@ export function SceneVisual({
   onDiscover,
 }: SceneVisualProps) {
   const parts = narrationParts(scene.speaker);
-  const partIndex = Math.min(
-    parts.length - 1,
-    Math.floor(progress * parts.length),
-  );
+  const timedCaptions = captionTracks[scene.id];
+  const activeCaption = timedCaptions
+    ? timedCaptions.reduce(
+        (active, cue) => (progress >= cue.at ? cue : active),
+        timedCaptions[0],
+      ).text
+    : parts[
+        Math.min(parts.length - 1, Math.floor(progress * parts.length))
+      ];
   const nonCameraMotions = scene.motions.filter(
     (motion) => !motion.includes("kamera"),
   );
@@ -1146,7 +1152,7 @@ export function SceneVisual({
             ? `Sprechertext · ${narrationVoiceName}`
             : `Sprechertext · Aufnahme ${narrationVoiceName} ausstehend`}
         </span>
-        <p>{parts[partIndex]}</p>
+        <p>{activeCaption}</p>
       </div>
     </section>
   );
