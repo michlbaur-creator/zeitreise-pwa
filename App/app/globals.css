@@ -425,6 +425,12 @@ button:disabled {
   font-style: normal;
 }
 
+.scene-swipe-surface {
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .scene-visual {
   position: relative;
   aspect-ratio: 16 / 9;

@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  type PointerEvent as ReactPointerEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
 import { FinalEpisodeQuiz } from "./components/FinalEpisodeQuiz";
 import { SceneVisual } from "./components/SceneVisual";
@@ -223,6 +229,12 @@ export default function ZeitreiseApp() {
   const isPlayingRef = useRef(false);
   const updateWaitingRef = useRef(false);
   const updateReloadingRef = useRef(false);
+  const swipeStartRef = useRef<{
+    x: number;
+    y: number;
+    pointerId: number;
+    target: EventTarget | null;
+  } | null>(null);
 
   const scene = scenes[currentIndex];
   const narrationPath = narrationTracks[scene.id];
@@ -269,6 +281,66 @@ export default function ZeitreiseApp() {
       window.localStorage.setItem("zeitreise-current-scene", String(nextIndex));
     },
     [],
+  );
+
+  const startSceneSwipe = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      if (
+        !event.isPrimary ||
+        (event.pointerType === "mouse" && event.button !== 0)
+      ) {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      if (
+        target?.closest(
+          "button, a, input, textarea, select, [role='slider']",
+        )
+      ) {
+        return;
+      }
+
+      swipeStartRef.current = {
+        x: event.clientX,
+        y: event.clientY,
+        pointerId: event.pointerId,
+        target: event.target,
+      };
+    },
+    [],
+  );
+
+  const finishSceneSwipe = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      const start = swipeStartRef.current;
+      swipeStartRef.current = null;
+      if (!start || start.pointerId !== event.pointerId) return;
+
+      const target = start.target as HTMLElement | null;
+      if (
+        target?.closest(
+          "button, a, input, textarea, select, [role='slider']",
+        )
+      ) {
+        return;
+      }
+
+      const horizontalDistance = event.clientX - start.x;
+      const verticalDistance = event.clientY - start.y;
+      const isClearHorizontalSwipe =
+        Math.abs(horizontalDistance) >= 70 &&
+        Math.abs(horizontalDistance) > Math.abs(verticalDistance) * 1.25;
+
+      if (!isClearHorizontalSwipe) return;
+
+      if (horizontalDistance < 0) {
+        goToScene(currentIndex + 1, true);
+      } else {
+        goToScene(currentIndex - 1);
+      }
+    },
+    [currentIndex, goToScene],
   );
 
   useEffect(() => {
@@ -562,6 +634,9 @@ export default function ZeitreiseApp() {
   const startJourney = () => {
     goToScene(0);
     setIntroClosing(true);
+    void activateAmbientSound().then((activated) => {
+      if (activated) setAmbientEnabled(true);
+    });
     setIsPlaying(true);
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
@@ -688,20 +763,29 @@ export default function ZeitreiseApp() {
             </div>
           </div>
 
-          <SceneVisual
-            scene={scene}
-            isPlaying={isPlaying}
-            progress={progress}
-            hasNarration={Boolean(narrationPath)}
-            narrationVoiceName={narrationDisplayName}
-            activeHotspot={activeHotspot}
-            onHotspot={(index) =>
-              setActiveHotspot((value) => (value === index ? null : index))
-            }
-            discoveryActive={discoveryActive}
-            discovered={discovered}
-            onDiscover={discover}
-          />
+          <div
+            className="scene-swipe-surface"
+            onPointerDown={startSceneSwipe}
+            onPointerUp={finishSceneSwipe}
+            onPointerCancel={() => {
+              swipeStartRef.current = null;
+            }}
+          >
+            <SceneVisual
+              scene={scene}
+              isPlaying={isPlaying}
+              progress={progress}
+              hasNarration={Boolean(narrationPath)}
+              narrationVoiceName={narrationDisplayName}
+              activeHotspot={activeHotspot}
+              onHotspot={(index) =>
+                setActiveHotspot((value) => (value === index ? null : index))
+              }
+              discoveryActive={discoveryActive}
+              discovered={discovered}
+              onDiscover={discover}
+            />
+          </div>
 
           {narrationPath ? (
             <audio
@@ -835,7 +919,8 @@ export default function ZeitreiseApp() {
             </button>
           </div>
           <p className="keyboard-hint">
-            Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert
+            Wischen oder Pfeiltasten wechseln die Szene · Leertaste startet
+            oder pausiert
           </p>
           <button
             className={`details-toggle ${detailsOpen ? "is-open" : ""}`}

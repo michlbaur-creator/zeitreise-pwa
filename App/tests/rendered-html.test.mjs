@@ -275,6 +275,12 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
   assert.match(app, /Hintergrundatmosphäre \$\{/);
   assert.match(app, /const \[ambientEnabled, setAmbientEnabled\] = useState\(false\)/);
   assert.match(app, /activateAmbientSound\(\)/);
+  assert.match(app, /className="scene-swipe-surface"/);
+  assert.match(app, /onPointerDown=\{startSceneSwipe\}/);
+  assert.match(app, /onPointerUp=\{finishSceneSwipe\}/);
+  assert.match(app, /Math\.abs\(horizontalDistance\) >= 70/);
+  assert.match(styles, /\.scene-swipe-surface \{/);
+  assert.match(styles, /touch-action: pan-y/);
   assert.match(app, /zeitreise-update=\$\{Date\.now\(\)\}/);
   assert.match(app, /window\.setInterval\(checkForUpdate, 3 \* 60 \* 1000\)/);
   assert.match(app, /updateViaCache: "none"/);
@@ -323,7 +329,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(imprint, /keine Werbung und kein/);
   assert.match(imprint, /className="info-simple-footer"/);
   assert.match(imprint, /Zurück zur Zeitreise/);
-  assert.match(worker, /zeitreise-v35/);
+  assert.match(worker, /zeitreise-v36/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
