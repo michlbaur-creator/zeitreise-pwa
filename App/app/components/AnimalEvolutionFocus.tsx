@@ -120,7 +120,12 @@ export function AnimalEvolutionFocus() {
             <article key={step.number}>
               <p>
                 <span>{step.number}</span>
-                <i aria-hidden="true">{step.symbol}</i>
+                <i
+                  className={step.number === "04" ? "evolution-step-arrow" : ""}
+                  aria-hidden="true"
+                >
+                  {step.symbol}
+                </i>
               </p>
               <h3>{step.title}</h3>
               <p>{step.text}</p>

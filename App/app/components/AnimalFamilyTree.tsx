@@ -138,11 +138,13 @@ const tiers = [
   },
   {
     label: "Zweiseitentiere",
+    scientific: "Bilateria",
     note: "Links, rechts, vorn und hinten",
     ids: ["weichtiere", "gliederfuesser", "stachelhaeuter", "wirbeltiere"],
   },
   {
     label: "Wirbeltiere an Wasser und Land",
+    scientific: "Vertebrata",
     note: "Der große Landgang",
     ids: ["fische", "amphibien", "amnioten"],
   },
@@ -162,19 +164,83 @@ const tierIndexByNodeId = new Map(
 
 const treeQuiz = [
   {
-    question: "Welche Tiergruppe besitzt die namensgebenden Nesselzellen?",
-    options: ["Schwämme", "Nesseltiere", "Weichtiere"],
+    question:
+      "Welche Aussage beschreibt Schwämme im Vergleich zu den meisten anderen Tieren am besten?",
+    options: [
+      "Sie besitzen weder echte Organe noch ein Nervensystem.",
+      "Sie besitzen ein einfaches Nervennetz.",
+      "Sie tragen ein Außenskelett aus Chitin.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question: "Welche Kombination ist typisch für Nesseltiere?",
+    options: [
+      "Mantel und muskulöser Fuß",
+      "Nervennetz und Nesselzellen",
+      "Wirbelsäule und Kiemen",
+    ],
     correctIndex: 1,
+  },
+  {
+    question:
+      "Welcher gemeinsame Grundbauplan verbindet Schnecken, Muscheln und Tintenfische?",
+    options: [
+      "Wassergefäßsystem und Stacheln",
+      "Außenskelett und Gelenkbeine",
+      "Mantel und muskulöser Fuß",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Welche Neuerungen erklären den Erfolg der Gliederfüßer besonders gut?",
+    options: [
+      "Außenskelett und gegliederte Beine",
+      "Milchdrüsen und Haare",
+      "Nesselzellen und Nervennetz",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Warum stehen Stachelhäuter im Stammbaum näher bei Wirbeltieren, als ihr Aussehen vermuten lässt?",
+    options: [
+      "Beide besitzen als Erwachsene fünf Arme.",
+      "Beide gehören entwicklungsgeschichtlich zu den Neumündern.",
+      "Beide besitzen ein Außenskelett.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Warum sind „Fische“ keine sauber abgeschlossene Abstammungsgruppe?",
+    options: [
+      "Weil alle Fische später zu Amphibien wurden.",
+      "Weil Fische keinen gemeinsamen Vorfahren besitzen.",
+      "Weil aus frühen fischartigen Wirbeltieren auch Landwirbeltiere hervorgingen.",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Welche Abhängigkeit vom Wasser blieb bei frühen Amphibien bestehen?",
+    options: [
+      "Fortpflanzung und Entwicklung",
+      "Atmung ausschließlich durch Kiemen",
+      "Fortbewegung ausschließlich mit Flossen",
+    ],
+    correctIndex: 0,
   },
   {
     question:
       "Welche Neuerung machte Amnioten bei der Fortpflanzung unabhängiger vom Wasser?",
     options: [
-      "Ein geschütztes Ei mit Embryonalhüllen",
       "Ein Außenskelett",
-      "Kiemen und Flossen",
+      "Ein geschütztes Ei mit Embryonalhüllen",
+      "Ein Wassergefäßsystem",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
   },
   {
     question: "Welche Aussage über Vögel ist richtig?",
@@ -188,18 +254,22 @@ const treeQuiz = [
 ];
 
 export function AnimalFamilyTree() {
-  const [selectedId, setSelectedId] = useState("tierreich");
-  const [revealedTierCount, setRevealedTierCount] = useState(0);
+  const [selectedId, setSelectedId] = useState("schwaemme");
+  const [revealedTierCount, setRevealedTierCount] = useState(1);
   const [quizAnswers, setQuizAnswers] = useState<(number | null)[]>(
     () => treeQuiz.map(() => null),
   );
+  const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const selected = nodeById.get(selectedId) ?? nodes[0];
+  const selectedTierIndex = tierIndexByNodeId.get(selectedId);
   const allTiersRevealed = revealedTierCount === tiers.length;
   const correctAnswerCount = quizAnswers.filter(
     (answer, index) => answer === treeQuiz[index].correctIndex,
   ).length;
-  const quizComplete = quizAnswers.every((answer) => answer !== null);
-  const quizWon = quizComplete && correctAnswerCount === treeQuiz.length;
+  const quizWon = correctAnswerCount === treeQuiz.length;
+  const activeQuiz = treeQuiz[quizQuestionIndex];
+  const activeQuizAnswer = quizAnswers[quizQuestionIndex];
+  const activeQuizIsCorrect = activeQuizAnswer === activeQuiz.correctIndex;
 
   const revealTier = (tierIndex: number) => {
     if (tierIndex > revealedTierCount) return;
@@ -255,60 +325,6 @@ export function AnimalFamilyTree() {
 
   return (
     <div className="interaction-block animal-family-tree">
-      <section
-        className={`family-tree-quest ${
-          allTiersRevealed ? "is-complete" : ""
-        }`}
-        aria-labelledby="family-tree-quest-title"
-      >
-        <div className="family-tree-quest-heading">
-          <div>
-            <p>Entdeckungsaufgabe</p>
-            <h2 id="family-tree-quest-title">
-              {allTiersRevealed
-                ? "Alle vier Äste sind sichtbar"
-                : "Öffne den Stammbaum Ast für Ast"}
-            </h2>
-          </div>
-          <strong aria-label={`${revealedTierCount} von 4 Ästen entdeckt`}>
-            {revealedTierCount}<span>/4</span>
-          </strong>
-        </div>
-
-        <div
-          className="family-tree-quest-progress"
-          aria-label="Fortschritt der Entdeckungsaufgabe"
-        >
-          {tiers.map((tier, tierIndex) => (
-            <span
-              className={tierIndex < revealedTierCount ? "is-found" : ""}
-              key={tier.label}
-            >
-              <i aria-hidden="true">
-                {tierIndex < revealedTierCount ? "✓" : tierIndex + 1}
-              </i>
-              {tier.label}
-            </span>
-          ))}
-        </div>
-
-        {revealedTierCount === 0 ? (
-          <button
-            type="button"
-            className="family-tree-quest-start"
-            onClick={() => revealTier(0)}
-          >
-            Entdeckungsreise starten <span aria-hidden="true">→</span>
-          </button>
-        ) : (
-          <p className="family-tree-quest-hint">
-            {allTiersRevealed
-              ? "Sehr gut. Jetzt wartet unter dem Stammbaum das Abschlussquiz."
-              : "Tippe die Tiergruppen an und öffne danach den nächsten Ast."}
-          </p>
-        )}
-      </section>
-
       <div className="family-tree-intro">
         <div>
           <h1>Der Stammbaum der Tiere</h1>
@@ -338,32 +354,64 @@ export function AnimalFamilyTree() {
               <span>{twoDigits(tierIndex + 1)}</span>
               <div>
                 <strong>{tier.label}</strong>
+                {"scientific" in tier && tier.scientific ? (
+                  <em>{tier.scientific}</em>
+                ) : null}
                 <small>{tier.note}</small>
               </div>
             </header>
             {tierIndex < revealedTierCount ? (
-              <div
-                className={`family-tree-nodes family-tree-nodes-${tier.ids.length}`}
-              >
-                {tier.ids.map((id) => {
-                  const node = nodeById.get(id);
-                  if (!node) return null;
+              <div className="family-tree-tier-content">
+                <div
+                  className={`family-tree-nodes family-tree-nodes-${tier.ids.length}`}
+                >
+                  {tier.ids.map((id) => {
+                    const node = nodeById.get(id);
+                    if (!node) return null;
 
-                  return (
-                    <button
-                      type="button"
-                      id={id}
-                      className={selectedId === id ? "is-selected" : ""}
-                      onClick={() => setSelectedId(id)}
-                      aria-pressed={selectedId === id}
-                      key={id}
+                    return (
+                      <button
+                        type="button"
+                        id={id}
+                        className={selectedId === id ? "is-selected" : ""}
+                        onClick={() => setSelectedId(id)}
+                        aria-pressed={selectedId === id}
+                        key={id}
+                      >
+                        <span
+                          className={`family-tree-node-symbol family-tree-node-symbol-${node.id}`}
+                          aria-hidden="true"
+                        >
+                          {node.symbol}
+                        </span>
+                        <strong>{node.name}</strong>
+                        {node.scientific ? (
+                          <small>{node.scientific}</small>
+                        ) : null}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {selectedTierIndex === tierIndex ? (
+                  <article className="family-tree-detail" aria-live="polite">
+                    <div
+                      className={`family-tree-detail-symbol family-tree-node-symbol-${selected.id}`}
+                      aria-hidden="true"
                     >
-                      <span aria-hidden="true">{node.symbol}</span>
-                      <strong>{node.name}</strong>
-                      {node.scientific ? <small>{node.scientific}</small> : null}
-                    </button>
-                  );
-                })}
+                      {selected.symbol}
+                    </div>
+                    <div>
+                      <p>
+                        {selected.scientific ??
+                          "Gemeinsamer Ursprung aller Tiere"}
+                      </p>
+                      <h4>{selected.name}</h4>
+                      <strong>{selected.innovation}</strong>
+                      <span>{selected.description}</span>
+                    </div>
+                  </article>
+                ) : null}
               </div>
             ) : (
               <button
@@ -386,7 +434,7 @@ export function AnimalFamilyTree() {
         ))}
       </div>
 
-      {revealedTierCount > 0 ? (
+      {selectedId === "tierreich" ? (
         <article className="family-tree-detail" aria-live="polite">
           <div className="family-tree-detail-symbol" aria-hidden="true">
             {selected.symbol}
@@ -405,89 +453,104 @@ export function AnimalFamilyTree() {
           <div className="family-tree-quiz-heading">
             <div>
               <p>Dein Abschlussquiz</p>
-              <h3 id="tree-quiz-title">Drei Fragen bis zur Auszeichnung</h3>
+              <h3 id="tree-quiz-title">Neun Fragen bis zur Auszeichnung</h3>
             </div>
             <strong>
-              {correctAnswerCount}<span>/3 richtig</span>
+              Frage <span>{quizQuestionIndex + 1}/{treeQuiz.length}</span>
             </strong>
           </div>
 
-          <div className="family-tree-quiz-questions">
-            {treeQuiz.map((item, questionIndex) => {
-              const answer = quizAnswers[questionIndex];
-
-              return (
-                <fieldset key={item.question}>
-                  <legend>
-                    <span>{questionIndex + 1}</span>
-                    {item.question}
-                  </legend>
-                  <div>
-                    {item.options.map((option, optionIndex) => {
-                      const isSelected = answer === optionIndex;
-                      const isCorrect =
-                        isSelected && optionIndex === item.correctIndex;
-                      const isWrong =
-                        isSelected && optionIndex !== item.correctIndex;
-
-                      return (
-                        <button
-                          type="button"
-                          className={`${isCorrect ? "is-correct" : ""} ${
-                            isWrong ? "is-wrong" : ""
-                          }`}
-                          aria-pressed={isSelected}
-                          onClick={() =>
-                            setQuizAnswers((current) =>
-                              current.map((value, index) =>
-                                index === questionIndex ? optionIndex : value,
-                              ),
-                            )
-                          }
-                          key={option}
-                        >
-                          <span aria-hidden="true">
-                            {isCorrect ? "✓" : isWrong ? "×" : optionIndex + 1}
-                          </span>
-                          {option}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {answer !== null ? (
-                    <p
-                      className={
-                        answer === item.correctIndex
-                          ? "is-correct"
-                          : "is-wrong"
-                      }
-                    >
-                      {answer === item.correctIndex
-                        ? "Richtig!"
-                        : "Noch nicht – probiere eine andere Antwort."}
-                    </p>
-                  ) : null}
-                </fieldset>
-              );
-            })}
+          <div
+            className="family-tree-quiz-progress"
+            aria-label={`${correctAnswerCount} von ${treeQuiz.length} Fragen richtig beantwortet`}
+          >
+            {treeQuiz.map((item, index) => (
+              <span
+                className={`${
+                  quizAnswers[index] === item.correctIndex ? "is-correct" : ""
+                } ${index === quizQuestionIndex ? "is-active" : ""}`}
+                key={item.question}
+              />
+            ))}
           </div>
+
+          <fieldset>
+            <legend>
+              <span>{quizQuestionIndex + 1}</span>
+              {activeQuiz.question}
+            </legend>
+            <div>
+              {activeQuiz.options.map((option, optionIndex) => {
+                const isSelected = activeQuizAnswer === optionIndex;
+                const isCorrect =
+                  isSelected && optionIndex === activeQuiz.correctIndex;
+                const isWrong =
+                  isSelected && optionIndex !== activeQuiz.correctIndex;
+
+                return (
+                  <button
+                    type="button"
+                    className={`${isCorrect ? "is-correct" : ""} ${
+                      isWrong ? "is-wrong" : ""
+                    }`}
+                    aria-pressed={isSelected}
+                    onClick={() =>
+                      setQuizAnswers((current) =>
+                        current.map((value, index) =>
+                          index === quizQuestionIndex ? optionIndex : value,
+                        ),
+                      )
+                    }
+                    key={option}
+                  >
+                    <span aria-hidden="true">
+                      {isCorrect ? "✓" : isWrong ? "×" : optionIndex + 1}
+                    </span>
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+            {activeQuizAnswer !== null ? (
+              <p className={activeQuizIsCorrect ? "is-correct" : "is-wrong"}>
+                {activeQuizIsCorrect
+                  ? "Richtig – dieser Ast sitzt!"
+                  : "Noch nicht – schau noch einmal genau hin."}
+              </p>
+            ) : null}
+          </fieldset>
+
+          {activeQuizIsCorrect && !quizWon ? (
+            <button
+              type="button"
+              className="family-tree-quiz-next"
+              onClick={() =>
+                setQuizQuestionIndex((current) =>
+                  Math.min(current + 1, treeQuiz.length - 1),
+                )
+              }
+            >
+              Nächste Frage <span aria-hidden="true">→</span>
+            </button>
+          ) : null}
 
           {quizWon ? (
             <div className="family-tree-reward" role="status">
+              <div className="family-tree-fireworks" aria-hidden="true">
+                {Array.from({ length: 18 }, (_, index) => (
+                  <i key={index} />
+                ))}
+              </div>
               <span aria-hidden="true">★</span>
               <div>
-                <p>Auszeichnung freigeschaltet</p>
+                <p>Taraaa! Auszeichnung freigeschaltet</p>
                 <strong>Stammbaum-Entdecker</strong>
                 <small>
-                  Du hast alle vier Äste geöffnet und das Abschlussquiz gelöst.
+                  Du hast alle vier Äste geöffnet und neun anspruchsvolle Fragen
+                  richtig beantwortet.
                 </small>
               </div>
             </div>
-          ) : quizComplete ? (
-            <p className="family-tree-quiz-again">
-              {correctAnswerCount} von 3 richtig – korrigiere noch die markierte
-              Antwort.
-            </p>
           ) : null}
         </section>
       ) : null}
@@ -502,7 +565,7 @@ export function AnimalFamilyTree() {
           <strong>Den vollständigen Tierstammbaum öffnen</strong>
           <small>Mehr Gruppen, Bilder und ausführliche Erklärungen auf Fauna Mibaso</small>
         </span>
-        <i aria-hidden="true">↗</i>
+        <i className="external-link-icon" aria-hidden="true" />
       </a>
     </div>
   );

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteFooter } from "../components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Impressum & Datenschutz | Zeitreise",
@@ -107,7 +106,11 @@ export default function ImprintPage() {
         </div>
       </article>
 
-      <SiteFooter />
+      <footer className="info-simple-footer">
+        <Link href="/">
+          <span aria-hidden="true">←</span> Zurück zur Zeitreise
+        </Link>
+      </footer>
     </main>
   );
 }

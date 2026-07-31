@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteFooter } from "../components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Über mich | Zeitreise – Die Geschichte des Lebens",
@@ -75,7 +74,11 @@ export default function AboutPage() {
         </div>
       </article>
 
-      <SiteFooter />
+      <footer className="info-simple-footer">
+        <Link href="/">
+          <span aria-hidden="true">←</span> Zurück zur Zeitreise
+        </Link>
+      </footer>
     </main>
   );
 }

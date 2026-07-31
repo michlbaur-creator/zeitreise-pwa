@@ -681,7 +681,8 @@ export default function ZeitreiseApp() {
                   className="scene-tree-link"
                   href={`/tierstammbaum/#${familyTreeLink.group}`}
                 >
-                  {familyTreeLink.label} <i aria-hidden="true">↗</i>
+                  {familyTreeLink.label}{" "}
+                  <i className="external-link-icon" aria-hidden="true" />
                 </Link>
               ) : null}
             </div>
@@ -873,7 +874,8 @@ export default function ZeitreiseApp() {
               className="panel-tree-nav"
               href={`/tierstammbaum/#${familyTreeLink?.group ?? "tierreich"}`}
             >
-              Tierstammbaum &amp; Stationen <i aria-hidden="true">↗</i>
+              Tierstammbaum &amp; Stationen{" "}
+              <i className="external-link-icon" aria-hidden="true" />
             </Link>
           </div>
 
