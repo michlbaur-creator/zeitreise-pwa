@@ -311,11 +311,12 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(footer, /Über mich/);
   assert.match(footer, /Impressum &amp; Datenschutz/);
   assert.match(footer, /mibaur@me\.com/);
+  assert.doesNotMatch(footer, /site-footer-meta/);
   assert.match(about, /Hallo, ich bin Micha\./);
   assert.match(about, /michael-baur-garten\.jpg/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(worker, /zeitreise-v29/);
+  assert.match(worker, /zeitreise-v30/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
@@ -359,19 +360,22 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
   assert.match(tree, /Amphibien/);
   assert.match(tree, /Reptilien/);
   assert.match(tree, /Vögel/);
-  assert.match(tree, /Manche gingen zurück ins Meer/);
+  assert.doesNotMatch(tree, /Keine Rangliste/);
   assert.match(
     tree,
     /https:\/\/fauna\.mibaso\.de\/interaktiv\/stammbaum\.html/,
   );
   assert.match(tree, /window\.location\.hash\.slice\(1\)/);
+  assert.match(tree, /scrollIntoView/);
+  assert.match(tree, /selectFromStationLink/);
   assert.match(treePage, /<AnimalFamilyTree \/>/);
   assert.match(treePage, /<AnimalEvolutionFocus \/>/);
-  assert.match(treePage, /Orientierung durch das Tierreich/);
   assert.match(treePage, /href="\/\?weiter=1"/);
   assert.match(treePage, /Die entscheidenden Stationen/);
   assert.match(treePage, /href="#rueckkehr-ins-meer"/);
-  assert.match(treePage, /href="#fisch-landgang"/);
+  assert.match(treePage, /href="#fische"/);
+  assert.match(treePage, /href="#amphibien"/);
+  assert.match(treePage, /href="#reptilien"/);
   assert.match(focus, /Von Flossen zu vier Gliedmaßen/);
   assert.match(focus, /Tiktaalik/);
   assert.match(focus, /nicht\s+zwingend ihr direkter Vorfahr/);
@@ -379,9 +383,31 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
   assert.match(focus, /Meeresschildkröten/);
   assert.match(focus, /Wale/);
   assert.match(focus, /Das nennt man Konvergenz/);
-  assert.match(footer, /href="\/tierstammbaum\/"/);
+  assert.match(focus, /openFromStationLink/);
+  assert.match(focus, /<details/);
+  assert.doesNotMatch(footer, /Zur Zeitreise/);
+  assert.doesNotMatch(footer, /href="\/tierstammbaum\/"/);
   assert.match(app, /new URLSearchParams\(window\.location\.search\)/);
   assert.match(app, /setIntroOpen\(false\)/);
+  assert.match(app, /Tierstammbaum &amp; Stationen/);
+  assert.doesNotMatch(app, />\s*Werkstatt\s*</);
+});
+
+test("vervollständigt die Entdeckungen in Szene 18", async () => {
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const sceneData = await readFile(
+    new URL("../app/data/scenes.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneData, /Entdecke fünf Bewohner dieser Welt/);
+  assert.match(sceneData, /Vögel sind die heute lebenden Nachfahren/);
+  assert.match(sceneData, /Flugsaurier waren keine Dinosaurier/);
+  assert.match(sceneData, /explanations:/);
+  assert.match(app, /scene\.discovery\?\.explanations/);
 });
 
 test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {

@@ -8,12 +8,11 @@ import { SceneVisual } from "./components/SceneVisual";
 import { SiteFooter } from "./components/SiteFooter";
 import {
   narrationTracks,
-  narrationVoice,
   narrationVoiceForScene,
 } from "./data/narration";
 import { scenes } from "./data/scenes";
 
-type Panel = "sprecher" | "interaktion" | "produktion";
+type Panel = "sprecher" | "interaktion";
 
 type InstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -215,7 +214,6 @@ export default function ZeitreiseApp() {
   const [discoveredByScene, setDiscoveredByScene] = useState<
     Record<string, number[]>
   >({});
-  const [isOnline, setIsOnline] = useState(true);
   const [installPrompt, setInstallPrompt] =
     useState<InstallPromptEvent | null>(null);
   const [isReady, setIsReady] = useState(false);
@@ -281,7 +279,6 @@ export default function ZeitreiseApp() {
       setCurrentIndex(loadStoredSceneIndex());
       setCorrectScenes(loadStoredNumbers("zeitreise-correct-scenes"));
       setDiscoveredByScene(loadStoredRecord("zeitreise-discoveries"));
-      setIsOnline(window.navigator.onLine);
       const continueJourney =
         new URLSearchParams(window.location.search).get("weiter") === "1";
       if (
@@ -297,15 +294,11 @@ export default function ZeitreiseApp() {
       setIsReady(true);
     });
 
-    const onOnline = () => setIsOnline(true);
-    const onOffline = () => setIsOnline(false);
     const onInstallPrompt = (event: Event) => {
       event.preventDefault();
       setInstallPrompt(event as InstallPromptEvent);
     };
 
-    window.addEventListener("online", onOnline);
-    window.addEventListener("offline", onOffline);
     window.addEventListener("beforeinstallprompt", onInstallPrompt);
 
     if ("serviceWorker" in navigator) {
@@ -318,8 +311,6 @@ export default function ZeitreiseApp() {
 
     return () => {
       cancelled = true;
-      window.removeEventListener("online", onOnline);
-      window.removeEventListener("offline", onOffline);
       window.removeEventListener("beforeinstallprompt", onInstallPrompt);
     };
   }, []);
@@ -861,11 +852,10 @@ export default function ZeitreiseApp() {
           id="scene-details"
           className={`content-panel ${detailsOpen ? "is-open" : ""}`}
         >
-          <div className="panel-tabs" role="tablist" aria-label="Szeneninhalt">
+          <div className="panel-tabs" aria-label="Szeneninhalt">
             <button
               type="button"
-              role="tab"
-              aria-selected={panel === "sprecher"}
+              aria-pressed={panel === "sprecher"}
               className={panel === "sprecher" ? "is-active" : ""}
               onClick={() => setPanel("sprecher")}
             >
@@ -873,26 +863,22 @@ export default function ZeitreiseApp() {
             </button>
             <button
               type="button"
-              role="tab"
-              aria-selected={panel === "interaktion"}
+              aria-pressed={panel === "interaktion"}
               className={panel === "interaktion" ? "is-active" : ""}
               onClick={() => setPanel("interaktion")}
             >
               Entdecken &amp; Quiz
             </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={panel === "produktion"}
-              className={panel === "produktion" ? "is-active" : ""}
-              onClick={() => setPanel("produktion")}
+            <Link
+              className="panel-tree-nav"
+              href={`/tierstammbaum/#${familyTreeLink?.group ?? "tierreich"}`}
             >
-              Werkstatt
-            </button>
+              Tierstammbaum &amp; Stationen <i aria-hidden="true">↗</i>
+            </Link>
           </div>
 
           {panel === "sprecher" ? (
-            <section className="panel-section" role="tabpanel">
+            <section className="panel-section">
               <div className="section-label">
                 <span>Sprechertext – Fassung 1.2</span>
                 <i>warm · deutlich humorvoller</i>
@@ -919,7 +905,7 @@ export default function ZeitreiseApp() {
           ) : null}
 
           {panel === "interaktion" ? (
-            <section className="panel-section interactions" role="tabpanel">
+            <section className="panel-section interactions">
               {scene.discovery ? (
                 <div className="interaction-block discovery-panel">
                   <div className="section-label">
@@ -948,9 +934,19 @@ export default function ZeitreiseApp() {
                         <span aria-hidden="true">
                           {discovered.includes(index) ? "✓" : "·"}
                         </span>
-                        {discovered.includes(index)
-                          ? item
-                          : "Noch nicht entdeckt"}
+                        <div>
+                          <strong>
+                            {discovered.includes(index)
+                              ? item
+                              : "Noch nicht entdeckt"}
+                          </strong>
+                          {discovered.includes(index) &&
+                          scene.discovery?.explanations?.[index] ? (
+                            <small>
+                              {scene.discovery.explanations[index]}
+                            </small>
+                          ) : null}
+                        </div>
                       </li>
                     ))}
                   </ul>
@@ -1039,89 +1035,6 @@ export default function ZeitreiseApp() {
             </section>
           ) : null}
 
-          {panel === "produktion" ? (
-            <section className="panel-section production" role="tabpanel">
-              {scene.directorNote ? (
-                <div className="director-note">
-                  <span>Verbindliche Regieentscheidung</span>
-                  <p>{scene.directorNote}</p>
-                </div>
-              ) : null}
-
-              <dl className="production-facts">
-                <div>
-                  <dt>Sprecherstimme</dt>
-                  <dd>
-                    {`${activeNarrationVoice.provider} ${activeNarrationVoice.displayName} · ${activeNarrationVoice.disclosure} · ${activeNarrationVoice.direction}`}
-                  </dd>
-                </div>
-                <div>
-                  <dt>Bildinhalt</dt>
-                  <dd>{scene.setting}</dd>
-                </div>
-                <div>
-                  <dt>Kamera</dt>
-                  <dd>{scene.camera}</dd>
-                </div>
-                {scene.mediaNote ? (
-                  <div>
-                    <dt>Besondere Animation / Hinweis</dt>
-                    <dd>{scene.mediaNote}</dd>
-                  </div>
-                ) : null}
-                {scene.transition ? (
-                  <div>
-                    <dt>Übergang</dt>
-                    <dd>{scene.transition}</dd>
-                  </div>
-                ) : null}
-              </dl>
-
-              <details open>
-                <summary>
-                  Geplante Bilder und Ebenen <span>{scene.media.length}</span>
-                </summary>
-                <p className="asset-status">
-                  Noch keine dieser Dateien liegt im Projekt vor.
-                </p>
-                <ul className="asset-list">
-                  {scene.media.map((asset) => (
-                    <li key={asset}>{asset}</li>
-                  ))}
-                </ul>
-              </details>
-
-              <details>
-                <summary>
-                  Bewegungen in der App <span>{scene.motions.length}</span>
-                </summary>
-                <p className="asset-status">
-                  Diese Einträge laufen als ruhige Bewegungen in der Vorschau,
-                  nicht als einzelne Mediendateien.
-                </p>
-                <ul className="asset-list">
-                  {scene.motions.map((motion) => (
-                    <li key={motion}>{motion}</li>
-                  ))}
-                </ul>
-              </details>
-
-              <details>
-                <summary>
-                  Geplante Geräusche <span>{scene.sounds.length}</span>
-                </summary>
-                <p className="asset-status">
-                  Noch keine Audiodatei liegt im Projekt vor. Musik:{" "}
-                  {scene.music}.
-                </p>
-                <ul className="asset-list">
-                  {scene.sounds.map((sound) => (
-                    <li key={sound}>{sound}</li>
-                  ))}
-                </ul>
-              </details>
-            </section>
-          ) : null}
         </aside>
       </div>
 
@@ -1129,10 +1042,7 @@ export default function ZeitreiseApp() {
         <FinalEpisodeQuiz scenes={finalQuizScenes} />
       ) : null}
 
-      <SiteFooter
-        isOnline={isOnline}
-        productionNote={`Muster-Episode V1.0 · Stimme Micha (Szenen 1–14) · KI-Stimme ${narrationVoice.displayName} (Szenen 15–22)`}
-      />
+      <SiteFooter />
     </main>
   );
 }

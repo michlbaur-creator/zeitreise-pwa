@@ -18,7 +18,7 @@ const nodes: FamilyTreeNode[] = [
     symbol: "◎",
     innovation: "Ein gemeinsamer Ursprung",
     description:
-      "So verschieden Tiere heute aussehen: Ihre Stammbäume führen zu gemeinsamen Vorfahren zurück. Der Stammbaum zeigt Verwandtschaft – keine Rangliste.",
+      "So verschieden Tiere heute aussehen: Ihre Stammbäume führen zu gemeinsamen Vorfahren zurück.",
   },
   {
     id: "schwaemme",
@@ -162,30 +162,39 @@ export function AnimalFamilyTree() {
   useEffect(() => {
     const selectFromHash = () => {
       const id = window.location.hash.slice(1);
+      if (nodeById.has(id)) {
+        setSelectedId(id);
+        window.requestAnimationFrame(() => {
+          document.getElementById(id)?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        });
+      }
+    };
+
+    const selectFromStationLink = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const anchor = target.closest<HTMLAnchorElement>('a[href^="#"]');
+      const id = anchor?.getAttribute("href")?.slice(1) ?? "";
       if (nodeById.has(id)) setSelectedId(id);
     };
 
     selectFromHash();
     window.addEventListener("hashchange", selectFromHash);
-    return () => window.removeEventListener("hashchange", selectFromHash);
+    document.addEventListener("click", selectFromStationLink);
+    return () => {
+      window.removeEventListener("hashchange", selectFromHash);
+      document.removeEventListener("click", selectFromStationLink);
+    };
   }, []);
 
   return (
     <div className="interaction-block animal-family-tree">
-      <div className="section-label">
-        <span>Tierstammbaum</span>
-        <i>Schulansicht</i>
-      </div>
-
       <div className="family-tree-intro">
         <div>
-          <p className="family-tree-kicker">Wer ist mit wem verwandt?</p>
-          <h3>Der Stammbaum der Tiere</h3>
-          <p>
-            Tippe eine Tiergruppe an. Lies den Baum von oben nach unten:
-            Jede Verzweigung steht für gemeinsame Vorfahren – nicht für
-            „höher“ oder „besser“.
-          </p>
+          <h1>Der Stammbaum der Tiere</h1>
         </div>
         <button
           type="button"
@@ -248,15 +257,6 @@ export function AnimalFamilyTree() {
           <span>{selected.description}</span>
         </div>
       </article>
-
-      <aside className="family-tree-return">
-        <span aria-hidden="true">↩</span>
-        <p>
-          <strong>Übrigens: Manche gingen zurück ins Meer.</strong>
-          Ichthyosaurier, Meeresschildkröten und Wale stammen jeweils von
-          Landwirbeltieren ab. Unten verfolgen wir diesen Rückweg genauer.
-        </p>
-      </aside>
 
       <a
         className="family-tree-fauna-link"

@@ -14,6 +14,7 @@ export type Discovery = {
   label: string;
   prompt: string;
   items: string[];
+  explanations?: string[];
   note?: string;
 };
 
@@ -1196,28 +1197,41 @@ export const scenes: Scene[] = [
         label: "Die Erde verändert sich",
         text: "Während der Dinosaurierzeit verschoben sich die Kontinente weiter. Aus dem Superkontinent Pangäa entstanden nach und nach die Kontinente, die wir heute kennen.",
       },
+      {
+        label: "Wer hat überlebt?",
+        text: "Vögel gingen aus einer Linie gefiederter Raubsaurier hervor. Sie sind die einzigen Dinosaurier, die bis heute überlebt haben.",
+      },
     ],
     quiz: {
       question:
-        "Welche Zeitspanne kommt der Vorherrschaft der Dinosaurier am nächsten?",
+        "Welche Aussage über Dinosaurier ist fachlich richtig?",
       options: [
-        "Etwa 10 Millionen Jahre",
-        "Etwa 50 Millionen Jahre",
-        "Rund 170 Millionen Jahre",
-        "Mehr als eine Milliarde Jahre",
+        "Flugsaurier waren fliegende Dinosaurier.",
+        "Fast alle Dinosaurier waren riesige Pflanzenfresser.",
+        "Vögel sind die heute lebenden Nachfahren einer Dinosaurierlinie.",
+        "Die letzten Dinosaurier begegneten bereits frühen Menschen.",
       ],
       correctIndex: 2,
     },
     discovery: {
       label: "Forscherblick",
-      prompt: "Wer entdeckt zuerst?",
+      prompt: "Entdecke fünf Bewohner dieser Welt.",
       items: [
-        "einen kleinen Pflanzenfresser",
-        "einen Fleischfresser im Hintergrund",
-        "einen Ginkgo-Baum",
-        "eine Libelle",
-        "einen Flugsaurier am Himmel (Zusatz: Flugsaurier waren keine Dinosaurier, sondern eine eigene Reptiliengruppe.)",
+        "Kleiner Pflanzenfresser",
+        "Fleischfresser im Hintergrund",
+        "Ginkgo-Baum",
+        "Libelle",
+        "Flugsaurier am Himmel",
       ],
+      explanations: [
+        "Dinosaurier gab es in sehr unterschiedlichen Größen. Nicht jeder war ein Gigant.",
+        "Raubsaurier waren wichtige Teile des Ökosystems – aber keineswegs überall die Hauptdarsteller.",
+        "Ginkgos existierten schon lange vor vielen bekannten Dinosauriergruppen und wachsen noch heute.",
+        "Insekten lebten bereits lange vor den Dinosauriern. Die riesigen Urzeitlibellen gehören allerdings in eine viel frühere Epoche.",
+        "Flugsaurier waren keine Dinosaurier, sondern eine eigene Gruppe fliegender Reptilien.",
+      ],
+      note:
+        "Tippe die Suchpunkte im Bild an. Nach jedem Fund erscheint hier die Erklärung.",
     },
     transition:
       "Die Kamera steigt immer höher. Aus der friedlichen Landschaft wird eine riesige Panoramaaufnahme. Langsam zieht ein Schatten über den Boden. Zunächst kaum bemerkbar. Die Tiere schauen nach oben. Der Schatten verschwindet wieder. Niemand weiß, was er bedeutet. Der Zuschauer schon.",

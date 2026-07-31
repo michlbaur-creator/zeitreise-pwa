@@ -24,41 +24,19 @@ export default function AnimalFamilyTreePage() {
       </header>
 
       <article className="info-page family-tree-page">
-        <header className="family-tree-page-hero">
-          <div>
-            <p className="eyebrow">Orientierung durch das Tierreich</p>
-            <h1>Der Tierstammbaum</h1>
-            <p>
-              Von frühen Meerestieren über Fische und Amphibien bis zu
-              Reptilien, Vögeln und Säugetieren. Diese Schulansicht zeigt die
-              großen Verwandtschaftslinien – ohne im Detaildschungel zu
-              verschwinden.
-            </p>
-          </div>
-          <aside>
-            <span aria-hidden="true">◆</span>
-            <strong>Keine Rangliste</strong>
-            <p>
-              Jede heute lebende Tiergruppe steht an der Spitze ihres eigenen
-              langen Astes.
-            </p>
-          </aside>
-        </header>
-
         <nav
           className="family-tree-learning-path"
           aria-label="Schulweg durch den Tierstammbaum"
         >
           <p>
-            <span>Unser Schulweg</span>
             <strong>Die entscheidenden Stationen</strong>
           </p>
           <div>
-            <Link href="#fisch-landgang">
+            <Link href="#fische">
               <i>1</i>
               <span>Fische</span>
             </Link>
-            <Link href="#fisch-landgang">
+            <Link href="#amphibien">
               <i>2</i>
               <span>Landgang &amp; Amphibien</span>
             </Link>

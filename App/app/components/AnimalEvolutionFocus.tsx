@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 const landSteps = [
   {
     number: "01",
@@ -53,10 +57,49 @@ const seaReturners = [
 ];
 
 export function AnimalEvolutionFocus() {
+  const landRef = useRef<HTMLDetailsElement>(null);
+  const returnRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    const openTarget = () => {
+      if (window.location.hash === "#fisch-landgang") {
+        landRef.current?.setAttribute("open", "");
+      }
+      if (window.location.hash === "#rueckkehr-ins-meer") {
+        returnRef.current?.setAttribute("open", "");
+      }
+    };
+
+    const openFromStationLink = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const anchor = target.closest<HTMLAnchorElement>('a[href^="#"]');
+      const href = anchor?.getAttribute("href");
+      if (href === "#fisch-landgang") {
+        landRef.current?.setAttribute("open", "");
+      }
+      if (href === "#rueckkehr-ins-meer") {
+        returnRef.current?.setAttribute("open", "");
+      }
+    };
+
+    openTarget();
+    window.addEventListener("hashchange", openTarget);
+    document.addEventListener("click", openFromStationLink);
+    return () => {
+      window.removeEventListener("hashchange", openTarget);
+      document.removeEventListener("click", openFromStationLink);
+    };
+  }, []);
+
   return (
     <div className="animal-evolution-focus">
-      <section className="evolution-focus-section" id="fisch-landgang">
-        <header className="evolution-focus-header">
+      <details
+        className="evolution-focus-section"
+        id="fisch-landgang"
+        ref={landRef}
+      >
+        <summary className="evolution-focus-header">
           <p>
             <span>Vertiefung 1</span>
             <i>Der Weg an Land</i>
@@ -69,7 +112,8 @@ export function AnimalEvolutionFocus() {
               über sehr lange Zeit.
             </p>
           </div>
-        </header>
+          <i className="evolution-focus-toggle" aria-hidden="true" />
+        </summary>
 
         <div className="evolution-step-path" aria-label="Vom Fisch zum Landwirbeltier">
           {landSteps.map((step) => (
@@ -93,10 +137,14 @@ export function AnimalEvolutionFocus() {
             heutige Enden verschiedener Äste.
           </p>
         </aside>
-      </section>
+      </details>
 
-      <section className="evolution-focus-section sea-return-section" id="rueckkehr-ins-meer">
-        <header className="evolution-focus-header">
+      <details
+        className="evolution-focus-section sea-return-section"
+        id="rueckkehr-ins-meer"
+        ref={returnRef}
+      >
+        <summary className="evolution-focus-header">
           <p>
             <span>Vertiefung 2</span>
             <i>Der Weg zurück</i>
@@ -109,7 +157,8 @@ export function AnimalEvolutionFocus() {
               Ergebnis sieht manchmal fischähnlich aus – ist aber nicht Fisch.
             </p>
           </div>
-        </header>
+          <i className="evolution-focus-toggle" aria-hidden="true" />
+        </summary>
 
         <div className="sea-return-grid">
           {seaReturners.map((returner) => (
@@ -150,7 +199,7 @@ export function AnimalEvolutionFocus() {
             </li>
           </ul>
         </div>
-      </section>
+      </details>
     </div>
   );
 }
