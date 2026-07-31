@@ -46,9 +46,12 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
     setFinished(false);
   };
 
-  const check = () => {
-    if (selected === null) return;
-    if (selected === question.correctIndex) setScore((value) => value + 1);
+  const answer = (optionIndex: number) => {
+    if (checked) return;
+    setSelected(optionIndex);
+    if (optionIndex === question.correctIndex) {
+      setScore((value) => value + 1);
+    }
     setChecked(true);
   };
 
@@ -138,9 +141,7 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
                 <button
                   type="button"
                   className={`${selected === index ? "is-selected" : ""} ${optionIsCorrect ? "is-correct" : ""} ${optionIsWrong ? "is-wrong" : ""}`}
-                  onClick={() => {
-                    if (!checked) setSelected(index);
-                  }}
+                  onClick={() => answer(index)}
                   aria-pressed={selected === index}
                   key={option}
                 >
@@ -151,8 +152,8 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
             })}
           </div>
 
-          <div className="final-quiz-actions">
-            {checked ? (
+          {checked ? (
+            <div className="final-quiz-actions">
               <>
                 <p
                   className={isCorrect ? "is-correct" : "is-wrong"}
@@ -169,12 +170,8 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
                   <span aria-hidden="true">→</span>
                 </button>
               </>
-            ) : (
-              <button type="button" disabled={selected === null} onClick={check}>
-                Antwort prüfen
-              </button>
-            )}
-          </div>
+            </div>
+          ) : null}
         </>
       )}
     </section>

@@ -604,11 +604,12 @@ export default function ZeitreiseApp() {
     }
   };
 
-  const checkQuiz = () => {
-    if (selectedOption === null || !scene.quiz) return;
+  const answerQuiz = (optionIndex: number) => {
+    if (!scene.quiz || selectedOption === scene.quiz.correctIndex) return;
+    setSelectedOption(optionIndex);
     setQuizChecked(true);
     if (
-      selectedOption === scene.quiz.correctIndex &&
+      optionIndex === scene.quiz.correctIndex &&
       !correctScenes.includes(scene.id)
     ) {
       setCorrectScenes((values) => [...values, scene.id]);
@@ -1046,9 +1047,7 @@ export default function ZeitreiseApp() {
                         <button
                           type="button"
                           className={`${isSelected ? "is-selected" : ""} ${isCorrect ? "is-correct" : ""} ${isWrong ? "is-wrong" : ""}`}
-                          onClick={() => {
-                            if (!quizChecked) setSelectedOption(index);
-                          }}
+                          onClick={() => answerQuiz(index)}
                           aria-pressed={isSelected}
                           key={option}
                         >
@@ -1073,24 +1072,10 @@ export default function ZeitreiseApp() {
                           : "Noch nicht richtig."}
                       </strong>
                       {selectedOption !== scene.quiz.correctIndex ? (
-                        <button
-                          type="button"
-                          onClick={() => setQuizChecked(false)}
-                        >
-                          Antwort ändern
-                        </button>
+                        <span>Versuch es einfach noch einmal.</span>
                       ) : null}
                     </div>
-                  ) : (
-                    <button
-                      type="button"
-                      className="check-answer"
-                      disabled={selectedOption === null}
-                      onClick={checkQuiz}
-                    >
-                      Antwort prüfen
-                    </button>
-                  )}
+                  ) : null}
                 </div>
               ) : null}
 

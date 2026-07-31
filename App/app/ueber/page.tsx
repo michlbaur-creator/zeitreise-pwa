@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { HistoryBackLink } from "../components/HistoryBackLink";
 
 export const metadata: Metadata = {
   title: "Über mich | Zeitreise – Die Geschichte des Lebens",
@@ -11,9 +11,7 @@ export default function AboutPage() {
   return (
     <main className="info-shell">
       <header className="info-header">
-        <Link className="info-back" href="/">
-          <span aria-hidden="true">←</span> Zur Zeitreise
-        </Link>
+        <HistoryBackLink />
         <div className="info-brand" aria-label="Zeitreise">
           <i aria-hidden="true" />
           <span>Episode 1</span>
@@ -74,11 +72,6 @@ export default function AboutPage() {
         </div>
       </article>
 
-      <footer className="info-simple-footer">
-        <Link href="/">
-          <span aria-hidden="true">←</span> Zurück zur Zeitreise
-        </Link>
-      </footer>
     </main>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { HistoryBackLink } from "../components/HistoryBackLink";
 
 export const metadata: Metadata = {
   title: "Impressum & Datenschutz | Zeitreise",
@@ -11,9 +11,7 @@ export default function ImprintPage() {
   return (
     <main className="info-shell">
       <header className="info-header">
-        <Link className="info-back" href="/">
-          <span aria-hidden="true">←</span> Zur Zeitreise
-        </Link>
+        <HistoryBackLink />
         <div className="info-brand" aria-label="Zeitreise">
           <i aria-hidden="true" />
           <span>Episode 1</span>
@@ -106,11 +104,6 @@ export default function ImprintPage() {
         </div>
       </article>
 
-      <footer className="info-simple-footer">
-        <Link href="/">
-          <span aria-hidden="true">←</span> Zurück zur Zeitreise
-        </Link>
-      </footer>
     </main>
   );
 }

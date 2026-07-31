@@ -257,6 +257,8 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(styles, /animation: intro-stars 11s ease-in-out both/);
   assert.match(styles, /transition: opacity 1100ms ease/);
   assert.match(app, /setIntroReady\(true\), 10400/);
+  assert.match(app, /onClick=\{\(\) => answerQuiz\(index\)\}/);
+  assert.doesNotMatch(app, /Antwort prüfen/);
 });
 
 test("optimiert Film und Bedienung für Smartphones", async () => {
@@ -314,6 +316,10 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
     new URL("../app/impressum/page.tsx", import.meta.url),
     "utf8",
   );
+  const historyBack = await readFile(
+    new URL("../app/components/HistoryBackLink.tsx", import.meta.url),
+    "utf8",
+  );
   const worker = await readFile(
     new URL("../public/sw.js", import.meta.url),
     "utf8",
@@ -323,19 +329,23 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(app, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} \/>/);
   assert.match(finalQuiz, /Das große Episode-1-Quiz/);
   assert.match(finalQuiz, /Frage \{questionIndex \+ 1\} von/);
+  assert.match(finalQuiz, /onClick=\{\(\) => answer\(index\)\}/);
+  assert.doesNotMatch(finalQuiz, /Antwort prüfen/);
   assert.match(footer, /Über mich/);
   assert.match(footer, /Impressum &amp; Datenschutz/);
   assert.match(footer, /mibaur@me\.com/);
   assert.doesNotMatch(footer, /site-footer-meta/);
   assert.match(about, /Hallo, ich bin Micha\./);
   assert.match(about, /michael-baur-garten\.jpg/);
-  assert.match(about, /className="info-simple-footer"/);
-  assert.match(about, /Zurück zur Zeitreise/);
+  assert.match(about, /<HistoryBackLink \/>/);
+  assert.doesNotMatch(about, /info-simple-footer/);
   assert.match(imprint, /Nordeckerweg 22E/);
   assert.match(imprint, /keine Werbung und kein/);
-  assert.match(imprint, /className="info-simple-footer"/);
-  assert.match(imprint, /Zurück zur Zeitreise/);
-  assert.match(worker, /zeitreise-v37/);
+  assert.match(imprint, /<HistoryBackLink \/>/);
+  assert.doesNotMatch(imprint, /info-simple-footer/);
+  assert.match(historyBack, /window\.history\.back\(\)/);
+  assert.match(historyBack, /window\.location\.assign\("\/\?weiter=1"\)/);
+  assert.match(worker, /zeitreise-v38/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);

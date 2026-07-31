@@ -5493,40 +5493,16 @@ button:disabled {
   padding: 8px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
+  background: transparent;
   color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
   font-size: 0.72rem;
   font-weight: 700;
   text-decoration: none;
 }
 
 .info-back:hover {
-  border-color: rgba(216, 170, 98, 0.46);
-  color: var(--amber-soft);
-}
-
-.info-simple-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: clamp(28px, 5vw, 52px);
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-}
-
-.info-simple-footer a {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  gap: 9px;
-  padding: 9px 15px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--muted);
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.info-simple-footer a:hover {
   border-color: rgba(216, 170, 98, 0.46);
   color: var(--amber-soft);
 }
