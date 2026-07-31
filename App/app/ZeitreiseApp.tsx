@@ -16,7 +16,7 @@ import {
   narrationTracks,
   narrationVoiceForScene,
 } from "./data/narration";
-import { scenes } from "./data/scenes";
+import { followUpQuizzes, scenes } from "./data/scenes";
 
 type Panel = "sprecher" | "interaktion";
 
@@ -215,6 +215,7 @@ export default function ZeitreiseApp() {
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizChecked, setQuizChecked] = useState(false);
+  const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const [correctScenes, setCorrectScenes] = useState<number[]>([]);
   const [discoveryActive, setDiscoveryActive] = useState(false);
   const [discoveredByScene, setDiscoveredByScene] = useState<
@@ -237,6 +238,10 @@ export default function ZeitreiseApp() {
   } | null>(null);
 
   const scene = scenes[currentIndex];
+  const sceneQuizzes = scene.quiz
+    ? [scene.quiz, followUpQuizzes[scene.id]].filter(Boolean)
+    : [];
+  const activeQuiz = sceneQuizzes[quizQuestionIndex];
   const narrationPath = narrationTracks[scene.id];
   const activeNarrationVoice = narrationVoiceForScene(scene.id);
   const narrationDisplayName =
@@ -257,7 +262,7 @@ export default function ZeitreiseApp() {
 
   useEffect(() => {
     if (!introOpen) return;
-    const timer = window.setTimeout(() => setIntroReady(true), 10400);
+    const timer = window.setTimeout(() => setIntroReady(true), 14800);
     return () => window.clearTimeout(timer);
   }, [introOpen]);
 
@@ -277,6 +282,7 @@ export default function ZeitreiseApp() {
       setActiveHotspot(null);
       setSelectedOption(null);
       setQuizChecked(false);
+      setQuizQuestionIndex(0);
       setDiscoveryActive(false);
       window.localStorage.setItem("zeitreise-current-scene", String(nextIndex));
     },
@@ -569,6 +575,30 @@ export default function ZeitreiseApp() {
     );
   }, [discoveredByScene, isReady]);
 
+  useEffect(() => {
+    if (
+      !quizChecked ||
+      selectedOption !== activeQuiz?.correctIndex ||
+      quizQuestionIndex >= sceneQuizzes.length - 1
+    ) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setQuizQuestionIndex((value) => value + 1);
+      setSelectedOption(null);
+      setQuizChecked(false);
+    }, 1100);
+
+    return () => window.clearTimeout(timer);
+  }, [
+    activeQuiz?.correctIndex,
+    quizChecked,
+    quizQuestionIndex,
+    sceneQuizzes.length,
+    selectedOption,
+  ]);
+
   const togglePlayback = () => {
     if (progress >= 1) {
       setProgress(0);
@@ -605,11 +635,12 @@ export default function ZeitreiseApp() {
   };
 
   const answerQuiz = (optionIndex: number) => {
-    if (!scene.quiz || selectedOption === scene.quiz.correctIndex) return;
+    if (!activeQuiz || selectedOption === activeQuiz.correctIndex) return;
     setSelectedOption(optionIndex);
     setQuizChecked(true);
     if (
-      optionIndex === scene.quiz.correctIndex &&
+      optionIndex === activeQuiz.correctIndex &&
+      quizQuestionIndex === sceneQuizzes.length - 1 &&
       !correctScenes.includes(scene.id)
     ) {
       setCorrectScenes((values) => [...values, scene.id]);
@@ -648,7 +679,7 @@ export default function ZeitreiseApp() {
     window.setTimeout(() => {
       setIntroOpen(false);
       setIntroClosing(false);
-    }, 1120);
+    }, 1520);
   };
 
   const replayIntro = () => {
@@ -1025,24 +1056,28 @@ export default function ZeitreiseApp() {
                 </div>
               ) : null}
 
-              {scene.quiz ? (
+              {activeQuiz ? (
                 <div className="interaction-block quiz-panel">
                   <div className="section-label">
-                    <span>Quiz</span>
+                    <span>
+                      Quiz · Frage {quizQuestionIndex + 1} von {sceneQuizzes.length}
+                    </span>
                     {correctScenes.includes(scene.id) ? (
                       <i className="correct-label">beantwortet</i>
                     ) : null}
                   </div>
-                  <h3>{scene.quiz.question}</h3>
+                  <h3>{activeQuiz.question}</h3>
                   <div className="quiz-options">
-                    {scene.quiz.options.map((option, index) => {
+                    {activeQuiz.options.map((option, index) => {
                       const isSelected = selectedOption === index;
                       const isCorrect =
-                        quizChecked && index === scene.quiz?.correctIndex;
+                        quizChecked &&
+                        isSelected &&
+                        index === activeQuiz.correctIndex;
                       const isWrong =
                         quizChecked &&
                         isSelected &&
-                        index !== scene.quiz?.correctIndex;
+                        index !== activeQuiz.correctIndex;
                       return (
                         <button
                           type="button"
@@ -1060,19 +1095,21 @@ export default function ZeitreiseApp() {
                   {quizChecked ? (
                     <div
                       className={`quiz-result ${
-                        selectedOption === scene.quiz.correctIndex
+                        selectedOption === activeQuiz.correctIndex
                           ? "is-correct"
                           : "is-wrong"
                       }`}
                       role="status"
                     >
                       <strong>
-                        {selectedOption === scene.quiz.correctIndex
+                        {selectedOption === activeQuiz.correctIndex
                           ? "Richtig."
                           : "Noch nicht richtig."}
                       </strong>
-                      {selectedOption !== scene.quiz.correctIndex ? (
+                      {selectedOption !== activeQuiz.correctIndex ? (
                         <span>Versuch es einfach noch einmal.</span>
+                      ) : quizQuestionIndex < sceneQuizzes.length - 1 ? (
+                        <span>Die nächste Frage kommt sofort.</span>
                       ) : null}
                     </div>
                   ) : null}

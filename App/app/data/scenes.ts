@@ -779,6 +779,7 @@ export const scenes: Scene[] = [
         "Sie waren meist weich und besaßen kaum harte, gut erhaltungsfähige Teile.",
         "Sie lebten ausschließlich in der Luft.",
         "Ihre Körper bestanden nur aus flüssigem Wasser.",
+        "Sie entstanden erst nach den ersten Dinosauriern.",
       ],
       correctIndex: 0,
     },
@@ -1355,6 +1356,17 @@ export const scenes: Scene[] = [
     ],
     music: "keine festgelegt",
     hotspots: [],
+    quiz: {
+      question:
+        "Warum hatten kleine Säugetiere nach dem Massenaussterben einen Vorteil?",
+      options: [
+        "Sie konnten ohne Nahrung mehrere Jahrtausende überleben.",
+        "Kleine Körper, Verstecke und eine vielseitige Lebensweise halfen manchen Arten zu überleben.",
+        "Sie waren gegen jede Klimaveränderung vollständig geschützt.",
+        "Der Asteroid hatte ausschließlich große Tiere getroffen.",
+      ],
+      correctIndex: 1,
+    },
     directorNote:
       "Nach der Schwarzblende erscheint der aschebedeckte Zeitfelsen als stiller Zeuge. Erst danach entdeckt die Kamera das kleine Säugetier.",
   },
@@ -1473,6 +1485,17 @@ export const scenes: Scene[] = [
     ],
     music: "keine festgelegt",
     hotspots: [],
+    quiz: {
+      question:
+        "Warum wirkt die Geschichte des Menschen auf der Zeitskala der Erde wie ein Wimpernschlag?",
+      options: [
+        "Weil Menschen schon vor den ersten Zellen lebten.",
+        "Weil die Erdgeschichte erst mit dem Menschen begann.",
+        "Weil Menschen nur einen winzigen Teil der 4,6 Milliarden Jahre langen Erdgeschichte ausmachen.",
+        "Weil sich seit dem Auftreten des Menschen keine Arten mehr verändern.",
+      ],
+      correctIndex: 2,
+    },
     directorNote:
       "Im Abschluss wird kein Mensch gezeigt. Sichtbar ist nur die Kinderhand am Zeitfelsen. Damit schließt sich der Kreis zum Beginn der Episode.",
     mediaNote:
@@ -1484,3 +1507,226 @@ export const totalDuration = scenes.reduce(
   (sum, scene) => sum + scene.duration,
   0,
 );
+
+export const followUpQuizzes: Record<number, Quiz> = {
+  1: {
+    question: "Woher stammte ein großer Teil der Gase der frühen Erdatmosphäre?",
+    options: [
+      "Aus den ersten Wäldern",
+      "Aus den Ozeanen fertiger Lebewesen",
+      "Aus vulkanischen Ausgasungen",
+      "Aus einer bereits vorhandenen Ozonschicht",
+    ],
+    correctIndex: 2,
+  },
+  2: {
+    question: "Was musste geschehen, bevor aus Wasserdampf dauerhafter Regen werden konnte?",
+    options: [
+      "Die Sonne musste vollständig erlöschen.",
+      "Erste Pflanzen mussten Wolken erzeugen.",
+      "Das Meer musste bereits voller Sauerstoff sein.",
+      "Die Erdoberfläche musste sich ausreichend abkühlen.",
+    ],
+    correctIndex: 3,
+  },
+  3: {
+    question: "Wo sammelte sich das kondensierte Wasser zu den ersten Ozeanen?",
+    options: [
+      "Nur in Vulkanen",
+      "Ausschließlich in der Atmosphäre",
+      "In Senken und Becken der Erdoberfläche",
+      "Im Inneren fertiger Zellen",
+    ],
+    correctIndex: 2,
+  },
+  4: {
+    question: "Was war die sogenannte „Ursuppe“ ausdrücklich noch nicht?",
+    options: [
+      "Wasser mit gelösten einfachen Stoffen",
+      "Ein Ort chemischer Reaktionen",
+      "Eine Umgebung mit verschiedenen Energiequellen",
+      "Eine Brühe voller fertiger Tiere und Pflanzen",
+    ],
+    correctIndex: 3,
+  },
+  5: {
+    question: "Warum war eine Membran für eine frühe Zelle so entscheidend?",
+    options: [
+      "Sie ersetzte die Erbinformation.",
+      "Sie machte die Zelle sofort vielzellig.",
+      "Sie erzeugte ohne Energie neue Moleküle.",
+      "Sie grenzte einen eigenen Reaktionsraum ab und regelte den Stoffaustausch.",
+    ],
+    correctIndex: 3,
+  },
+  6: {
+    question: "Was entsteht bei einer gelungenen einfachen Zellteilung?",
+    options: [
+      "Zwei Tochterzellen mit kopierter Erbinformation",
+      "Ein vielzelliger Organismus mit Organen",
+      "Eine Zelle ohne Membran",
+      "Sofort eine neue Tierart",
+    ],
+    correctIndex: 0,
+  },
+  7: {
+    question: "Wie gewannen Cyanobakterien Energie und setzten dabei Sauerstoff frei?",
+    options: [
+      "Durch das Fressen erster Fische",
+      "Durch Vulkanismus",
+      "Durch Photosynthese",
+      "Durch die Aufnahme fertiger Mitochondrien",
+    ],
+    correctIndex: 2,
+  },
+  8: {
+    question: "Welche spätere Schutzwirkung hing mit dem Sauerstoff in der Atmosphäre zusammen?",
+    options: [
+      "Eine Ozonschicht schwächte einen Teil der schädlichen UV-Strahlung ab.",
+      "Sauerstoff stoppte sämtliche Meteoriteneinschläge.",
+      "Eine Sauerstoffdecke verhinderte jede Abkühlung.",
+      "Sauerstoff machte Wasser vollkommen keimfrei.",
+    ],
+    correctIndex: 0,
+  },
+  9: {
+    question: "Welcher Befund passt zur Endosymbiontentheorie?",
+    options: [
+      "Mitochondrien besitzen eigenes Erbmaterial.",
+      "Mitochondrien liegen außerhalb jeder Zelle.",
+      "Alle Bakterien besitzen einen Zellkern.",
+      "Tierische Zellen kommen ohne Energie aus.",
+    ],
+    correctIndex: 0,
+  },
+  10: {
+    question: "Welche Lebewesen bestehen aus eukaryotischen Zellen?",
+    options: [
+      "Nur Bakterien",
+      "Tiere, Pflanzen und Pilze",
+      "Ausschließlich Viren",
+      "Nur Cyanobakterien",
+    ],
+    correctIndex: 1,
+  },
+  11: {
+    question: "Was bedeutet Arbeitsteilung in einem Vielzeller?",
+    options: [
+      "Alle Zellen erledigen immer genau dieselbe Aufgabe.",
+      "Jede Zelle verlässt den Organismus nach der Teilung.",
+      "Spezialisierte Zellen übernehmen unterschiedliche Aufgaben für den Organismus.",
+      "Der Organismus benötigt keine Kommunikation zwischen Zellen.",
+    ],
+    correctIndex: 2,
+  },
+  12: {
+    question: "Welche Aussage über die Ediacara-Lebewesen ist am vorsichtigsten formuliert?",
+    options: [
+      "Jede Ediacara-Form war sicher ein direkter Vorfahr heutiger Tiere.",
+      "Viele waren weichkörperig; ihre genaue Verwandtschaft ist teilweise noch unklar.",
+      "Sie lebten ausschließlich an Land.",
+      "Sie besaßen bereits Knochen und Zähne.",
+    ],
+    correctIndex: 1,
+  },
+  13: {
+    question: "Was wurde im Kambrium besonders vielfältig?",
+    options: [
+      "Nur die Farben der Ozeane",
+      "Ausschließlich Landpflanzen",
+      "Bereits alle heutigen Tierarten in unveränderter Form",
+      "Viele unterschiedliche Körperbaupläne und Lebensweisen von Tieren",
+    ],
+    correctIndex: 3,
+  },
+  14: {
+    question: "Warum bereiteten Landpflanzen den späteren Tieren gewissermaßen ein „Buffet“?",
+    options: [
+      "Sie schufen Nahrung und Lebensräume an Land.",
+      "Sie beseitigten jedes Wasser vom Festland.",
+      "Sie verwandelten Tiere in Pflanzenfresser.",
+      "Sie verhinderten die Bildung von Böden.",
+    ],
+    correctIndex: 0,
+  },
+  15: {
+    question: "Welche Tiere gehörten zu den frühen kleinen Eroberern des Festlands?",
+    options: [
+      "Wale und Delfine",
+      "Gliederfüßer wie frühe Tausendfüßer und Verwandte",
+      "Dinosaurier und Vögel",
+      "Große Säugetiere",
+    ],
+    correctIndex: 1,
+  },
+  16: {
+    question: "Welche Aussage über Tiktaalik vermeidet eine typische Falle?",
+    options: [
+      "Tiktaalik war bereits ein heutiger Frosch.",
+      "Tiktaalik war der erste Dinosaurier.",
+      "Tiktaalik lebte vollständig unabhängig vom Wasser.",
+      "Tiktaalik zeigt ein Merkmalsmosaik zwischen wasserlebenden Fischen und frühen Landwirbeltieren.",
+    ],
+    correctIndex: 3,
+  },
+  17: {
+    question: "Welche Struktur des Amnioteneis verhinderte vor allem das Austrocknen des Embryos?",
+    options: [
+      "Eine schützende Hülle mit inneren Eihäuten",
+      "Kiemen außerhalb des Eis",
+      "Ein Fell im Ei",
+      "Eine Verbindung zum offenen Meer",
+    ],
+    correctIndex: 0,
+  },
+  18: {
+    question: "Welche Gruppe gehört nicht zu den Dinosauriern, obwohl sie zur gleichen Zeit lebte?",
+    options: [
+      "Vögel",
+      "Theropoden",
+      "Sauropoden",
+      "Flugsaurier",
+    ],
+    correctIndex: 3,
+  },
+  19: {
+    question: "Was geschah nach der Verdunkelung zuerst mit vielen Nahrungsketten?",
+    options: [
+      "Weniger Sonnenlicht schwächte Pflanzen und damit zahlreiche weitere Glieder der Nahrungskette.",
+      "Alle Pflanzen wuchsen durch den Staub schneller.",
+      "Nur Tiere am Einschlagsort waren betroffen.",
+      "Die Ozeane verwandelten sich dauerhaft in Süßwasser.",
+    ],
+    correctIndex: 0,
+  },
+  20: {
+    question: "Was bedeutet in dieser Szene die „Stunde der Säugetiere“?",
+    options: [
+      "Alle Säugetiere wurden innerhalb einer Stunde riesig.",
+      "Nach dem Aussterben vieler Gruppen eröffneten sich langfristig neue Entwicklungsmöglichkeiten.",
+      "Säugetiere entstanden erst nach dem Asteroideneinschlag.",
+      "Von nun an gab es keine anderen Wirbeltiere mehr.",
+    ],
+    correctIndex: 1,
+  },
+  21: {
+    question: "Warum entstanden nach dem Massenaussterben so unterschiedliche Säugetierformen?",
+    options: [
+      "Alle Lebensräume waren identisch geworden.",
+      "Freie ökologische Nischen boten Chancen für verschiedene Lebensweisen.",
+      "Jede Art erhielt gleichzeitig dieselben Merkmale.",
+      "Säugetiere lebten fortan nur noch in Bäumen.",
+    ],
+    correctIndex: 1,
+  },
+  22: {
+    question: "Welche Botschaft fasst das Ende der Episode am besten zusammen?",
+    options: [
+      "Evolution verfolgt seit Beginn einen festen Plan zum Menschen.",
+      "Die Geschichte des Lebens ist abgeschlossen.",
+      "Aus langen Veränderungen entstand Vielfalt – und unsere neugierige Spur ist sehr jung.",
+      "Nur große Katastrophen verändern das Leben.",
+    ],
+    correctIndex: 2,
+  },
+};

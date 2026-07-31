@@ -52,7 +52,7 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
   );
   assert.equal((source.match(/^\s+speaker:$/gm) ?? []).length, 22);
   assert.equal((source.match(/^\s+timeLabel:/gm) ?? []).length, 22);
-  assert.equal((source.match(/correctIndex:\s+\d+,/g) ?? []).length, 20);
+  assert.equal((source.match(/correctIndex:\s+\d+,/g) ?? []).length, 44);
   const answerPositions = [
     ...source.matchAll(/correctIndex:\s+(\d+),/g),
   ].map((match) => Number(match[1]));
@@ -60,7 +60,7 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
     [0, 1, 2, 3].map(
       (position) => answerPositions.filter((value) => value === position).length,
     ),
-    [5, 5, 5, 5],
+    [11, 11, 11, 11],
   );
   assert.match(source, /weder Bademeister noch Nachschub aus dem Meer/);
   assert.match(source, /Tadaa! Du landest auf der jungen Erde/);
@@ -254,9 +254,9 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(app, /"Szene starten"/);
   assert.match(styles, /height: clamp\(380px, calc\(100svh - 350px\), 620px\)/);
   assert.match(styles, /@media \(min-width: 761px\) and \(max-height: 900px\)/);
-  assert.match(styles, /animation: intro-stars 11s ease-in-out both/);
-  assert.match(styles, /transition: opacity 1100ms ease/);
-  assert.match(app, /setIntroReady\(true\), 10400/);
+  assert.match(styles, /animation: intro-stars 15\.5s ease-in-out both/);
+  assert.match(styles, /transition: opacity 1500ms ease/);
+  assert.match(app, /setIntroReady\(true\), 14800/);
   assert.match(app, /onClick=\{\(\) => answerQuiz\(index\)\}/);
   assert.doesNotMatch(app, /Antwort prüfen/);
 });
@@ -331,6 +331,9 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(finalQuiz, /Frage \{questionIndex \+ 1\} von/);
   assert.match(finalQuiz, /onClick=\{\(\) => answer\(index\)\}/);
   assert.doesNotMatch(finalQuiz, /Antwort prüfen/);
+  assert.doesNotMatch(finalQuiz, /Richtig ist:/);
+  assert.match(app, /Quiz · Frage \{quizQuestionIndex \+ 1\} von/);
+  assert.match(app, /Die nächste Frage kommt sofort\./);
   assert.match(footer, /Über mich/);
   assert.match(footer, /Impressum &amp; Datenschutz/);
   assert.match(footer, /mibaur@me\.com/);
@@ -343,9 +346,9 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(imprint, /keine Werbung und kein/);
   assert.match(imprint, /<HistoryBackLink \/>/);
   assert.doesNotMatch(imprint, /info-simple-footer/);
-  assert.match(historyBack, /window\.history\.back\(\)/);
-  assert.match(historyBack, /window\.location\.assign\("\/\?weiter=1"\)/);
-  assert.match(worker, /zeitreise-v38/);
+  assert.match(historyBack, /href="\/\?weiter=1"/);
+  assert.doesNotMatch(historyBack, /window\.history\.back/);
+  assert.match(worker, /zeitreise-v39/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);

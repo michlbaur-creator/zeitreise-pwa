@@ -134,7 +134,7 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
           <div className="final-quiz-options">
             {question.options.map((option, index) => {
               const optionIsCorrect =
-                checked && index === question.correctIndex;
+                checked && selected === index && index === question.correctIndex;
               const optionIsWrong =
                 checked && selected === index && !optionIsCorrect;
               return (
@@ -161,7 +161,7 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
                 >
                   {isCorrect
                     ? "Richtig – weiter durch die Erdgeschichte."
-                    : `Nicht ganz. Richtig ist: ${question.options[question.correctIndex]}`}
+                    : "Nicht ganz – die Lösung bleibt noch verborgen."}
                 </p>
                 <button type="button" onClick={next}>
                   {questionIndex === questions.length - 1
