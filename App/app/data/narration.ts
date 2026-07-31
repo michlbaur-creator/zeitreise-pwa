@@ -24,7 +24,8 @@ export const michaNarrationVoice = {
 } as const;
 
 export function narrationVoiceForScene(sceneId: number) {
-  return sceneId <= 14 ? michaNarrationVoice : narrationVoice;
+  void sceneId;
+  return michaNarrationVoice;
 }
 
 export const narrationTracks: Record<number, string> = {
@@ -42,14 +43,14 @@ export const narrationTracks: Record<number, string> = {
   12: "/assets/episode1/scene12/sprecher-micha-v1.m4a",
   13: "/assets/episode1/scene13/sprecher-micha-v1.m4a",
   14: "/assets/episode1/scene14/sprecher-micha-v1.m4a",
-  15: "/assets/episode1/scene15/sprecher-cedar-v3.mp3",
-  16: "/assets/episode1/scene16/sprecher-cedar-v2.mp3",
-  17: "/assets/episode1/scene17/sprecher-cedar-v3.mp3",
-  18: "/assets/episode1/scene18/sprecher-cedar-v3.mp3",
-  19: "/assets/episode1/scene19/sprecher-cedar-v2.mp3",
-  20: "/assets/episode1/scene20/sprecher-cedar-v2.mp3",
-  21: "/assets/episode1/scene21/sprecher-cedar-v2.mp3",
-  22: "/assets/episode1/scene22/sprecher-cedar-v2.mp3",
+  15: "/assets/episode1/scene15/sprecher-micha-v1.m4a",
+  16: "/assets/episode1/scene16/sprecher-micha-v1.m4a",
+  17: "/assets/episode1/scene17/sprecher-micha-v1.m4a",
+  18: "/assets/episode1/scene18/sprecher-micha-v1.m4a",
+  19: "/assets/episode1/scene19/sprecher-micha-v1.m4a",
+  20: "/assets/episode1/scene20/sprecher-micha-v1.m4a",
+  21: "/assets/episode1/scene21/sprecher-micha-v1.m4a",
+  22: "/assets/episode1/scene22/sprecher-micha-v1.m4a",
 };
 
 export const humanNarrationSamples = {

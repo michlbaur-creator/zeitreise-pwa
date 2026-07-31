@@ -145,18 +145,9 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
   await Promise.all(
     Array.from({ length: 22 }, (_, index) => {
       const scene = String(index + 1).padStart(2, "0");
-      if (index + 1 <= 14) {
-        return access(
-          new URL(
-            `../public/assets/episode1/scene${scene}/sprecher-micha-v1.m4a`,
-            import.meta.url,
-          ),
-        );
-      }
-      const version = [15, 17, 18].includes(index + 1) ? "v3" : "v2";
       return access(
         new URL(
-          `../public/assets/episode1/scene${scene}/sprecher-cedar-${version}.mp3`,
+          `../public/assets/episode1/scene${scene}/sprecher-micha-v1.m4a`,
           import.meta.url,
         ),
       );
@@ -193,7 +184,7 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
   assert.match(visual, /hintergrund-feuerplanet-v1\.png/);
 });
 
-test("verknüpft Michas Aufnahmen für Szene 1 bis 14 und Cedar für den Rest", async () => {
+test("verknüpft Michas Aufnahmen für alle 22 Szenen", async () => {
   const narration = await readFile(
     new URL("../app/data/narration.ts", import.meta.url),
     "utf8",
@@ -202,18 +193,11 @@ test("verknüpft Michas Aufnahmen für Szene 1 bis 14 und Cedar für den Rest", 
   assert.match(narration, /voice: "cedar"/);
   assert.equal(
     (narration.match(/sprecher-micha-v1\.m4a/g) ?? []).length,
-    14,
-  );
-  assert.equal(
-    (narration.match(/sprecher-cedar-v2\.mp3/g) ?? []).length,
-    5,
-  );
-  assert.equal(
-    (narration.match(/sprecher-cedar-v3\.mp3/g) ?? []).length,
-    3,
+    22,
   );
   assert.match(narration, /displayName: "Micha"/);
   assert.match(narration, /narrationVoiceForScene/);
+  assert.match(narration, /return michaNarrationVoice;/);
   assert.match(narration, /sprecher-micha-test-v1\.m4a/);
   assert.match(narration, /sprecher-rosi-test-v1\.m4a/);
   await access(
@@ -320,7 +304,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(imprint, /keine Werbung und kein/);
   assert.match(imprint, /className="info-simple-footer"/);
   assert.match(imprint, /Zurück zur Zeitreise/);
-  assert.match(worker, /zeitreise-v33/);
+  assert.match(worker, /zeitreise-v34/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);

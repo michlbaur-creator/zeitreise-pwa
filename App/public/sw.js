@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v33";
+const CACHE_NAME = "zeitreise-v34";
 const APP_SHELL = [
   "/",
   "/tierstammbaum/",
@@ -54,27 +54,27 @@ const APP_SHELL = [
   "/assets/episode1/scene14/overlay-nebel-v1.png",
   "/assets/episode1/scene14/sprecher-micha-v1.m4a",
   "/assets/episode1/scene15/hintergrund-erste-landtiere-v1.png",
-  "/assets/episode1/scene15/sprecher-cedar-v3.mp3",
+  "/assets/episode1/scene15/sprecher-micha-v1.m4a",
   "/assets/episode1/scene16/hintergrund-tiktaalik-v1.png",
   "/assets/episode1/scene16/overlay-wassersplash-v1.png",
-  "/assets/episode1/scene16/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene16/sprecher-micha-v1.m4a",
   "/assets/episode1/scene17/hintergrund-amniotenei-v1.png",
-  "/assets/episode1/scene17/sprecher-cedar-v3.mp3",
+  "/assets/episode1/scene17/sprecher-micha-v1.m4a",
   "/assets/episode1/scene18/hintergrund-dinosaurier-v1.png",
   "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
-  "/assets/episode1/scene18/sprecher-cedar-v3.mp3",
+  "/assets/episode1/scene18/sprecher-micha-v1.m4a",
   "/assets/episode1/scene19/hintergrund-asteroid-morgen-v1.png",
   "/assets/episode1/scene19/overlay-meteor-v1.png",
-  "/assets/episode1/scene19/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene19/sprecher-micha-v1.m4a",
   "/assets/episode1/scene20/hintergrund-nach-einschlag-v1.png",
   "/assets/episode1/scene20/overlay-staubwolke-v1.png",
   "/assets/episode1/scene20/overlay-aschewolke-v1.png",
   "/assets/episode1/scene20/overlay-nebel-lichtet-v1.png",
-  "/assets/episode1/scene20/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene20/sprecher-micha-v1.m4a",
   "/assets/episode1/scene21/hintergrund-saeugetiere-v1.png",
-  "/assets/episode1/scene21/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene21/sprecher-micha-v1.m4a",
   "/assets/episode1/scene22/hintergrund-zeitfelsen-heute-v1.png",
-  "/assets/episode1/scene22/sprecher-cedar-v2.mp3",
+  "/assets/episode1/scene22/sprecher-micha-v1.m4a",
 ];
 
 self.addEventListener("install", (event) => {
