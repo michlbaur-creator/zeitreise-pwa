@@ -337,6 +337,10 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(footer, /Über mich/);
   assert.match(footer, /Impressum &amp; Datenschutz/);
   assert.match(footer, /mibaur@me\.com/);
+  assert.match(footer, /https:\/\/fauna\.mibaso\.de\//);
+  assert.match(footer, /Fauna entdecken/);
+  assert.match(footer, /https:\/\/start\.mibaso\.de\//);
+  assert.match(footer, /Alle Mibaso-Apps/);
   assert.doesNotMatch(footer, /site-footer-meta/);
   assert.match(about, /Hallo, ich bin Micha\./);
   assert.match(about, /michael-baur-garten\.jpg/);
@@ -348,7 +352,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v40/);
+  assert.match(worker, /zeitreise-v41/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
