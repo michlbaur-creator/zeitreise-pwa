@@ -5503,6 +5503,13 @@ button:disabled {
   text-decoration: underline;
 }
 
+.site-footer-copy {
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(225, 232, 226, 0.07);
+  line-height: 1.5;
+}
+
 .site-footer-meta {
   display: flex;
   align-items: center;
@@ -6220,9 +6227,15 @@ button:disabled {
   border-bottom: 1px solid var(--line);
 }
 
-.legal-page section:last-child {
+.legal-page section:last-of-type {
   padding-bottom: 0;
   border-bottom: 0;
+}
+
+.legal-copy {
+  margin-top: 26px;
+  color: var(--faint);
+  font-size: 0.82rem;
 }
 
 .connection-dot {

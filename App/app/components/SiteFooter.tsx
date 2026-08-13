@@ -4,11 +4,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <nav className="site-footer-portals" aria-label="Weitere Mibaso-Angebote">
-        <a href="https://fauna.mibaso.de/">
-          <span aria-hidden="true">🦋</span>
-          Fauna entdecken
-        </a>
-        <a href="https://start.mibaso.de/">
+        <a href="https://mibaso.de">
           <span aria-hidden="true">⌂</span>
           Alle Mibaso-Apps
         </a>
@@ -21,8 +17,11 @@ export function SiteFooter() {
         <nav aria-label="Fußnavigation">
           <Link href="/ueber/">Über mich</Link>
           <Link href="/impressum/">Impressum &amp; Datenschutz</Link>
-          <a href="mailto:mibaur@me.com">Kontakt</a>
         </nav>
+      </div>
+      <div className="site-footer-copy">
+        © 2026 Michael Baur · Kontakt:{" "}
+        <a href="mailto:mibaur@me.com">mibaur@me.com</a>
       </div>
     </footer>
   );

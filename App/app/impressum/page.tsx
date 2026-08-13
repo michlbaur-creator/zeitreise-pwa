@@ -42,18 +42,19 @@ export default function ImprintPage() {
           <section>
             <h2>Verantwortlich für den Inhalt</h2>
             <p>
-              Verantwortlich gemäß § 18 Abs. 2 MStV:
+              Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
               <br />
               Michael Baur, Anschrift wie oben.
             </p>
+            <p>Dies ist eine private, nicht-kommerzielle Website.</p>
           </section>
 
           <section>
             <h2>Datenschutz</h2>
             <p>
-              Diese App verwendet keine Benutzerkonten, keine Werbung und kein
-              eigenes Besucher-Tracking. Ich setze keine Analyse- oder
-              Werbe-Cookies ein.
+              Zeitreise Mibaso ist eine reine Web-App ohne Nutzerkonto. Es
+              werden keine personenbezogenen Daten erhoben, gespeichert oder an
+              Dritte weitergegeben. Es gibt kein Tracking und keine Werbung.
             </p>
             <p>
               Dein aktueller Szenenstand, Quiz-Ergebnisse und entdeckte
@@ -64,9 +65,10 @@ export default function ImprintPage() {
               Browser- oder App-Daten entfernt werden.
             </p>
             <p>
-              Die Website wird über GitHub Pages bereitgestellt. Beim Abruf
-              können technisch notwendige Verbindungsdaten durch GitHub
-              verarbeitet werden. Weitere Informationen findest du in der{" "}
+              Die Seite wird über GitHub Pages bereitgestellt (GitHub Inc., 88
+              Colin P. Kelly Jr. St, San Francisco, CA 94107, USA). Beim Aufruf
+              werden technisch bedingt Server-Logdaten (z. B. IP-Adresse,
+              Zeitpunkt des Abrufs) durch GitHub verarbeitet; Näheres in der{" "}
               <a
                 href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement"
                 rel="noreferrer"
@@ -74,21 +76,16 @@ export default function ImprintPage() {
               >
                 Datenschutzerklärung von GitHub
               </a>
-              .
-            </p>
-            <p>
-              Wenn du per E-Mail Kontakt aufnimmst, werden deine Angaben nur zur
-              Bearbeitung deiner Nachricht verwendet.
+              . Darauf habe ich keinen Einfluss.
             </p>
           </section>
 
           <section>
-            <h2>Transparenz zu KI-Inhalten</h2>
+            <h2>Transparenzhinweis zu KI-Inhalten</h2>
             <p>
-              Bei Texten, Illustrationen, Audiodateien und Programmierung kamen
-              unterstützend KI-Werkzeuge zum Einsatz. Die Inhalte wurden
-              redaktionell ausgewählt, geprüft und für dieses Bildungsprojekt
-              bearbeitet.
+              Teile der Texte, Grafiken und Illustrationen dieser App wurden mit
+              Unterstützung generativer KI erstellt und anschließend
+              redaktionell geprüft.
             </p>
           </section>
 
@@ -101,6 +98,8 @@ export default function ImprintPage() {
               ausschließlich deren Betreiber verantwortlich.
             </p>
           </section>
+
+          <p className="legal-copy">© 2026 Michael Baur · Zeitreise Mibaso</p>
         </div>
       </article>
 
