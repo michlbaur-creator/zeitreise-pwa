@@ -1086,6 +1086,34 @@ export function SceneVisual({
         ))}
       </div>
 
+      {isSceneTwo || isSceneThree ? (
+        <div
+          className={`driving-rain driving-rain-scene-${scene.id}`}
+          aria-hidden="true"
+        >
+          <span className="rain-curtain rain-curtain-back" />
+          <span className="rain-curtain rain-curtain-middle" />
+          <span className="rain-curtain rain-curtain-front" />
+          <span className="rain-impact-haze" />
+          <span className="rain-splash-field">
+            {Array.from({ length: 20 }, (_, index) => (
+              <span
+                className="rain-splash"
+                style={
+                  {
+                    "--rain-splash-left": `${3 + ((index * 29) % 94)}%`,
+                    "--rain-splash-bottom": `${5 + ((index * 17) % 24)}%`,
+                    "--rain-splash-delay": `${-(index % 8) * 0.09}s`,
+                    "--rain-splash-scale": 0.65 + (index % 5) * 0.13,
+                  } as CSSProperties
+                }
+                key={`rain-splash-${scene.id}-${index}`}
+              />
+            ))}
+          </span>
+        </div>
+      ) : null}
+
       {showEnding ? (
         <div className="ending-title" aria-live="polite">
           <span>Zeitreise</span>

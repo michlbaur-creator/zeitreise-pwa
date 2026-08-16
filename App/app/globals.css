@@ -2527,6 +2527,186 @@ button:disabled {
   }
 }
 
+/* Durchgehender Starkregen in den Szenen 2 und 3. Die drei Ebenen werden
+   direkt in der App bewegt und benötigen keine zusätzlichen Mediendateien. */
+.driving-rain {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.driving-rain-scene-2 {
+  opacity: 0.9;
+}
+
+.driving-rain-scene-3 {
+  opacity: 0.96;
+}
+
+.rain-curtain {
+  position: absolute;
+  inset: -32% -18%;
+  background-image:
+    linear-gradient(
+      106deg,
+      transparent 44%,
+      rgba(225, 239, 238, 0.82) 48%,
+      transparent 53%
+    ),
+    linear-gradient(
+      106deg,
+      transparent 46%,
+      rgba(202, 222, 221, 0.58) 49%,
+      transparent 53%
+    );
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  animation-name: driving-rain-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  will-change: background-position, transform;
+}
+
+.rain-curtain-back {
+  z-index: 1;
+  background-size: 21px 112px, 37px 154px;
+  opacity: 0.3;
+  filter: blur(0.45px);
+  animation-duration: 0.74s;
+}
+
+.rain-curtain-middle {
+  z-index: 2;
+  background-size: 28px 145px, 47px 188px;
+  opacity: 0.5;
+  animation-duration: 0.56s;
+  animation-delay: -0.22s;
+}
+
+.rain-curtain-front {
+  z-index: 3;
+  background-size: 39px 184px, 61px 228px;
+  opacity: 0.66;
+  filter: blur(0.2px);
+  animation-duration: 0.43s;
+  animation-delay: -0.31s;
+}
+
+.rain-impact-haze {
+  position: absolute;
+  z-index: 4;
+  right: -10%;
+  bottom: -8%;
+  left: -10%;
+  height: 43%;
+  background:
+    repeating-linear-gradient(
+      174deg,
+      transparent 0 14px,
+      rgba(210, 229, 226, 0.11) 15px 16px,
+      transparent 17px 28px
+    ),
+    linear-gradient(0deg, rgba(198, 219, 215, 0.2), transparent 76%);
+  filter: blur(1.3px);
+  opacity: 0.74;
+  animation: rain-impact-haze 1.35s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.rain-splash-field {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+}
+
+.rain-splash {
+  --rain-splash-left: 50%;
+  --rain-splash-bottom: 10%;
+  --rain-splash-delay: 0s;
+  --rain-splash-scale: 1;
+  position: absolute;
+  left: var(--rain-splash-left);
+  bottom: var(--rain-splash-bottom);
+  width: 24px;
+  height: 9px;
+  border-top: 2px solid rgba(228, 241, 238, 0.72);
+  border-radius: 50%;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px rgba(202, 228, 225, 0.38));
+  transform: translateX(-50%) scale(var(--rain-splash-scale));
+  animation: rain-splash 0.72s ease-out var(--rain-splash-delay) infinite;
+  animation-play-state: paused;
+}
+
+.rain-splash::before,
+.rain-splash::after {
+  position: absolute;
+  bottom: 1px;
+  width: 2px;
+  height: 8px;
+  border-radius: 50% 50% 0 0;
+  background: rgba(222, 239, 235, 0.68);
+  content: "";
+}
+
+.rain-splash::before {
+  left: 7px;
+  transform: rotate(-25deg);
+}
+
+.rain-splash::after {
+  right: 7px;
+  transform: rotate(25deg);
+}
+
+.scene-visual.is-playing .rain-curtain,
+.scene-visual.is-playing .rain-impact-haze,
+.scene-visual.is-playing .rain-splash {
+  animation-play-state: running;
+}
+
+@keyframes driving-rain-fall {
+  from {
+    background-position: 0 -230px, 12px -320px;
+    transform: translate3d(2%, -5%, 0);
+  }
+  to {
+    background-position: -74px 230px, -96px 320px;
+    transform: translate3d(-2%, 5%, 0);
+  }
+}
+
+@keyframes rain-impact-haze {
+  from {
+    opacity: 0.48;
+    transform: translate3d(-1%, 2%, 0) scale(0.99);
+  }
+  to {
+    opacity: 0.78;
+    transform: translate3d(1%, -1%, 0) scale(1.02);
+  }
+}
+
+@keyframes rain-splash {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px)
+      scale(var(--rain-splash-scale)) scale(0.45);
+  }
+  18% {
+    opacity: 0.92;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-11px)
+      scale(var(--rain-splash-scale)) scale(1.35);
+  }
+}
+
 @keyframes scene-three-steam {
   0%,
   100% {

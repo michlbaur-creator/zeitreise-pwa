@@ -380,11 +380,43 @@ export default function ZeitreiseApp() {
     window.addEventListener("beforeinstallprompt", onInstallPrompt);
 
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/sw.js", { updateViaCache: "none" })
-        .catch(() => {
-        // Die lokale Vorschau funktioniert auch ohne installierten Service Worker.
-      });
+      if (process.env.NODE_ENV === "development") {
+        void navigator.serviceWorker
+          .getRegistrations()
+          .then(async (registrations) => {
+            await Promise.all(
+              registrations.map((registration) => registration.unregister()),
+            );
+
+            if ("caches" in window) {
+              const cacheNames = await window.caches.keys();
+              await Promise.all(
+                cacheNames
+                  .filter((name) => name.startsWith("zeitreise-"))
+                  .map((name) => window.caches.delete(name)),
+              );
+            }
+
+            const reloadKey = "zeitreise-local-cache-cleared";
+            if (
+              !cancelled &&
+              navigator.serviceWorker.controller &&
+              window.sessionStorage.getItem(reloadKey) !== "1"
+            ) {
+              window.sessionStorage.setItem(reloadKey, "1");
+              window.location.reload();
+            }
+          })
+          .catch(() => {
+            // Die lokale Vorschau bleibt auch ohne Bereinigung nutzbar.
+          });
+      } else {
+        navigator.serviceWorker
+          .register("/sw.js", { updateViaCache: "none" })
+          .catch(() => {
+            // Die App funktioniert auch ohne installierten Service Worker.
+          });
+      }
     }
 
     return () => {
@@ -409,6 +441,8 @@ export default function ZeitreiseApp() {
   }, []);
 
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") return;
+
     let disposed = false;
     let checking = false;
 

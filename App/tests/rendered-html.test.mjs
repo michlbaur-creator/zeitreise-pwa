@@ -353,7 +353,10 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v42/);
+  assert.match(worker, /zeitreise-v44/);
+  assert.match(app, /process\.env\.NODE_ENV === "development"/);
+  assert.match(app, /registration\.unregister\(\)/);
+  assert.match(app, /name\.startsWith\("zeitreise-"\)/);
   assert.match(worker, /"\/tierstammbaum\/"/);
   assert.match(worker, /"\/ueber\/"/);
   assert.match(worker, /"\/impressum\/"/);
@@ -363,6 +366,27 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
       import.meta.url,
     ),
   );
+});
+
+test("lässt in Szene 2 und 3 durchgehend Starkregen prasseln", async () => {
+  const visual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(visual, /isSceneTwo \|\| isSceneThree/);
+  assert.match(visual, /driving-rain-scene-\$\{scene\.id\}/);
+  assert.match(visual, /rain-curtain-back/);
+  assert.match(visual, /rain-curtain-middle/);
+  assert.match(visual, /rain-curtain-front/);
+  assert.match(visual, /Array\.from\(\{ length: 20 \}/);
+  assert.match(styles, /@keyframes driving-rain-fall/);
+  assert.match(styles, /@keyframes rain-splash/);
+  assert.match(styles, /\.scene-visual\.is-playing \.rain-curtain/);
 });
 
 test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
