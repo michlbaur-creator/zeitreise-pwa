@@ -353,7 +353,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v47/);
+  assert.match(worker, /zeitreise-v48/);
   assert.match(app, /process\.env\.NODE_ENV === "development"/);
   assert.match(app, /registration\.unregister\(\)/);
   assert.match(app, /name\.startsWith\("zeitreise-"\)/);
@@ -544,10 +544,36 @@ test("inszeniert in Szene 19 genau einen synchronisierten Einschlag", async () =
     /<MeteorImpactAnimation progress=\{progress\} \/>/,
   );
   assert.equal((sceneVisual.match(/className="impact-single-meteor"/g) ?? []).length, 1);
-  assert.match(audio, /\.filter\(\(event\) => event !== "impact"\)/);
+  assert.match(audio, /event !== "impact"/);
   assert.match(audio, /!impactPlayedRef\.current/);
   assert.match(timing, /SCENE_NINETEEN_IMPACT = 0\.625/);
   assert.doesNotMatch(css, /collection-meteor 12s ease-in-out infinite/);
+});
+
+test("zeigt in Szene 20 erst den Zeitfelsen und dann das kleine Säugetier", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const audio = await readFile(
+    new URL("../app/audio/useAmbientSound.ts", import.meta.url),
+    "utf8",
+  );
+  const timing = await readFile(
+    new URL("../app/data/survivorTiming.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function AftermathSurvivorAnimation/);
+  assert.match(
+    sceneVisual,
+    /<AftermathSurvivorAnimation progress=\{progress\} \/>/,
+  );
+  assert.match(sceneVisual, /survivor-time-rock-focus/);
+  assert.match(sceneVisual, /survivor-mammal-track/);
+  assert.match(timing, /SCENE_TWENTY_MAMMAL_EMERGES = 0\.32/);
+  assert.match(audio, /survivorRustlePlayedRef/);
+  assert.match(audio, /sceneId === 20 && event === "rustle"/);
 });
 
 test("erzählt die Endosymbiose als synchronisierte Animation", async () => {

@@ -11,6 +11,11 @@ import {
 } from "../data/impactTiming";
 import { rainIntensityForScene } from "../data/rainTiming";
 import type { Scene } from "../data/scenes";
+import {
+  SCENE_TWENTY_MAMMAL_EMERGES,
+  SCENE_TWENTY_MAMMAL_HIDDEN,
+  SCENE_TWENTY_MAMMAL_RETREATS,
+} from "../data/survivorTiming";
 
 type SceneVisualProps = {
   scene: Scene;
@@ -110,20 +115,6 @@ const collectionOverlays: Partial<Record<number, CollectionOverlay[]>> = {
     {
       src: "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
       className: "collection-overlay-shadow",
-    },
-  ],
-  20: [
-    {
-      src: "/assets/episode1/scene20/overlay-staubwolke-v1.png",
-      className: "collection-overlay-dust",
-    },
-    {
-      src: "/assets/episode1/scene20/overlay-aschewolke-v1.png",
-      className: "collection-overlay-ash-cloud",
-    },
-    {
-      src: "/assets/episode1/scene20/overlay-nebel-lichtet-v1.png",
-      className: "collection-overlay-clearing-mist",
     },
   ],
 };
@@ -780,6 +771,112 @@ function MeteorImpactAnimation({ progress }: { progress: number }) {
   );
 }
 
+function AftermathSurvivorAnimation({ progress }: { progress: number }) {
+  const clearing = phaseProgress(progress, 0.035, 0.34);
+  const rockFocus = 1 - phaseProgress(progress, 0.18, 0.34);
+  const emergence = phaseProgress(
+    progress,
+    SCENE_TWENTY_MAMMAL_EMERGES,
+    SCENE_TWENTY_MAMMAL_EMERGES + 0.11,
+  );
+  const retreat = phaseProgress(
+    progress,
+    SCENE_TWENTY_MAMMAL_RETREATS,
+    SCENE_TWENTY_MAMMAL_HIDDEN,
+  );
+  const mammalVisibility = emergence * (1 - retreat);
+  const mammalOffset = -4 + emergence * 8 - retreat * 10;
+  const groundDust =
+    phaseProgress(
+      progress,
+      SCENE_TWENTY_MAMMAL_EMERGES,
+      SCENE_TWENTY_MAMMAL_EMERGES + 0.08,
+    ) *
+    (1 -
+      phaseProgress(
+        progress,
+        SCENE_TWENTY_MAMMAL_EMERGES + 0.08,
+        SCENE_TWENTY_MAMMAL_EMERGES + 0.2,
+      ));
+  const futureGlow = phaseProgress(progress, 0.86, 0.98);
+
+  return (
+    <div
+      className="aftermath-survivor-story"
+      role="img"
+      aria-label="Die Asche lichtet sich. Zuerst steht der Zeitfelsen im Blick, dann kommt ein kleines Säugetier unter einem Baumstamm hervor, schnuppert und zieht sich wieder zurück."
+      style={
+        {
+          "--survivor-clearing": clearing,
+          "--survivor-rock-focus": rockFocus,
+          "--survivor-mammal-visible": mammalVisibility,
+          "--survivor-ground-dust": groundDust,
+          "--survivor-future-glow": futureGlow,
+        } as CSSProperties
+      }
+    >
+      <img
+        className="survivor-dust-cloud"
+        src="/assets/episode1/scene20/overlay-staubwolke-v1.png"
+        alt=""
+        draggable={false}
+        style={{
+          opacity: 0.58 - clearing * 0.46,
+          transform: `translate3d(${-4 - clearing * 11}%, ${4 + clearing * 3}%, 0) scale(${1.08 + clearing * 0.08})`,
+        }}
+      />
+      <img
+        className="survivor-ash-cloud"
+        src="/assets/episode1/scene20/overlay-aschewolke-v1.png"
+        alt=""
+        draggable={false}
+        style={{
+          opacity: 0.36 - clearing * 0.27,
+          transform: `translate3d(${8 + clearing * 16}%, ${2 - clearing * 5}%, 0) scale(${1.04 + clearing * 0.06})`,
+        }}
+      />
+      <img
+        className="survivor-clearing-mist"
+        src="/assets/episode1/scene20/overlay-nebel-lichtet-v1.png"
+        alt=""
+        draggable={false}
+        style={{
+          opacity: clearing * (1 - futureGlow) * 0.2,
+          transform: `translate3d(${-10 + clearing * 18}%, ${8 - clearing * 6}%, 0) scale(1.08)`,
+        }}
+      />
+      <span className="survivor-time-rock-focus" />
+      <span className="survivor-mammal-cover" />
+      <span
+        className="survivor-mammal-track"
+        style={{
+          opacity: mammalVisibility,
+          transform: `translate3d(${mammalOffset}%, 0, 0)`,
+        }}
+      >
+        <span className="survivor-mammal-image" />
+      </span>
+      <span className="survivor-ground-dust" />
+      <span className="survivor-future-light" />
+      <span className="survivor-ash-particles">
+        {Array.from({ length: 20 }, (_, index) => (
+          <span
+            style={
+              {
+                "--survivor-ash-index": index,
+                "--survivor-ash-left": `${2 + ((index * 37) % 96)}%`,
+                "--survivor-ash-top": `${5 + ((index * 29) % 72)}%`,
+                "--survivor-ash-size": `${1 + (index % 3)}px`,
+              } as CSSProperties
+            }
+            key={`survivor-ash-${index}`}
+          />
+        ))}
+      </span>
+    </div>
+  );
+}
+
 export function SceneVisual({
   scene,
   isPlaying,
@@ -1173,6 +1270,9 @@ export function SceneVisual({
           </div>
         ) : null}
         {scene.id === 19 ? <MeteorImpactAnimation progress={progress} /> : null}
+        {scene.id === 20 ? (
+          <AftermathSurvivorAnimation progress={progress} />
+        ) : null}
         {!isSceneOne ? (
           <>
             <div className="world-sun" aria-hidden="true" />

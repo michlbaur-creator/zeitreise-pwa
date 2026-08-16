@@ -8,6 +8,7 @@ import {
 } from "../data/impactTiming";
 import { rainIntensityForScene } from "../data/rainTiming";
 import type { SceneTheme } from "../data/scenes";
+import { SCENE_TWENTY_MAMMAL_EMERGES } from "../data/survivorTiming";
 
 type SoundEvent =
   | "bubbles"
@@ -483,6 +484,13 @@ export function useAmbientSound(
     brownNoise: AudioBuffer;
   } | null>(null);
   const impactPlayedRef = useRef(false);
+  const survivorSoundRef = useRef<{
+    context: AudioContext;
+    destination: AudioNode;
+    whiteNoise: AudioBuffer;
+    brownNoise: AudioBuffer;
+  } | null>(null);
+  const survivorRustlePlayedRef = useRef(false);
   const impactSceneRef = useRef(sceneId);
   const sceneProgressRef = useRef(progress);
   const [contextRevision, setContextRevision] = useState(0);
@@ -517,6 +525,7 @@ export function useAmbientSound(
     if (impactSceneRef.current !== sceneId) {
       impactSceneRef.current = sceneId;
       impactPlayedRef.current = false;
+      survivorRustlePlayedRef.current = false;
     }
 
     if (context && rainBedGain && context.state !== "closed") {
@@ -529,41 +538,66 @@ export function useAmbientSound(
       rainBedGain.gain.setTargetAtTime(target, context.currentTime, 0.18);
     }
 
-    if (sceneId !== 19) return;
-    if (progress < SCENE_NINETEEN_SILENCE_START - 0.04) {
-      impactPlayedRef.current = false;
+    if (sceneId === 19) {
+      if (progress < SCENE_NINETEEN_SILENCE_START - 0.04) {
+        impactPlayedRef.current = false;
+      }
+
+      const impactSound = impactSoundRef.current;
+      if (!impactSound || impactSound.context.state === "closed") return;
+
+      const isSilent =
+        progress >= SCENE_NINETEEN_SILENCE_START &&
+        progress < SCENE_NINETEEN_IMPACT;
+      const master = impactSound.destination as GainNode;
+      master.gain.cancelScheduledValues(impactSound.context.currentTime);
+      master.gain.setTargetAtTime(
+        isSilent ? 0.0001 : 1.05,
+        impactSound.context.currentTime,
+        isSilent ? 0.08 : 0.025,
+      );
+
+      if (
+        isPlaying &&
+        !impactPlayedRef.current &&
+        progress >= SCENE_NINETEEN_IMPACT &&
+        progress < SCENE_NINETEEN_BLACKOUT_END
+      ) {
+        impactPlayedRef.current = true;
+        master.gain.cancelScheduledValues(impactSound.context.currentTime);
+        master.gain.setValueAtTime(1.05, impactSound.context.currentTime);
+        playSoundEvent(
+          "impact",
+          impactSound.context,
+          impactSound.destination,
+          impactSound.whiteNoise,
+          impactSound.brownNoise,
+        );
+      }
     }
 
-    const impactSound = impactSoundRef.current;
-    if (!impactSound || impactSound.context.state === "closed") return;
-
-    const isSilent =
-      progress >= SCENE_NINETEEN_SILENCE_START &&
-      progress < SCENE_NINETEEN_IMPACT;
-    const master = impactSound.destination as GainNode;
-    master.gain.cancelScheduledValues(impactSound.context.currentTime);
-    master.gain.setTargetAtTime(
-      isSilent ? 0.0001 : 1.05,
-      impactSound.context.currentTime,
-      isSilent ? 0.08 : 0.025,
-    );
-
-    if (
-      isPlaying &&
-      !impactPlayedRef.current &&
-      progress >= SCENE_NINETEEN_IMPACT &&
-      progress < SCENE_NINETEEN_BLACKOUT_END
-    ) {
-      impactPlayedRef.current = true;
-      master.gain.cancelScheduledValues(impactSound.context.currentTime);
-      master.gain.setValueAtTime(1.05, impactSound.context.currentTime);
-      playSoundEvent(
-        "impact",
-        impactSound.context,
-        impactSound.destination,
-        impactSound.whiteNoise,
-        impactSound.brownNoise,
-      );
+    if (sceneId === 20) {
+      if (progress < SCENE_TWENTY_MAMMAL_EMERGES - 0.04) {
+        survivorRustlePlayedRef.current = false;
+      }
+      const survivorSound = survivorSoundRef.current;
+      if (
+        isPlaying &&
+        !survivorRustlePlayedRef.current &&
+        progress >= SCENE_TWENTY_MAMMAL_EMERGES &&
+        progress < SCENE_TWENTY_MAMMAL_EMERGES + 0.16 &&
+        survivorSound &&
+        survivorSound.context.state !== "closed"
+      ) {
+        survivorRustlePlayedRef.current = true;
+        playSoundEvent(
+          "rustle",
+          survivorSound.context,
+          survivorSound.destination,
+          survivorSound.whiteNoise,
+          survivorSound.brownNoise,
+        );
+      }
     }
   }, [isPlaying, progress, sceneId]);
 
@@ -605,6 +639,14 @@ export function useAmbientSound(
 
     if (sceneId === 19) {
       impactSoundRef.current = {
+        context,
+        destination: master,
+        whiteNoise,
+        brownNoise,
+      };
+    }
+    if (sceneId === 20) {
+      survivorSoundRef.current = {
         context,
         destination: master,
         whiteNoise,
@@ -670,7 +712,10 @@ export function useAmbientSound(
 
     persistentNodes.forEach((node) => node.start());
     (sceneEvents[sceneId] ?? [])
-      .filter((event) => event !== "impact")
+      .filter(
+        (event) =>
+          event !== "impact" && !(sceneId === 20 && event === "rustle"),
+      )
       .forEach(scheduleEvent);
 
     return () => {
@@ -680,6 +725,9 @@ export function useAmbientSound(
       }
       if (impactSoundRef.current?.destination === master) {
         impactSoundRef.current = null;
+      }
+      if (survivorSoundRef.current?.destination === master) {
+        survivorSoundRef.current = null;
       }
       timers.forEach((timer) => window.clearTimeout(timer));
       persistentNodes.forEach((node) => {
