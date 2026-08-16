@@ -2005,6 +2005,10 @@ button:disabled {
   filter: saturate(0.64) contrast(1.06) brightness(0.78);
 }
 
+.scene-generated-16 .scene-generated-background {
+  animation: none;
+}
+
 .scene-five-media::before,
 .scene-six-media::before,
 .scene-seven-media::before,
@@ -3341,6 +3345,749 @@ button:disabled {
 
 .scene-generated-19 .scene-generated-background {
   filter: saturate(0.82) contrast(1.05) brightness(0.8);
+}
+
+.cambrian-explosion-story {
+  --cambrian-diversity: 0;
+  --cambrian-features: 0;
+  --cambrian-arms-race: 0;
+  --cambrian-transition: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cambrian-water-depth {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    radial-gradient(circle at 74% 12%, rgba(224, 231, 190, 0.15), transparent 28%),
+    linear-gradient(180deg, rgba(26, 68, 68, 0.04), rgba(16, 39, 36, 0.16));
+  opacity: calc(0.28 + var(--cambrian-diversity) * 0.36);
+  mix-blend-mode: screen;
+}
+
+.cambrian-trilobite,
+.cambrian-transition-trilobite {
+  --cambrian-delay: 0s;
+  position: absolute;
+  z-index: 6;
+  width: 76px;
+  height: 34px;
+  border: 1px solid rgba(82, 63, 40, 0.72);
+  border-radius: 52% 48% 46% 54%;
+  background:
+    linear-gradient(90deg, rgba(86, 67, 43, 0.86), transparent 20% 80%, rgba(72, 54, 35, 0.78)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(177, 145, 94, 0.78) 0 6px,
+      rgba(87, 67, 42, 0.88) 6px 9px
+    );
+  box-shadow:
+    inset 0 2px 8px rgba(218, 190, 135, 0.26),
+    0 7px 12px rgba(8, 19, 17, 0.22);
+  filter: saturate(0.74) contrast(1.08);
+  will-change: left, top, transform, opacity;
+}
+
+.cambrian-trilobite::before,
+.cambrian-transition-trilobite::before {
+  position: absolute;
+  right: -2px;
+  top: 3px;
+  width: 23px;
+  height: 26px;
+  border-radius: 46% 58% 48% 52%;
+  background:
+    radial-gradient(circle at 72% 30%, rgba(224, 204, 150, 0.78) 0 2px, transparent 3px),
+    linear-gradient(90deg, #786044, #a08355);
+  box-shadow: inset 2px 0 5px rgba(51, 39, 27, 0.36);
+  content: "";
+}
+
+.cambrian-trilobite::after,
+.cambrian-transition-trilobite::after {
+  position: absolute;
+  left: -9px;
+  top: 8px;
+  width: 18px;
+  height: 17px;
+  border-radius: 70% 22% 22% 70%;
+  background: #745c3f;
+  content: "";
+  clip-path: polygon(100% 0, 76% 48%, 100% 100%, 0 73%, 0 27%);
+}
+
+.cambrian-trilobite i,
+.cambrian-transition-trilobite i {
+  position: absolute;
+  z-index: -1;
+  left: 11px;
+  bottom: -7px;
+  width: 53px;
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 5px,
+    rgba(90, 70, 45, 0.82) 5px 7px,
+    transparent 7px 10px
+  );
+  transform: skewX(-18deg);
+  animation: cambrian-legs-scuttle 620ms steps(2) infinite;
+  animation-delay: var(--cambrian-delay);
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .cambrian-trilobite i,
+.scene-visual.is-playing .cambrian-transition-trilobite i {
+  animation-play-state: running;
+}
+
+.cambrian-swimmer {
+  position: absolute;
+  z-index: 7;
+  left: 10%;
+  top: 22%;
+  width: 166px;
+  height: 48px;
+  border: 1px solid rgba(107, 91, 63, 0.62);
+  border-radius: 78% 42% 50% 72%;
+  background:
+    radial-gradient(circle at 83% 30%, #272b25 0 3px, #c2b083 4px 6px, transparent 7px),
+    repeating-linear-gradient(
+      90deg,
+      rgba(117, 100, 70, 0.82) 0 11px,
+      rgba(177, 154, 105, 0.72) 11px 15px
+    );
+  box-shadow:
+    inset 0 3px 10px rgba(221, 207, 160, 0.18),
+    0 9px 18px rgba(8, 24, 22, 0.2);
+  filter: saturate(0.68);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.cambrian-swimmer::before {
+  position: absolute;
+  left: -54px;
+  top: -15px;
+  width: 68px;
+  height: 76px;
+  background: repeating-conic-gradient(
+    from 230deg at 100% 50%,
+    rgba(136, 119, 82, 0.72) 0 8deg,
+    transparent 8deg 19deg
+  );
+  content: "";
+  clip-path: polygon(100% 28%, 0 0, 42% 50%, 0 100%, 100% 72%);
+}
+
+.cambrian-swimmer::after {
+  position: absolute;
+  right: -31px;
+  top: 13px;
+  width: 41px;
+  height: 24px;
+  border-top: 3px solid rgba(142, 118, 75, 0.88);
+  border-bottom: 3px solid rgba(142, 118, 75, 0.88);
+  border-radius: 50%;
+  content: "";
+  animation: cambrian-grasping-arms 1.4s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .cambrian-swimmer::after {
+  animation-play-state: running;
+}
+
+.cambrian-swimmer i {
+  position: absolute;
+  left: 18px;
+  bottom: -12px;
+  width: 112px;
+  height: 18px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 9px,
+    rgba(134, 111, 73, 0.7) 9px 11px,
+    transparent 11px 15px
+  );
+  transform: skewX(-25deg);
+}
+
+.cambrian-prey {
+  position: absolute;
+  z-index: 6;
+  left: 56%;
+  top: 38%;
+  width: 34px;
+  height: 11px;
+  border-radius: 50% 70% 70% 50%;
+  background: linear-gradient(90deg, #8d805e, #c1ac77);
+  box-shadow: -8px 0 0 -2px rgba(127, 111, 74, 0.76);
+  will-change: transform, opacity;
+}
+
+.cambrian-burrowing-worm {
+  position: absolute;
+  z-index: 6;
+  left: 79%;
+  top: 73%;
+  width: 82px;
+  height: 17px;
+  border-radius: 70% 35% 68% 34%;
+  background: repeating-linear-gradient(
+    90deg,
+    #846f4b 0 8px,
+    #ae9362 8px 12px
+  );
+  box-shadow: 0 7px 10px rgba(20, 31, 25, 0.3);
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}
+
+.cambrian-eye-glints {
+  position: absolute;
+  z-index: 8;
+  left: 54.9%;
+  top: 15.4%;
+  width: 7.2%;
+  height: 5%;
+  opacity: var(--cambrian-features);
+}
+
+.cambrian-eye-glints i {
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #edf4d2;
+  box-shadow:
+    0 0 7px rgba(229, 242, 201, 0.92),
+    0 0 16px rgba(204, 225, 176, 0.5);
+}
+
+.cambrian-eye-glints i:first-child {
+  left: 2%;
+}
+
+.cambrian-eye-glints i:last-child {
+  right: 2%;
+}
+
+.cambrian-shell-shimmer {
+  position: absolute;
+  z-index: 7;
+  left: 33%;
+  top: 70%;
+  width: 31%;
+  aspect-ratio: 1.8;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    transparent 48%,
+    rgba(229, 208, 160, 0.2) 55%,
+    transparent 67%
+  );
+  opacity: var(--cambrian-features);
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+
+.cambrian-diversity-cloud {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+}
+
+.cambrian-diversity-cloud > span {
+  --cambrian-index: 0;
+  position: absolute;
+  left: var(--cambrian-left);
+  top: var(--cambrian-top);
+  width: calc(var(--cambrian-size) * 2.8);
+  height: var(--cambrian-size);
+  border: 1px solid rgba(174, 158, 112, 0.46);
+  border-radius: 58% 42% 62% 38%;
+  background: rgba(126, 111, 77, 0.38);
+  animation: cambrian-small-life-swim calc(8s + var(--cambrian-index) * 0.5s)
+    ease-in-out infinite alternate;
+  animation-delay: calc(var(--cambrian-index) * -0.71s);
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .cambrian-diversity-cloud > span {
+  animation-play-state: running;
+}
+
+.cambrian-transition-trilobite {
+  z-index: 9;
+  left: 18%;
+  bottom: 13%;
+  top: auto;
+  will-change: transform, opacity;
+}
+
+.cambrian-rock-mask {
+  position: absolute;
+  z-index: 10;
+  right: -5%;
+  bottom: -10%;
+  width: 32%;
+  height: 35%;
+  border-radius: 64% 36% 0 0;
+  background:
+    radial-gradient(circle at 24% 20%, rgba(111, 96, 70, 0.82) 0 3%, transparent 4%),
+    linear-gradient(145deg, rgba(91, 78, 57, 0.9), rgba(39, 46, 38, 0.96));
+  box-shadow: inset 9px 8px 22px rgba(190, 165, 112, 0.12);
+  opacity: calc(var(--cambrian-transition) * 0.9);
+}
+
+@keyframes cambrian-legs-scuttle {
+  from {
+    transform: skewX(-22deg) translateX(-2px);
+  }
+  to {
+    transform: skewX(18deg) translateX(2px);
+  }
+}
+
+@keyframes cambrian-grasping-arms {
+  from {
+    transform: rotate(-8deg) scaleX(0.86);
+  }
+  to {
+    transform: rotate(7deg) scaleX(1.08);
+  }
+}
+
+@keyframes cambrian-small-life-swim {
+  from {
+    transform: translate3d(-16px, 8px, 0) rotate(-4deg);
+  }
+  to {
+    transform: translate3d(38px, -16px, 0) rotate(5deg);
+  }
+}
+
+.oxygen-pioneer-story,
+.oxygen-revolution-story {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.oxygen-pioneer-story {
+  --oxygen-production: 0;
+  --oxygen-abundance: 0;
+  --oxygen-follow: 0;
+  --oxygen-surface-change: 0;
+}
+
+.scene-seven-background {
+  animation: scene-seven-seafloor-drift 16s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  transform-origin: 55% 22%;
+}
+
+.oxygen-mat-glow {
+  position: absolute;
+  z-index: 1;
+  left: 16%;
+  bottom: 9%;
+  width: 62%;
+  height: 47%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 47% 66%,
+    rgba(192, 215, 139, 0.15),
+    rgba(161, 196, 131, 0.05) 48%,
+    transparent 74%
+  );
+  filter: blur(9px);
+  opacity: calc(var(--oxygen-production) * 0.72);
+  mix-blend-mode: screen;
+}
+
+.oxygen-bubble-field {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+}
+
+.oxygen-bubble-field i,
+.oxygen-follow-bubble {
+  position: absolute;
+  border: 1px solid rgba(229, 239, 224, 0.68);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 28%,
+    rgba(255, 255, 255, 0.5) 0 10%,
+    rgba(225, 239, 231, 0.08) 32%,
+    rgba(145, 183, 174, 0.04) 68%
+  );
+  box-shadow:
+    inset -1px -1px 2px rgba(89, 126, 118, 0.24),
+    0 0 5px rgba(224, 239, 227, 0.14);
+  will-change: transform, opacity;
+}
+
+.oxygen-follow-bubble {
+  z-index: 6;
+  width: 13px;
+  height: 13px;
+  border-color: rgba(241, 247, 236, 0.82);
+  box-shadow:
+    inset -2px -2px 3px rgba(69, 111, 107, 0.28),
+    0 0 9px rgba(238, 247, 235, 0.3);
+}
+
+.oxygen-surface-ring {
+  position: absolute;
+  z-index: 5;
+  left: 61%;
+  top: 8%;
+  width: 22%;
+  height: 6%;
+  border: 1px solid rgba(240, 241, 209, 0.58);
+  border-radius: 50%;
+  opacity: calc(var(--oxygen-surface-change) * 0.78);
+  transform: translate(-50%, -50%)
+    scale(calc(0.3 + var(--oxygen-surface-change) * 1.45));
+}
+
+.oxygen-surface-shift {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 30% 20% at 61% 7%,
+      rgba(245, 241, 207, 0.5),
+      rgba(188, 219, 219, 0.12) 47%,
+      transparent 72%
+    ),
+    linear-gradient(180deg, rgba(188, 216, 217, 0.13), transparent 42%);
+  opacity: calc(var(--oxygen-surface-change) * 0.92);
+  mix-blend-mode: screen;
+}
+
+.oxygen-revolution-story {
+  --oxygen-reaction: 0;
+  --oxygen-toxic-effect: 0;
+  --oxygen-adaptation: 0;
+  --oxygen-atmosphere-shift: 0;
+  --oxygen-micro-transition: 0;
+}
+
+.scene-eight-background {
+  animation: scene-eight-wide-view 18s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.oxygen-revolution-story::after {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  box-shadow: inset 0 0 84px rgba(37, 34, 29, 0.5);
+  content: "";
+  opacity: calc(var(--oxygen-toxic-effect) * 0.34);
+}
+
+.oxygen-yellow-haze,
+.oxygen-iron-reaction,
+.oxygen-blue-wash,
+.oxygen-clear-sunlight,
+.oxygen-micro-transition,
+.oxygen-ocean-glints {
+  position: absolute;
+  pointer-events: none;
+}
+
+.oxygen-yellow-haze {
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(150, 128, 84, 0.42), rgba(125, 111, 79, 0.12) 61%, transparent),
+    linear-gradient(90deg, rgba(176, 145, 84, 0.16), rgba(139, 125, 100, 0.3));
+  opacity: calc(0.72 - var(--oxygen-atmosphere-shift) * 0.58);
+  mix-blend-mode: color;
+}
+
+.oxygen-iron-reaction {
+  z-index: 2;
+  right: -8%;
+  bottom: -10%;
+  left: -8%;
+  height: 56%;
+  background:
+    radial-gradient(ellipse at 26% 63%, rgba(164, 93, 48, 0.31), transparent 32%),
+    radial-gradient(ellipse at 64% 71%, rgba(139, 75, 43, 0.22), transparent 38%);
+  filter: blur(13px);
+  opacity: calc(
+    var(--oxygen-reaction) * (1 - var(--oxygen-adaptation) * 0.78)
+  );
+  mix-blend-mode: soft-light;
+}
+
+.oxygen-blue-wash {
+  z-index: 3;
+  top: 0;
+  right: -7%;
+  bottom: 0;
+  width: calc(var(--oxygen-atmosphere-shift) * 114%);
+  background: linear-gradient(
+    90deg,
+    rgba(105, 158, 174, 0.04),
+    rgba(73, 151, 186, 0.25) 52%,
+    rgba(72, 161, 204, 0.38)
+  );
+  opacity: calc(0.18 + var(--oxygen-atmosphere-shift) * 0.68);
+  mix-blend-mode: color;
+}
+
+.oxygen-clear-sunlight {
+  z-index: 4;
+  inset: -12%;
+  background:
+    radial-gradient(circle at 18% 43%, rgba(255, 234, 172, 0.32), transparent 22%),
+    linear-gradient(112deg, transparent 32%, rgba(232, 241, 219, 0.12) 48%, transparent 63%);
+  filter: blur(5px);
+  opacity: calc(var(--oxygen-adaptation) * 0.82);
+  mix-blend-mode: screen;
+}
+
+.oxygen-ocean-glints {
+  z-index: 4;
+  inset: 0;
+  opacity: calc(var(--oxygen-adaptation) * 0.7);
+}
+
+.oxygen-ocean-glints i {
+  --oxygen-glint-index: 0;
+  position: absolute;
+  width: calc(26px + var(--oxygen-glint-index) * 5px);
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(236, 239, 209, 0.42);
+  box-shadow: 0 0 8px rgba(234, 238, 212, 0.18);
+  animation: oxygen-ocean-glint
+    calc(4.8s + var(--oxygen-glint-index) * 0.55s) ease-in-out infinite alternate;
+  animation-delay: calc(var(--oxygen-glint-index) * -0.72s);
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .oxygen-ocean-glints i {
+  animation-play-state: running;
+}
+
+.oxygen-micro-transition {
+  z-index: 7;
+  inset: 0;
+  background: radial-gradient(
+    circle at 57% 61%,
+    rgba(186, 217, 205, 0.2),
+    rgba(35, 65, 62, 0.16) 28%,
+    rgba(9, 26, 27, 0.68) 74%
+  );
+  filter: blur(calc(var(--oxygen-micro-transition) * 3px));
+  opacity: calc(var(--oxygen-micro-transition) * 0.72);
+  transform: scale(calc(1.12 - var(--oxygen-micro-transition) * 0.12));
+}
+
+@keyframes scene-seven-seafloor-drift {
+  from {
+    transform: translate3d(
+        calc(-0.7% - var(--scene-seven-follow, 0) * 0.5%),
+        calc(0.4% + var(--scene-seven-follow, 0) * 2.7%),
+        0
+      )
+      scale(calc(1.025 + var(--scene-seven-follow, 0) * 0.055));
+  }
+  to {
+    transform: translate3d(
+        calc(0.9% - var(--scene-seven-follow, 0) * 0.5%),
+        calc(-0.6% + var(--scene-seven-follow, 0) * 2.7%),
+        0
+      )
+      scale(calc(1.055 + var(--scene-seven-follow, 0) * 0.055));
+  }
+}
+
+@keyframes scene-eight-wide-view {
+  from {
+    transform: translate3d(-0.5%, 0.3%, 0) scale(1.02);
+  }
+  to {
+    transform: translate3d(0.6%, -0.4%, 0) scale(1.045);
+  }
+}
+
+@keyframes oxygen-ocean-glint {
+  from {
+    opacity: 0.16;
+    transform: scaleX(0.7) translateX(-8px);
+  }
+  to {
+    opacity: 0.58;
+    transform: scaleX(1.25) translateX(9px);
+  }
+}
+
+.tiktaalik-shallow-water-story {
+  --tiktaalik-head-lift: 0;
+  --tiktaalik-support: 0;
+  --tiktaalik-splash: 0;
+  --tiktaalik-transition: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tiktaalik-water-current {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 53%, rgba(179, 202, 198, 0.05));
+}
+
+.tiktaalik-water-current i {
+  --tiktaalik-ripple-index: 0;
+  position: absolute;
+  width: calc(54px + var(--tiktaalik-ripple-index) * 8px);
+  height: calc(13px + var(--tiktaalik-ripple-index) * 2px);
+  border: 1px solid rgba(220, 231, 223, 0.22);
+  border-radius: 50%;
+  opacity: calc(0.18 + var(--tiktaalik-support) * 0.18);
+  animation: tiktaalik-water-ripple
+    calc(6s + var(--tiktaalik-ripple-index) * 0.7s) ease-in-out infinite alternate;
+  animation-delay: calc(var(--tiktaalik-ripple-index) * -0.83s);
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .tiktaalik-water-current i {
+  animation-play-state: running;
+}
+
+.tiktaalik-head-layer,
+.tiktaalik-resting-head-shade {
+  position: absolute;
+  pointer-events: none;
+}
+
+.tiktaalik-resting-head-shade {
+  z-index: 5;
+  left: 5%;
+  top: 27%;
+  width: 44%;
+  height: 38%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 49% 55%,
+    rgba(20, 27, 22, 0.42),
+    rgba(24, 31, 26, 0.21) 48%,
+    transparent 75%
+  );
+  filter: blur(7px);
+  opacity: calc(var(--tiktaalik-head-lift) * 0.62);
+}
+
+.tiktaalik-head-layer {
+  z-index: 7;
+  inset: 0;
+  background: url("/assets/episode1/scene16/hintergrund-tiktaalik-v1.png") center / cover no-repeat;
+  -webkit-mask-image: radial-gradient(
+    ellipse 23% 20% at 28% 47%,
+    #000 0 56%,
+    rgba(0, 0, 0, 0.9) 69%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 23% 20% at 28% 47%,
+    #000 0 56%,
+    rgba(0, 0, 0, 0.9) 69%,
+    transparent 100%
+  );
+  filter: brightness(calc(1 + var(--tiktaalik-head-lift) * 0.09))
+    contrast(calc(1 + var(--tiktaalik-head-lift) * 0.04));
+  transform: translate3d(
+      calc(var(--tiktaalik-head-lift) * -0.7%),
+      calc(var(--tiktaalik-head-lift) * -4.1%),
+      0
+    )
+    rotate(calc(var(--tiktaalik-head-lift) * -1.45deg))
+    scale(calc(1 + var(--tiktaalik-head-lift) * 0.008));
+  transform-origin: 43% 60%;
+  will-change: transform;
+}
+
+.tiktaalik-single-splash {
+  position: absolute;
+  z-index: 9;
+  left: 22%;
+  bottom: 8%;
+  display: block;
+  width: 43%;
+  max-width: none;
+  opacity: calc(var(--tiktaalik-splash) * 0.72);
+  filter: brightness(0.76) saturate(0.5) contrast(1.08);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transform: translate3d(0, calc((1 - var(--tiktaalik-splash)) * 8%), 0)
+    scale(calc(0.72 + var(--tiktaalik-splash) * 0.38));
+  transform-origin: 50% 100%;
+}
+
+.tiktaalik-amphibian-focus {
+  position: absolute;
+  z-index: 8;
+  left: 79%;
+  top: 40%;
+  width: 15%;
+  aspect-ratio: 1.5;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(220, 224, 194, 0.18),
+    rgba(185, 201, 174, 0.06) 42%,
+    transparent 70%
+  );
+  box-shadow: 0 0 28px rgba(210, 220, 191, 0.06);
+  opacity: calc(var(--tiktaalik-transition) * 0.92);
+  transform: translate(-50%, -50%) scale(calc(0.86 + var(--tiktaalik-transition) * 0.18));
+}
+
+.tiktaalik-transition-shade {
+  position: absolute;
+  z-index: 11;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(18, 31, 22, 0.82),
+    rgba(26, 41, 27, 0.48) 37%,
+    transparent 66%
+  );
+  opacity: calc(var(--tiktaalik-transition) * 0.88);
+  transform: translateX(calc((1 - var(--tiktaalik-transition)) * -18%));
+}
+
+@keyframes tiktaalik-water-ripple {
+  from {
+    opacity: 0.08;
+    transform: scaleX(0.72) translateX(-10px);
+  }
+  to {
+    opacity: 0.34;
+    transform: scaleX(1.28) translateX(18px);
+  }
 }
 
 .meteor-impact-story {

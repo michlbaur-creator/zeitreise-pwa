@@ -353,7 +353,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v48/);
+  assert.match(worker, /zeitreise-v52/);
   assert.match(app, /process\.env\.NODE_ENV === "development"/);
   assert.match(app, /registration\.unregister\(\)/);
   assert.match(app, /name\.startsWith\("zeitreise-"\)/);
@@ -574,6 +574,88 @@ test("zeigt in Szene 20 erst den Zeitfelsen und dann das kleine Säugetier", asy
   assert.match(timing, /SCENE_TWENTY_MAMMAL_EMERGES = 0\.32/);
   assert.match(audio, /survivorRustlePlayedRef/);
   assert.match(audio, /sceneId === 20 && event === "rustle"/);
+});
+
+test("synchronisiert Sauerstoffblasen und Atmosphärenwandel in Szene 7 und 8", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+  const timing = await readFile(
+    new URL("../app/data/oxygenTiming.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function OxygenPioneerAnimation/);
+  assert.match(sceneVisual, /function OxygenRevolutionAnimation/);
+  assert.match(sceneVisual, /<OxygenPioneerAnimation progress=\{progress\} \/>/);
+  assert.match(
+    sceneVisual,
+    /<OxygenRevolutionAnimation progress=\{progress\} \/>/,
+  );
+  assert.doesNotMatch(sceneVisual, /atmosphere-oxygen-bubbles/);
+  assert.doesNotMatch(sceneVisual, /atmosphere-oxygen-shift/);
+  assert.match(styles, /\.oxygen-follow-bubble/);
+  assert.match(styles, /\.oxygen-blue-wash/);
+  assert.match(timing, /SCENE_SEVEN_PHOTOSYNTHESIS_START = 0\.191/);
+  assert.match(timing, /SCENE_SEVEN_BUBBLES_BUILD = 0\.437/);
+  assert.match(timing, /SCENE_EIGHT_ATMOSPHERE_CHANGE = 0\.842/);
+});
+
+test("lässt die Vielfalt in Szene 13 schrittweise lebendig werden", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const timing = await readFile(
+    new URL("../app/data/cambrianTiming.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function CambrianExplosionAnimation/);
+  assert.match(
+    sceneVisual,
+    /<CambrianExplosionAnimation progress=\{progress\} \/>/,
+  );
+  assert.match(sceneVisual, /cambrian-trilobite/);
+  assert.match(sceneVisual, /cambrian-swimmer/);
+  assert.match(sceneVisual, /cambrian-burrowing-worm/);
+  assert.match(sceneVisual, /cambrian-transition-trilobite/);
+  assert.match(timing, /SCENE_THIRTEEN_DIVERSITY_START = 0\.146/);
+  assert.match(timing, /SCENE_THIRTEEN_PREDATOR_PREY_START = 0\.437/);
+});
+
+test("lässt Tiktaalik in Szene 16 glaubwürdig im Flachwasser arbeiten", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const audio = await readFile(
+    new URL("../app/audio/useAmbientSound.ts", import.meta.url),
+    "utf8",
+  );
+  const timing = await readFile(
+    new URL("../app/data/tiktaalikTiming.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function TiktaalikShallowWaterAnimation/);
+  assert.match(
+    sceneVisual,
+    /<TiktaalikShallowWaterAnimation progress=\{progress\} \/>/,
+  );
+  assert.match(sceneVisual, /tiktaalik-head-layer/);
+  assert.doesNotMatch(sceneVisual, /tiktaalik-support-fin/);
+  assert.doesNotMatch(sceneVisual, /tiktaalik-transition-fern/);
+  assert.equal((sceneVisual.match(/className="tiktaalik-single-splash"/g) ?? []).length, 1);
+  assert.match(timing, /SCENE_SIXTEEN_HEAD_LIFT_START = 0\.163/);
+  assert.match(timing, /SCENE_SIXTEEN_CROAK = 0\.88/);
+  assert.match(audio, /16: \["bubbles", "insects", "rustle", "croak"\]/);
+  assert.match(audio, /!tiktaalikCroakPlayedRef\.current/);
 });
 
 test("erzählt die Endosymbiose als synchronisierte Animation", async () => {

@@ -9,10 +9,12 @@ import {
 import { rainIntensityForScene } from "../data/rainTiming";
 import type { SceneTheme } from "../data/scenes";
 import { SCENE_TWENTY_MAMMAL_EMERGES } from "../data/survivorTiming";
+import { SCENE_SIXTEEN_CROAK } from "../data/tiktaalikTiming";
 
 type SoundEvent =
   | "bubbles"
   | "birds"
+  | "croak"
   | "eruption"
   | "footsteps"
   | "impact"
@@ -174,7 +176,7 @@ const sceneEvents: Record<number, SoundEvent[]> = {
   13: ["bubbles"],
   14: ["waves"],
   15: ["waves", "rustle"],
-  16: ["bubbles", "insects", "rustle"],
+  16: ["bubbles", "insects", "rustle", "croak"],
   17: ["insects", "rustle", "roar"],
   18: ["footsteps", "insects", "roar"],
   19: ["impact", "insects", "roar"],
@@ -329,6 +331,29 @@ function playSoundEvent(
         delay: 0.2,
       });
       break;
+    case "croak":
+      playTone(context, destination, {
+        from: 190,
+        to: 76,
+        duration: 0.42,
+        level: 0.032,
+        type: "sawtooth",
+      });
+      playTone(context, destination, {
+        from: 148,
+        to: 62,
+        duration: 0.36,
+        level: 0.025,
+        type: "triangle",
+        delay: 0.2,
+      });
+      playNoiseBurst(context, destination, brownNoise, {
+        frequency: 310,
+        duration: 0.62,
+        level: 0.014,
+        filterType: "lowpass",
+      });
+      break;
     case "eruption":
       playNoiseBurst(context, destination, brownNoise, {
         frequency: 170,
@@ -457,6 +482,7 @@ function playSoundEvent(
 const eventTiming: Record<SoundEvent, [number, number, number]> = {
   bubbles: [0.45, 1.4, 0.4],
   birds: [2.1, 4.8, 1.1],
+  croak: [30, 30, 30],
   eruption: [6.5, 10.5, 2.2],
   footsteps: [3.2, 5.4, 1.2],
   impact: [30, 30, 2.8],
@@ -491,6 +517,13 @@ export function useAmbientSound(
     brownNoise: AudioBuffer;
   } | null>(null);
   const survivorRustlePlayedRef = useRef(false);
+  const tiktaalikSoundRef = useRef<{
+    context: AudioContext;
+    destination: AudioNode;
+    whiteNoise: AudioBuffer;
+    brownNoise: AudioBuffer;
+  } | null>(null);
+  const tiktaalikCroakPlayedRef = useRef(false);
   const impactSceneRef = useRef(sceneId);
   const sceneProgressRef = useRef(progress);
   const [contextRevision, setContextRevision] = useState(0);
@@ -526,6 +559,7 @@ export function useAmbientSound(
       impactSceneRef.current = sceneId;
       impactPlayedRef.current = false;
       survivorRustlePlayedRef.current = false;
+      tiktaalikCroakPlayedRef.current = false;
     }
 
     if (context && rainBedGain && context.state !== "closed") {
@@ -599,6 +633,30 @@ export function useAmbientSound(
         );
       }
     }
+
+    if (sceneId === 16) {
+      if (progress < SCENE_SIXTEEN_CROAK - 0.06) {
+        tiktaalikCroakPlayedRef.current = false;
+      }
+      const tiktaalikSound = tiktaalikSoundRef.current;
+      if (
+        isPlaying &&
+        !tiktaalikCroakPlayedRef.current &&
+        progress >= SCENE_SIXTEEN_CROAK &&
+        progress < 0.98 &&
+        tiktaalikSound &&
+        tiktaalikSound.context.state !== "closed"
+      ) {
+        tiktaalikCroakPlayedRef.current = true;
+        playSoundEvent(
+          "croak",
+          tiktaalikSound.context,
+          tiktaalikSound.destination,
+          tiktaalikSound.whiteNoise,
+          tiktaalikSound.brownNoise,
+        );
+      }
+    }
   }, [isPlaying, progress, sceneId]);
 
   useEffect(() => {
@@ -647,6 +705,14 @@ export function useAmbientSound(
     }
     if (sceneId === 20) {
       survivorSoundRef.current = {
+        context,
+        destination: master,
+        whiteNoise,
+        brownNoise,
+      };
+    }
+    if (sceneId === 16) {
+      tiktaalikSoundRef.current = {
         context,
         destination: master,
         whiteNoise,
@@ -714,7 +780,9 @@ export function useAmbientSound(
     (sceneEvents[sceneId] ?? [])
       .filter(
         (event) =>
-          event !== "impact" && !(sceneId === 20 && event === "rustle"),
+          event !== "croak" &&
+            event !== "impact" &&
+            !(sceneId === 20 && event === "rustle"),
       )
       .forEach(scheduleEvent);
 
@@ -728,6 +796,9 @@ export function useAmbientSound(
       }
       if (survivorSoundRef.current?.destination === master) {
         survivorSoundRef.current = null;
+      }
+      if (tiktaalikSoundRef.current?.destination === master) {
+        tiktaalikSoundRef.current = null;
       }
       timers.forEach((timer) => window.clearTimeout(timer));
       persistentNodes.forEach((node) => {

@@ -1,6 +1,13 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import {
+  SCENE_THIRTEEN_ARMS_RACE_START,
+  SCENE_THIRTEEN_DIVERSITY_START,
+  SCENE_THIRTEEN_FEATURES_START,
+  SCENE_THIRTEEN_PREDATOR_PREY_START,
+  SCENE_THIRTEEN_TRANSITION_START,
+} from "../data/cambrianTiming";
 import { captionTracks } from "../data/captions";
 import {
   SCENE_NINETEEN_BLACKOUT_END,
@@ -9,6 +16,18 @@ import {
   SCENE_NINETEEN_METEOR_START,
   SCENE_NINETEEN_SILENCE_START,
 } from "../data/impactTiming";
+import {
+  SCENE_EIGHT_ADAPTATION,
+  SCENE_EIGHT_ATMOSPHERE_CHANGE,
+  SCENE_EIGHT_MICRO_TRANSITION,
+  SCENE_EIGHT_OCEAN_REACTION,
+  SCENE_EIGHT_TOXIC_EFFECT,
+  SCENE_SEVEN_BUBBLES_BUILD,
+  SCENE_SEVEN_FOLLOW_BUBBLE,
+  SCENE_SEVEN_NEW_INGREDIENT,
+  SCENE_SEVEN_PHOTOSYNTHESIS_START,
+  SCENE_SEVEN_SURFACE_CHANGE,
+} from "../data/oxygenTiming";
 import { rainIntensityForScene } from "../data/rainTiming";
 import type { Scene } from "../data/scenes";
 import {
@@ -16,6 +35,13 @@ import {
   SCENE_TWENTY_MAMMAL_HIDDEN,
   SCENE_TWENTY_MAMMAL_RETREATS,
 } from "../data/survivorTiming";
+import {
+  SCENE_SIXTEEN_CROAK,
+  SCENE_SIXTEEN_HEAD_LIFT_START,
+  SCENE_SIXTEEN_PUSH_START,
+  SCENE_SIXTEEN_SECOND_PUSH,
+  SCENE_SIXTEEN_SUPPORT_START,
+} from "../data/tiktaalikTiming";
 
 type SceneVisualProps = {
   scene: Scene;
@@ -95,12 +121,6 @@ const collectionOverlays: Partial<Record<number, CollectionOverlay[]>> = {
       className: "collection-overlay-mist collection-overlay-mist-coast",
     },
   ],
-  16: [
-    {
-      src: "/assets/episode1/scene16/overlay-wassersplash-v1.png",
-      className: "collection-overlay-splash",
-    },
-  ],
   17: [
     {
       src: "/assets/episode1/scene14/overlay-nebel-v1.png",
@@ -125,12 +145,9 @@ const atmosphereProfiles: Partial<
   3: { className: "atmosphere-ocean-light", particles: 5 },
   4: { className: "atmosphere-lagoon-bubbles", particles: 8 },
   5: { className: "atmosphere-first-cell", particles: 4 },
-  7: { className: "atmosphere-oxygen-bubbles", particles: 12 },
-  8: { className: "atmosphere-oxygen-shift", particles: 3 },
   10: { className: "atmosphere-micro-swim", particles: 8 },
   11: { className: "atmosphere-cell-team", particles: 8 },
   12: { className: "atmosphere-seafloor-drift", particles: 6 },
-  13: { className: "atmosphere-cambrian-life", particles: 7 },
   14: { className: "atmosphere-land-spores", particles: 14 },
   15: { className: "atmosphere-land-crawlers", particles: 5 },
   16: { className: "atmosphere-swamp-life", particles: 6 },
@@ -674,6 +691,397 @@ function EndosymbiosisAnimation({ progress }: { progress: number }) {
   );
 }
 
+const oxygenBubbleSpecs = [
+  { left: 31, bottom: 31, size: 5, start: 0.21, end: 0.52, drift: -8 },
+  { left: 38, bottom: 28, size: 7, start: 0.29, end: 0.61, drift: 9 },
+  { left: 56, bottom: 30, size: 4, start: 0.36, end: 0.68, drift: -5 },
+  { left: 67, bottom: 25, size: 6, start: 0.43, end: 0.74, drift: 7 },
+  { left: 26, bottom: 24, size: 4, start: 0.47, end: 0.73, drift: 5 },
+  { left: 35, bottom: 35, size: 6, start: 0.5, end: 0.78, drift: -10 },
+  { left: 45, bottom: 23, size: 5, start: 0.53, end: 0.82, drift: 8 },
+  { left: 52, bottom: 32, size: 7, start: 0.56, end: 0.85, drift: -7 },
+  { left: 62, bottom: 27, size: 4, start: 0.59, end: 0.87, drift: 6 },
+  { left: 72, bottom: 34, size: 6, start: 0.62, end: 0.9, drift: -9 },
+  { left: 29, bottom: 22, size: 5, start: 0.65, end: 0.92, drift: 7 },
+  { left: 41, bottom: 29, size: 4, start: 0.68, end: 0.94, drift: -6 },
+  { left: 58, bottom: 23, size: 6, start: 0.71, end: 0.96, drift: 8 },
+  { left: 69, bottom: 29, size: 5, start: 0.74, end: 0.98, drift: -7 },
+];
+
+function OxygenPioneerAnimation({ progress }: { progress: number }) {
+  const production = phaseProgress(
+    progress,
+    SCENE_SEVEN_PHOTOSYNTHESIS_START,
+    SCENE_SEVEN_BUBBLES_BUILD,
+  );
+  const abundance = phaseProgress(
+    progress,
+    SCENE_SEVEN_BUBBLES_BUILD,
+    SCENE_SEVEN_NEW_INGREDIENT,
+  );
+  const follow = phaseProgress(
+    progress,
+    SCENE_SEVEN_FOLLOW_BUBBLE,
+    SCENE_SEVEN_SURFACE_CHANGE,
+  );
+  const surfaceChange = phaseProgress(
+    progress,
+    SCENE_SEVEN_SURFACE_CHANGE,
+    0.995,
+  );
+
+  return (
+    <div
+      className="oxygen-pioneer-story"
+      role="img"
+      aria-label="An den Cyanobakterienmatten entstehen zunächst einzelne, dann immer mehr kleine Sauerstoffblasen. Am Ende folgt die Kamera einer Blase bis zur Wasseroberfläche."
+      style={
+        {
+          "--oxygen-production": production,
+          "--oxygen-abundance": abundance,
+          "--oxygen-follow": follow,
+          "--oxygen-surface-change": surfaceChange,
+        } as CSSProperties
+      }
+    >
+      <span className="oxygen-mat-glow" />
+      <span className="oxygen-bubble-field">
+        {oxygenBubbleSpecs.map((bubble, index) => {
+          const rise = phaseProgress(progress, bubble.start, bubble.end);
+          const reveal = phaseProgress(
+            progress,
+            bubble.start,
+            bubble.start + 0.025,
+          );
+          const fade =
+            1 - phaseProgress(progress, bubble.end - 0.06, bubble.end);
+          const opacity =
+            reveal * fade * (index < 4 ? 0.72 : 0.42 + abundance * 0.4);
+
+          return (
+            <i
+              style={{
+                left: `${bubble.left}%`,
+                bottom: `${bubble.bottom}%`,
+                width: `${bubble.size}px`,
+                height: `${bubble.size}px`,
+                opacity,
+                transform: `translate3d(${Math.sin(rise * Math.PI) * bubble.drift}px, ${-rise * 190}px, 0) scale(${0.7 + rise * 0.38})`,
+              }}
+              key={`oxygen-bubble-${index}`}
+            />
+          );
+        })}
+      </span>
+      <span
+        className="oxygen-follow-bubble"
+        style={{
+          left: `${53 + follow * 8}%`,
+          top: `${69 - follow * 60}%`,
+          opacity:
+            phaseProgress(progress, 0.755, SCENE_SEVEN_FOLLOW_BUBBLE) *
+            (1 - phaseProgress(progress, 0.965, 0.995)),
+          transform: `translate(-50%, -50%) scale(${0.72 + follow * 0.62})`,
+        }}
+      />
+      <span className="oxygen-surface-ring" />
+      <span className="oxygen-surface-shift" />
+    </div>
+  );
+}
+
+function OxygenRevolutionAnimation({ progress }: { progress: number }) {
+  const reaction = phaseProgress(
+    progress,
+    SCENE_EIGHT_OCEAN_REACTION,
+    SCENE_EIGHT_TOXIC_EFFECT,
+  );
+  const toxicEffect = phaseProgress(
+    progress,
+    SCENE_EIGHT_TOXIC_EFFECT,
+    SCENE_EIGHT_ADAPTATION,
+  );
+  const adaptation = phaseProgress(
+    progress,
+    SCENE_EIGHT_ADAPTATION,
+    SCENE_EIGHT_ATMOSPHERE_CHANGE,
+  );
+  const earlyShift =
+    phaseProgress(
+      progress,
+      SCENE_EIGHT_OCEAN_REACTION,
+      SCENE_EIGHT_ATMOSPHERE_CHANGE,
+    ) * 0.72;
+  const finalShift =
+    phaseProgress(progress, SCENE_EIGHT_ATMOSPHERE_CHANGE, 0.965) * 0.28;
+  const atmosphereShift = Math.min(1, earlyShift + finalShift);
+  const microTransition = phaseProgress(
+    progress,
+    SCENE_EIGHT_MICRO_TRANSITION,
+    1,
+  );
+
+  return (
+    <div
+      className="oxygen-revolution-story"
+      role="img"
+      aria-label="Der gelblich graue Himmel wird langsam heller und zunehmend blau. Das Sonnenlicht klärt sich, und auf dem Ozean entstehen feine Lichtspiegelungen."
+      style={
+        {
+          "--oxygen-reaction": reaction,
+          "--oxygen-toxic-effect": toxicEffect,
+          "--oxygen-adaptation": adaptation,
+          "--oxygen-atmosphere-shift": atmosphereShift,
+          "--oxygen-micro-transition": microTransition,
+        } as CSSProperties
+      }
+    >
+      <span className="oxygen-yellow-haze" />
+      <span className="oxygen-iron-reaction" />
+      <span className="oxygen-blue-wash" />
+      <span className="oxygen-clear-sunlight" />
+      <span className="oxygen-ocean-glints">
+        {Array.from({ length: 7 }, (_, index) => (
+          <i
+            style={
+              {
+                "--oxygen-glint-index": index,
+                left: `${8 + index * 13}%`,
+                top: `${70 + (index % 3) * 6}%`,
+              } as CSSProperties
+            }
+            key={`oxygen-glint-${index}`}
+          />
+        ))}
+      </span>
+      <span className="oxygen-micro-transition" />
+    </div>
+  );
+}
+
+function CambrianExplosionAnimation({ progress }: { progress: number }) {
+  const diversity = phaseProgress(
+    progress,
+    SCENE_THIRTEEN_DIVERSITY_START,
+    SCENE_THIRTEEN_ARMS_RACE_START,
+  );
+  const features =
+    phaseProgress(
+      progress,
+      SCENE_THIRTEEN_FEATURES_START,
+      SCENE_THIRTEEN_FEATURES_START + 0.08,
+    ) *
+    (1 - phaseProgress(progress, 0.48, 0.58));
+  const predatorChase = phaseProgress(
+    progress,
+    SCENE_THIRTEEN_PREDATOR_PREY_START,
+    0.7,
+  );
+  const armsRace = phaseProgress(
+    progress,
+    SCENE_THIRTEEN_ARMS_RACE_START,
+    0.76,
+  );
+  const transition = phaseProgress(
+    progress,
+    SCENE_THIRTEEN_TRANSITION_START,
+    0.98,
+  );
+  const trilobites = [
+    { start: 0.14, x: 15, y: 70, travel: 12, scale: 0.72, delay: 0 },
+    { start: 0.22, x: 47, y: 63, travel: -9, scale: 0.54, delay: -0.5 },
+    { start: 0.34, x: 68, y: 76, travel: 11, scale: 0.63, delay: -1 },
+    { start: 0.52, x: 35, y: 82, travel: 15, scale: 0.44, delay: -1.5 },
+  ];
+
+  return (
+    <div
+      className="cambrian-explosion-story"
+      role="img"
+      aria-label="Die Vielfalt im kambrischen Meer nimmt schrittweise zu: Trilobiten krabbeln, ein früher Gliederfüßer schwimmt, ein Wurm gräbt sich ein und ein Räuber verfolgt Beute."
+      style={
+        {
+          "--cambrian-diversity": diversity,
+          "--cambrian-features": features,
+          "--cambrian-arms-race": armsRace,
+          "--cambrian-transition": transition,
+        } as CSSProperties
+      }
+    >
+      <span className="cambrian-water-depth" />
+      {trilobites.map((trilobite, index) => {
+        const reveal = phaseProgress(
+          progress,
+          trilobite.start,
+          trilobite.start + 0.09,
+        );
+        const crawl = phaseProgress(progress, trilobite.start, 0.88);
+        const fade =
+          index === 3 ? 1 - phaseProgress(progress, 0.88, 0.98) : 1;
+
+        return (
+          <span
+            className={`cambrian-trilobite cambrian-trilobite-${index + 1}`}
+            style={
+              {
+                left: `${trilobite.x + crawl * trilobite.travel}%`,
+                top: `${trilobite.y - Math.sin(crawl * Math.PI) * 2}%`,
+                opacity: reveal * fade,
+                transform: `translate(-50%, -50%) scale(${trilobite.scale}) rotate(${trilobite.travel < 0 ? 176 : -4}deg)`,
+                "--cambrian-delay": `${trilobite.delay}s`,
+              } as CSSProperties
+            }
+            key={`cambrian-trilobite-${index}`}
+          >
+            <i />
+          </span>
+        );
+      })}
+      <span
+        className="cambrian-swimmer"
+        style={{
+          opacity: phaseProgress(progress, 0.25, 0.36),
+          transform: `translate3d(${-18 + predatorChase * 55}%, ${4 - Math.sin(predatorChase * Math.PI) * 8}%, 0) rotate(${-4 + predatorChase * 5}deg) scale(${0.78 + predatorChase * 0.18})`,
+        }}
+      >
+        <i />
+      </span>
+      <span
+        className="cambrian-prey"
+        style={{
+          opacity: phaseProgress(
+            progress,
+            SCENE_THIRTEEN_PREDATOR_PREY_START,
+            SCENE_THIRTEEN_PREDATOR_PREY_START + 0.08,
+          ),
+          transform: `translate3d(${predatorChase * 86}%, ${-predatorChase * 24}%, 0)`,
+        }}
+      />
+      <span
+        className="cambrian-burrowing-worm"
+        style={{
+          opacity:
+            phaseProgress(progress, 0.36, 0.47) *
+            (1 - phaseProgress(progress, 0.7, 0.8)),
+          transform: `translate(-50%, ${28 - armsRace * 72}%) rotate(11deg)`,
+        }}
+      />
+      <span className="cambrian-eye-glints">
+        <i />
+        <i />
+      </span>
+      <span className="cambrian-shell-shimmer" />
+      <span className="cambrian-diversity-cloud">
+        {Array.from({ length: 12 }, (_, index) => (
+          <span
+            style={
+              {
+                "--cambrian-index": index,
+                "--cambrian-left": `${8 + ((index * 31) % 84)}%`,
+                "--cambrian-top": `${18 + ((index * 23) % 65)}%`,
+                "--cambrian-size": `${4 + (index % 4) * 2}px`,
+                opacity: phaseProgress(
+                  progress,
+                  SCENE_THIRTEEN_DIVERSITY_START + index * 0.025,
+                  SCENE_THIRTEEN_DIVERSITY_START + 0.1 + index * 0.025,
+                ),
+              } as CSSProperties
+            }
+            key={`cambrian-life-${index}`}
+          />
+        ))}
+      </span>
+      <span
+        className="cambrian-transition-trilobite"
+        style={{
+          opacity: transition * (1 - phaseProgress(progress, 0.95, 1)),
+          transform: `translate3d(${transition * 54}vw, ${transition * 18}%, 0) scale(${0.76 + transition * 0.08})`,
+        }}
+      >
+        <i />
+      </span>
+      <span className="cambrian-rock-mask" />
+    </div>
+  );
+}
+
+function TiktaalikShallowWaterAnimation({ progress }: { progress: number }) {
+  const headLift = phaseProgress(
+    progress,
+    SCENE_SIXTEEN_HEAD_LIFT_START,
+    SCENE_SIXTEEN_SUPPORT_START + 0.05,
+  );
+  const support = phaseProgress(
+    progress,
+    SCENE_SIXTEEN_SUPPORT_START,
+    SCENE_SIXTEEN_PUSH_START + 0.09,
+  );
+  const slip = phaseProgress(progress, 0.55, 0.64);
+  const secondPush = phaseProgress(
+    progress,
+    SCENE_SIXTEEN_SECOND_PUSH,
+    SCENE_SIXTEEN_SECOND_PUSH + 0.13,
+  );
+  const splash =
+    phaseProgress(
+      progress,
+      SCENE_SIXTEEN_PUSH_START,
+      SCENE_SIXTEEN_PUSH_START + 0.035,
+    ) *
+    (1 -
+      phaseProgress(
+        progress,
+        SCENE_SIXTEEN_PUSH_START + 0.055,
+        SCENE_SIXTEEN_PUSH_START + 0.14,
+      ));
+  const transition = phaseProgress(progress, SCENE_SIXTEEN_CROAK, 0.99);
+  const headMotion = Math.min(
+    1,
+    headLift * (1 - slip * 0.18) + secondPush * 0.16,
+  );
+
+  return (
+    <div
+      className="tiktaalik-shallow-water-story"
+      role="img"
+      aria-label="Tiktaalik hebt im Flachwasser vorsichtig den Kopf, stützt sich mit kräftigen Vorderflossen ab, rutscht kurz und bewegt sich mühsam über schlammigen Grund."
+      style={
+        {
+          "--tiktaalik-head-lift": headMotion,
+          "--tiktaalik-support": support,
+          "--tiktaalik-splash": splash,
+          "--tiktaalik-transition": transition,
+        } as CSSProperties
+      }
+    >
+      <span className="tiktaalik-water-current">
+        {Array.from({ length: 7 }, (_, index) => (
+          <i
+            style={
+              {
+                "--tiktaalik-ripple-index": index,
+                left: `${18 + index * 11}%`,
+                top: `${65 + (index % 3) * 8}%`,
+              } as CSSProperties
+            }
+            key={`tiktaalik-ripple-${index}`}
+          />
+        ))}
+      </span>
+      <span className="tiktaalik-resting-head-shade" />
+      <span className="tiktaalik-head-layer" />
+      <img
+        className="tiktaalik-single-splash"
+        src="/assets/episode1/scene16/overlay-wassersplash-v1.png"
+        alt=""
+        draggable={false}
+      />
+      <span className="tiktaalik-amphibian-focus" />
+      <span className="tiktaalik-transition-shade" />
+    </div>
+  );
+}
+
 function MeteorImpactAnimation({ progress }: { progress: number }) {
   const approach = phaseProgress(
     progress,
@@ -1004,7 +1412,15 @@ export function SceneVisual({
               ? ({
                   "--rain-intensity": rainIntensity,
                 } as CSSProperties)
-          : undefined
+              : isSceneSeven
+                ? ({
+                    "--scene-seven-follow": phaseProgress(
+                      progress,
+                      SCENE_SEVEN_FOLLOW_BUBBLE,
+                      SCENE_SEVEN_SURFACE_CHANGE,
+                    ),
+                  } as CSSProperties)
+                : undefined
       }
       aria-label={`Technische Bildvorschau für Szene ${scene.id}: ${scene.title}`}
     >
@@ -1175,24 +1591,30 @@ export function SceneVisual({
           </>
         ) : null}
         {isSceneSeven ? (
-          <div className="scene-seven-media" aria-hidden="true">
-            <img
-              className="scene-seven-background"
-              src="/assets/episode1/scene07/hintergrund-cyanobakterien-v1.png"
-              alt=""
-              draggable={false}
-            />
-          </div>
+          <>
+            <div className="scene-seven-media" aria-hidden="true">
+              <img
+                className="scene-seven-background"
+                src="/assets/episode1/scene07/hintergrund-cyanobakterien-v1.png"
+                alt=""
+                draggable={false}
+              />
+            </div>
+            <OxygenPioneerAnimation progress={progress} />
+          </>
         ) : null}
         {isSceneEight ? (
-          <div className="scene-eight-media" aria-hidden="true">
-            <img
-              className="scene-eight-background"
-              src="/assets/episode1/scene08/hintergrund-sauerstoffwende-v1.png"
-              alt=""
-              draggable={false}
-            />
-          </div>
+          <>
+            <div className="scene-eight-media" aria-hidden="true">
+              <img
+                className="scene-eight-background"
+                src="/assets/episode1/scene08/hintergrund-sauerstoffwende-v1.png"
+                alt=""
+                draggable={false}
+              />
+            </div>
+            <OxygenRevolutionAnimation progress={progress} />
+          </>
         ) : null}
         {isSceneNine ? (
           <>
@@ -1270,6 +1692,12 @@ export function SceneVisual({
           </div>
         ) : null}
         {scene.id === 19 ? <MeteorImpactAnimation progress={progress} /> : null}
+        {scene.id === 13 ? (
+          <CambrianExplosionAnimation progress={progress} />
+        ) : null}
+        {scene.id === 16 ? (
+          <TiktaalikShallowWaterAnimation progress={progress} />
+        ) : null}
         {scene.id === 20 ? (
           <AftermathSurvivorAnimation progress={progress} />
         ) : null}
