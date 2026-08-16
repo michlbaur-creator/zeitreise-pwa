@@ -353,7 +353,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v44/);
+  assert.match(worker, /zeitreise-v47/);
   assert.match(app, /process\.env\.NODE_ENV === "development"/);
   assert.match(app, /registration\.unregister\(\)/);
   assert.match(app, /name\.startsWith\("zeitreise-"\)/);
@@ -368,13 +368,21 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   );
 });
 
-test("lässt in Szene 2 und 3 durchgehend Starkregen prasseln", async () => {
+test("synchronisiert den feinen Regen in Szene 2 und 3", async () => {
   const visual = await readFile(
     new URL("../app/components/SceneVisual.tsx", import.meta.url),
     "utf8",
   );
   const styles = await readFile(
     new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+  const rainTiming = await readFile(
+    new URL("../app/data/rainTiming.ts", import.meta.url),
+    "utf8",
+  );
+  const ambientSound = await readFile(
+    new URL("../app/audio/useAmbientSound.ts", import.meta.url),
     "utf8",
   );
 
@@ -387,6 +395,16 @@ test("lässt in Szene 2 und 3 durchgehend Starkregen prasseln", async () => {
   assert.match(styles, /@keyframes driving-rain-fall/);
   assert.match(styles, /@keyframes rain-splash/);
   assert.match(styles, /\.scene-visual\.is-playing \.rain-curtain/);
+  assert.match(styles, /opacity: var\(--rain-intensity, 0\)/);
+  assert.match(rainTiming, /SCENE_TWO_RAIN_START = 0\.5/);
+  assert.match(rainTiming, /rainProgress \/ 0\.12/);
+  assert.match(rainTiming, /sceneId === 3/);
+  assert.match(ambientSound, /rainBedGainRef/);
+  assert.match(ambientSound, /rainIntensityForScene/);
+  assert.match(ambientSound, /sceneId === 2 \? profiles\.volcanic/);
+  assert.match(ambientSound, /sceneId === 2 \? 0\.09 : 0\.056/);
+  assert.match(ambientSound, /contextRevision/);
+  assert.match(visual, /rainIntensityForScene/);
 });
 
 test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
@@ -500,6 +518,36 @@ test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async (
   assert.match(app, /const activateAmbientSound = useAmbientSound\(/);
   assert.match(audio, /const activate = useCallback/);
   assert.match(audio, /return activate/);
+});
+
+test("inszeniert in Szene 19 genau einen synchronisierten Einschlag", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const audio = await readFile(
+    new URL("../app/audio/useAmbientSound.ts", import.meta.url),
+    "utf8",
+  );
+  const timing = await readFile(
+    new URL("../app/data/impactTiming.ts", import.meta.url),
+    "utf8",
+  );
+  const css = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function MeteorImpactAnimation/);
+  assert.match(
+    sceneVisual,
+    /<MeteorImpactAnimation progress=\{progress\} \/>/,
+  );
+  assert.equal((sceneVisual.match(/className="impact-single-meteor"/g) ?? []).length, 1);
+  assert.match(audio, /\.filter\(\(event\) => event !== "impact"\)/);
+  assert.match(audio, /!impactPlayedRef\.current/);
+  assert.match(timing, /SCENE_NINETEEN_IMPACT = 0\.625/);
+  assert.doesNotMatch(css, /collection-meteor 12s ease-in-out infinite/);
 });
 
 test("erzählt die Endosymbiose als synchronisierte Animation", async () => {

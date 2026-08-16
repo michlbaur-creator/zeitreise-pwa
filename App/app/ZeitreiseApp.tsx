@@ -225,6 +225,7 @@ export default function ZeitreiseApp() {
     useState<InstallPromptEvent | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [ambientEnabled, setAmbientEnabled] = useState(false);
+  const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isPlayingRef = useRef(false);
@@ -258,7 +259,15 @@ export default function ZeitreiseApp() {
     scene.theme,
     isPlaying,
     ambientEnabled,
+    progress,
   );
+
+  const ensureAmbientSound = useCallback(() => {
+    if (ambientMutedByUser) return;
+    void activateAmbientSound().then((activated) => {
+      if (activated && !ambientEnabled) setAmbientEnabled(true);
+    });
+  }, [activateAmbientSound, ambientEnabled, ambientMutedByUser]);
 
   useEffect(() => {
     if (!introOpen) return;
@@ -566,6 +575,7 @@ export default function ZeitreiseApp() {
       }
 
       if (event.key === "ArrowRight") {
+        if (currentIndex < scenes.length - 1) ensureAmbientSound();
         goToScene(
           Math.min(scenes.length - 1, currentIndex + 1),
           currentIndex < scenes.length - 1,
@@ -581,6 +591,7 @@ export default function ZeitreiseApp() {
           progressRef.current = 0;
           if (audioRef.current) audioRef.current.currentTime = 0;
         }
+        if (!isPlaying) ensureAmbientSound();
         setIsPlaying((value) => !value);
       }
       if (event.key === "Escape") {
@@ -591,7 +602,7 @@ export default function ZeitreiseApp() {
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [currentIndex, goToScene, progress]);
+  }, [currentIndex, ensureAmbientSound, goToScene, isPlaying, progress]);
 
   useEffect(() => {
     if (!isReady) return;
@@ -639,15 +650,18 @@ export default function ZeitreiseApp() {
       progressRef.current = 0;
       if (audioRef.current) audioRef.current.currentTime = 0;
     }
+    if (!isPlaying) ensureAmbientSound();
     setIsPlaying((value) => !value);
   };
 
   const toggleAmbientSound = () => {
     if (ambientEnabled) {
       setAmbientEnabled(false);
+      setAmbientMutedByUser(true);
       return;
     }
 
+    setAmbientMutedByUser(false);
     void activateAmbientSound().then((activated) => {
       if (activated) setAmbientEnabled(true);
     });
@@ -700,6 +714,7 @@ export default function ZeitreiseApp() {
   const startJourney = () => {
     goToScene(0);
     setIntroClosing(true);
+    setAmbientMutedByUser(false);
     void activateAmbientSound().then((activated) => {
       if (activated) setAmbientEnabled(true);
     });
@@ -982,7 +997,10 @@ export default function ZeitreiseApp() {
             <button
               className="next-control"
               type="button"
-              onClick={() => goToScene(currentIndex + 1, true)}
+              onClick={() => {
+                ensureAmbientSound();
+                goToScene(currentIndex + 1, true);
+              }}
               disabled={currentIndex === scenes.length - 1}
               aria-label="Nächste Szene"
             >

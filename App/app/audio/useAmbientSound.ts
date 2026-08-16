@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  SCENE_NINETEEN_BLACKOUT_END,
+  SCENE_NINETEEN_IMPACT,
+  SCENE_NINETEEN_SILENCE_START,
+} from "../data/impactTiming";
+import { rainIntensityForScene } from "../data/rainTiming";
 import type { SceneTheme } from "../data/scenes";
 
 type SoundEvent =
@@ -352,18 +358,32 @@ function playSoundEvent(
       });
       break;
     case "impact":
+      playNoiseBurst(context, destination, whiteNoise, {
+        frequency: 1650,
+        duration: 0.18,
+        level: 0.14,
+        filterType: "bandpass",
+      });
       playNoiseBurst(context, destination, brownNoise, {
-        frequency: 130,
-        duration: 2.8,
-        level: 0.075,
+        frequency: 145,
+        duration: 2.4,
+        level: 0.115,
         filterType: "lowpass",
       });
       playTone(context, destination, {
-        from: 76,
-        to: 24,
-        duration: 3,
-        level: 0.055,
+        from: 92,
+        to: 22,
+        duration: 2.6,
+        level: 0.082,
         type: "sawtooth",
+      });
+      playTone(context, destination, {
+        from: 48,
+        to: 18,
+        duration: 3.2,
+        level: 0.07,
+        type: "sine",
+        delay: 0.04,
       });
       break;
     case "insects":
@@ -452,8 +472,20 @@ export function useAmbientSound(
   theme: SceneTheme,
   isPlaying: boolean,
   enabled: boolean,
+  progress: number,
 ) {
   const contextRef = useRef<AudioContext | null>(null);
+  const rainBedGainRef = useRef<GainNode | null>(null);
+  const impactSoundRef = useRef<{
+    context: AudioContext;
+    destination: AudioNode;
+    whiteNoise: AudioBuffer;
+    brownNoise: AudioBuffer;
+  } | null>(null);
+  const impactPlayedRef = useRef(false);
+  const impactSceneRef = useRef(sceneId);
+  const sceneProgressRef = useRef(progress);
+  const [contextRevision, setContextRevision] = useState(0);
 
   const activate = useCallback(async () => {
     const AudioContextClass =
@@ -473,8 +505,67 @@ export function useAmbientSound(
       await context.resume();
     }
 
-    return context.state === "running";
+    const isRunning = context.state === "running";
+    if (isRunning) setContextRevision((value) => value + 1);
+    return isRunning;
   }, []);
+
+  useEffect(() => {
+    sceneProgressRef.current = progress;
+    const context = contextRef.current;
+    const rainBedGain = rainBedGainRef.current;
+    if (impactSceneRef.current !== sceneId) {
+      impactSceneRef.current = sceneId;
+      impactPlayedRef.current = false;
+    }
+
+    if (context && rainBedGain && context.state !== "closed") {
+      const rainLevel = sceneId === 2 ? 0.09 : 0.056;
+      const target = Math.max(
+        0.0001,
+        rainIntensityForScene(sceneId, progress) * rainLevel,
+      );
+      rainBedGain.gain.cancelScheduledValues(context.currentTime);
+      rainBedGain.gain.setTargetAtTime(target, context.currentTime, 0.18);
+    }
+
+    if (sceneId !== 19) return;
+    if (progress < SCENE_NINETEEN_SILENCE_START - 0.04) {
+      impactPlayedRef.current = false;
+    }
+
+    const impactSound = impactSoundRef.current;
+    if (!impactSound || impactSound.context.state === "closed") return;
+
+    const isSilent =
+      progress >= SCENE_NINETEEN_SILENCE_START &&
+      progress < SCENE_NINETEEN_IMPACT;
+    const master = impactSound.destination as GainNode;
+    master.gain.cancelScheduledValues(impactSound.context.currentTime);
+    master.gain.setTargetAtTime(
+      isSilent ? 0.0001 : 1.05,
+      impactSound.context.currentTime,
+      isSilent ? 0.08 : 0.025,
+    );
+
+    if (
+      isPlaying &&
+      !impactPlayedRef.current &&
+      progress >= SCENE_NINETEEN_IMPACT &&
+      progress < SCENE_NINETEEN_BLACKOUT_END
+    ) {
+      impactPlayedRef.current = true;
+      master.gain.cancelScheduledValues(impactSound.context.currentTime);
+      master.gain.setValueAtTime(1.05, impactSound.context.currentTime);
+      playSoundEvent(
+        "impact",
+        impactSound.context,
+        impactSound.destination,
+        impactSound.whiteNoise,
+        impactSound.brownNoise,
+      );
+    }
+  }, [isPlaying, progress, sceneId]);
 
   useEffect(() => {
     if (!isPlaying || !enabled) return;
@@ -482,7 +573,7 @@ export function useAmbientSound(
     const context = contextRef.current;
     if (!context || context.state === "closed") return;
 
-    const profile = profiles[theme];
+    const profile = sceneId === 2 ? profiles.volcanic : profiles[theme];
     const whiteNoise = createNoiseBuffer(context, 4, "white");
     const brownNoise = createNoiseBuffer(context, 4, "brown");
     const noise = context.createBufferSource();
@@ -512,7 +603,39 @@ export function useAmbientSound(
     movementGain.connect(bed.gain);
     master.connect(context.destination);
 
+    if (sceneId === 19) {
+      impactSoundRef.current = {
+        context,
+        destination: master,
+        whiteNoise,
+        brownNoise,
+      };
+    }
+
     const persistentNodes: AudioScheduledSourceNode[] = [noise, movement];
+
+    let rainBedGain: GainNode | null = null;
+    if (sceneId === 2 || sceneId === 3) {
+      const rainBed = context.createBufferSource();
+      const rainFilter = context.createBiquadFilter();
+      rainBedGain = context.createGain();
+
+      rainBed.buffer = whiteNoise;
+      rainBed.loop = true;
+      rainFilter.type = "bandpass";
+      rainFilter.frequency.value = sceneId === 2 ? 2850 : 2450;
+      rainFilter.Q.value = 0.38;
+      const rainLevel = sceneId === 2 ? 0.09 : 0.056;
+      rainBedGain.gain.value = Math.max(
+        0.0001,
+        rainIntensityForScene(sceneId, sceneProgressRef.current) * rainLevel,
+      );
+      rainBed.connect(rainFilter);
+      rainFilter.connect(rainBedGain);
+      rainBedGain.connect(master);
+      persistentNodes.push(rainBed);
+      rainBedGainRef.current = rainBedGain;
+    }
 
     if (profile.rumble) {
       const rumble = context.createOscillator();
@@ -529,7 +652,12 @@ export function useAmbientSound(
       const [minimum, maximum, initial] = eventTiming[event];
       const run = () => {
         if (disposed) return;
-        playSoundEvent(event, context, master, whiteNoise, brownNoise);
+        const rainIsAudible =
+          event !== "rain" ||
+          rainIntensityForScene(sceneId, sceneProgressRef.current) > 0;
+        if (rainIsAudible) {
+          playSoundEvent(event, context, master, whiteNoise, brownNoise);
+        }
         const timer = window.setTimeout(
           run,
           randomBetween(minimum, maximum) * 1000,
@@ -541,10 +669,18 @@ export function useAmbientSound(
     };
 
     persistentNodes.forEach((node) => node.start());
-    (sceneEvents[sceneId] ?? []).forEach(scheduleEvent);
+    (sceneEvents[sceneId] ?? [])
+      .filter((event) => event !== "impact")
+      .forEach(scheduleEvent);
 
     return () => {
       disposed = true;
+      if (rainBedGainRef.current === rainBedGain) {
+        rainBedGainRef.current = null;
+      }
+      if (impactSoundRef.current?.destination === master) {
+        impactSoundRef.current = null;
+      }
       timers.forEach((timer) => window.clearTimeout(timer));
       persistentNodes.forEach((node) => {
         try {
@@ -554,7 +690,7 @@ export function useAmbientSound(
         }
       });
     };
-  }, [enabled, isPlaying, sceneId, theme]);
+  }, [contextRevision, enabled, isPlaying, sceneId, theme]);
 
   useEffect(
     () => () => {

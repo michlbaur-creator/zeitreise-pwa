@@ -2,6 +2,14 @@
 
 import type { CSSProperties } from "react";
 import { captionTracks } from "../data/captions";
+import {
+  SCENE_NINETEEN_BLACKOUT_END,
+  SCENE_NINETEEN_FLASH_END,
+  SCENE_NINETEEN_IMPACT,
+  SCENE_NINETEEN_METEOR_START,
+  SCENE_NINETEEN_SILENCE_START,
+} from "../data/impactTiming";
+import { rainIntensityForScene } from "../data/rainTiming";
 import type { Scene } from "../data/scenes";
 
 type SceneVisualProps = {
@@ -102,16 +110,6 @@ const collectionOverlays: Partial<Record<number, CollectionOverlay[]>> = {
     {
       src: "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
       className: "collection-overlay-shadow",
-    },
-  ],
-  19: [
-    {
-      src: "/assets/episode1/scene19/overlay-meteor-v1.png",
-      className: "collection-overlay-meteor",
-    },
-    {
-      src: "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
-      className: "collection-overlay-shadow collection-overlay-shadow-impact",
     },
   ],
   20: [
@@ -685,6 +683,103 @@ function EndosymbiosisAnimation({ progress }: { progress: number }) {
   );
 }
 
+function MeteorImpactAnimation({ progress }: { progress: number }) {
+  const approach = phaseProgress(
+    progress,
+    SCENE_NINETEEN_METEOR_START,
+    SCENE_NINETEEN_IMPACT,
+  );
+  const reveal = phaseProgress(
+    progress,
+    SCENE_NINETEEN_METEOR_START,
+    SCENE_NINETEEN_METEOR_START + 0.045,
+  );
+  const vanish =
+    1 -
+    phaseProgress(
+      progress,
+      SCENE_NINETEEN_IMPACT - 0.012,
+      SCENE_NINETEEN_IMPACT + 0.003,
+    );
+  const shadowIn = phaseProgress(progress, 0.525, 0.575);
+  const shadowOut = 1 - phaseProgress(progress, 0.595, SCENE_NINETEEN_IMPACT);
+  const impactBurst = phaseProgress(
+    progress,
+    SCENE_NINETEEN_IMPACT - 0.008,
+    SCENE_NINETEEN_IMPACT + 0.008,
+  );
+  const impactAfterglow =
+    1 -
+    phaseProgress(
+      progress,
+      SCENE_NINETEEN_IMPACT + 0.006,
+      SCENE_NINETEEN_FLASH_END,
+    );
+  const aftermath = phaseProgress(
+    progress,
+    SCENE_NINETEEN_BLACKOUT_END,
+    SCENE_NINETEEN_BLACKOUT_END + 0.08,
+  );
+  const meteorX = 34 - approach * 132;
+  const meteorY = -26 + approach * 104;
+  const meteorScale = 0.72 + approach * 0.5;
+
+  return (
+    <div
+      className="meteor-impact-story"
+      role="img"
+      aria-label="Ein einzelner Asteroid wird am Himmel heller, rast auf die Erde zu und endet in einem Lichtblitz mit Druckwelle."
+      style={
+        {
+          "--impact-approach": approach,
+          "--impact-burst": impactBurst * impactAfterglow,
+          "--impact-aftermath": aftermath,
+        } as CSSProperties
+      }
+    >
+      <img
+        className="impact-shadow-sweep"
+        src="/assets/episode1/scene18/overlay-wolkenschatten-v1.png"
+        alt=""
+        draggable={false}
+        style={{
+          opacity: shadowIn * shadowOut * 0.5,
+          transform: `translate3d(${24 - approach * 72}%, ${8 + approach * 22}%, 0) scale(${1.04 + approach * 0.28})`,
+        }}
+      />
+      <span className="impact-entry-glow" />
+      <img
+        className="impact-single-meteor"
+        src="/assets/episode1/scene19/overlay-meteor-v1.png"
+        alt=""
+        draggable={false}
+        style={{
+          opacity: reveal * vanish,
+          transform: `translate3d(${meteorX}%, ${meteorY}%, 0) rotate(-5deg) scale(${meteorScale})`,
+        }}
+      />
+      <span className="impact-core" />
+      <span className="impact-pressure-wave" />
+      <span className="impact-aftermath-veil" />
+      <span className="impact-ash-field">
+        {Array.from({ length: 18 }, (_, index) => (
+          <span
+            style={
+              {
+                "--ash-index": index,
+                "--ash-left": `${4 + ((index * 31) % 92)}%`,
+                "--ash-top": `${8 + ((index * 23) % 76)}%`,
+                "--ash-size": `${2 + (index % 3)}px`,
+              } as CSSProperties
+            }
+            key={`impact-ash-${index}`}
+          />
+        ))}
+      </span>
+    </div>
+  );
+}
+
 export function SceneVisual({
   scene,
   isPlaying,
@@ -727,10 +822,34 @@ export function SceneVisual({
   const atmosphereProfile = atmosphereProfiles[scene.id];
   const recoveredMediaState = mediaStates[scene.id];
   const hasRecoveredMedia = Boolean(recoveredMediaState);
-  const impactFlash =
-    scene.id === 19 && progress >= 0.56 && progress < 0.585;
-  const impactBlackout =
-    scene.id === 19 && progress >= 0.585 && progress < 0.63;
+  const impactFlashOpacity =
+    scene.id === 19
+      ? phaseProgress(
+          progress,
+          SCENE_NINETEEN_IMPACT - 0.004,
+          SCENE_NINETEEN_IMPACT + 0.006,
+        ) *
+        (1 -
+          phaseProgress(
+            progress,
+            SCENE_NINETEEN_IMPACT + 0.012,
+            SCENE_NINETEEN_FLASH_END,
+          ))
+      : 0;
+  const impactBlackoutOpacity =
+    scene.id === 19
+      ? phaseProgress(
+          progress,
+          SCENE_NINETEEN_FLASH_END - 0.004,
+          SCENE_NINETEEN_FLASH_END + 0.006,
+        ) *
+        (1 -
+          phaseProgress(
+            progress,
+            SCENE_NINETEEN_BLACKOUT_END - 0.006,
+            SCENE_NINETEEN_BLACKOUT_END,
+          ))
+      : 0;
   const showEnding = scene.id === 22 && progress >= 0.72;
   const sceneOneCosmosOpacity = Math.min(
     1,
@@ -743,11 +862,8 @@ export function SceneVisual({
     1,
     Math.max(0, (progress - 0.5) / 0.12),
   );
-  const sceneTwoRainOpacity = Math.min(
-    0.8,
-    Math.max(0.08, (progress - 0.18) / 0.55),
-  );
   const sceneTwoHeatOpacity = Math.max(0.18, 1 - progress * 0.82);
+  const rainIntensity = rainIntensityForScene(scene.id, progress);
 
   return (
     <section
@@ -765,6 +881,10 @@ export function SceneVisual({
         isSceneNine && "has-scene-nine-media",
         isSceneTen && "has-scene-ten-media",
         isSceneEleven && "has-scene-eleven-media",
+        scene.id === 19 &&
+          progress >= SCENE_NINETEEN_IMPACT - 0.006 &&
+          progress < SCENE_NINETEEN_FLASH_END &&
+          "is-impact-strike",
         generatedBackground && "has-scene-generated-media",
         isPlaying ? "is-playing" : "is-paused",
       ]
@@ -779,9 +899,14 @@ export function SceneVisual({
             } as CSSProperties)
           : isSceneTwo
             ? ({
-                "--scene-two-rain-opacity": sceneTwoRainOpacity,
+                "--scene-two-rain-opacity": rainIntensity * 0.6,
                 "--scene-two-heat-opacity": sceneTwoHeatOpacity,
+                "--rain-intensity": rainIntensity,
               } as CSSProperties)
+            : isSceneThree
+              ? ({
+                  "--rain-intensity": rainIntensity,
+                } as CSSProperties)
           : undefined
       }
       aria-label={`Technische Bildvorschau für Szene ${scene.id}: ${scene.title}`}
@@ -1047,6 +1172,7 @@ export function SceneVisual({
             ))}
           </div>
         ) : null}
+        {scene.id === 19 ? <MeteorImpactAnimation progress={progress} /> : null}
         {!isSceneOne ? (
           <>
             <div className="world-sun" aria-hidden="true" />
@@ -1122,15 +1248,19 @@ export function SceneVisual({
         </div>
       ) : null}
 
-      {scene.id === 19 && progress >= 0.48 && progress < 0.52 ? (
+      {scene.id === 19 &&
+      progress >= SCENE_NINETEEN_SILENCE_START &&
+      progress < SCENE_NINETEEN_IMPACT ? (
         <div className="silence-card">Absolute Stille · 2 Sekunden</div>
       ) : null}
       <div
-        className={`impact-flash ${impactFlash ? "is-visible" : ""}`}
+        className="impact-flash"
+        style={{ opacity: impactFlashOpacity }}
         aria-hidden="true"
       />
       <div
-        className={`impact-blackout ${impactBlackout ? "is-visible" : ""}`}
+        className="impact-blackout"
+        style={{ opacity: impactBlackoutOpacity }}
         aria-hidden="true"
       />
 
