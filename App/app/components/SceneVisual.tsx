@@ -865,6 +865,104 @@ function OxygenRevolutionAnimation({ progress }: { progress: number }) {
   );
 }
 
+const complexCellSpecs = [
+  { x: 14, y: 19, rx: 11, ry: 14, start: 0.08, dx: 18, dy: -12, turn: 3 },
+  { x: 33, y: 43, rx: 20, ry: 16, start: 0.15, dx: 48, dy: -18, turn: 4 },
+  { x: 77, y: 30, rx: 15, ry: 20, start: 0.2, dx: -18, dy: 10, turn: -3 },
+  { x: 60, y: 60, rx: 13, ry: 17, start: 0.26, dx: -27, dy: -15, turn: -5 },
+  { x: 10, y: 66, rx: 11, ry: 17, start: 0.32, dx: 25, dy: -12, turn: 4 },
+  { x: 87, y: 72, rx: 11, ry: 10, start: 0.39, dx: -31, dy: -8, turn: -4 },
+];
+
+function ComplexCellWorldAnimation({ progress }: { progress: number }) {
+  const activity = phaseProgress(progress, 0.045, SCENE_TEN_DIVERSE_BEHAVIOR);
+  const diversity = phaseProgress(
+    progress,
+    SCENE_TEN_DIVERSE_BEHAVIOR,
+    SCENE_TEN_VARIANTS,
+  );
+  const variants = phaseProgress(
+    progress,
+    SCENE_TEN_VARIANTS,
+    SCENE_TEN_SELECTION,
+  );
+  const selection = phaseProgress(
+    progress,
+    SCENE_TEN_SELECTION,
+    SCENE_TEN_GENERATIONS,
+  );
+  const generations = phaseProgress(
+    progress,
+    SCENE_TEN_GENERATIONS,
+    SCENE_TEN_SEA_FILLS,
+  );
+  const finalDiversity = phaseProgress(progress, SCENE_TEN_SEA_FILLS, 0.98);
+  const daughterMask =
+    "radial-gradient(ellipse 8% 11% at 36% 71%, #000 0 58%, rgba(0, 0, 0, 0.9) 72%, transparent 100%)";
+
+  return (
+    <div
+      className="complex-cell-world-story"
+      role="img"
+      aria-label="Die vorhandenen Einzeller treiben ruhig in verschiedene Richtungen, drehen und pulsieren leicht. Eine kleine Zelle teilt sich über viele Generationen, während die Kamera langsam weitere Formen sichtbar macht."
+      style={
+        {
+          "--complex-cell-activity": activity,
+          "--complex-cell-diversity": diversity,
+          "--complex-cell-variants": variants,
+          "--complex-cell-selection": selection,
+          "--complex-cell-generations": generations,
+          "--complex-cell-final": finalDiversity,
+        } as CSSProperties
+      }
+    >
+      <span className="complex-cell-rest-shade" />
+      {complexCellSpecs.map((cell, index) => {
+        const motion = phaseProgress(progress, cell.start, 0.94);
+        const reveal = phaseProgress(progress, cell.start - 0.045, cell.start);
+        const pulse =
+          1 + Math.sin(motion * Math.PI * 3 + index * 0.9) * 0.018;
+        const mask = `radial-gradient(ellipse ${cell.rx}% ${cell.ry}% at ${cell.x}% ${cell.y}%, #000 0 58%, rgba(0, 0, 0, 0.9) 72%, transparent 100%)`;
+        const speedGain = 0.68 + diversity * 0.32 + variants * 0.12;
+
+        return (
+          <span
+            className={`complex-cell-layer complex-cell-layer-${index + 1}`}
+            style={{
+              WebkitMaskImage: mask,
+              maskImage: mask,
+              opacity: activity * reveal * (0.86 + selection * 0.1),
+              transform: `translate3d(${motion * cell.dx * speedGain}px, ${motion * cell.dy * speedGain}px, 0) rotate(${motion * cell.turn}deg) scale(${pulse})`,
+              transformOrigin: `${cell.x}% ${cell.y}%`,
+            }}
+            key={`complex-cell-${index}`}
+          />
+        );
+      })}
+      <span
+        className="complex-cell-daughter complex-cell-daughter-a"
+        style={{
+          WebkitMaskImage: daughterMask,
+          maskImage: daughterMask,
+          opacity: generations * (1 - finalDiversity * 0.22),
+          transform: `translate3d(${-generations * 16}px, ${-generations * 8}px, 0) rotate(${-generations * 4}deg) scale(${0.92 - generations * 0.08})`,
+        }}
+      />
+      <span
+        className="complex-cell-daughter complex-cell-daughter-b"
+        style={{
+          WebkitMaskImage: daughterMask,
+          maskImage: daughterMask,
+          opacity: generations * (1 - finalDiversity * 0.22),
+          transform: `translate3d(${generations * 17}px, ${generations * 7}px, 0) rotate(${generations * 5}deg) scale(${0.92 - generations * 0.08})`,
+        }}
+      />
+      <span className="complex-cell-focus-wash" />
+      <span className="complex-cell-depth-transition" />
+    </div>
+  );
+}
+
 function CambrianExplosionAnimation({ progress }: { progress: number }) {
   const diversity = phaseProgress(
     progress,
@@ -1435,7 +1533,15 @@ export function SceneVisual({
                       SCENE_SEVEN_SURFACE_CHANGE,
                     ),
                   } as CSSProperties)
-                : undefined
+                : isSceneTen
+                  ? ({
+                      "--scene-ten-zoom-out": phaseProgress(
+                        progress,
+                        SCENE_TEN_SEA_FILLS,
+                        0.98,
+                      ),
+                    } as CSSProperties)
+                  : undefined
       }
       aria-label={`Technische Bildvorschau für Szene ${scene.id}: ${scene.title}`}
     >
@@ -1645,14 +1751,17 @@ export function SceneVisual({
           </>
         ) : null}
         {isSceneTen ? (
-          <div className="scene-ten-media" aria-hidden="true">
-            <img
-              className="scene-ten-background"
-              src="/assets/episode1/scene10/hintergrund-komplexe-einzeller-v1.png"
-              alt=""
-              draggable={false}
-            />
-          </div>
+          <>
+            <div className="scene-ten-media" aria-hidden="true">
+              <img
+                className="scene-ten-background"
+                src="/assets/episode1/scene10/hintergrund-komplexe-einzeller-v1.png"
+                alt=""
+                draggable={false}
+              />
+            </div>
+            <ComplexCellWorldAnimation progress={progress} />
+          </>
         ) : null}
         {isSceneEleven ? (
           <div className="scene-eleven-media" aria-hidden="true">

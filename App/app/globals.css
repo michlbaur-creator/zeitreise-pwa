@@ -3674,6 +3674,105 @@ button:disabled {
   }
 }
 
+.complex-cell-world-story {
+  --complex-cell-activity: 0;
+  --complex-cell-diversity: 0;
+  --complex-cell-variants: 0;
+  --complex-cell-selection: 0;
+  --complex-cell-generations: 0;
+  --complex-cell-final: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.scene-ten-background {
+  animation: scene-ten-macro-drift 17s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  transform-origin: 54% 49%;
+}
+
+.complex-cell-rest-shade,
+.complex-cell-layer,
+.complex-cell-daughter,
+.complex-cell-focus-wash,
+.complex-cell-depth-transition {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.complex-cell-rest-shade {
+  z-index: 5;
+  background:
+    radial-gradient(ellipse 11% 14% at 14% 19%, rgba(15, 25, 21, 0.5), transparent 76%),
+    radial-gradient(ellipse 20% 16% at 33% 43%, rgba(15, 25, 21, 0.54), transparent 77%),
+    radial-gradient(ellipse 15% 20% at 77% 30%, rgba(15, 25, 21, 0.5), transparent 76%),
+    radial-gradient(ellipse 13% 17% at 60% 60%, rgba(15, 25, 21, 0.5), transparent 76%),
+    radial-gradient(ellipse 11% 17% at 10% 66%, rgba(15, 25, 21, 0.48), transparent 76%),
+    radial-gradient(ellipse 11% 10% at 87% 72%, rgba(15, 25, 21, 0.46), transparent 76%);
+  filter: blur(5px);
+  opacity: calc(var(--complex-cell-activity) * 0.72);
+}
+
+.complex-cell-layer,
+.complex-cell-daughter {
+  z-index: 6;
+  background: url("/assets/episode1/scene10/hintergrund-komplexe-einzeller-v1.png") center / cover no-repeat;
+  filter: brightness(1.07) contrast(1.025) saturate(1.04);
+  will-change: transform, opacity;
+}
+
+.complex-cell-layer-2 {
+  z-index: 7;
+}
+
+.complex-cell-layer-3 {
+  filter: brightness(1.09) contrast(1.035) saturate(1.07);
+}
+
+.complex-cell-layer-4 {
+  z-index: 7;
+}
+
+.complex-cell-daughter {
+  z-index: 7;
+  transform-origin: 36% 71%;
+}
+
+.complex-cell-focus-wash {
+  z-index: 8;
+  background:
+    radial-gradient(circle at 60% 60%, rgba(238, 224, 174, 0.13), transparent 19%),
+    radial-gradient(circle at 77% 30%, rgba(218, 217, 166, 0.1), transparent 23%);
+  opacity: calc(
+    var(--complex-cell-selection) * (1 - var(--complex-cell-final) * 0.42)
+  );
+  mix-blend-mode: screen;
+}
+
+.complex-cell-depth-transition {
+  z-index: 9;
+  background:
+    radial-gradient(circle at 52% 48%, transparent 31%, rgba(9, 25, 23, 0.28) 78%),
+    linear-gradient(180deg, rgba(177, 205, 177, 0.05), rgba(26, 56, 49, 0.16));
+  opacity: calc(var(--complex-cell-final) * 0.68);
+  transform: scale(calc(1.08 - var(--complex-cell-final) * 0.08));
+}
+
+@keyframes scene-ten-macro-drift {
+  from {
+    transform: translate3d(-0.8%, 0.5%, 0)
+      scale(calc(1.055 - var(--scene-ten-zoom-out, 0) * 0.035));
+  }
+  to {
+    transform: translate3d(0.9%, -0.7%, 0)
+      scale(calc(1.085 - var(--scene-ten-zoom-out, 0) * 0.055));
+  }
+}
+
 .oxygen-pioneer-story,
 .oxygen-revolution-story {
   position: absolute;
