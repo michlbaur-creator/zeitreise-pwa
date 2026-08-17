@@ -1,0 +1,5 @@
+export const SCENE_TEN_DIVERSE_BEHAVIOR = 0.169;
+export const SCENE_TEN_VARIANTS = 0.434;
+export const SCENE_TEN_SELECTION = 0.53;
+export const SCENE_TEN_GENERATIONS = 0.675;
+export const SCENE_TEN_SEA_FILLS = 0.844;
