@@ -8,6 +8,13 @@ import {
   SCENE_THIRTEEN_PREDATOR_PREY_START,
   SCENE_THIRTEEN_TRANSITION_START,
 } from "../data/cambrianTiming";
+import {
+  SCENE_TEN_DIVERSE_BEHAVIOR,
+  SCENE_TEN_GENERATIONS,
+  SCENE_TEN_SEA_FILLS,
+  SCENE_TEN_SELECTION,
+  SCENE_TEN_VARIANTS,
+} from "../data/complexCellTiming";
 import { captionTracks } from "../data/captions";
 import {
   SCENE_NINETEEN_BLACKOUT_END,
@@ -145,7 +152,6 @@ const atmosphereProfiles: Partial<
   3: { className: "atmosphere-ocean-light", particles: 5 },
   4: { className: "atmosphere-lagoon-bubbles", particles: 8 },
   5: { className: "atmosphere-first-cell", particles: 4 },
-  10: { className: "atmosphere-micro-swim", particles: 8 },
   11: { className: "atmosphere-cell-team", particles: 8 },
   12: { className: "atmosphere-seafloor-drift", particles: 6 },
   14: { className: "atmosphere-land-spores", particles: 14 },
@@ -1016,7 +1022,9 @@ function TiktaalikShallowWaterAnimation({ progress }: { progress: number }) {
     SCENE_SIXTEEN_SUPPORT_START,
     SCENE_SIXTEEN_PUSH_START + 0.09,
   );
-  const slip = phaseProgress(progress, 0.55, 0.64);
+  const slip =
+    phaseProgress(progress, 0.55, 0.59) *
+    (1 - phaseProgress(progress, 0.61, 0.65));
   const secondPush = phaseProgress(
     progress,
     SCENE_SIXTEEN_SECOND_PUSH,
@@ -1037,7 +1045,11 @@ function TiktaalikShallowWaterAnimation({ progress }: { progress: number }) {
   const transition = phaseProgress(progress, SCENE_SIXTEEN_CROAK, 0.99);
   const headMotion = Math.min(
     1,
-    headLift * (1 - slip * 0.18) + secondPush * 0.16,
+    headLift * 0.82 - slip * 0.12 + secondPush * 0.22,
+  );
+  const bodyMotion = Math.min(
+    1,
+    support * 0.72 - slip * 0.12 + secondPush * 0.28,
   );
 
   return (
@@ -1048,6 +1060,7 @@ function TiktaalikShallowWaterAnimation({ progress }: { progress: number }) {
       style={
         {
           "--tiktaalik-head-lift": headMotion,
+          "--tiktaalik-body-push": bodyMotion,
           "--tiktaalik-support": support,
           "--tiktaalik-splash": splash,
           "--tiktaalik-transition": transition,
@@ -1068,6 +1081,8 @@ function TiktaalikShallowWaterAnimation({ progress }: { progress: number }) {
           />
         ))}
       </span>
+      <span className="tiktaalik-resting-body-shade" />
+      <span className="tiktaalik-body-layer" />
       <span className="tiktaalik-resting-head-shade" />
       <span className="tiktaalik-head-layer" />
       <img

@@ -3942,6 +3942,7 @@ button:disabled {
 
 .tiktaalik-shallow-water-story {
   --tiktaalik-head-lift: 0;
+  --tiktaalik-body-push: 0;
   --tiktaalik-support: 0;
   --tiktaalik-splash: 0;
   --tiktaalik-transition: 0;
@@ -3978,9 +3979,57 @@ button:disabled {
 }
 
 .tiktaalik-head-layer,
-.tiktaalik-resting-head-shade {
+.tiktaalik-body-layer,
+.tiktaalik-resting-head-shade,
+.tiktaalik-resting-body-shade {
   position: absolute;
   pointer-events: none;
+}
+
+.tiktaalik-resting-body-shade {
+  z-index: 5;
+  left: 3%;
+  top: 30%;
+  width: 94%;
+  height: 43%;
+  border-radius: 48%;
+  background: radial-gradient(
+    ellipse at 49% 53%,
+    rgba(15, 23, 19, 0.48),
+    rgba(19, 28, 22, 0.25) 58%,
+    transparent 79%
+  );
+  filter: blur(8px);
+  opacity: calc(var(--tiktaalik-body-push) * 0.74);
+}
+
+.tiktaalik-body-layer {
+  z-index: 6;
+  inset: 0;
+  background: url("/assets/episode1/scene16/hintergrund-tiktaalik-v1.png") center / cover no-repeat;
+  -webkit-mask-image: radial-gradient(
+    ellipse 50% 23% at 51% 53%,
+    #000 0 59%,
+    rgba(0, 0, 0, 0.9) 72%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 50% 23% at 51% 53%,
+    #000 0 59%,
+    rgba(0, 0, 0, 0.9) 72%,
+    transparent 100%
+  );
+  filter: brightness(calc(1 + var(--tiktaalik-body-push) * 0.055))
+    contrast(calc(1 + var(--tiktaalik-body-push) * 0.035));
+  transform: translate3d(
+      calc(var(--tiktaalik-body-push) * -3.8%),
+      calc(var(--tiktaalik-body-push) * -6.2%),
+      0
+    )
+    rotate(calc(var(--tiktaalik-body-push) * -1.1deg))
+    scale(calc(1 + var(--tiktaalik-body-push) * 0.012));
+  transform-origin: 72% 62%;
+  will-change: transform;
 }
 
 .tiktaalik-resting-head-shade {
@@ -4019,12 +4068,28 @@ button:disabled {
   filter: brightness(calc(1 + var(--tiktaalik-head-lift) * 0.09))
     contrast(calc(1 + var(--tiktaalik-head-lift) * 0.04));
   transform: translate3d(
-      calc(var(--tiktaalik-head-lift) * -0.7%),
-      calc(var(--tiktaalik-head-lift) * -4.1%),
+      calc(
+        var(--tiktaalik-body-push) * -3.8% +
+          var(--tiktaalik-head-lift) * -0.9%
+      ),
+      calc(
+        var(--tiktaalik-body-push) * -6.2% +
+          var(--tiktaalik-head-lift) * -3.6%
+      ),
       0
     )
-    rotate(calc(var(--tiktaalik-head-lift) * -1.45deg))
-    scale(calc(1 + var(--tiktaalik-head-lift) * 0.008));
+    rotate(
+      calc(
+        var(--tiktaalik-body-push) * -1.1deg +
+          var(--tiktaalik-head-lift) * -1.7deg
+      )
+    )
+    scale(
+      calc(
+        1 + var(--tiktaalik-body-push) * 0.012 +
+          var(--tiktaalik-head-lift) * 0.01
+      )
+    );
   transform-origin: 43% 60%;
   will-change: transform;
 }

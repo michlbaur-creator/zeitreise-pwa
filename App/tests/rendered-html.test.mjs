@@ -353,7 +353,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v52/);
+  assert.match(worker, /zeitreise-v53/);
   assert.match(app, /process\.env\.NODE_ENV === "development"/);
   assert.match(app, /registration\.unregister\(\)/);
   assert.match(app, /name\.startsWith\("zeitreise-"\)/);
@@ -649,6 +649,8 @@ test("lässt Tiktaalik in Szene 16 glaubwürdig im Flachwasser arbeiten", async 
     /<TiktaalikShallowWaterAnimation progress=\{progress\} \/>/,
   );
   assert.match(sceneVisual, /tiktaalik-head-layer/);
+  assert.match(sceneVisual, /tiktaalik-body-layer/);
+  assert.match(sceneVisual, /--tiktaalik-body-push/);
   assert.doesNotMatch(sceneVisual, /tiktaalik-support-fin/);
   assert.doesNotMatch(sceneVisual, /tiktaalik-transition-fern/);
   assert.equal((sceneVisual.match(/className="tiktaalik-single-splash"/g) ?? []).length, 1);
