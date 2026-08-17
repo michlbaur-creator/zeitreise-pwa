@@ -1,0 +1,5 @@
+export const SCENE_ELEVEN_SIGNALS = 0.211;
+export const SCENE_ELEVEN_TASKS = 0.448;
+export const SCENE_ELEVEN_COOPERATION = 0.632;
+export const SCENE_ELEVEN_MULTICELLS = 0.737;
+export const SCENE_ELEVEN_TEAMWORK = 0.79;

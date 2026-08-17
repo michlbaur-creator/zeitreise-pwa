@@ -3773,6 +3773,148 @@ button:disabled {
   }
 }
 
+.multicell-team-story {
+  --multicell-joining: 0;
+  --multicell-signals: 0;
+  --multicell-tasks: 0;
+  --multicell-cooperation: 0;
+  --multicell-growth: 0;
+  --multicell-teamwork: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: scale(calc(1 + var(--multicell-growth) * 0.045));
+  transform-origin: 62% 70%;
+}
+
+.scene-eleven-background {
+  animation: scene-eleven-gentle-current 16s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  transform-origin: 62% 70%;
+}
+
+.multicell-rest-shade,
+.multicell-image-layer,
+.multicell-signal-path,
+.multicell-task-focus,
+.multicell-team-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.multicell-rest-shade {
+  z-index: 5;
+  background:
+    radial-gradient(ellipse 8% 11% at 9% 58%, rgba(15, 25, 21, 0.52), transparent 77%),
+    radial-gradient(ellipse 27% 38% at 32% 63%, rgba(15, 25, 21, 0.48), transparent 78%),
+    radial-gradient(ellipse 25% 23% at 64% 76%, rgba(15, 25, 21, 0.5), transparent 77%),
+    radial-gradient(ellipse 13% 16% at 86% 49%, rgba(15, 25, 21, 0.48), transparent 77%);
+  filter: blur(5px);
+  opacity: calc(
+    var(--multicell-joining) * 0.4 + var(--multicell-signals) * 0.28
+  );
+}
+
+.multicell-image-layer {
+  z-index: 6;
+  background: url("/assets/episode1/scene11/hintergrund-erste-vielzeller-v1.png") center / cover no-repeat;
+  filter: brightness(1.075) contrast(1.03) saturate(1.04);
+  will-change: transform, opacity;
+}
+
+.multicell-chain-layer,
+.multicell-cluster-layer {
+  z-index: 7;
+}
+
+.multicell-signal-path {
+  z-index: 8;
+  opacity: calc(var(--multicell-signals) * 0.88);
+}
+
+.multicell-signal-path i {
+  --multicell-signal-index: 0;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(242, 221, 154, 0.64);
+  box-shadow:
+    0 0 6px rgba(245, 224, 157, 0.48),
+    0 0 13px rgba(210, 205, 143, 0.24);
+  animation: multicell-signal-travel 2.8s ease-in-out infinite;
+  animation-delay: calc(var(--multicell-signal-index) * 0.18s - 1.4s);
+  animation-play-state: paused;
+  transform: translate(-50%, -50%);
+}
+
+.scene-visual.is-playing .multicell-signal-path i {
+  animation-play-state: running;
+}
+
+.multicell-task-focus {
+  z-index: 8;
+  background:
+    radial-gradient(circle at 47% 35%, rgba(231, 221, 166, 0.16), transparent 15%),
+    radial-gradient(circle at 66% 74%, rgba(191, 218, 174, 0.13), transparent 22%);
+  opacity: calc(var(--multicell-tasks) * 0.78);
+  mix-blend-mode: screen;
+}
+
+.multicell-team-glow {
+  z-index: 9;
+  background:
+    radial-gradient(ellipse at 38% 65%, rgba(198, 219, 170, 0.1), transparent 35%),
+    radial-gradient(ellipse at 67% 70%, rgba(221, 213, 155, 0.1), transparent 31%);
+  opacity: calc(
+    var(--multicell-cooperation) * 0.48 + var(--multicell-teamwork) * 0.36
+  );
+  mix-blend-mode: screen;
+  animation: multicell-team-breathe 4.6s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .multicell-team-glow {
+  animation-play-state: running;
+}
+
+@keyframes scene-eleven-gentle-current {
+  from {
+    transform: translate3d(-0.6%, 0.45%, 0)
+      scale(calc(1.03 + var(--scene-eleven-growth, 0) * 0.055));
+  }
+  to {
+    transform: translate3d(0.75%, -0.55%, 0)
+      scale(calc(1.06 + var(--scene-eleven-growth, 0) * 0.055));
+  }
+}
+
+@keyframes multicell-signal-travel {
+  0%,
+  100% {
+    opacity: 0.16;
+    transform: translate(-50%, -50%) scale(0.62);
+  }
+  42% {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+}
+
+@keyframes multicell-team-breathe {
+  from {
+    filter: brightness(0.92);
+    transform: scale(0.98);
+  }
+  to {
+    filter: brightness(1.1);
+    transform: scale(1.025);
+  }
+}
+
 .oxygen-pioneer-story,
 .oxygen-revolution-story {
   position: absolute;

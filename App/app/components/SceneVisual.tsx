@@ -35,6 +35,13 @@ import {
   SCENE_SEVEN_PHOTOSYNTHESIS_START,
   SCENE_SEVEN_SURFACE_CHANGE,
 } from "../data/oxygenTiming";
+import {
+  SCENE_ELEVEN_COOPERATION,
+  SCENE_ELEVEN_MULTICELLS,
+  SCENE_ELEVEN_SIGNALS,
+  SCENE_ELEVEN_TASKS,
+  SCENE_ELEVEN_TEAMWORK,
+} from "../data/multicellTiming";
 import { rainIntensityForScene } from "../data/rainTiming";
 import type { Scene } from "../data/scenes";
 import {
@@ -152,7 +159,6 @@ const atmosphereProfiles: Partial<
   3: { className: "atmosphere-ocean-light", particles: 5 },
   4: { className: "atmosphere-lagoon-bubbles", particles: 8 },
   5: { className: "atmosphere-first-cell", particles: 4 },
-  11: { className: "atmosphere-cell-team", particles: 8 },
   12: { className: "atmosphere-seafloor-drift", particles: 6 },
   14: { className: "atmosphere-land-spores", particles: 14 },
   15: { className: "atmosphere-land-crawlers", particles: 5 },
@@ -963,6 +969,124 @@ function ComplexCellWorldAnimation({ progress }: { progress: number }) {
   );
 }
 
+function MulticellTeamAnimation({ progress }: { progress: number }) {
+  const joining = phaseProgress(progress, 0.035, SCENE_ELEVEN_SIGNALS);
+  const signals = phaseProgress(
+    progress,
+    SCENE_ELEVEN_SIGNALS,
+    SCENE_ELEVEN_TASKS,
+  );
+  const tasks = phaseProgress(
+    progress,
+    SCENE_ELEVEN_TASKS,
+    SCENE_ELEVEN_COOPERATION,
+  );
+  const cooperation = phaseProgress(
+    progress,
+    SCENE_ELEVEN_COOPERATION,
+    SCENE_ELEVEN_MULTICELLS,
+  );
+  const growth = phaseProgress(
+    progress,
+    SCENE_ELEVEN_MULTICELLS,
+    0.94,
+  );
+  const teamwork = phaseProgress(progress, SCENE_ELEVEN_TEAMWORK, 0.97);
+  const chainMask =
+    "radial-gradient(ellipse 27% 38% at 32% 63%, #000 0 57%, rgba(0, 0, 0, 0.9) 72%, transparent 100%)";
+  const matMask =
+    "radial-gradient(ellipse 25% 23% at 64% 76%, #000 0 58%, rgba(0, 0, 0, 0.9) 72%, transparent 100%)";
+  const clusterMask =
+    "radial-gradient(ellipse 13% 16% at 86% 49%, #000 0 58%, rgba(0, 0, 0, 0.9) 72%, transparent 100%)";
+  const memberMask =
+    "radial-gradient(ellipse 8% 11% at 9% 58%, #000 0 58%, rgba(0, 0, 0, 0.9) 72%, transparent 100%)";
+  const signalPoints = [
+    [15, 80],
+    [22, 75],
+    [28, 68],
+    [34, 59],
+    [39, 49],
+    [44, 40],
+    [49, 34],
+  ];
+
+  return (
+    <div
+      className="multicell-team-story"
+      role="img"
+      aria-label="Eine einzelne Zelle bleibt nach der Teilung bei einem Zellverband. Die verbundenen Zellen bewegen sich gemeinsam, tauschen Signale aus und übernehmen unterschiedliche Aufgaben."
+      style={
+        {
+          "--multicell-joining": joining,
+          "--multicell-signals": signals,
+          "--multicell-tasks": tasks,
+          "--multicell-cooperation": cooperation,
+          "--multicell-growth": growth,
+          "--multicell-teamwork": teamwork,
+        } as CSSProperties
+      }
+    >
+      <span className="multicell-rest-shade" />
+      <span
+        className="multicell-image-layer multicell-joining-member"
+        style={{
+          WebkitMaskImage: memberMask,
+          maskImage: memberMask,
+          opacity: joining,
+          transform: `translate3d(${joining * 78}px, ${joining * 78}px, 0) rotate(${joining * 8}deg) scale(${1 - joining * 0.06})`,
+          transformOrigin: "9% 58%",
+        }}
+      />
+      <span
+        className="multicell-image-layer multicell-chain-layer"
+        style={{
+          WebkitMaskImage: chainMask,
+          maskImage: chainMask,
+          opacity: joining,
+          transform: `translate3d(${signals * 9}px, ${-signals * 8}px, 0) rotate(${Math.sin(signals * Math.PI) * 2.2}deg) scale(${1 + cooperation * 0.018})`,
+          transformOrigin: "28% 78%",
+        }}
+      />
+      <span
+        className="multicell-image-layer multicell-mat-layer"
+        style={{
+          WebkitMaskImage: matMask,
+          maskImage: matMask,
+          opacity: signals,
+          transform: `translate3d(${-tasks * 8}px, ${-tasks * 6}px, 0) scale(${1 + Math.sin(tasks * Math.PI) * 0.025 + teamwork * 0.018})`,
+          transformOrigin: "64% 76%",
+        }}
+      />
+      <span
+        className="multicell-image-layer multicell-cluster-layer"
+        style={{
+          WebkitMaskImage: clusterMask,
+          maskImage: clusterMask,
+          opacity: tasks,
+          transform: `translate3d(${-tasks * 18}px, ${tasks * 9}px, 0) rotate(${-tasks * 3}deg) scale(${1 + cooperation * 0.025})`,
+          transformOrigin: "86% 49%",
+        }}
+      />
+      <span className="multicell-signal-path">
+        {signalPoints.map(([left, top], index) => (
+          <i
+            style={
+              {
+                "--multicell-signal-index": index,
+                left: `${left}%`,
+                top: `${top}%`,
+              } as CSSProperties
+            }
+            key={`multicell-signal-${index}`}
+          />
+        ))}
+      </span>
+      <span className="multicell-task-focus" />
+      <span className="multicell-team-glow" />
+    </div>
+  );
+}
+
 function CambrianExplosionAnimation({ progress }: { progress: number }) {
   const diversity = phaseProgress(
     progress,
@@ -1541,7 +1665,15 @@ export function SceneVisual({
                         0.98,
                       ),
                     } as CSSProperties)
-                  : undefined
+                  : isSceneEleven
+                    ? ({
+                        "--scene-eleven-growth": phaseProgress(
+                          progress,
+                          SCENE_ELEVEN_MULTICELLS,
+                          0.96,
+                        ),
+                      } as CSSProperties)
+                    : undefined
       }
       aria-label={`Technische Bildvorschau für Szene ${scene.id}: ${scene.title}`}
     >
@@ -1764,14 +1896,17 @@ export function SceneVisual({
           </>
         ) : null}
         {isSceneEleven ? (
-          <div className="scene-eleven-media" aria-hidden="true">
-            <img
-              className="scene-eleven-background"
-              src="/assets/episode1/scene11/hintergrund-erste-vielzeller-v1.png"
-              alt=""
-              draggable={false}
-            />
-          </div>
+          <>
+            <div className="scene-eleven-media" aria-hidden="true">
+              <img
+                className="scene-eleven-background"
+                src="/assets/episode1/scene11/hintergrund-erste-vielzeller-v1.png"
+                alt=""
+                draggable={false}
+              />
+            </div>
+            <MulticellTeamAnimation progress={progress} />
+          </>
         ) : null}
         {generatedBackground ? (
           <div

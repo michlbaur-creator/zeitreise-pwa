@@ -353,7 +353,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v54/);
+  assert.match(worker, /zeitreise-v55/);
   assert.match(app, /process\.env\.NODE_ENV === "development"/);
   assert.match(app, /registration\.unregister\(\)/);
   assert.match(app, /name\.startsWith\("zeitreise-"\)/);
@@ -632,6 +632,32 @@ test("bewegt die vorhandenen Einzeller in Szene 10 synchron zum Sprechertext", a
   assert.match(timing, /SCENE_TEN_DIVERSE_BEHAVIOR = 0\.169/);
   assert.match(timing, /SCENE_TEN_GENERATIONS = 0\.675/);
   assert.match(timing, /SCENE_TEN_SEA_FILLS = 0\.844/);
+});
+
+test("lässt die vorhandenen Zellverbände in Szene 11 zusammenarbeiten", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+  const timing = await readFile(
+    new URL("../app/data/multicellTiming.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function MulticellTeamAnimation/);
+  assert.match(sceneVisual, /<MulticellTeamAnimation progress=\{progress\} \/>/);
+  assert.doesNotMatch(sceneVisual, /atmosphere-cell-team/);
+  assert.match(sceneVisual, /multicell-joining-member/);
+  assert.match(sceneVisual, /multicell-signal-path/);
+  assert.match(styles, /\.multicell-chain-layer/);
+  assert.match(styles, /scene-eleven-gentle-current/);
+  assert.match(timing, /SCENE_ELEVEN_SIGNALS = 0\.211/);
+  assert.match(timing, /SCENE_ELEVEN_TASKS = 0\.448/);
+  assert.match(timing, /SCENE_ELEVEN_MULTICELLS = 0\.737/);
 });
 
 test("lässt die Vielfalt in Szene 13 schrittweise lebendig werden", async () => {
