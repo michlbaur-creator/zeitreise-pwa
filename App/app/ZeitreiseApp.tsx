@@ -245,10 +245,7 @@ export default function ZeitreiseApp() {
   const activeQuiz = sceneQuizzes[quizQuestionIndex];
   const narrationPath = narrationTracks[scene.id];
   const activeNarrationVoice = narrationVoiceForScene(scene.id);
-  const narrationDisplayName =
-    scene.id <= 14
-      ? activeNarrationVoice.displayName
-      : `KI-Stimme ${activeNarrationVoice.displayName}`;
+  const narrationDisplayName = activeNarrationVoice.displayName;
   const discovered = discoveredByScene[String(scene.id)] ?? [];
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
@@ -363,12 +360,16 @@ export default function ZeitreiseApp() {
 
     window.queueMicrotask(() => {
       if (cancelled) return;
-      setCurrentIndex(loadStoredSceneIndex());
+      const storedSceneIndex = loadStoredSceneIndex();
+      const introWasSeen =
+        window.localStorage.getItem("zeitreise-intro-seen") === "1";
+      setCurrentIndex(storedSceneIndex);
       setCorrectScenes(loadStoredNumbers("zeitreise-correct-scenes"));
       setDiscoveredByScene(loadStoredRecord("zeitreise-discoveries"));
       const continueJourney =
         new URLSearchParams(window.location.search).get("weiter") === "1";
       if (
+        introWasSeen ||
         continueJourney ||
         window.localStorage.getItem("zeitreise-resume-after-update") === "1"
       ) {
@@ -433,6 +434,24 @@ export default function ZeitreiseApp() {
       window.removeEventListener("beforeinstallprompt", onInstallPrompt);
     };
   }, []);
+
+  useEffect(() => {
+    if (
+      !isReady ||
+      process.env.NODE_ENV === "development" ||
+      !("serviceWorker" in navigator)
+    ) {
+      return;
+    }
+
+    const sceneIds = [scene.id, scenes[currentIndex + 1]?.id].filter(
+      (sceneId): sceneId is number => typeof sceneId === "number",
+    );
+
+    void navigator.serviceWorker.ready.then((registration) => {
+      registration.active?.postMessage({ type: "CACHE_SCENES", sceneIds });
+    });
+  }, [currentIndex, isReady, scene.id]);
 
   useEffect(() => {
     progressRef.current = progress;
@@ -712,6 +731,7 @@ export default function ZeitreiseApp() {
   };
 
   const startJourney = () => {
+    window.localStorage.setItem("zeitreise-intro-seen", "1");
     goToScene(0);
     setIntroClosing(true);
     setAmbientMutedByUser(false);
@@ -729,6 +749,12 @@ export default function ZeitreiseApp() {
       setIntroOpen(false);
       setIntroClosing(false);
     }, 1520);
+  };
+
+  const skipIntro = () => {
+    window.localStorage.setItem("zeitreise-intro-seen", "1");
+    setIntroClosing(false);
+    setIntroOpen(false);
   };
 
   const replayIntro = () => {
@@ -784,7 +810,12 @@ export default function ZeitreiseApp() {
                 <span aria-hidden="true">→</span>
               </button>
             ) : (
-              <span>Die Zeitmaschine fährt hoch …</span>
+              <div className="intro-entry-waiting">
+                <span>Die Zeitmaschine fährt hoch …</span>
+                <button className="intro-skip" type="button" onClick={skipIntro}>
+                  Intro überspringen
+                </button>
+              </div>
             )}
           </div>
         </section>

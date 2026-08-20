@@ -8275,6 +8275,21 @@ body.cinematic-intro-active {
   text-transform: uppercase;
 }
 
+.intro-entry-waiting {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.intro-entry-waiting > span {
+  color: rgba(255, 250, 240, 0.63);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .intro-entry button {
   display: inline-flex;
   align-items: center;
@@ -8296,6 +8311,15 @@ body.cinematic-intro-active {
 .intro-entry button span {
   color: #e0ad54;
   font-size: 1.3rem;
+}
+
+.intro-entry button.intro-skip {
+  min-height: 42px;
+  padding: 9px 16px;
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(7, 10, 8, 0.56);
+  color: rgba(255, 250, 240, 0.86);
+  font-size: 0.7rem;
 }
 
 @keyframes intro-stars {

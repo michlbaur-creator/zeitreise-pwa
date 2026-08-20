@@ -70,7 +70,7 @@ type SceneVisualProps = {
   onDiscover: (index: number) => void;
 };
 
-const positions = [
+const discoveryPositions = [
   { left: "18%", top: "34%" },
   { left: "72%", top: "46%" },
   { left: "44%", top: "24%" },
@@ -78,29 +78,31 @@ const positions = [
   { left: "34%", top: "57%" },
 ];
 
-const mediaStates: Partial<Record<number, string>> = {
-  1: "Sternsystem → Feuerplanet → Vulkanküste",
-  2: "Altbestand · Teilbestand",
-  3: "Urmeerbild · Vorschau",
-  4: "Lagunenbild · Vorschau",
-  5: "Mikrowelt · Vorschau",
-  6: "Zellwelt · Vorschau",
-  7: "Stromatolithen · Vorschau",
-  8: "Atmosphäre · Vorschau",
-  9: "Endosymbiose · Vorschau",
-  10: "Zellvielfalt · Vorschau",
-  11: "Vielzeller · Vorschau",
-  12: "Ediacara · Vorschau",
-  13: "Kambrium · Vorschau",
-  14: "Landpflanzen · Vorschau",
-  15: "Landtiere · Vorschau",
-  16: "Tiktaalik · Vorschau",
-  17: "Amniotenei · Vorschau",
-  18: "Dinosaurier · Vorschau",
-  19: "Asteroid · Vorschau",
-  20: "Neuanfang · Vorschau",
-  21: "Säugetiere · Vorschau",
-  22: "Zeitfelsen · Finale",
+const hotspotPositions: Partial<Record<number, CSSProperties[]>> = {
+  1: [{ left: "55%", top: "36%" }, { left: "52%", top: "73%" }],
+  2: [{ left: "72%", top: "18%" }, { left: "44%", top: "45%" }],
+  3: [{ left: "61%", top: "69%" }, { left: "83%", top: "28%" }],
+  4: [{ left: "60%", top: "74%" }, { left: "82%", top: "38%" }],
+  5: [{ left: "42%", top: "57%" }, { left: "78%", top: "29%" }],
+  6: [{ left: "76%", top: "34%" }, { left: "26%", top: "68%" }],
+  7: [{ left: "67%", top: "72%" }, { left: "22%", top: "56%" }],
+  8: [{ left: "72%", top: "29%" }, { left: "58%", top: "15%" }],
+  9: [{ left: "54%", top: "54%" }, { left: "61%", top: "59%" }],
+  10: [{ left: "29%", top: "57%" }, { left: "76%", top: "59%" }],
+  11: [{ left: "42%", top: "58%" }],
+  12: [{ left: "40%", top: "68%" }],
+  13: [{ left: "42%", top: "72%" }],
+  14: [{ left: "35%", top: "69%" }, { left: "68%", top: "68%" }],
+  15: [{ left: "57%", top: "64%" }, { left: "76%", top: "72%" }],
+  16: [{ left: "29%", top: "64%" }, { left: "62%", top: "47%" }],
+  17: [{ left: "48%", top: "74%" }, { left: "80%", top: "25%" }],
+  18: [
+    { left: "28%", top: "58%" },
+    { left: "79%", top: "22%" },
+    { left: "66%", top: "68%" },
+  ],
+  19: [{ left: "80%", top: "28%" }, { left: "28%", top: "59%" }],
+  21: [{ left: "35%", top: "69%" }],
 };
 
 const generatedBackgrounds: Partial<Record<number, string>> = {
@@ -1562,8 +1564,7 @@ export function SceneVisual({
   const generatedBackground = generatedBackgrounds[scene.id];
   const sceneCollectionOverlays = collectionOverlays[scene.id] ?? [];
   const atmosphereProfile = atmosphereProfiles[scene.id];
-  const recoveredMediaState = mediaStates[scene.id];
-  const hasRecoveredMedia = Boolean(recoveredMediaState);
+  const sceneHotspotPositions = hotspotPositions[scene.id] ?? discoveryPositions;
   const impactFlashOpacity =
     scene.id === 19
       ? phaseProgress(
@@ -1675,16 +1676,12 @@ export function SceneVisual({
                       } as CSSProperties)
                     : undefined
       }
-      aria-label={`Technische Bildvorschau für Szene ${scene.id}: ${scene.title}`}
+      aria-label={`Szene ${scene.id}: ${scene.title}. ${scene.timeLabel ?? ""}`}
     >
       <div className="stage-topline">
         {scene.timeLabel ? (
           <span className="time-card">{scene.timeLabel}</span>
         ) : <span aria-hidden="true" />}
-        <span className={`media-state ${hasRecoveredMedia ? "is-ready" : ""}`}>
-          <span className="state-dot" aria-hidden="true" />
-          {hasRecoveredMedia ? recoveredMediaState : "Medienplatzhalter"}
-        </span>
       </div>
 
       <div className={`world-camera ${cameraClasses(scene.motions)}`}>
@@ -2056,7 +2053,7 @@ export function SceneVisual({
           <button
             type="button"
             className={`hotspot-marker ${activeHotspot === index ? "is-active" : ""}`}
-            style={positions[index]}
+            style={sceneHotspotPositions[index] ?? discoveryPositions[index]}
             onClick={() => onHotspot(index)}
             aria-label={`Hotspot ${index + 1}: ${hotspot.label}`}
             aria-pressed={activeHotspot === index}
@@ -2076,7 +2073,9 @@ export function SceneVisual({
               <button
                 type="button"
                 className={`discovery-marker ${isFound ? "is-found" : ""}`}
-                style={positions[(index + 2) % positions.length]}
+                style={
+                  discoveryPositions[(index + 2) % discoveryPositions.length]
+                }
                 onClick={() => onDiscover(index)}
                 aria-label={
                   isFound ? `${item} – entdeckt` : `Unbekannten Fund markieren`

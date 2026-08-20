@@ -177,28 +177,11 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
     new URL("../app/components/SceneVisual.tsx", import.meta.url),
     "utf8",
   );
-  assert.match(visual, /Sternsystem → Feuerplanet → Vulkanküste/);
-  assert.match(visual, /Altbestand · Teilbestand/);
-  assert.match(visual, /Urmeerbild · Vorschau/);
-  assert.match(visual, /Lagunenbild · Vorschau/);
-  assert.match(visual, /Mikrowelt · Vorschau/);
-  assert.match(visual, /Zellwelt · Vorschau/);
-  assert.match(visual, /Stromatolithen · Vorschau/);
-  assert.match(visual, /Atmosphäre · Vorschau/);
-  assert.match(visual, /Endosymbiose · Vorschau/);
-  assert.match(visual, /Zellvielfalt · Vorschau/);
-  assert.match(visual, /Vielzeller · Vorschau/);
-  assert.match(visual, /Ediacara · Vorschau/);
-  assert.match(visual, /Kambrium · Vorschau/);
-  assert.match(visual, /Landpflanzen · Vorschau/);
-  assert.match(visual, /Landtiere · Vorschau/);
-  assert.match(visual, /Tiktaalik · Vorschau/);
-  assert.match(visual, /Amniotenei · Vorschau/);
-  assert.match(visual, /Dinosaurier · Vorschau/);
-  assert.match(visual, /Asteroid · Vorschau/);
-  assert.match(visual, /Neuanfang · Vorschau/);
-  assert.match(visual, /Säugetiere · Vorschau/);
-  assert.match(visual, /Zeitfelsen · Finale/);
+  assert.match(visual, /const hotspotPositions/);
+  assert.match(visual, /sceneHotspotPositions/);
+  assert.doesNotMatch(visual, /Technische Bildvorschau/);
+  assert.doesNotMatch(visual, /Medienplatzhalter/);
+  assert.doesNotMatch(visual, /· Vorschau/);
   assert.doesNotMatch(visual, /Zeitfelsen und Kinderhand fehlen/);
   assert.match(visual, /hintergrund-feuerplanet-v1\.png/);
 });
@@ -206,6 +189,10 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
 test("verknüpft Michas Aufnahmen für alle 22 Szenen", async () => {
   const narration = await readFile(
     new URL("../app/data/narration.ts", import.meta.url),
+    "utf8",
+  );
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
     "utf8",
   );
   assert.match(narration, /model: "gpt-4o-mini-tts"/);
@@ -217,6 +204,7 @@ test("verknüpft Michas Aufnahmen für alle 22 Szenen", async () => {
   assert.match(narration, /displayName: "Micha"/);
   assert.match(narration, /narrationVoiceForScene/);
   assert.match(narration, /return michaNarrationVoice;/);
+  assert.doesNotMatch(app, /`KI-Stimme/);
   assert.match(narration, /sprecher-micha-test-v1\.m4a/);
   assert.match(narration, /sprecher-rosi-test-v1\.m4a/);
   await access(
@@ -257,6 +245,8 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(styles, /animation: intro-stars 15\.5s ease-in-out both/);
   assert.match(styles, /transition: opacity 1500ms ease/);
   assert.match(app, /setIntroReady\(true\), 14800/);
+  assert.match(app, /zeitreise-intro-seen/);
+  assert.match(app, /Intro überspringen/);
   assert.match(app, /onClick=\{\(\) => answerQuiz\(index\)\}/);
   assert.doesNotMatch(app, /Antwort prüfen/);
 });
@@ -353,7 +343,10 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v55/);
+  assert.match(worker, /zeitreise-v56/);
+  assert.match(worker, /CACHE_SCENES/);
+  assert.match(worker, /SCENE_ASSETS/);
+  assert.match(app, /registration\.active\?\.postMessage/);
   assert.match(app, /process\.env\.NODE_ENV === "development"/);
   assert.match(app, /registration\.unregister\(\)/);
   assert.match(app, /name\.startsWith\("zeitreise-"\)/);
