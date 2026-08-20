@@ -755,6 +755,1268 @@ button:disabled {
   pointer-events: none;
 }
 
+.first-cell-formation {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.first-cell-formation::before {
+  position: absolute;
+  inset: 8% 12%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(139, 184, 142, 0.2),
+    rgba(34, 79, 70, 0.07) 54%,
+    transparent 76%
+  );
+  filter: blur(15px);
+  content: "";
+}
+
+.first-cell-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  filter: drop-shadow(0 15px 27px rgba(2, 16, 13, 0.38));
+}
+
+.first-cell-parent,
+.first-cell-daughter,
+.first-cell-molecules circle {
+  transition:
+    opacity 150ms linear,
+    transform 150ms linear;
+}
+
+.first-cell-molecules circle {
+  animation: first-cell-particle-drift 3.4s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.first-cell-closed-membrane,
+.first-cell-daughter {
+  animation: first-cell-breathe 4.6s ease-in-out infinite;
+  animation-play-state: paused;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scene-visual.is-playing .first-cell-molecules circle,
+.scene-visual.is-playing .first-cell-closed-membrane,
+.scene-visual.is-playing .first-cell-daughter {
+  animation-play-state: running;
+}
+
+@keyframes first-cell-particle-drift {
+  from {
+    transform: translate(-3px, 2px) scale(0.88);
+  }
+  to {
+    transform: translate(4px, -3px) scale(1.12);
+  }
+}
+
+@keyframes first-cell-breathe {
+  0%,
+  100% {
+    filter: brightness(0.94);
+  }
+  50% {
+    filter: brightness(1.12);
+  }
+}
+
+@media (max-width: 620px) {
+  .first-cell-svg {
+    transform: scale(1.1);
+  }
+}
+
+.ediacara-life-animation {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ediacara-organism {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/episode1/scene12/hintergrund-ediacara-v1.png") center / cover no-repeat;
+  filter: saturate(0.78) contrast(1.04) brightness(0.74);
+  animation-duration: 7.8s;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  animation-timing-function: ease-in-out;
+  will-change: transform;
+}
+
+.ediacara-organism-foreground {
+  clip-path: polygon(11% 60%, 15% 55%, 27% 52%, 43% 53%, 54% 59%, 57% 67%, 53% 75%, 39% 79%, 23% 78%, 13% 73%);
+  transform-origin: 34% 70%;
+  animation-name: ediacara-soft-pulse;
+}
+
+.ediacara-organism-left {
+  clip-path: ellipse(2.8% 16% at 27% 25%);
+  transform-origin: 27% 39%;
+  animation-name: ediacara-current-sway-left;
+  animation-duration: 9.6s;
+}
+
+.ediacara-organism-group {
+  clip-path: ellipse(4.6% 20% at 36% 21%);
+  transform-origin: 36% 40%;
+  animation-delay: -3.1s;
+  animation-name: ediacara-current-sway-right;
+  animation-duration: 8.7s;
+}
+
+.ediacara-organism-middle {
+  clip-path: ellipse(2.7% 15% at 49% 27%);
+  transform-origin: 49% 41%;
+  animation-delay: -5.2s;
+  animation-name: ediacara-current-sway-left;
+  animation-duration: 10.4s;
+}
+
+.ediacara-organism-right {
+  clip-path: ellipse(4.5% 23% at 60% 33%);
+  transform-origin: 60% 54%;
+  animation-delay: -2.4s;
+  animation-name: ediacara-current-sway-right;
+  animation-duration: 9.2s;
+}
+
+.scene-visual.is-playing .ediacara-organism {
+  animation-play-state: running;
+}
+
+@keyframes ediacara-current-sway-left {
+  0%,
+  100% {
+    transform: rotate(-0.28deg) translate3d(-0.5px, 0, 0) scaleY(0.998);
+  }
+  50% {
+    transform: rotate(0.42deg) translate3d(1px, -0.5px, 0) scaleY(1.006);
+  }
+}
+
+@keyframes ediacara-current-sway-right {
+  0%,
+  100% {
+    transform: rotate(0.3deg) translate3d(0.5px, 0, 0) scaleY(0.998);
+  }
+  50% {
+    transform: rotate(-0.4deg) translate3d(-1px, -0.5px, 0) scaleY(1.006);
+  }
+}
+
+@keyframes ediacara-soft-pulse {
+  0%,
+  100% {
+    transform: scale(0.999, 0.997);
+  }
+  50% {
+    transform: scale(1.003, 1.006);
+  }
+}
+
+.land-animal-animation {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.land-animal-cleanup,
+.land-animal-patch {
+  position: absolute;
+  inset: 0;
+}
+
+.land-animal-patch {
+  overflow: hidden;
+}
+
+.land-animal-patch::before {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/episode1/scene15/hintergrund-erste-landtiere-v1.png") center / cover no-repeat;
+  content: "";
+  filter: saturate(0.78) contrast(1.04) brightness(0.74);
+}
+
+.land-animal-patch-millipede {
+  clip-path: ellipse(10.5% 7.5% at 35.5% 69%);
+}
+
+.land-animal-patch-millipede::before {
+  transform: translate3d(14%, 0, 0) scale(1.01);
+}
+
+.land-animal-patch-spider {
+  clip-path: ellipse(4.7% 6.5% at 52.5% 64.5%);
+}
+
+.land-animal-patch-spider::before {
+  transform: translate3d(-11%, 0, 0) scale(1.01);
+}
+
+.land-millipede-track {
+  position: absolute;
+  inset: 0;
+  transition: transform 120ms linear;
+  will-change: transform;
+}
+
+.land-millipede-image,
+.land-spider-image {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/episode1/scene15/hintergrund-erste-landtiere-v1.png") center / cover no-repeat;
+  filter: saturate(0.78) contrast(1.04) brightness(0.74);
+}
+
+.land-millipede-image {
+  clip-path: ellipse(10.5% 7.5% at 35.5% 69%);
+}
+
+.land-millipede-live-details {
+  position: absolute;
+  left: 28.3%;
+  top: 65.5%;
+  width: 150px;
+  height: 42px;
+  filter: drop-shadow(0 2px 2px rgba(5, 6, 4, 0.62));
+  transform: rotate(7deg);
+}
+
+.land-millipede-live-leg {
+  --land-leg: 0;
+  position: absolute;
+  left: calc(10px + var(--land-leg) * 11.2px);
+  top: 25px;
+  width: 14px;
+  height: 9px;
+  border-bottom: 2px solid rgba(33, 29, 19, 0.95);
+  transform-origin: 0 50%;
+  animation: land-millipede-step 360ms ease-in-out infinite alternate;
+  animation-delay: var(--land-leg-delay);
+  animation-play-state: paused;
+}
+
+.land-millipede-antenna {
+  position: absolute;
+  z-index: 3;
+  right: -1px;
+  width: 25px;
+  height: 15px;
+  border-top: 2px solid rgba(49, 43, 27, 0.96);
+  border-radius: 50%;
+  transform-origin: 0 50%;
+  animation: land-millipede-feel 1.15s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.land-millipede-antenna-upper {
+  top: 11px;
+  transform: rotate(-22deg);
+}
+
+.land-millipede-antenna-lower {
+  top: 19px;
+  transform: rotate(17deg) scaleY(-1);
+  animation-delay: -0.58s;
+}
+
+.land-spider-track {
+  position: absolute;
+  inset: 0;
+  transition:
+    opacity 100ms linear,
+    transform 100ms linear;
+  will-change: opacity, transform;
+}
+
+.land-spider-image {
+  clip-path: ellipse(4.7% 6.5% at 52.5% 64.5%);
+}
+
+.scene-visual.is-playing .land-millipede-live-leg,
+.scene-visual.is-playing .land-millipede-antenna {
+  animation-play-state: running;
+}
+
+@keyframes land-millipede-step {
+  from { margin-left: -2px; width: 11px; }
+  to { margin-left: 3px; width: 16px; }
+}
+
+@keyframes land-millipede-feel {
+  from { margin-right: 0; rotate: -7deg; }
+  to { margin-right: -4px; rotate: 9deg; }
+}
+
+.amniote-egg-story {
+  --amniote-dig: 0;
+  --amniote-lay: 0;
+  --amniote-cover: 0;
+  --amniote-embryo: 0;
+  --amniote-crack: 0;
+  --amniote-hatch: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  animation: recovered-image-breathe 14s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .amniote-egg-story {
+  animation-play-state: running;
+}
+
+.amniote-original-eggs-cover {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: ellipse(13% 11% at 46% 79%);
+}
+
+.amniote-original-eggs-cover::before {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/episode1/scene17/hintergrund-amniotenei-v1.png") center / cover no-repeat;
+  content: "";
+  filter: saturate(0.78) contrast(1.04) brightness(0.74);
+  transform: translate3d(-20%, 0, 0) scale(1.02);
+}
+
+.amniote-nest-ground {
+  position: absolute;
+  left: 39%;
+  top: 71%;
+  width: 21%;
+  height: 17%;
+  border-radius: 48% 52% 56% 44%;
+  background:
+    radial-gradient(ellipse at 50% 52%, rgba(21, 23, 14, 0.97) 0 41%, rgba(39, 38, 23, 0.94) 54%, transparent 72%),
+    repeating-radial-gradient(circle at 44% 54%, rgba(96, 81, 48, 0.3) 0 2px, transparent 3px 9px);
+  box-shadow: inset 0 7px 13px rgba(7, 9, 6, 0.58);
+  opacity: calc(0.08 + var(--amniote-dig) * 0.92);
+  transform: scale(calc(0.48 + var(--amniote-dig) * 0.52), calc(0.32 + var(--amniote-dig) * 0.68));
+  transform-origin: 48% 57%;
+  transition:
+    opacity 120ms linear,
+    transform 120ms linear;
+}
+
+.amniote-nest-shadow {
+  position: absolute;
+  inset: 23% 12% 12%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(5, 7, 4, 0.72), rgba(18, 20, 12, 0.34) 57%, transparent 75%);
+  box-shadow: inset 0 8px 14px rgba(3, 5, 3, 0.5);
+}
+
+.amniote-digging-leg {
+  position: absolute;
+  z-index: 5;
+  left: -9%;
+  top: -6%;
+  width: 33%;
+  height: 34%;
+  border-right: 10px solid rgba(50, 46, 32, 0.96);
+  border-bottom: 8px solid rgba(43, 39, 27, 0.96);
+  border-radius: 12% 18% 64% 32%;
+  filter: drop-shadow(0 4px 3px rgba(5, 7, 4, 0.52));
+  opacity: calc(var(--amniote-dig) * (1 - var(--amniote-lay)));
+  transform-origin: 18% 12%;
+  animation: amniote-leg-dig 760ms ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.amniote-dirt-particle {
+  --dirt-index: 0;
+  position: absolute;
+  z-index: 7;
+  left: var(--dirt-x);
+  top: 43%;
+  width: calc(4px + var(--dirt-index) * 0.55px);
+  height: calc(3px + var(--dirt-index) * 0.42px);
+  border-radius: 50%;
+  background: #574d30;
+  box-shadow: 0 2px 2px rgba(6, 7, 4, 0.44);
+  opacity: calc(var(--amniote-dig) * (1 - var(--amniote-lay)));
+  animation: amniote-dirt-fly 1.05s ease-out infinite;
+  animation-delay: var(--dirt-delay);
+  animation-play-state: paused;
+}
+
+.amniote-clutch {
+  position: absolute;
+  z-index: 4;
+  inset: 12% 12% 8%;
+}
+
+.amniote-clutch::after {
+  position: absolute;
+  z-index: 7;
+  right: 4%;
+  bottom: 0;
+  left: 7%;
+  height: 46%;
+  border-radius: 48% 52% 42% 58%;
+  background:
+    repeating-linear-gradient(18deg, transparent 0 11px, rgba(103, 87, 53, 0.62) 12px 15px, transparent 16px 25px),
+    radial-gradient(ellipse, rgba(55, 49, 29, 0.92), rgba(29, 30, 18, 0.78) 68%, transparent 73%);
+  content: "";
+  opacity: calc(var(--amniote-cover) * (1 - var(--amniote-hatch)) * 0.74);
+  transform: translateY(calc((1 - var(--amniote-cover)) * -28px));
+  transition:
+    opacity 100ms linear,
+    transform 100ms linear;
+}
+
+.amniote-egg {
+  position: absolute;
+  z-index: 4;
+  width: 27px;
+  height: 36px;
+  border: 1px solid rgba(77, 67, 41, 0.72);
+  border-radius: 52% 48% 48% 52%;
+  background:
+    radial-gradient(circle at 34% 27%, rgba(238, 224, 174, 0.72) 0 8%, transparent 18%),
+    radial-gradient(circle at 68% 63%, rgba(99, 88, 54, 0.2) 0 2px, transparent 3px),
+    linear-gradient(135deg, #c6b785, #8f8055 68%, #655b3c);
+  box-shadow:
+    inset -4px -5px 7px rgba(47, 40, 24, 0.32),
+    0 6px 7px rgba(4, 6, 3, 0.46);
+  transition:
+    opacity 120ms linear,
+    transform 120ms linear;
+}
+
+.amniote-hatching-egg {
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.amniote-whole-shell {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  border: 1px solid rgba(77, 67, 41, 0.72);
+  border-radius: 52% 48% 48% 52%;
+  background:
+    radial-gradient(circle at 34% 27%, rgba(238, 224, 174, 0.72) 0 8%, transparent 18%),
+    radial-gradient(circle at 68% 63%, rgba(99, 88, 54, 0.2) 0 2px, transparent 3px),
+    linear-gradient(135deg, #c6b785, #8f8055 68%, #655b3c);
+  box-shadow:
+    inset -4px -5px 7px rgba(47, 40, 24, 0.32),
+    0 6px 7px rgba(4, 6, 3, 0.46);
+  opacity: calc(1 - var(--amniote-crack) - var(--amniote-embryo) * 0.24);
+}
+
+.amniote-shell-top,
+.amniote-shell-bottom {
+  position: absolute;
+  left: 0;
+  width: 27px;
+  border: 1px solid rgba(77, 67, 41, 0.72);
+  background:
+    radial-gradient(circle at 34% 27%, rgba(238, 224, 174, 0.72) 0 8%, transparent 18%),
+    linear-gradient(135deg, #c6b785, #8f8055 68%, #655b3c);
+  box-shadow: inset -4px -4px 7px rgba(47, 40, 24, 0.3);
+  opacity: var(--amniote-crack);
+  transition: transform 120ms linear;
+}
+
+.amniote-shell-top {
+  top: 0;
+  height: 20px;
+  border-radius: 54% 48% 18% 22%;
+  clip-path: polygon(0 0, 100% 0, 100% 78%, 82% 66%, 68% 88%, 48% 64%, 31% 86%, 13% 68%, 0 82%);
+  transform: translate3d(calc(var(--amniote-hatch) * 18px), calc(var(--amniote-hatch) * -19px), 0)
+    rotate(calc(var(--amniote-hatch) * 48deg));
+  transform-origin: 90% 82%;
+}
+
+.amniote-shell-bottom {
+  bottom: 0;
+  height: 23px;
+  border-radius: 20% 22% 52% 48%;
+  clip-path: polygon(0 16%, 15% 26%, 33% 7%, 49% 29%, 67% 8%, 84% 27%, 100% 13%, 100% 100%, 0 100%);
+}
+
+.amniote-egg-crack {
+  position: absolute;
+  z-index: 7;
+  left: 11px;
+  top: 8px;
+  width: 12px;
+  height: 19px;
+  border-left: 2px solid rgba(60, 48, 28, 0.9);
+  clip-path: polygon(0 0, 100% 18%, 16% 42%, 100% 60%, 18% 100%, 0 100%);
+  opacity: var(--amniote-crack);
+  transform: scaleY(var(--amniote-crack));
+  transform-origin: 50% 0;
+}
+
+.amniote-embryo {
+  position: absolute;
+  z-index: 6;
+  left: 5px;
+  top: 9px;
+  width: 17px;
+  height: 15px;
+  border: 3px solid rgba(53, 50, 34, 0.74);
+  border-left-color: transparent;
+  border-radius: 50%;
+  opacity: var(--amniote-embryo);
+  transform: rotate(calc(-18deg + var(--amniote-embryo) * 24deg)) scale(calc(0.82 + var(--amniote-embryo) * 0.18));
+  transition:
+    opacity 100ms linear,
+    transform 100ms linear;
+}
+
+.amniote-cover-piece {
+  --cover-index: 0;
+  position: absolute;
+  z-index: 8;
+  left: var(--cover-left);
+  bottom: var(--cover-bottom);
+  width: calc(13px + var(--cover-index) * 1.25px);
+  height: 3px;
+  border-radius: 70% 20% 70% 20%;
+  background: linear-gradient(90deg, #342f1e, #716444 54%, #292a1c);
+  box-shadow: 0 2px 3px rgba(5, 7, 4, 0.42);
+  opacity: calc(var(--amniote-cover) * (1 - var(--amniote-hatch) * 0.82) * 0.58);
+  transform: translateY(calc((1 - var(--amniote-cover)) * -32px)) rotate(var(--cover-rotate));
+  transition:
+    opacity 100ms linear,
+    transform 100ms linear;
+}
+
+.amniote-hatchling {
+  position: absolute;
+  z-index: 10;
+  left: 47%;
+  bottom: 23%;
+  width: 39px;
+  height: 16px;
+  border-radius: 62% 42% 45% 56%;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(157, 142, 94, 0.34) 0 2px, transparent 3px),
+    radial-gradient(circle at 67% 57%, rgba(21, 24, 18, 0.38) 0 2px, transparent 3px),
+    linear-gradient(180deg, #5a5640, #35362a 68%, #25271f);
+  box-shadow: 0 5px 7px rgba(4, 6, 3, 0.52);
+  opacity: var(--amniote-hatch);
+  transform: translate3d(calc(var(--amniote-hatch) * 9px), calc((1 - var(--amniote-hatch)) * 17px), 0)
+    rotate(calc(-10deg + var(--amniote-hatch) * 8deg))
+    scale(calc(0.62 + var(--amniote-hatch) * 0.3));
+  transform-origin: 20% 70%;
+  transition:
+    opacity 100ms linear,
+    transform 100ms linear;
+}
+
+.amniote-hatchling::after {
+  position: absolute;
+  right: -25px;
+  top: 6px;
+  width: 29px;
+  height: 7px;
+  border-top: 4px solid #343529;
+  border-radius: 50%;
+  content: "";
+  transform: rotate(9deg);
+}
+
+.amniote-hatchling-head {
+  position: absolute;
+  left: -10px;
+  top: -2px;
+  width: 15px;
+  height: 12px;
+  border-radius: 62% 38% 48% 52%;
+  background: linear-gradient(160deg, #5d5942, #34372a);
+}
+
+.amniote-hatchling-eye {
+  position: absolute;
+  z-index: 2;
+  left: -5px;
+  top: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #d9c878;
+  box-shadow: 0 0 3px rgba(227, 207, 118, 0.48);
+}
+
+.amniote-hatchling-leg {
+  position: absolute;
+  bottom: -6px;
+  width: 13px;
+  height: 8px;
+  border-left: 3px solid #303229;
+  border-bottom: 3px solid #303229;
+  border-radius: 0 0 0 70%;
+}
+
+.amniote-hatchling-leg-front { left: 6px; }
+.amniote-hatchling-leg-back { right: 5px; transform: scaleX(-1); }
+
+.scene-visual.is-playing .amniote-digging-leg,
+.scene-visual.is-playing .amniote-dirt-particle {
+  animation-play-state: running;
+}
+
+@keyframes amniote-leg-dig {
+  from { transform: rotate(-16deg) translate3d(-2px, -1px, 0); }
+  to { transform: rotate(18deg) translate3d(7px, 5px, 0); }
+}
+
+@keyframes amniote-dirt-fly {
+  0% { transform: translate3d(0, 0, 0) scale(0.6); }
+  54% { opacity: 0.9; }
+  100% { transform: translate3d(calc((var(--dirt-index) - 4) * 5px), -42px, 0) scale(1.08); opacity: 0; }
+}
+
+.dinosaur-life-animation {
+  --dino-herd: 0;
+  --dino-feed: 0;
+  --dino-foot: 0;
+  --dino-dust: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dinosaur-herd-moving,
+.dinosaur-mother-head,
+.dinosaur-mother-leg,
+.dinosaur-juvenile-body,
+.dinosaur-juvenile-leg {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/episode1/scene18/hintergrund-dinosaurier-v1.png") center / cover no-repeat;
+  filter: saturate(0.78) contrast(1.04) brightness(0.74);
+  will-change: transform;
+}
+
+.dinosaur-herd-moving {
+  -webkit-mask-image:
+    radial-gradient(ellipse 4% 13% at 44% 64%, #000 74%, transparent 100%),
+    radial-gradient(ellipse 4% 14% at 49% 64%, #000 74%, transparent 100%),
+    radial-gradient(ellipse 4.5% 12% at 55% 66%, #000 74%, transparent 100%),
+    radial-gradient(ellipse 4% 12% at 60% 66%, #000 74%, transparent 100%);
+  mask-image:
+    radial-gradient(ellipse 4% 13% at 44% 64%, #000 74%, transparent 100%),
+    radial-gradient(ellipse 4% 14% at 49% 64%, #000 74%, transparent 100%),
+    radial-gradient(ellipse 4.5% 12% at 55% 66%, #000 74%, transparent 100%),
+    radial-gradient(ellipse 4% 12% at 60% 66%, #000 74%, transparent 100%);
+  transition: transform 120ms linear;
+}
+
+.dinosaur-herd-moving::after {
+  position: absolute;
+  left: 43%;
+  top: 69%;
+  width: 19%;
+  height: 4%;
+  background: repeating-linear-gradient(90deg, transparent 0 17px, rgba(35, 31, 20, 0.72) 18px 21px, transparent 22px 31px);
+  content: "";
+  opacity: 0.62;
+  animation: dinosaur-herd-legs 1.35s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.dinosaur-mother-head {
+  clip-path: polygon(32% 24%, 47% 25%, 48% 43%, 43% 47%, 39% 58%, 33% 58%, 36% 43%);
+  transform-origin: 35% 55%;
+  transform: rotate(calc(var(--dino-feed) * 4.8deg)) translate3d(calc(var(--dino-feed) * 2px), calc(var(--dino-feed) * 9px), 0);
+  transition: transform 120ms linear;
+}
+
+.dinosaur-mother-leg-front {
+  clip-path: polygon(27% 62%, 33% 62%, 31% 84%, 26% 84%);
+  transform-origin: 29% 63%;
+  animation: dinosaur-foreleg-step 3.8s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.dinosaur-mother-leg-back {
+  clip-path: polygon(20% 62%, 27% 62%, 27% 84%, 21% 84%);
+  transform-origin: 24% 63%;
+  animation: dinosaur-hindleg-step 3.8s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.dinosaur-juvenile-body {
+  clip-path: ellipse(8% 15% at 42% 72%);
+  transform-origin: 42% 80%;
+  animation: dinosaur-juvenile-follow 2.9s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.dinosaur-juvenile-leg-front,
+.dinosaur-juvenile-leg-back {
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  animation-timing-function: ease-in-out;
+}
+
+.dinosaur-juvenile-leg-front {
+  clip-path: polygon(42% 70%, 46% 71%, 45% 84%, 42% 84%);
+  transform-origin: 44% 71%;
+  animation-name: dinosaur-foreleg-step;
+}
+
+.dinosaur-juvenile-leg-back {
+  clip-path: polygon(38% 70%, 42% 70%, 41% 84%, 38% 84%);
+  transform-origin: 40% 71%;
+  animation-direction: alternate-reverse;
+  animation-name: dinosaur-hindleg-step;
+}
+
+.dinosaur-feeding-branch {
+  position: absolute;
+  z-index: 9;
+  left: 29%;
+  top: 35%;
+  width: 15%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(50, 39, 24, 0.2), #57432a 44%, #3a3222);
+  opacity: calc(0.3 + var(--dino-feed) * 0.7);
+  transform: rotate(calc(-5deg + var(--dino-feed) * 3deg));
+  transform-origin: 0 50%;
+}
+
+.dinosaur-feeding-leaf {
+  --dino-leaf: 0;
+  position: absolute;
+  left: calc(8% + var(--dino-leaf) * 13%);
+  top: var(--dino-leaf-top);
+  width: 13px;
+  height: 6px;
+  border-radius: 75% 20% 70% 22%;
+  background: linear-gradient(90deg, #1f3023, #465d3a);
+  filter: drop-shadow(0 1px 1px rgba(5, 8, 5, 0.42));
+  opacity: calc(0.9 - var(--dino-feed) * var(--dino-leaf) * 0.08);
+  transform: rotate(calc(-38deg + var(--dino-leaf) * 11deg));
+  transform-origin: 0 50%;
+  animation: dinosaur-leaf-nibble 1.2s ease-in-out infinite alternate;
+  animation-delay: var(--dino-leaf-delay);
+  animation-play-state: paused;
+}
+
+.dinosaur-near-leg {
+  position: absolute;
+  z-index: 12;
+  right: 3%;
+  bottom: 2%;
+  width: 96px;
+  height: 132px;
+  border: 2px solid rgba(48, 43, 31, 0.72);
+  border-radius: 48% 42% 30% 34%;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(145, 126, 80, 0.16) 0 3px, transparent 4px),
+    repeating-linear-gradient(105deg, rgba(50, 48, 34, 0.9) 0 13px, rgba(65, 59, 39, 0.92) 14px 22px);
+  box-shadow:
+    inset 12px 0 18px rgba(130, 111, 70, 0.12),
+    0 16px 25px rgba(7, 8, 5, 0.48);
+  filter: blur(0.25px) saturate(0.72);
+  opacity: var(--dino-foot);
+  transform: translate3d(0, calc((1 - var(--dino-foot)) * -128px), 0) rotate(-4deg);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 100ms linear,
+    transform 100ms linear;
+}
+
+.dinosaur-near-foot {
+  position: absolute;
+  right: -42px;
+  bottom: 0;
+  width: 176px;
+  height: 54px;
+  border-radius: 58% 45% 25% 32%;
+  background: linear-gradient(180deg, #514a32, #2a2b20 72%, #1b1d18);
+  box-shadow: 0 13px 14px rgba(5, 6, 4, 0.56);
+}
+
+.dinosaur-near-toe {
+  position: absolute;
+  bottom: -4px;
+  width: 66px;
+  height: 24px;
+  border-radius: 80% 25% 48% 45%;
+  background: linear-gradient(180deg, #403c2c, #22251d);
+  box-shadow: 0 6px 7px rgba(5, 6, 4, 0.48);
+  transform-origin: 0 50%;
+}
+
+.dinosaur-near-toe::after {
+  position: absolute;
+  right: -2px;
+  top: 7px;
+  width: 17px;
+  height: 9px;
+  border-radius: 70% 28% 62% 34%;
+  background: linear-gradient(160deg, rgba(147, 137, 100, 0.72), rgba(70, 67, 50, 0.82));
+  content: "";
+}
+
+.dinosaur-near-toe-one { left: -44px; transform: rotate(13deg); }
+.dinosaur-near-toe-two { left: 6px; bottom: -8px; transform: rotate(3deg); }
+.dinosaur-near-toe-three { right: -48px; transform: rotate(-12deg); }
+
+.dinosaur-step-dust {
+  position: absolute;
+  z-index: 11;
+  right: -2%;
+  bottom: -2%;
+  width: 34%;
+  height: 22%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(184, 158, 105, 0.42), rgba(91, 81, 55, 0.22) 44%, transparent 72%);
+  filter: blur(8px);
+  opacity: var(--dino-dust);
+  transform: scale(calc(0.55 + var(--dino-dust) * 0.75));
+  transform-origin: 66% 80%;
+}
+
+.scene-visual.is-playing .dinosaur-herd-moving::after,
+.scene-visual.is-playing .dinosaur-mother-leg,
+.scene-visual.is-playing .dinosaur-juvenile-body,
+.scene-visual.is-playing .dinosaur-juvenile-leg,
+.scene-visual.is-playing .dinosaur-feeding-leaf {
+  animation-play-state: running;
+}
+
+.scene-visual.is-dinosaur-footstep .scene-generated-18,
+.scene-visual.is-dinosaur-footstep .dinosaur-life-animation {
+  animation: dinosaur-camera-shudder 540ms ease-out 1;
+}
+
+@keyframes dinosaur-herd-legs {
+  from { transform: translateX(-3px) skewX(-10deg); }
+  to { transform: translateX(4px) skewX(10deg); }
+}
+
+@keyframes dinosaur-foreleg-step {
+  from { transform: rotate(-2.8deg) translate3d(-1px, 1px, 0); }
+  to { transform: rotate(3.4deg) translate3d(3px, -4px, 0); }
+}
+
+@keyframes dinosaur-hindleg-step {
+  from { transform: rotate(3deg) translate3d(2px, -3px, 0); }
+  to { transform: rotate(-2.6deg) translate3d(-2px, 2px, 0); }
+}
+
+@keyframes dinosaur-juvenile-follow {
+  from { transform: translate3d(-2px, 2px, 0) rotate(-0.8deg); }
+  to { transform: translate3d(8px, -4px, 0) rotate(0.9deg); }
+}
+
+.mammal-future-animation {
+  --mammal-rise: 0;
+  --mammal-sniff: 0;
+  --mammal-sniff-strength: 0;
+  --mammal-youngster: 0;
+  --mammal-time-lapse: 0;
+  --mammal-season-wave: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mammal-adult-body,
+.mammal-adult-head,
+.mammal-youngster,
+.mammal-landscape-shift {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/episode1/scene21/hintergrund-saeugetiere-v1.png") center / cover no-repeat;
+  filter: saturate(0.82) contrast(1.03) brightness(0.78);
+  will-change: transform, filter, opacity;
+}
+
+.mammal-adult-body {
+  z-index: 4;
+  clip-path: polygon(26% 59%, 36% 57%, 44% 62%, 43% 78%, 38% 84%, 28% 81%, 25% 72%);
+  transform: translate3d(calc(var(--mammal-rise) * 6px), calc(var(--mammal-rise) * -11px), 0)
+    rotate(calc(var(--mammal-rise) * -2.4deg));
+  transform-origin: 36% 82%;
+  transition: transform 110ms linear;
+}
+
+.mammal-adult-head {
+  z-index: 5;
+  clip-path: ellipse(7% 9% at 39% 63%);
+  transform: translate3d(
+      calc(var(--mammal-rise) * 6px + var(--mammal-sniff) * 4px),
+      calc(var(--mammal-rise) * -11px + var(--mammal-sniff) * -2px),
+      0
+    )
+    rotate(calc(var(--mammal-rise) * -2.4deg + var(--mammal-sniff) * 2deg));
+  transform-origin: 35% 69%;
+  transition: transform 90ms linear;
+}
+
+.mammal-youngster {
+  z-index: 4;
+  clip-path: ellipse(8% 11% at 20% 73%);
+  transform: translate3d(
+      calc(var(--mammal-youngster) * 17px),
+      calc(var(--mammal-youngster) * -5px),
+      0
+    )
+    rotate(calc(var(--mammal-youngster) * -1.8deg));
+  transform-origin: 21% 80%;
+  transition: transform 110ms linear;
+}
+
+.mammal-sniff-ripple {
+  position: absolute;
+  z-index: 6;
+  left: 42.5%;
+  top: 59.5%;
+  width: 22px;
+  height: 13px;
+  border: 1px solid rgba(234, 224, 188, 0.54);
+  border-left-color: transparent;
+  border-radius: 50%;
+  opacity: calc(var(--mammal-sniff-strength) * 0.68);
+  transform: translateX(calc(var(--mammal-sniff-strength) * 10px)) scale(calc(0.72 + var(--mammal-sniff-strength) * 0.5));
+  transition: opacity 90ms linear, transform 90ms linear;
+}
+
+.mammal-sniff-ripple-two {
+  width: 31px;
+  height: 18px;
+  opacity: calc(var(--mammal-sniff-strength) * 0.34);
+  transform: translateX(calc(var(--mammal-sniff-strength) * 17px)) scale(calc(0.68 + var(--mammal-sniff-strength) * 0.62));
+}
+
+.mammal-landscape-shift {
+  z-index: 1;
+  opacity: calc(var(--mammal-time-lapse) * 0.86);
+  filter:
+    saturate(calc(0.82 + var(--mammal-season-wave) * 0.12))
+    contrast(1.04)
+    brightness(calc(0.76 + var(--mammal-season-wave) * 0.08))
+    hue-rotate(calc(var(--mammal-season-wave) * 8deg));
+  transform: translate3d(0, calc(var(--mammal-time-lapse) * -7px), 0)
+    scale(calc(1 + var(--mammal-time-lapse) * 0.025));
+  transform-origin: 58% 42%;
+  transition: opacity 150ms linear, transform 150ms linear, filter 150ms linear;
+}
+
+.mammal-time-clouds {
+  position: absolute;
+  z-index: 2;
+  left: -25%;
+  top: 2%;
+  width: 76%;
+  height: 34%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 30% 52%, rgba(245, 245, 232, 0.25), transparent 45%),
+    radial-gradient(ellipse at 70% 44%, rgba(220, 227, 219, 0.2), transparent 42%);
+  filter: blur(12px);
+  opacity: calc(var(--mammal-time-lapse) * 0.74);
+  transform: translate3d(calc(var(--mammal-time-lapse) * 150%), 0, 0);
+  transition: opacity 130ms linear, transform 130ms linear;
+}
+
+.mammal-time-light {
+  position: absolute;
+  z-index: 3;
+  inset: -18%;
+  background:
+    linear-gradient(108deg, transparent 33%, rgba(255, 229, 166, 0.18) 48%, transparent 61%),
+    radial-gradient(circle at 78% 22%, rgba(255, 238, 190, 0.23), transparent 28%),
+    linear-gradient(180deg, rgba(117, 144, 157, 0.1), transparent 48%);
+  mix-blend-mode: screen;
+  opacity: calc(var(--mammal-time-lapse) * 0.78);
+  transform: translate3d(calc((var(--mammal-time-lapse) - 0.5) * 9%), 0, 0);
+  transition: opacity 140ms linear, transform 140ms linear;
+}
+
+.finale-animation {
+  --finale-hand: 0;
+  --finale-glow: 0;
+  --finale-retreat: 0;
+  --finale-butterflies: 0;
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.primordial-lagoon-animation,
+.landfall-animation {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.lagoon-organic-shimmer {
+  position: absolute;
+  left: 48%;
+  bottom: 8%;
+  width: 43%;
+  height: 34%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 48% 54%, rgba(151, 218, 176, 0.3), transparent 38%),
+    conic-gradient(from 118deg, rgba(112, 182, 202, 0.16), rgba(211, 176, 111, 0.2), rgba(163, 116, 181, 0.14), rgba(112, 182, 202, 0.16));
+  filter: blur(13px);
+  mix-blend-mode: screen;
+  opacity: calc(var(--lagoon-shimmer) * 0.58);
+  transform: translate3d(calc(var(--lagoon-shimmer) * 8px), calc(var(--lagoon-shimmer) * -3px), 0)
+    scale(calc(0.82 + var(--lagoon-shimmer) * 0.18));
+  transition: opacity 120ms linear, transform 120ms linear;
+}
+
+.lagoon-gas-bubble {
+  position: absolute;
+  left: var(--lagoon-bubble-left);
+  bottom: var(--lagoon-bubble-bottom);
+  width: var(--lagoon-bubble-size);
+  height: var(--lagoon-bubble-size);
+  border: 1px solid rgba(220, 236, 218, 0.58);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 245, 0.58) 0 14%, rgba(188, 219, 198, 0.12) 30%, transparent 66%);
+  box-shadow: inset -1px -1px 2px rgba(69, 107, 91, 0.28);
+  opacity: 0;
+  animation: lagoon-bubble-rise var(--lagoon-bubble-duration) ease-in infinite;
+  animation-delay: var(--lagoon-bubble-delay);
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .lagoon-gas-bubble {
+  animation-play-state: running;
+}
+
+.landfall-plant-mat {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: url("/assets/episode1/scene14/hintergrund-erste-landpflanzen-v1.png") center / cover no-repeat;
+  clip-path: polygon(0 53%, 18% 50%, 42% 58%, 63% 79%, 63% 100%, 0 100%);
+  filter: saturate(0.82) contrast(1.04) brightness(0.74);
+  opacity: var(--landfall-plants);
+  transform-origin: 34% 92%;
+  animation: landfall-plant-breathe 5.6s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.landfall-surf {
+  position: absolute;
+  z-index: 4;
+  right: -7%;
+  width: 58%;
+  height: 8%;
+  border-top: 2px solid rgba(227, 237, 231, 0.54);
+  border-radius: 50%;
+  filter: blur(0.45px);
+  opacity: calc(var(--landfall-surf) * 0.68);
+  animation: landfall-surf-wash 7.8s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.landfall-surf-one { top: 35%; animation-delay: -1.4s; }
+.landfall-surf-two { top: 40%; right: 2%; width: 48%; animation-delay: -4.8s; }
+.landfall-surf-three { top: 45%; right: 12%; width: 37%; animation-delay: -6.2s; }
+
+.landfall-drop {
+  position: absolute;
+  z-index: 5;
+  left: var(--landfall-drop-left);
+  top: var(--landfall-drop-top);
+  width: 4px;
+  height: 7px;
+  border-radius: 54% 54% 62% 62%;
+  background: linear-gradient(145deg, rgba(244, 250, 246, 0.78), rgba(117, 159, 163, 0.35));
+  box-shadow: 0 0 4px rgba(221, 239, 232, 0.3);
+  opacity: 0;
+  animation: landfall-drop-run var(--landfall-drop-duration) ease-in infinite;
+  animation-delay: var(--landfall-drop-delay);
+  animation-play-state: paused;
+}
+
+.scene-visual.is-playing .landfall-plant-mat,
+.scene-visual.is-playing .landfall-surf,
+.scene-visual.is-playing .landfall-drop {
+  animation-play-state: running;
+}
+
+@keyframes lagoon-bubble-rise {
+  0% { opacity: 0; transform: translate3d(0, 12px, 0) scale(0.68); }
+  18% { opacity: 0.7; }
+  76% { opacity: 0.54; }
+  100% { opacity: 0; transform: translate3d(10px, -150px, 0) scale(1.14); }
+}
+
+@keyframes landfall-plant-breathe {
+  from { transform: translate3d(-1px, 1px, 0) rotate(-0.28deg) scale(1.002); }
+  to { transform: translate3d(2px, -2px, 0) rotate(0.42deg) scale(1.006); }
+}
+
+@keyframes landfall-surf-wash {
+  0%, 100% { opacity: 0.08; transform: translate3d(24px, -5px, 0) scaleX(0.82); }
+  48% { opacity: 0.64; transform: translate3d(-22px, 7px, 0) scaleX(1.04); }
+  68% { opacity: 0.24; transform: translate3d(-32px, 10px, 0) scaleX(1.08); }
+}
+
+@keyframes landfall-drop-run {
+  0%, 12% { opacity: 0; transform: translate3d(0, -4px, 0) scale(0.62); }
+  24% { opacity: calc(var(--landfall-droplets) * 0.8); }
+  82% { opacity: calc(var(--landfall-droplets) * 0.58); }
+  100% { opacity: 0; transform: translate3d(7px, 54px, 0) scale(0.88); }
+}
+
+.finale-camera,
+.finale-hand {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/episode1/scene22/hintergrund-zeitfelsen-heute-v1.png") center / cover no-repeat;
+  filter: saturate(0.82) contrast(1.03) brightness(0.78);
+  will-change: transform;
+}
+
+.finale-camera {
+  z-index: 1;
+  transform: scale(calc(1.065 - var(--finale-retreat) * 0.065));
+  transform-origin: 48% 67%;
+  transition: transform 130ms linear;
+}
+
+.finale-hand {
+  z-index: 4;
+  clip-path: polygon(51% 62%, 62% 62%, 100% 76%, 100% 100%, 61% 91%, 52% 78%);
+  filter: saturate(0.88) contrast(1.03) brightness(0.82);
+  opacity: calc(var(--finale-hand) * 0.34);
+  transform: translate3d(
+      0,
+      calc((1 - var(--finale-hand)) * -3px),
+      0
+    )
+    scale(calc(1.065 - var(--finale-retreat) * 0.065));
+  transform-origin: 48% 67%;
+  transition: opacity 130ms linear, transform 130ms linear, filter 130ms linear;
+}
+
+.finale-rock-glow {
+  position: absolute;
+  z-index: 3;
+  left: 25%;
+  bottom: 4%;
+  width: 56%;
+  height: 52%;
+  border-radius: 52% 48% 43% 57%;
+  background:
+    radial-gradient(ellipse at 57% 52%, rgba(255, 220, 137, 0.42), rgba(224, 168, 76, 0.18) 38%, transparent 70%),
+    radial-gradient(ellipse at 42% 62%, rgba(255, 235, 181, 0.22), transparent 62%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  opacity: calc(var(--finale-glow) * 0.72);
+  transform: scale(calc(0.8 + var(--finale-glow) * 0.2));
+  transform-origin: 58% 58%;
+  transition: opacity 150ms linear, transform 150ms linear;
+  animation: finale-golden-breathe 5.8s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.finale-butterfly {
+  position: absolute;
+  z-index: 5;
+  width: 18px;
+  height: 12px;
+  transition: opacity 140ms linear, transform 140ms linear;
+  will-change: transform;
+}
+
+.finale-butterfly::before,
+.finale-butterfly::after {
+  position: absolute;
+  top: 2px;
+  width: 10px;
+  height: 8px;
+  border-radius: 80% 22% 72% 30%;
+  background: linear-gradient(145deg, #e1ad52, #6f3e20 72%);
+  box-shadow: 0 1px 3px rgba(8, 8, 5, 0.38);
+  content: "";
+  transform-origin: 100% 50%;
+  animation: finale-butterfly-wing 1.3s ease-in-out infinite alternate;
+  animation-delay: var(--finale-butterfly-delay);
+  animation-play-state: paused;
+}
+
+.finale-butterfly::before { left: 0; }
+
+.finale-butterfly::after {
+  right: 0;
+  transform: scaleX(-1);
+  transform-origin: 0 50%;
+  animation-direction: alternate-reverse;
+}
+
+.scene-visual.is-playing .finale-rock-glow,
+.scene-visual.is-playing .finale-butterfly::before,
+.scene-visual.is-playing .finale-butterfly::after {
+  animation-play-state: running;
+}
+
+@keyframes finale-golden-breathe {
+  from { filter: blur(10px) brightness(0.9); }
+  to { filter: blur(13px) brightness(1.14); }
+}
+
+@keyframes finale-butterfly-wing {
+  from { scale: 0.42 1; rotate: -7deg; }
+  to { scale: 1 1; rotate: 6deg; }
+}
+
+@keyframes dinosaur-leaf-nibble {
+  from { translate: 0 -1px; rotate: -2deg; }
+  to { translate: 2px 2px; rotate: 3deg; }
+}
+
+@keyframes dinosaur-camera-shudder {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  22% { transform: translate3d(-2.4px, 1.6px, 0); }
+  44% { transform: translate3d(2.2px, -1.4px, 0); }
+  66% { transform: translate3d(-1.2px, 0.8px, 0); }
+}
+
 .binary-fission-story {
   position: absolute;
   z-index: 8;
@@ -2003,6 +3265,18 @@ button:disabled {
 .scene-generated-20 .scene-generated-background {
   animation: none;
   filter: saturate(0.64) contrast(1.06) brightness(0.78);
+}
+
+.scene-generated-12 .scene-generated-background {
+  animation: none;
+}
+
+.scene-generated-15 .scene-generated-background {
+  animation: none;
+}
+
+.scene-generated-18 .scene-generated-background {
+  animation: none;
 }
 
 .scene-generated-16 .scene-generated-background {

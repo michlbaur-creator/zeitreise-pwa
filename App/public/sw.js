@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v56";
+const CACHE_NAME = "zeitreise-v64";
 const APP_SHELL = [
   "/",
   "/tierstammbaum/",

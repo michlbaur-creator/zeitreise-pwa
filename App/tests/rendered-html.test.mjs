@@ -343,7 +343,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v56/);
+  assert.match(worker, /zeitreise-v64/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
@@ -736,4 +736,165 @@ test("zeigt die Zellteilung als biologisch nachvollziehbare Animation", async ()
     sceneVisual,
     /<BinaryFissionAnimation progress=\{progress\} \/>/,
   );
+});
+
+test("zeigt in Szene 5 die Entstehung und Teilung der ersten Zellblase", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function FirstCellFormationAnimation/);
+  assert.match(sceneVisual, /first-cell-forming-membrane/);
+  assert.match(sceneVisual, /strokeDashoffset=\{membraneLength \* \(1 - closure\)\}/);
+  assert.match(sceneVisual, /const division = phaseProgress\(progress, 0\.69, 0\.86\)/);
+  assert.match(
+    sceneVisual,
+    /<FirstCellFormationAnimation progress=\{progress\} \/>/,
+  );
+});
+
+test("wiegt die vorhandenen Ediacara-Lebewesen in Szene 12 sanft", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function EdiacaraLifeAnimation/);
+  assert.match(sceneVisual, /scene\.id === 12 \? <EdiacaraLifeAnimation \/>/);
+  assert.match(styles, /ediacara-current-sway-left/);
+  assert.match(styles, /ediacara-current-sway-right/);
+  assert.match(styles, /ediacara-soft-pulse/);
+  assert.match(styles, /hintergrund-ediacara-v1\.png/);
+});
+
+test("lässt in Szene 15 Tausendfüßer und Spinnentier wirklich laufen", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function LandAnimalAnimation/);
+  assert.match(sceneVisual, /const spiderRun = phaseProgress\(progress, 0\.46, 0\.64\)/);
+  assert.match(sceneVisual, /land-millipede-antenna/);
+  assert.match(sceneVisual, /scene\.id === 15 \? <LandAnimalAnimation progress=\{progress\} \/>/);
+  assert.match(styles, /land-millipede-step/);
+  assert.match(styles, /land-millipede-feel/);
+  assert.match(styles, /land-spider-image/);
+});
+
+test("erzählt in Szene 17 Mulde, Eiablage, Embryo und Schlüpfen", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function AmnioteEggStory/);
+  assert.match(sceneVisual, /const dig = phaseProgress\(progress, 0\.04, 0\.24\)/);
+  assert.match(sceneVisual, /const lay = phaseProgress\(progress, 0\.22, 0\.48\)/);
+  assert.match(sceneVisual, /const embryo =/);
+  assert.match(sceneVisual, /const hatch = phaseProgress\(progress, 0\.84, 0\.98\)/);
+  assert.match(sceneVisual, /scene\.id === 17 \? <AmnioteEggStory progress=\{progress\} \/>/);
+  assert.match(styles, /amniote-leg-dig/);
+  assert.match(styles, /amniote-egg-crack/);
+  assert.match(styles, /amniote-hatchling/);
+});
+
+test("inszeniert Szene 18 als ruhige Dinosaurier-Naturdokumentation", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function DinosaurLifeAnimation/);
+  assert.match(sceneVisual, /const herdTravel = phaseProgress\(progress, 0\.08, 0\.88\)/);
+  assert.match(sceneVisual, /dinosaur-juvenile-body/);
+  assert.match(sceneVisual, /dinosaur-feeding-branch/);
+  assert.match(sceneVisual, /dinosaur-near-foot/);
+  assert.match(sceneVisual, /scene\.id === 18 \? <DinosaurLifeAnimation progress=\{progress\} \/>/);
+  assert.match(styles, /dinosaur-camera-shudder/);
+  assert.match(styles, /dinosaur-herd-legs/);
+  assert.match(styles, /dinosaur-leaf-nibble/);
+});
+
+test("lässt in Szene 21 die Säugetierfamilie aufbrechen und die Landschaft altern", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function MammalFutureAnimation/);
+  assert.match(sceneVisual, /const rise =/);
+  assert.match(sceneVisual, /const youngster =/);
+  assert.match(sceneVisual, /const timeLapse = phaseProgress\(progress, 0\.46, 0\.98\)/);
+  assert.match(sceneVisual, /mammal-adult-head/);
+  assert.match(sceneVisual, /mammal-youngster/);
+  assert.match(sceneVisual, /scene\.id === 21 \? <MammalFutureAnimation progress=\{progress\} \/>/);
+  assert.match(styles, /mammal-landscape-shift/);
+  assert.match(styles, /mammal-time-clouds/);
+  assert.match(styles, /mammal-sniff-ripple/);
+});
+
+test("inszeniert Szene 22 als feierliches und ruhiges Finale", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function FinaleAnimation/);
+  assert.match(sceneVisual, /const handSettle = phaseProgress\(progress, 0\.34, 0\.54\)/);
+  assert.match(sceneVisual, /const glow = phaseProgress\(progress, 0\.54, 0\.76\)/);
+  assert.match(sceneVisual, /const retreat = phaseProgress\(progress, 0\.08, 0\.98\)/);
+  assert.match(sceneVisual, /scene\.id === 22 \? <FinaleAnimation progress=\{progress\} \/>/);
+  assert.match(styles, /finale-rock-glow/);
+  assert.match(styles, /finale-golden-breathe/);
+  assert.match(styles, /finale-butterfly-wing/);
+});
+
+test("belebt Ursuppe und frühe Landküste in Szene 4 und 14", async () => {
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(sceneVisual, /function PrimordialLagoonAnimation/);
+  assert.match(sceneVisual, /const shimmer =/);
+  assert.match(sceneVisual, /lagoon-gas-bubble/);
+  assert.match(sceneVisual, /function LandfallAnimation/);
+  assert.match(sceneVisual, /landfall-plant-mat/);
+  assert.match(sceneVisual, /landfall-drop/);
+  assert.match(sceneVisual, /landfall-surf-one/);
+  assert.match(sceneVisual, /scene\.id === 4 \? <PrimordialLagoonAnimation progress=\{progress\} \/>/);
+  assert.match(sceneVisual, /scene\.id === 14 \? <LandfallAnimation progress=\{progress\} \/>/);
+  assert.match(styles, /lagoon-bubble-rise/);
+  assert.match(styles, /landfall-plant-breathe/);
+  assert.match(styles, /landfall-surf-wash/);
 });

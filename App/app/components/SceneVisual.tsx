@@ -95,7 +95,7 @@ const hotspotPositions: Partial<Record<number, CSSProperties[]>> = {
   14: [{ left: "35%", top: "69%" }, { left: "68%", top: "68%" }],
   15: [{ left: "57%", top: "64%" }, { left: "76%", top: "72%" }],
   16: [{ left: "29%", top: "64%" }, { left: "62%", top: "47%" }],
-  17: [{ left: "48%", top: "74%" }, { left: "80%", top: "25%" }],
+  17: [{ left: "66%", top: "74%" }, { left: "80%", top: "25%" }],
   18: [
     { left: "28%", top: "58%" },
     { left: "79%", top: "22%" },
@@ -159,16 +159,11 @@ const atmosphereProfiles: Partial<
   Record<number, { className: string; particles: number }>
 > = {
   3: { className: "atmosphere-ocean-light", particles: 5 },
-  4: { className: "atmosphere-lagoon-bubbles", particles: 8 },
   5: { className: "atmosphere-first-cell", particles: 4 },
   12: { className: "atmosphere-seafloor-drift", particles: 6 },
-  14: { className: "atmosphere-land-spores", particles: 14 },
-  15: { className: "atmosphere-land-crawlers", particles: 5 },
   16: { className: "atmosphere-swamp-life", particles: 6 },
   17: { className: "atmosphere-egg-and-insects", particles: 6 },
-  18: { className: "atmosphere-dinosaur-scale", particles: 3 },
   21: { className: "atmosphere-forest-life", particles: 10 },
-  22: { className: "atmosphere-present-life", particles: 10 },
 };
 
 const subjectLabels: Record<Scene["theme"], string[]> = {
@@ -282,6 +277,599 @@ function binaryCellPath(
     `C ${centerX - 28} ${top + pinch} ${centerX - 48} ${top} ${centerX - 88} ${top}`,
     "Z",
   ].join(" ");
+}
+
+function FirstCellFormationAnimation({ progress }: { progress: number }) {
+  const gather = phaseProgress(progress, 0.02, 0.18);
+  const bubble = phaseProgress(progress, 0.06, 0.24);
+  const closure = phaseProgress(progress, 0.16, 0.34);
+  const contents = phaseProgress(progress, 0.28, 0.48);
+  const division = phaseProgress(progress, 0.69, 0.86);
+  const separation = phaseProgress(progress, 0.8, 0.93);
+  const parentOpacity = 1 - phaseProgress(progress, 0.84, 0.9);
+  const daughterOpacity = phaseProgress(progress, 0.82, 0.9);
+  const cellWidth = 300 + division * 80;
+  const pinch = division * 68;
+  const daughterDistance = 58 + separation * 88;
+  const membraneLength = 565;
+  const moleculePaths = [
+    { fromX: 260, fromY: 180, toX: 455, toY: 284, r: 8 },
+    { fromX: 690, fromY: 190, toX: 530, toY: 270, r: 6 },
+    { fromX: 735, fromY: 410, toX: 545, toY: 346, r: 9 },
+    { fromX: 285, fromY: 430, toX: 463, toY: 354, r: 7 },
+    { fromX: 520, fromY: 126, toX: 506, toY: 320, r: 5 },
+  ];
+
+  return (
+    <div
+      className="first-cell-formation"
+      role="img"
+      aria-label="Eine transparente Zellblase entsteht zwischen Mineralien. Ihre dünne Membran schließt sich, Stoffe sammeln sich im Inneren und die Zelle teilt sich langsam in zwei Tochterzellen."
+    >
+      <svg
+        className="first-cell-svg"
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <radialGradient id="first-cell-cytoplasm" cx="40%" cy="34%" r="72%">
+            <stop offset="0%" stopColor="#e5e0ae" stopOpacity="0.42" />
+            <stop offset="58%" stopColor="#86ad89" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#315f56" stopOpacity="0.24" />
+          </radialGradient>
+          <linearGradient id="first-cell-membrane" x1="12%" y1="8%" x2="88%" y2="92%">
+            <stop offset="0%" stopColor="#f1e9bd" stopOpacity="0.92" />
+            <stop offset="52%" stopColor="#b9d0a6" stopOpacity="0.88" />
+            <stop offset="100%" stopColor="#6f9b83" stopOpacity="0.82" />
+          </linearGradient>
+          <filter id="first-cell-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <g id="first-daughter-cell">
+            <ellipse
+              rx="91"
+              ry="78"
+              fill="url(#first-cell-cytoplasm)"
+              stroke="url(#first-cell-membrane)"
+              strokeWidth="6"
+            />
+            <ellipse
+              rx="76"
+              ry="64"
+              fill="none"
+              stroke="#edf0c8"
+              strokeOpacity="0.18"
+              strokeWidth="2"
+              strokeDasharray="4 12"
+            />
+            <circle cx="-24" cy="-14" r="8" fill="#d8d99e" opacity="0.3" />
+            <circle cx="31" cy="19" r="6" fill="#aac99b" opacity="0.28" />
+            <path
+              d="M-31 13 C-10 -19 23 -18 34 5 C17 31 -15 32 -31 13 Z"
+              fill="none"
+              stroke="#dbc979"
+              strokeOpacity="0.7"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+          </g>
+        </defs>
+
+        <g className="first-cell-molecules">
+          {moleculePaths.map(({ fromX, fromY, toX, toY, r }, index) => (
+            <circle
+              key={`${fromX}-${fromY}`}
+              cx={fromX + (toX - fromX) * gather}
+              cy={fromY + (toY - fromY) * gather}
+              r={r}
+              fill={index % 2 ? "#c5d6aa" : "#e0ce83"}
+              opacity={0.16 + gather * 0.42}
+              style={{ animationDelay: `${index * -0.5}s` }}
+            />
+          ))}
+        </g>
+
+        <g
+          className="first-cell-parent"
+          opacity={parentOpacity}
+          transform={`translate(500 318) scale(${0.7 + bubble * 0.3})`}
+        >
+          <ellipse
+            rx="90"
+            ry="86"
+            fill="url(#first-cell-cytoplasm)"
+            opacity={bubble * (0.18 + closure * 0.82) * (1 - division)}
+          />
+          <ellipse
+            className="first-cell-closed-membrane"
+            rx="90"
+            ry="86"
+            fill="none"
+            stroke="url(#first-cell-membrane)"
+            strokeWidth="6"
+            opacity={closure * (1 - division)}
+            filter="url(#first-cell-glow)"
+          />
+          <path
+            d={binaryCellPath(0, 0, cellWidth, 180, pinch)}
+            fill="url(#first-cell-cytoplasm)"
+            stroke="url(#first-cell-membrane)"
+            strokeWidth="6"
+            opacity={division}
+            filter="url(#first-cell-glow)"
+          />
+          <circle
+            className="first-cell-forming-membrane"
+            cx="0"
+            cy="0"
+            r="90"
+            fill="none"
+            stroke="url(#first-cell-membrane)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            strokeDasharray={membraneLength}
+            strokeDashoffset={membraneLength * (1 - closure)}
+            opacity={(1 - closure) * bubble}
+            transform="rotate(-90)"
+            filter="url(#first-cell-glow)"
+          />
+          <g opacity={contents * (1 - division * 0.35)}>
+            <circle cx="-34" cy="-18" r="9" fill="#d8d99e" opacity="0.32" />
+            <circle cx="39" cy="25" r="7" fill="#aac99b" opacity="0.3" />
+            <path
+              d="M-43 15 C-17 -26 26 -24 43 4 C22 36 -20 39 -43 15 Z"
+              fill="none"
+              stroke="#dbc979"
+              strokeOpacity="0.72"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+          </g>
+        </g>
+
+        <g
+          className="first-cell-daughter"
+          opacity={daughterOpacity}
+          transform={`translate(${500 - daughterDistance} 318) rotate(-4)`}
+        >
+          <use href="#first-daughter-cell" />
+        </g>
+        <g
+          className="first-cell-daughter"
+          opacity={daughterOpacity}
+          transform={`translate(${500 + daughterDistance} 318) rotate(4)`}
+        >
+          <use href="#first-daughter-cell" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
+function EdiacaraLifeAnimation() {
+  return (
+    <div className="ediacara-life-animation" aria-hidden="true">
+      <span className="ediacara-organism ediacara-organism-foreground" />
+      <span className="ediacara-organism ediacara-organism-left" />
+      <span className="ediacara-organism ediacara-organism-group" />
+      <span className="ediacara-organism ediacara-organism-middle" />
+      <span className="ediacara-organism ediacara-organism-right" />
+    </div>
+  );
+}
+
+function LandAnimalAnimation({ progress }: { progress: number }) {
+  const millipedeTravel = phaseProgress(progress, 0.05, 0.92);
+  const spiderRun = phaseProgress(progress, 0.46, 0.64);
+  const spiderOpacity =
+    phaseProgress(progress, 0.43, 0.48) *
+    (1 - phaseProgress(progress, 0.64, 0.69));
+
+  return (
+    <div
+      className="land-animal-animation"
+      role="img"
+      aria-label="Ein früher Tausendfüßer krabbelt mit vielen arbeitenden Beinen über den feuchten Boden und tastet mit seinen Fühlern. Ein kleines Spinnentier huscht einmal kurz durch das Bild."
+    >
+      <div className="land-animal-cleanup" aria-hidden="true">
+        <span className="land-animal-patch land-animal-patch-millipede" />
+        <span className="land-animal-patch land-animal-patch-spider" />
+      </div>
+
+      <div
+        className="land-millipede-track"
+        style={{
+          transform: `translate3d(${millipedeTravel * 138}px, ${Math.sin(millipedeTravel * Math.PI * 4) * 3}px, 0)`,
+        }}
+        aria-hidden="true"
+      >
+        <span className="land-millipede-image" />
+        <div className="land-millipede-live-details">
+          <span className="land-millipede-antenna land-millipede-antenna-upper" />
+          <span className="land-millipede-antenna land-millipede-antenna-lower" />
+          {Array.from({ length: 11 }, (_, index) => (
+            <i
+              className="land-millipede-live-leg"
+              style={
+                {
+                  "--land-leg": index,
+                  "--land-leg-delay": `${index * -0.055}s`,
+                } as CSSProperties
+              }
+              key={`land-millipede-${index}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="land-spider-track"
+        style={{
+          opacity: spiderOpacity,
+          transform: `translate3d(${spiderRun * 210}px, ${Math.sin(spiderRun * Math.PI) * -18}px, 0) scale(${0.88 + spiderRun * 0.12})`,
+        }}
+        aria-hidden="true"
+      >
+        <span className="land-spider-image" />
+      </div>
+    </div>
+  );
+}
+
+function AmnioteEggStory({ progress }: { progress: number }) {
+  const dig = phaseProgress(progress, 0.04, 0.24);
+  const lay = phaseProgress(progress, 0.22, 0.48);
+  const cover = phaseProgress(progress, 0.46, 0.64);
+  const embryo =
+    phaseProgress(progress, 0.63, 0.68) *
+    (1 - phaseProgress(progress, 0.72, 0.76));
+  const crack = phaseProgress(progress, 0.74, 0.86);
+  const hatch = phaseProgress(progress, 0.84, 0.98);
+  const eggPositions = [
+    { left: 29, bottom: 25, rotate: -12 },
+    { left: 42, bottom: 35, rotate: 7 },
+    { left: 52, bottom: 22, rotate: -2 },
+    { left: 63, bottom: 36, rotate: 11 },
+    { left: 72, bottom: 22, rotate: -8 },
+  ];
+
+  return (
+    <div
+      className="amniote-egg-story"
+      role="img"
+      aria-label="Ein frühes Landtier gräbt eine Mulde, legt mehrere Eier hinein und bedeckt sie. In einem Ei bewegt sich kurz ein Embryo. Danach bricht die Schale auf und ein Jungtier schlüpft."
+      style={
+        {
+          "--amniote-dig": dig,
+          "--amniote-lay": lay,
+          "--amniote-cover": cover,
+          "--amniote-embryo": embryo,
+          "--amniote-crack": crack,
+          "--amniote-hatch": hatch,
+        } as CSSProperties
+      }
+    >
+      <span className="amniote-original-eggs-cover" aria-hidden="true" />
+      <div className="amniote-nest-ground" aria-hidden="true">
+        <span className="amniote-nest-shadow" />
+        {Array.from({ length: 9 }, (_, index) => (
+          <i
+            className="amniote-dirt-particle"
+            style={
+              {
+                "--dirt-index": index,
+                "--dirt-x": `${18 + ((index * 13) % 69)}%`,
+                "--dirt-delay": `${index * -0.09}s`,
+              } as CSSProperties
+            }
+            key={`amniote-dirt-${index}`}
+          />
+        ))}
+        <span className="amniote-digging-leg" />
+
+        <div className="amniote-clutch">
+          {eggPositions.map(({ left, bottom, rotate }, index) => {
+            const eggVisible = phaseProgress(
+              lay,
+              index * 0.14,
+              0.25 + index * 0.14,
+            );
+
+            if (index === 2) {
+              return (
+                <span
+                  className="amniote-egg amniote-hatching-egg"
+                  style={{
+                    left: `${left}%`,
+                    bottom: `${bottom}%`,
+                    opacity: eggVisible,
+                    transform: `translateY(${(1 - eggVisible) * -28}px) rotate(${rotate}deg) scale(${0.72 + eggVisible * 0.28})`,
+                  }}
+                  key="amniote-hatching-egg"
+                >
+                  <span className="amniote-whole-shell" />
+                  <span className="amniote-embryo" />
+                  <span className="amniote-egg-crack" />
+                  <span className="amniote-shell-top" />
+                  <span className="amniote-shell-bottom" />
+                </span>
+              );
+            }
+
+            return (
+              <span
+                className="amniote-egg"
+                style={{
+                  left: `${left}%`,
+                  bottom: `${bottom}%`,
+                  opacity: eggVisible,
+                  transform: `translateY(${(1 - eggVisible) * -28}px) rotate(${rotate}deg) scale(${0.72 + eggVisible * 0.28})`,
+                }}
+                key={`amniote-egg-${index}`}
+              />
+            );
+          })}
+          <span className="amniote-hatchling">
+            <i className="amniote-hatchling-head" />
+            <i className="amniote-hatchling-eye" />
+            <i className="amniote-hatchling-leg amniote-hatchling-leg-front" />
+            <i className="amniote-hatchling-leg amniote-hatchling-leg-back" />
+          </span>
+          {Array.from({ length: 8 }, (_, index) => (
+            <i
+              className="amniote-cover-piece"
+              style={
+                {
+                  "--cover-index": index,
+                  "--cover-left": `${18 + ((index * 17) % 72)}%`,
+                  "--cover-bottom": `${10 + (index % 3) * 11}%`,
+                  "--cover-rotate": `${-38 + ((index * 23) % 76)}deg`,
+                } as CSSProperties
+              }
+              key={`amniote-cover-${index}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DinosaurLifeAnimation({ progress }: { progress: number }) {
+  const herdTravel = phaseProgress(progress, 0.08, 0.88);
+  const feeding =
+    phaseProgress(progress, 0.31, 0.4) *
+    (1 - phaseProgress(progress, 0.55, 0.64));
+  const footDown = phaseProgress(progress, 0.17, 0.255);
+  const footLift = phaseProgress(progress, 0.32, 0.39);
+  const footOpacity = footDown * (1 - footLift);
+  const dust =
+    phaseProgress(progress, 0.255, 0.285) *
+    (1 - phaseProgress(progress, 0.31, 0.38));
+
+  return (
+    <div
+      className="dinosaur-life-animation"
+      role="img"
+      aria-label="Eine Dinosaurierherde zieht langsam durch die Landschaft. Ein Jungtier folgt seiner Mutter, ein Pflanzenfresser frisst Blätter und ein großer Fuß setzt nahe der Kamera auf."
+      style={
+        {
+          "--dino-herd": herdTravel,
+          "--dino-feed": feeding,
+          "--dino-foot": footOpacity,
+          "--dino-dust": dust,
+        } as CSSProperties
+      }
+    >
+      <span
+        className="dinosaur-herd-moving"
+        style={{
+          transform: `translate3d(${herdTravel * 25}px, ${Math.sin(herdTravel * Math.PI * 5) * 3.2}px, 0)`,
+        }}
+        aria-hidden="true"
+      />
+
+      <span className="dinosaur-mother-head" aria-hidden="true" />
+      <span className="dinosaur-mother-leg dinosaur-mother-leg-front" aria-hidden="true" />
+      <span className="dinosaur-mother-leg dinosaur-mother-leg-back" aria-hidden="true" />
+      <span className="dinosaur-juvenile-body" aria-hidden="true" />
+      <span className="dinosaur-juvenile-leg dinosaur-juvenile-leg-front" aria-hidden="true" />
+      <span className="dinosaur-juvenile-leg dinosaur-juvenile-leg-back" aria-hidden="true" />
+
+      <span className="dinosaur-feeding-branch" aria-hidden="true">
+        {Array.from({ length: 7 }, (_, index) => (
+          <i
+            className="dinosaur-feeding-leaf"
+            style={
+              {
+                "--dino-leaf": index,
+                "--dino-leaf-delay": `${index * -0.18}s`,
+                "--dino-leaf-top": `${-9 + (index % 2) * 11}px`,
+              } as CSSProperties
+            }
+            key={`dinosaur-leaf-${index}`}
+          />
+        ))}
+      </span>
+
+      <span className="dinosaur-near-leg" aria-hidden="true">
+        <i className="dinosaur-near-foot" />
+        <i className="dinosaur-near-toe dinosaur-near-toe-one" />
+        <i className="dinosaur-near-toe dinosaur-near-toe-two" />
+        <i className="dinosaur-near-toe dinosaur-near-toe-three" />
+      </span>
+      <span className="dinosaur-step-dust" aria-hidden="true" />
+    </div>
+  );
+}
+
+function MammalFutureAnimation({ progress }: { progress: number }) {
+  const rise =
+    phaseProgress(progress, 0.05, 0.2) *
+    (1 - phaseProgress(progress, 0.38, 0.46));
+  const sniffWindow =
+    phaseProgress(progress, 0.16, 0.22) *
+    (1 - phaseProgress(progress, 0.36, 0.43));
+  const sniff = Math.sin(phaseProgress(progress, 0.17, 0.39) * Math.PI * 4) * sniffWindow;
+  const sniffStrength = Math.abs(sniff);
+  const youngster =
+    phaseProgress(progress, 0.2, 0.34) *
+    (1 - phaseProgress(progress, 0.41, 0.49));
+  const timeLapse = phaseProgress(progress, 0.46, 0.98);
+  const seasonWave = Math.sin(timeLapse * Math.PI * 2.4);
+
+  return (
+    <div
+      className="mammal-future-animation"
+      role="img"
+      aria-label="Das erwachsene Säugetier richtet sich auf und schnuppert. Sein Jungtier folgt. Danach verändert sich die Landschaft in einem ruhigen Zeitraffer."
+      style={
+        {
+          "--mammal-rise": rise,
+          "--mammal-sniff": sniff,
+          "--mammal-sniff-strength": sniffStrength,
+          "--mammal-youngster": youngster,
+          "--mammal-time-lapse": timeLapse,
+          "--mammal-season-wave": seasonWave,
+        } as CSSProperties
+      }
+    >
+      <span className="mammal-landscape-shift" aria-hidden="true" />
+      <span className="mammal-time-clouds" aria-hidden="true" />
+      <span className="mammal-time-light" aria-hidden="true" />
+
+      <span className="mammal-adult-body" aria-hidden="true" />
+      <span className="mammal-adult-head" aria-hidden="true" />
+      <span className="mammal-youngster" aria-hidden="true" />
+      <span className="mammal-sniff-ripple mammal-sniff-ripple-one" aria-hidden="true" />
+      <span className="mammal-sniff-ripple mammal-sniff-ripple-two" aria-hidden="true" />
+    </div>
+  );
+}
+
+function PrimordialLagoonAnimation({ progress }: { progress: number }) {
+  const shimmer =
+    phaseProgress(progress, 0.36, 0.43) *
+    (1 - phaseProgress(progress, 0.55, 0.62));
+
+  return (
+    <div
+      className="primordial-lagoon-animation"
+      role="img"
+      aria-label="Kleine Gasblasen steigen durch die warme Lagune. Kurz schimmert das Wasser organisch in feinen Farben."
+      style={{ "--lagoon-shimmer": shimmer } as CSSProperties}
+    >
+      <span className="lagoon-organic-shimmer" aria-hidden="true" />
+      {Array.from({ length: 11 }, (_, index) => (
+        <span
+          className="lagoon-gas-bubble"
+          style={
+            {
+              "--lagoon-bubble-left": `${43 + ((index * 13) % 51)}%`,
+              "--lagoon-bubble-bottom": `${2 + (index % 4) * 5}%`,
+              "--lagoon-bubble-size": `${4 + (index % 5) * 1.7}px`,
+              "--lagoon-bubble-duration": `${5.8 + (index % 4) * 1.15}s`,
+              "--lagoon-bubble-delay": `${-(index * 0.73)}s`,
+            } as CSSProperties
+          }
+          aria-hidden="true"
+          key={`lagoon-gas-bubble-${index}`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function LandfallAnimation({ progress }: { progress: number }) {
+  const plants = phaseProgress(progress, 0.12, 0.28);
+  const droplets = phaseProgress(progress, 0.27, 0.42);
+  const surf = phaseProgress(progress, 0.04, 0.16);
+
+  return (
+    <div
+      className="landfall-animation"
+      role="img"
+      aria-label="Die niedrigen Landpflanzen bewegen sich im Wind. Wassertropfen rinnen über die Felsen und sanfte Brandung läuft am Ufer aus."
+      style={
+        {
+          "--landfall-plants": plants,
+          "--landfall-droplets": droplets,
+          "--landfall-surf": surf,
+        } as CSSProperties
+      }
+    >
+      <span className="landfall-plant-mat" aria-hidden="true" />
+      <span className="landfall-surf landfall-surf-one" aria-hidden="true" />
+      <span className="landfall-surf landfall-surf-two" aria-hidden="true" />
+      <span className="landfall-surf landfall-surf-three" aria-hidden="true" />
+      {Array.from({ length: 7 }, (_, index) => (
+        <span
+          className="landfall-drop"
+          style={
+            {
+              "--landfall-drop-left": `${16 + ((index * 11) % 43)}%`,
+              "--landfall-drop-top": `${58 + (index % 3) * 8}%`,
+              "--landfall-drop-delay": `${-(index * 0.62)}s`,
+              "--landfall-drop-duration": `${3.6 + (index % 3) * 0.8}s`,
+            } as CSSProperties
+          }
+          aria-hidden="true"
+          key={`landfall-drop-${index}`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function FinaleAnimation({ progress }: { progress: number }) {
+  const handSettle = phaseProgress(progress, 0.34, 0.54);
+  const glow = phaseProgress(progress, 0.54, 0.76);
+  const retreat = phaseProgress(progress, 0.08, 0.98);
+  const butterflies = phaseProgress(progress, 0.16, 0.3);
+
+  return (
+    <div
+      className="finale-animation"
+      role="img"
+      aria-label="Eine Kinderhand legt sich ruhig auf den Zeitfelsen. Der Felsen glimmt golden, einzelne Schmetterlinge ziehen vorbei und die Kamera fährt langsam zurück."
+      style={
+        {
+          "--finale-hand": handSettle,
+          "--finale-glow": glow,
+          "--finale-retreat": retreat,
+          "--finale-butterflies": butterflies,
+        } as CSSProperties
+      }
+    >
+      <span className="finale-camera" aria-hidden="true" />
+      <span className="finale-hand" aria-hidden="true" />
+      <span className="finale-rock-glow" aria-hidden="true" />
+      {[
+        { left: 25, top: 48, x: 58, y: -34, scale: 0.78 },
+        { left: 63, top: 59, x: -42, y: -48, scale: 0.62 },
+        { left: 47, top: 35, x: 38, y: -28, scale: 0.52 },
+      ].map((butterfly, index) => (
+        <span
+          className="finale-butterfly"
+          style={
+            {
+              left: `${butterfly.left}%`,
+              top: `${butterfly.top}%`,
+              opacity: butterflies * (0.66 + index * 0.12),
+              transform: `translate3d(${butterflies * butterfly.x}px, ${butterflies * butterfly.y + Math.sin(progress * Math.PI * (3.2 + index)) * 7}px, 0) scale(${butterfly.scale})`,
+              "--finale-butterfly-delay": `${index * -0.42}s`,
+            } as CSSProperties
+          }
+          aria-hidden="true"
+          key={`finale-butterfly-${index}`}
+        />
+      ))}
+    </div>
+  );
 }
 
 function BinaryFissionAnimation({ progress }: { progress: number }) {
@@ -1628,6 +2216,10 @@ export function SceneVisual({
           progress >= SCENE_NINETEEN_IMPACT - 0.006 &&
           progress < SCENE_NINETEEN_FLASH_END &&
           "is-impact-strike",
+        scene.id === 18 &&
+          progress >= 0.265 &&
+          progress < 0.31 &&
+          "is-dinosaur-footstep",
         generatedBackground && "has-scene-generated-media",
         isPlaying ? "is-playing" : "is-paused",
       ]
@@ -1818,14 +2410,17 @@ export function SceneVisual({
           </div>
         ) : null}
         {isSceneFive ? (
-          <div className="scene-five-media" aria-hidden="true">
-            <img
-              className="scene-five-background"
-              src="/assets/episode1/scene05/hintergrund-erste-zelle-v1.png"
-              alt=""
-              draggable={false}
-            />
-          </div>
+          <>
+            <div className="scene-five-media" aria-hidden="true">
+              <img
+                className="scene-five-background"
+                src="/assets/episode1/scene05/hintergrund-erste-zelle-v1.png"
+                alt=""
+                draggable={false}
+              />
+            </div>
+            <FirstCellFormationAnimation progress={progress} />
+          </>
         ) : null}
         {isSceneSix ? (
           <>
@@ -1927,6 +2522,14 @@ export function SceneVisual({
             ))}
           </div>
         ) : null}
+        {scene.id === 12 ? <EdiacaraLifeAnimation /> : null}
+        {scene.id === 15 ? <LandAnimalAnimation progress={progress} /> : null}
+        {scene.id === 17 ? <AmnioteEggStory progress={progress} /> : null}
+        {scene.id === 18 ? <DinosaurLifeAnimation progress={progress} /> : null}
+        {scene.id === 21 ? <MammalFutureAnimation progress={progress} /> : null}
+        {scene.id === 22 ? <FinaleAnimation progress={progress} /> : null}
+        {scene.id === 4 ? <PrimordialLagoonAnimation progress={progress} /> : null}
+        {scene.id === 14 ? <LandfallAnimation progress={progress} /> : null}
         {atmosphereProfile ? (
           <div
             className={`scene-atmosphere ${atmosphereProfile.className}`}
