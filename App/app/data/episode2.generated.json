@@ -1,0 +1,997 @@
+[
+  {
+    "id": 1,
+    "title": "Der nächste Zeitsprung",
+    "timeLabel": "Vor etwa 60 bis 55 Millionen Jahren",
+    "duration": 38,
+    "durationLabel": "ca. 38 Sekunden",
+    "function": "Direkter Anschluss an Episode 1; Einstieg in die Primatengeschichte ohne einen plötzlichen Sprung zum Menschen.",
+    "background": "Die vertraute Landschaft aus dem Ende von Episode 1 ist üppiger geworden. Der Zeitfelsen steht zwischen Wurzeln und Farnen. Ein kleines, baumbewohnendes Säugetier bewegt sich vorsichtig über einen Ast. Es wird nicht als sicherer direkter Vorfahr bezeichnet, sondern als früher Primatenverwandter.",
+    "camera": [
+      "Beginn nah an der Kinderhand auf dem Zeitfelsen; warmes goldenes Glimmen.",
+      "Ruhige Fahrt vom Felsen über eine Wurzel in die Baumkrone.",
+      "Fokuswechsel auf Hände, Füße und nach vorn gerichtete Augen des Tieres."
+    ],
+    "animation": [
+      "Das Tier tastet einen Ast ab, greift sicher zu und springt nur eine kurze Distanz.",
+      "Blätter reagieren fein auf Gewicht und Wind; Staub und Lichtpunkte driften langsam.",
+      "Der Zeitfelsen verschwindet nach dem Einstieg vollständig aus dem Bild."
+    ],
+    "sounds": [
+      "morgendlicher Wald",
+      "Blätterrascheln",
+      "ferne Insekten",
+      "ein einzelner weicher Zeitklang am Felsen"
+    ],
+    "speaker": "Unsere erste Reise endete bei einem kleinen Säugetier. Genau dort geht es weiter. Viele Millionen Jahre vergehen, Wälder breiten sich aus, und in den Baumkronen werden geschickte Hände, gutes räumliches Sehen und ein sicherer Gleichgewichtssinn immer nützlicher. Dieses Tier ist nicht einfach ‚der erste Mensch‘. So funktioniert Evolution nicht. Es gehört zu einer weit verzweigten Verwandtschaft, aus der später Lemuren, Affen, Menschenaffen und schließlich auch wir hervorgehen. Willkommen in Episode 2 - einer Geschichte mit vielen Ästen statt einer geraden Leiter.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Greifende Hände",
+        "text": "Bewegliche Finger und ein greifender Daumen helfen, Äste, Früchte und Nahrung sicher festzuhalten."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Räumliches Sehen",
+        "text": "Nach vorn gerichtete Augen erzeugen überlappende Sichtfelder. Das erleichtert die Einschätzung von Entfernungen in den Bäumen."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Warum waren Greifhände in den Baumkronen besonders nützlich?",
+      "options": [
+        "Sie machten das Tier unsichtbar.",
+        "Sie halfen beim sicheren Klettern und Festhalten.",
+        "Sie ersetzten das Sehen.",
+        "Sie kühlten die Luft."
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Das Tier blickt in die Tiefe. Die Kamera folgt seinem Blick durch mehrere Kronenschichten. Mit der Abwärtsfahrt ändern sich Pflanzen und Licht - ein stiller Zeitsprung in eine vielfältigere Primatenwelt.",
+    "science": "Frühe Primaten und Primatenverwandte sind schwer gegeneinander abzugrenzen. Die Szene zeigt deshalb keinen einzelnen, eindeutig benannten Stammvater."
+  },
+  {
+    "id": 2,
+    "title": "Ein Leben in den Bäumen",
+    "timeLabel": "Vor etwa 55 bis 35 Millionen Jahren",
+    "duration": 36,
+    "durationLabel": "ca. 36 Sekunden",
+    "function": "Die grundlegenden Primatenmerkmale werden über Bewegung und Wahrnehmung verständlich.",
+    "background": "Ein dichter, warmer Wald mit mehreren Höhenebenen. Kleine frühe Primaten suchen Früchte und Insekten. Einige sind eher nachtaktiv, andere bewegen sich im Tageslicht. Keine moderne Affenart wird als unverändertes Urbild gezeigt.",
+    "camera": [
+      "Langsame Parallelfahrt durch Äste und Lianen.",
+      "Kurze Nahaufnahmen von Augen, Fingerspitzen und einem vorsichtigen Sprung."
+    ],
+    "animation": [
+      "Zwei Tiere bewegen sich mit unterschiedlichem Rhythmus durch die Kronen.",
+      "Ein Ast biegt sich unter dem Gewicht und federt anschließend zurück.",
+      "Die Pupillen eines nachtaktiven Tieres reagieren dezent auf Licht."
+    ],
+    "sounds": [
+      "weicher Waldwind",
+      "Insekten",
+      "vereinzelte Tropfen",
+      "leises Knacken von Zweigen"
+    ],
+    "speaker": "In den Bäumen zählt jeder Griff. Wer eine Entfernung falsch einschätzt, landet nicht einfach neben dem Weg - unter dem Weg geht es ziemlich weit nach unten. Viele frühe Primaten besitzen deshalb bewegliche Hände und Füße, empfindliche Fingerspitzen und Augen, die Entfernungen gut erfassen. Aber auch hier gibt es nicht den einen perfekten Bauplan. Manche Arten sind klein und nachtaktiv, andere werden größer und erkunden neue Nahrungsquellen. Evolution arbeitet nicht auf ein Ziel hin. Sie bewahrt, was unter den jeweiligen Bedingungen funktioniert.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Nägel statt Krallen",
+        "text": "Viele Primaten besitzen flache Nägel und empfindliche Fingerkuppen. Das verbessert den Tastsinn."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Kein Stillstand",
+        "text": "Heutige Lemuren oder Affen sind keine lebenden Fossilien. Auch ihre Linien haben sich über Millionen Jahre weiterentwickelt."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Welche Kombination ist für viele Primaten typisch?",
+      "options": [
+        "Flossen und Kiemen",
+        "Federn und Schnabel",
+        "Greifhände und gutes räumliches Sehen",
+        "Panzer und Stacheln"
+      ],
+      "correctIndex": 2
+    },
+    "transition": "Ein Tier greift nach einer Frucht. Beim Heranziehen füllt ein Blatt das Bild. Dahinter öffnet sich nach der Überblendung ein lichterer Wald mit deutlich größeren Menschenaffen.",
+    "science": "Die genannten Merkmale entstanden nicht gleichzeitig und kommen nicht bei allen Primaten gleich stark vor."
+  },
+  {
+    "id": 3,
+    "title": "Die Welt der Menschenaffen",
+    "timeLabel": "Vor etwa 23 bis 10 Millionen Jahren",
+    "duration": 40,
+    "durationLabel": "ca. 40 Sekunden",
+    "function": "Zeigt die große Vielfalt der Menschenaffen vor der Entstehung der Homininen.",
+    "background": "Miozäne Waldlandschaften in Afrika und Eurasien. Mehrere unterschiedlich gebaute Menschenaffen nutzen Bäume und Boden. Die Szene vermeidet die Darstellung einer einzigen aufsteigenden Reihe.",
+    "camera": [
+      "Weite Eröffnung über ein Waldmosaik.",
+      "Ruhige Begegnungen mit drei deutlich verschiedenen Körperformen.",
+      "Kurzer Blick von oben auf verzweigte Wege am Waldboden."
+    ],
+    "animation": [
+      "Ein Tier hangelt, ein anderes klettert vierfüßig, ein drittes sitzt am Boden und öffnet eine harte Frucht.",
+      "Äste, Fell und Schatten bewegen sich leicht und glaubwürdig."
+    ],
+    "sounds": [
+      "Waldatmosphäre",
+      "Fruchtschalen knacken",
+      "ferne Rufe",
+      "Wind in hohen Kronen"
+    ],
+    "speaker": "Jetzt wird der Stammbaum richtig buschig. Im Miozän leben viele verschiedene Menschenaffen in Afrika, Asien und Europa. Manche sind geschickte Kletterer, manche bewegen sich häufiger am Boden, andere verschwinden wieder, ohne direkte Nachkommen zu hinterlassen. Keine dieser Formen trägt ein Schild mit der Aufschrift ‚Hier entlang zum Menschen‘. Unsere Linie ist nur einer von vielen Zweigen. Und wie bei einem echten Baum gilt: Ein Ast wird nicht besser, nur weil er später weiterwächst.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Menschenaffen",
+        "text": "Zu den heute lebenden Menschenaffen gehören Gibbons, Orang-Utans, Gorillas, Schimpansen, Bonobos und Menschen."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Ausgestorbene Vielfalt",
+        "text": "Der Fossilbericht zeigt zahlreiche ausgestorbene Menschenaffen. Ihre genaue Verwandtschaft ist oft umstritten."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Wie sah die Evolution der Menschenaffen aus?",
+      "options": [
+        "Wie eine gerade Treppe",
+        "Wie ein Baum mit vielen Zweigen",
+        "Wie ein einziger Kreis",
+        "Ohne ausgestorbene Arten"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Die Kamera bleibt auf einem Waldweg. Licht und Vegetation wechseln im Zeitraffer. Aus geschlossenem Wald wird ein Mosaik aus Waldinseln, Buschland und offenen Flächen.",
+    "science": "Viele miozäne Arten lassen sich nicht sicher einem heutigen Zweig zuordnen. Rekonstruktionen bleiben Annäherungen."
+  },
+  {
+    "id": 4,
+    "title": "Afrika im Wandel",
+    "timeLabel": "Vor etwa 10 bis 7 Millionen Jahren",
+    "duration": 38,
+    "durationLabel": "ca. 38 Sekunden",
+    "function": "Bereitet die frühe Homininenentwicklung vor, ohne die überholte einfache Savannen-Erklärung zu verwenden.",
+    "background": "Eine wechselhafte afrikanische Landschaft: Galeriewald am Fluss, lichte Waldinseln, Buschland und offene Bereiche. Jahreszeiten und Niederschläge schwanken. Tiere bewegen sich zwischen verschiedenen Lebensräumen.",
+    "camera": [
+      "Ruhiger Landschafts-Zeitraffer über mehrere Jahreszeiten.",
+      "Kamera bleibt niedrig und zeigt, wie nahe Wald und offene Flächen beieinanderliegen."
+    ],
+    "animation": [
+      "Gräser und Büsche reagieren unterschiedlich auf Wind.",
+      "Ein Fluss wird schmaler und füllt sich später wieder.",
+      "Tierspuren kreuzen sich, ohne eine Hauptfigur festzulegen."
+    ],
+    "sounds": [
+      "Wind",
+      "fernes Wasser",
+      "Insekten",
+      "wechselnde, sparsame Tierlaute"
+    ],
+    "speaker": "Afrika wird nicht plötzlich zu einer einzigen endlosen Savanne. Stattdessen wechseln Wälder, Buschland, Flussufer und offene Flächen immer wieder ihre Ausdehnung. Wer hier lebt, muss mit Veränderungen zurechtkommen. Vielleicht begünstigt dieses Mosaik neue Arten der Fortbewegung, Nahrungssuche und Zusammenarbeit. Aber Forschende kennen keinen einzelnen Schalter, der einfach auf ‚Menschwerdung‘ umgelegt wird. Klima, Lebensraum, Körperbau und Verhalten beeinflussen sich über sehr lange Zeit gegenseitig.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Mosaik-Landschaft",
+        "text": "Frühe Homininen lebten wahrscheinlich in abwechslungsreichen Lebensräumen - nicht nur in offener Savanne."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Klima als Mitspieler",
+        "text": "Klimawandel kann neue Chancen und Risiken schaffen. Er erklärt Evolution aber selten allein."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Wie sah der Lebensraum früher Homininen wahrscheinlich aus?",
+      "options": [
+        "Nur Wüste",
+        "Nur dichter Regenwald",
+        "Als wechselndes Mosaik verschiedener Lebensräume",
+        "Als heutige Großstadt"
+      ],
+      "correctIndex": 2
+    },
+    "transition": "Zwei Tiergruppen bewegen sich in unterschiedliche Richtungen. Ihre Spuren verzweigen sich im feuchten Boden. Die Kamera folgt keiner als ‚Gewinner‘, sondern bleibt über der Gabelung.",
+    "science": "Der Einfluss von Klima und Landschaft auf einzelne Evolutionsschritte wird weiter erforscht; einfache Ein-Ursachen-Erzählungen sind zu vermeiden."
+  },
+  {
+    "id": 5,
+    "title": "Getrennte Wege",
+    "timeLabel": "Vor ungefähr 9 bis 6 Millionen Jahren",
+    "duration": 42,
+    "durationLabel": "ca. 42 Sekunden",
+    "function": "Erklärt den letzten gemeinsamen Vorfahren von Menschen und Schimpansen sowie die zentrale Verzweigungslogik.",
+    "background": "Abstrakt-dokumentarische Naturdarstellung: Ein realer Waldpfad teilt sich, darüber erscheinen zurückhaltende Linien einer Baumgrafik. Keine lineare Verwandlung von Affe zu Mensch.",
+    "camera": [
+      "Langsame Fahrt bis zur Weggabelung.",
+      "Die Kamera steigt leicht auf und zeigt mehrere Seitenpfade."
+    ],
+    "animation": [
+      "Zwei dünne Linien wachsen aus einem gemeinsamen Punkt in verschiedene Richtungen.",
+      "Heutige Schimpansen und Menschen erscheinen erst am äußersten Ende weit getrennter Äste."
+    ],
+    "sounds": [
+      "ruhiger Wald",
+      "zwei räumlich getrennte Rufgruppen",
+      "sehr dezenter tiefer Übergangston"
+    ],
+    "speaker": "Ein wichtiger Satz für unsere Reise: Menschen stammen nicht von den heute lebenden Schimpansen ab. Wir teilen mit ihnen einen älteren gemeinsamen Vorfahren. Wie dieser genau aussah, wissen wir nicht. Irgendwann vor ungefähr neun bis sechs Millionen Jahren trennen sich Populationen, und ihre Nachkommen entwickeln sich auf verschiedenen Wegen weiter. Auch Schimpansen und Bonobos haben seitdem eine lange eigene Geschichte. Die Gabelung ist also kein Abschied von ‚primitiv‘ zu ‚fortschrittlich‘ - sondern der Beginn mehrerer gleichzeitiger Geschichten.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Gemeinsamer Vorfahr",
+        "text": "Der letzte gemeinsame Vorfahr war weder ein heutiger Mensch noch ein heutiger Schimpanse."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Verwandt, nicht abstammend",
+        "text": "Menschen, Schimpansen und Bonobos sind nahe Verwandte mit getrennten Entwicklungslinien."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Von wem stammen Menschen ab?",
+      "options": [
+        "Direkt von heutigen Schimpansen",
+        "Direkt von heutigen Gorillas",
+        "Von älteren Populationen, mit denen auch Schimpansen gemeinsame Vorfahren teilen",
+        "Von keiner anderen Lebensform"
+      ],
+      "correctIndex": 2
+    },
+    "transition": "Die Baumgrafik löst sich wieder in Äste auf. Auf dem Boden erscheint zwischen Blättern ein unvollständiger Schädelknochen. Die Kamera nähert sich vorsichtig.",
+    "science": "Genetische Daten grenzen den Zeitraum der Trennung ein; ein sicher identifizierter letzter gemeinsamer Vorfahr ist nicht bekannt."
+  },
+  {
+    "id": 6,
+    "title": "Auf zwei Beinen?",
+    "timeLabel": "Vor etwa 7 bis 6 Millionen Jahren",
+    "duration": 42,
+    "durationLabel": "ca. 42 Sekunden",
+    "function": "Führt die frühesten Hinweise auf Zweibeinigkeit ein und zeigt zugleich, welche Fragen trotz neuer Befunde offenbleiben.",
+    "background": "Lichter Wald nahe eines Gewässers. Eine frühe Homininenform wird nur in Teilansichten gezeigt: Schädelansatz, Oberschenkel, Fußspuren im weichen Boden. Keine übergenaue Gesichtsrekonstruktion.",
+    "camera": [
+      "Detailaufnahme eines teilweise erhaltenen Oberschenkelknochens als Fundstück.",
+      "Wechsel zu einer vorsichtigen Lebensrekonstruktion im Wald."
+    ],
+    "animation": [
+      "Das Tier richtet sich kurz auf, macht wenige Schritte und greift wieder nach einem Ast.",
+      "Eine halbtransparente Einblendung markiert nur die Knochenmerkmale, auf die sich die Deutung stützt."
+    ],
+    "sounds": [
+      "Wald und Wasser",
+      "Schritte auf feuchtem Boden",
+      "einzelne Blätter",
+      "keine dramatische Musik"
+    ],
+    "speaker": "War das schon ein aufrechter Gang? Sahelanthropus lebte vor ungefähr sieben Millionen Jahren, Orrorin etwas später. Neue Untersuchungen des Oberschenkelknochens von Sahelanthropus stärken die Annahme, dass er sich am Boden auf zwei Beinen bewegte. Sein Gang sah aber vermutlich noch anders aus als bei späteren Homininen, und seine Arme blieben gut zum Klettern geeignet. Auch Orrorins Oberschenkel spricht für Zweibeinigkeit. Trotzdem sind die Fossilien unvollständig, und ihre genaue Stellung im Stammbaum bleibt umstritten. Wissenschaft zeigt nicht nur Antworten, sondern auch, wie sicher sie sind.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Sahelanthropus",
+        "text": "Eine Analyse von 2026 stärkt die Deutung als frühen Zweibeiner. Seine genaue Gangart und Stellung im Stammbaum bleiben Gegenstand der Forschung."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Orrorin",
+        "text": "Ein etwa sechs Millionen Jahre alter Fund aus Kenia. Merkmale des Oberschenkels sprechen für regelmäßige Zweibeinigkeit."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Warum wird die Fortbewegung dieser frühen Formen vorsichtig beschrieben?",
+      "options": [
+        "Weil Knochen nichts verraten",
+        "Weil die Funde unvollständig sind und Gangart sowie Stammbaumposition nicht in allen Einzelheiten klären",
+        "Weil sie sicher fliegen konnten",
+        "Weil es keine Altersbestimmung gibt"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Ein Fuß setzt auf feuchten Waldboden. Beim nächsten Schritt sind mehrere Millionen Jahre vergangen. Die Vegetation bleibt waldreich, doch der Körper im Bild wird deutlicher.",
+    "science": "Die 2026 veröffentlichte erneute Untersuchung von Sahelanthropus liefert stärkere Belege für Zweibeinigkeit. Die genaue Form der Fortbewegung und die Stammbaumposition bleiben dennoch nicht abschließend geklärt."
+  },
+  {
+    "id": 7,
+    "title": "Ardi - zwischen Baum und Boden",
+    "timeLabel": "Vor etwa 4,4 Millionen Jahren",
+    "duration": 42,
+    "durationLabel": "ca. 42 Sekunden",
+    "function": "Zeigt eine Merkmalsmischung und widerlegt die Vorstellung, Zweibeinigkeit sei erst in einer offenen Savanne entstanden.",
+    "background": "Waldiges Gelände mit Lichtungen in Äthiopien. Ardipithecus ramidus bewegt sich zwischen Ästen und Boden. Die Rekonstruktion bleibt zurückhaltend; Fell, Haut und Gesicht werden nicht unnötig präzise festgelegt.",
+    "camera": [
+      "Beginn in der Baumkrone, dann langsame Abwärtsfahrt.",
+      "Seitliche Ganzkörperansicht nur für wenige Schritte."
+    ],
+    "animation": [
+      "Ardi klettert vorsichtig ab, stützt sich am Stamm ab und geht eine kurze Strecke auf zwei Beinen.",
+      "Der greiffähige große Zeh wird in einem kurzen anatomischen Overlay gezeigt."
+    ],
+    "sounds": [
+      "sanfter Waldwind",
+      "Vögel aus sicher zeitgemäßen Gruppen nur sehr sparsam",
+      "Insekten",
+      "Rinde und Schritte"
+    ],
+    "speaker": "Ardi passt in keine einfache Schublade. Sie lebt vor rund 4,4 Millionen Jahren in einer waldreichen Landschaft. Ihr Becken zeigt Merkmale, die zu aufrechtem Gehen passen könnten. Gleichzeitig besitzt ihr Fuß einen greiffähigen großen Zeh - praktisch beim Klettern. Ihr Körper verbindet also verschiedene Möglichkeiten. Zweibeinigkeit entsteht nicht als fertige Erfindung an einem einzigen Tag. Sie entwickelt sich schrittweise, während Klettern noch lange wichtig bleibt.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Ardipithecus ramidus",
+        "text": "Die Art ist durch ein ungewöhnlich umfangreiches, aber stark beschädigtes Skelett bekannt. Das bekannteste Individuum heißt Ardi."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Wald statt reine Savanne",
+        "text": "Funde aus Ardis Umgebung sprechen für Wald- und Buschland. Das macht einfache Savannen-Erklärungen unwahrscheinlich."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Was zeigt Ardis Körper besonders gut?",
+      "options": [
+        "Eine fertige moderne Lauftechnik",
+        "Eine Mischung aus Klettern und möglicher Zweibeinigkeit",
+        "Den ersten Werkzeugkasten",
+        "Den ersten kontrollierten Gebrauch von Feuer"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Ardi hinterlässt einen einzelnen Abdruck im feuchten Boden. Wind trägt feine Vulkanasche darüber. Die Asche füllt das Bild und wird zur Oberfläche der nächsten Szene.",
+    "science": "Die genaue Fortbewegung von Ardipithecus wird diskutiert. Die Szene zeigt nur kurze, plausible Bewegungen und keine moderne Gehweise."
+  },
+  {
+    "id": 8,
+    "title": "Spuren in der Asche",
+    "timeLabel": "Vor rund 3,6 Millionen Jahren",
+    "duration": 38,
+    "durationLabel": "ca. 38 Sekunden",
+    "function": "Macht fossiles Verhalten unmittelbar sichtbar und lässt den Zuschauer Beweise lesen.",
+    "background": "Laetoli im heutigen Tansania nach einem Ascheregen. Der Boden ist feucht, im Hintergrund liegt ein Vulkan. Mehrere Homininen überqueren die Fläche, ohne dramatische Flucht.",
+    "camera": [
+      "Sehr tiefe Position knapp über dem Boden.",
+      "Die Kamera folgt einer entstehenden Spur und hält anschließend auf den Abdrücken."
+    ],
+    "animation": [
+      "Drei Individuen gehen ruhig durch die feuchte Asche.",
+      "Ferse, Fußsohle und großer Zeh hinterlassen nacheinander einen lesbaren Abdruck.",
+      "Späterer feiner Ascheregen deckt die Spur zu."
+    ],
+    "sounds": [
+      "weicher Wind",
+      "gedämpfte Schritte",
+      "fernes Grollen",
+      "feiner Ascheregen"
+    ],
+    "speaker": "Knochen zeigen, wie ein Körper gebaut war. Diese Spuren zeigen sogar, was jemand getan hat. Vor rund 3,6 Millionen Jahren laufen frühe Homininen durch feuchte Vulkanasche in Laetoli. Ihre großen Zehen liegen in einer Reihe mit den übrigen Zehen, und der Fuß rollt von der Ferse nach vorn ab. Wahrscheinlich stammen die Abdrücke von Australopithecus afarensis. Wer genau hier ging, wissen wir nicht. Aber für einen kurzen Moment wird aus einem fernen Fossil eine Bewegung: Schritt für Schritt.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Laetoli",
+        "text": "Die bekannte Spur umfasst zahlreiche Abdrücke und wurde in Tansania entdeckt."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Spurenfossil",
+        "text": "Fußabdrücke sind keine Körperreste, sondern erhaltene Zeichen eines Verhaltens."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Was belegen die Laetoli-Spuren besonders deutlich?",
+      "options": [
+        "Den Gebrauch von Feuer",
+        "Das Leben in Höhlen",
+        "Aufrechtes Gehen auf zwei Beinen",
+        "Die Herstellung von Metall"
+      ],
+      "correctIndex": 2
+    },
+    "transition": "Die Kamera fährt entlang der Spur. Einer der Abdrücke wird durch eine sanfte Überblendung zum Fußskelett und dann zum berühmten Teilskelett Lucy.",
+    "science": "Die Zuordnung zu Australopithecus afarensis ist sehr wahrscheinlich, aber die individuellen Spurenverursacher sind unbekannt."
+  },
+  {
+    "id": 9,
+    "title": "Lucy - zu Hause in zwei Welten",
+    "timeLabel": "Vor etwa 3,2 Millionen Jahren",
+    "duration": 44,
+    "durationLabel": "ca. 44 Sekunden",
+    "function": "Verbindet Skelettbelege mit einem glaubwürdigen Alltag zwischen Boden und Bäumen.",
+    "background": "Eine abwechslungsreiche Landschaft in Ostafrika. Eine Australopithecus-afarensis-Gruppe sucht Nahrung am Boden und zieht sich später in einen Baum zurück. Lucy steht stellvertretend für ihre Art, nicht für eine einzige direkte Ahnin aller Menschen.",
+    "camera": [
+      "Kurzer Blick auf das fossile Teilskelett als transparente Ebene.",
+      "Ruhige seitliche Begleitung einer kleinen Gruppe."
+    ],
+    "animation": [
+      "Lucy geht aufrecht, hebt eine Frucht auf und klettert anschließend sicher auf einen niedrigen Ast.",
+      "Arme, Becken und Beine werden kurz als funktionale Silhouette hervorgehoben."
+    ],
+    "sounds": [
+      "Wind im Gras",
+      "Blätter",
+      "leise Gruppenlaute",
+      "Früchte und Zweige"
+    ],
+    "speaker": "Lucy ist nur etwa einen Meter groß, aber ihr Skelett erzählt eine große Geschichte. Ihr Becken und ihre Beine tragen einen Körper, der regelmäßig aufrecht geht. Lange Arme und gebogene Finger zeigen zugleich, dass Klettern weiterhin wichtig ist. Ihr Gehirn ist deutlich kleiner als unseres. Erst aufrecht gehen und dann ein großes Gehirn entwickeln - die Reihenfolge überrascht viele. Lucy ist dabei nicht ‚halb Affe, halb Mensch‘. Sie ist vollständig sie selbst: Australopithecus afarensis, angepasst an mehr als eine Welt.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Lucy",
+        "text": "Das rund 3,2 Millionen Jahre alte Teilskelett AL 288-1 wurde 1974 in Hadar, Äthiopien, entdeckt."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Kleines Gehirn, aufrechter Gang",
+        "text": "Zweibeinigkeit entwickelte sich lange vor der starken Vergrößerung des Gehirns in der Gattung Homo."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Welche Aussage passt zu Australopithecus afarensis?",
+      "options": [
+        "Großes modernes Gehirn, aber kein aufrechter Gang",
+        "Regelmäßiger aufrechter Gang und weiterhin gute Kletterfähigkeiten",
+        "Sicherer Gebrauch von Metall",
+        "Leben ausschließlich in Eislandschaften"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Lucy schlägt eine harte Frucht gegen einen Stein. Das Geräusch bleibt stehen, während das Bild abdunkelt. Ein zweiter, gezielterer Steinschlag eröffnet Szene 10.",
+    "science": "Ob Lucy selbst direkte Vorfahrin späterer Homo-Arten war, lässt sich nicht beweisen. Ihre Art steht nahe an wichtigen Verzweigungen."
+  },
+  {
+    "id": 10,
+    "title": "Der Stein wird zum Werkzeug",
+    "timeLabel": "Früheste bekannte Funde vor etwa 3,3 Millionen Jahren",
+    "duration": 48,
+    "durationLabel": "ca. 48 Sekunden",
+    "function": "Großer Mittelpunkt: Technik beginnt vor der sicher belegten Gattung Homo; anschließend deutlicher Wechsel zum Homo-Teil.",
+    "background": "Westturkana in Kenia. Hände bearbeiten einen großen Stein auf einem Ambossstein. Das Gesicht des Werkzeugmachers bleibt außerhalb des Bildes, weil seine Art unbekannt ist.",
+    "camera": [
+      "Makroaufnahme von Händen, Schlagstein und abspringender Kante.",
+      "Nach dem Fundstück langsamer Rückzug auf die gesamte Arbeitsstelle."
+    ],
+    "animation": [
+      "Nur wenige kräftige, nachvollziehbare Schläge; keine moderne Präzisionsfertigung.",
+      "Ein Abschlag dreht sich im Licht und zeigt eine scharfe Kante.",
+      "Großer Mittelübergang: Die Kante wird im Match Cut zur Kante des Zeitfelsens; Linien eines verzweigten Stammbaums glimmen kurz auf und führen in die Gattung Homo."
+    ],
+    "sounds": [
+      "trockene Landschaft",
+      "Wind",
+      "drei klare Steinschläge",
+      "kurzer tiefer Zeitklang beim Mittelübergang"
+    ],
+    "speaker": "Ein Schlag - und der Stein verändert sich. In Lomekwi wurden Werkzeuge gefunden, die rund 3,3 Millionen Jahre alt sind. Damit sind sie älter als die frühesten sicher bekannten Fossilien der Gattung Homo. Wer sie hergestellt hat, wissen wir nicht. Vielleicht eine Australopithecus-Art, vielleicht eine andere Homininenform. Sicher ist: Werkzeugtechnik fällt nicht plötzlich fertig vom Himmel. Schon diese frühen Stücke zeigen, dass jemand Material auswählte, festhielt und mit wiederholten Schlägen veränderte.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Lomekwi 3",
+        "text": "Der Fundplatz in Kenia lieferte rund 3,3 Millionen Jahre alte Steinwerkzeuge. Die Technik wird Lomekwian genannt."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Unbekannter Hersteller",
+        "text": "In der Nähe gefundene Fossilien beweisen nicht, welche Art die Werkzeuge herstellte. Die Urheberschaft bleibt offen."
+      }
+    ],
+    "quiz": {
+      "kind": "stop",
+      "question": "Was ist an den Werkzeugen von Lomekwi besonders wichtig?",
+      "options": [
+        "Sie bestanden aus Metall.",
+        "Sie wurden sicher von Homo sapiens gefertigt.",
+        "Sie sind älter als die frühesten sicher bekannten Homo-Fossilien.",
+        "Sie dienten zum Entzünden von Feuerzeugen."
+      ],
+      "correctIndex": 2
+    },
+    "transition": "QUIZMOMENT A: Nach der Antwort schlägt ein letzter Klang an. Der Zeitfelsen erscheint nur für diesen großen Mittelübergang. Seine verzweigten Linien ordnen sich nicht zu einer Leiter, sondern zu mehreren gleichzeitigen Homo-Ästen. Dann löst er sich vollständig auf.",
+    "science": "Das Alter der Lomekwi-Funde ist gut belegt; ihre Interpretation und ihre Hersteller werden wissenschaftlich weiter diskutiert."
+  },
+  {
+    "id": 11,
+    "title": "Die Gattung Homo",
+    "timeLabel": "Seit ungefähr 2,8 Millionen Jahren",
+    "duration": 42,
+    "durationLabel": "ca. 42 Sekunden",
+    "function": "Beginnt die zweite Episodenhälfte und macht deutlich, dass auch Homo nicht plötzlich als fertiges Paket erscheint.",
+    "background": "Ostafrikanische Fundlandschaften mit mehreren zeitgleichen Homininen. Frühe Homo-Fossilien und Werkzeuge erscheinen als wissenschaftliche Belege, danach kurze Lebensrekonstruktionen.",
+    "camera": [
+      "Vom letzten Stammbaumast in eine Grabungsfläche.",
+      "Wechsel zwischen Kieferfragment, Schädelteilen und lebenden Gruppen."
+    ],
+    "animation": [
+      "Mehrere Gruppen bewegen sich in räumlich getrennten Bildbereichen.",
+      "Ein schlichtes Overlay verknüpft Fossil, Fundort und ungefähres Alter."
+    ],
+    "sounds": [
+      "trockener Wind",
+      "Schritte",
+      "Steinbearbeitung in der Ferne",
+      "ruhige Gruppenatmosphäre"
+    ],
+    "speaker": "Mit der Gattung Homo beginnt kein sauber abgegrenztes neues Kapitel. Der älteste bekannte Kiefer, der zu Homo gestellt wird, ist etwa 2,8 Millionen Jahre alt. Später begegnen uns Namen wie Homo habilis. Doch Zähne, Hände, Gehirn und Körper verändern sich nicht alle im selben Tempo. Gleichzeitig leben weiterhin Australopithecus- und Paranthropus-Arten. Statt einer Wachablösung sehen wir wieder mehrere Zweige nebeneinander - manche kurz, manche erstaunlich langlebig.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Ledi-Kiefer",
+        "text": "Der etwa 2,8 Millionen Jahre alte Unterkiefer aus Äthiopien gilt als ältester bekannter Fossilfund der Gattung Homo."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Homo habilis",
+        "text": "Die Art lebte ungefähr vor 2,4 bis 1,4 Millionen Jahren. Welche Fossilien wirklich zu ihr gehören, wird diskutiert."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Was geschah beim Auftreten der Gattung Homo?",
+      "options": [
+        "Alle anderen Homininen verschwanden sofort.",
+        "Mehrere Homininenformen lebten weiterhin gleichzeitig.",
+        "Der Mensch erfand sofort Schrift.",
+        "Das Gehirn erreichte sofort heutige Größe."
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Eine Gruppe verschwindet hinter einer Anhöhe. Als sie wieder sichtbar wird, haben sich Körperproportionen verändert: längere Beine, kürzere Arme, ein ausdauernderer Gang.",
+    "science": "Die Abgrenzung früher Homo-Arten ist umstritten. Namen werden in dieser Fassung als wissenschaftliche Ordnungsversuche, nicht als scharfe Kästen behandelt."
+  },
+  {
+    "id": 12,
+    "title": "Homo erectus - ein Körper für lange Wege",
+    "timeLabel": "Ab etwa 1,9 Millionen Jahren",
+    "duration": 44,
+    "durationLabel": "ca. 44 Sekunden",
+    "function": "Zeigt veränderte Körperproportionen, Ausdauer und die lange Erfolgsgeschichte von Homo erectus.",
+    "background": "Offene und bewaldete Zonen in Ostafrika. Eine Homo-erectus-Gruppe bewegt sich über längere Distanz zwischen Wasser, Schatten und Nahrung. Keine heroische Marschszene.",
+    "camera": [
+      "Seitliche, gleichmäßige Begleitfahrt auf Hüfthöhe.",
+      "Kurzer weiter Blick über die zurückgelegte Strecke."
+    ],
+    "animation": [
+      "Lange, ruhige Gehzyklen mit sichtbarer Gewichtsverlagerung.",
+      "Ein Jugendlicher passt sein Tempo an eine erwachsene Person an.",
+      "Hitze flimmert leicht; Schweiß wird nicht plakativ dargestellt."
+    ],
+    "sounds": [
+      "Schritte auf trockenem Boden",
+      "Wind",
+      "Atmung sehr dezent",
+      "ferne Tiere"
+    ],
+    "speaker": "Homo erectus wirkt im Körperbau schon deutlich vertrauter: längere Beine, kürzere Arme und ein Körper, der weite Strecken besser bewältigt. Diese Menschenform erscheint vor ungefähr 1,9 Millionen Jahren und bleibt in verschiedenen Regionen sehr lange bestehen. Ihr Gehirn ist im Durchschnitt größer als bei früheren Homininen, aber noch nicht wie unseres. Entscheidend ist das Zusammenspiel: Körper, Nahrung, Werkzeuge, Lernen und soziale Gruppen eröffnen gemeinsam neue Möglichkeiten.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Lange Beine",
+        "text": "Längere Beine vergrößern die Schrittlänge und erleichtern das Zurücklegen größerer Distanzen."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Ein langlebiger Zweig",
+        "text": "Homo erectus existierte in unterschiedlichen Formen über mehr als eine Million Jahre und verbreitete sich weit über Afrika hinaus."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Welche Veränderung half Homo erectus besonders bei langen Wegen?",
+      "options": [
+        "Kürzere Beine",
+        "Flügel",
+        "Längere Beine und modernere Körperproportionen",
+        "Ein schützender Panzer"
+      ],
+      "correctIndex": 2
+    },
+    "transition": "Die Gruppe erreicht einen Horizontpass. Die Kamera steigt auf. Eine zurückhaltende Karte legt sich über die Landschaft und zeigt mehrere mögliche Bewegungsrichtungen aus Afrika heraus.",
+    "science": "Homo erectus umfasst Funde aus großen Zeiträumen und Regionen. Ob alle unter einer einzigen Art zusammengefasst werden sollten, ist Gegenstand der Forschung."
+  },
+  {
+    "id": 13,
+    "title": "Die erste große Reise",
+    "timeLabel": "Vor etwa 1,85 bis 1,7 Millionen Jahren",
+    "duration": 46,
+    "durationLabel": "ca. 46 Sekunden",
+    "function": "Erzählt die frühe Ausbreitung außerhalb Afrikas als wiederholten Prozess, nicht als einmaligen Marsch.",
+    "background": "Übergang von afrikanischen Landschaften über den Kaukasus bis zu unterschiedlichen asiatischen Lebensräumen. Dmanisi bildet den klaren Belegpunkt.",
+    "camera": [
+      "Karte und Landschaft gehen fließend ineinander über.",
+      "Kurze ruhige Station am Fundort Dmanisi."
+    ],
+    "animation": [
+      "Mehrere kleine Gruppenlinien erscheinen zu unterschiedlichen Zeiten statt eines einzigen großen Pfeils.",
+      "Wetter, Vegetation und Höhenlage verändern sich auf der Reise.",
+      "Eine Gruppe repariert einfache Werkzeuge am Wegesrand."
+    ],
+    "sounds": [
+      "Wind in verschiedenen Landschaften",
+      "Schritte",
+      "Fluss",
+      "Steinschläge sehr sparsam"
+    ],
+    "speaker": "Vor ungefähr 1,8 Millionen Jahren finden wir frühe Menschen außerhalb Afrikas. In Dmanisi im heutigen Georgien lebten kleine Gruppen in einer Landschaft aus Grasland, Wald und Bergen. Später reichen Spuren bis weit nach Ostasien. Wahrscheinlich war das keine einzige große Auswanderung mit festem Ziel. Generation für Generation folgten Menschen Nahrung, Wasser und günstigen Lebensräumen. Manche Populationen kehrten um, andere verschwanden, wieder andere breiteten sich weiter aus.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Dmanisi",
+        "text": "Die etwa 1,85 bis 1,77 Millionen Jahre alten Funde gehören zu den frühesten bekannten Menschenfossilien außerhalb Afrikas."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Kein einzelner Pfeil",
+        "text": "Ausbreitungen bestanden wahrscheinlich aus vielen Bewegungen über lange Zeit, mit Rückwegen und regionalen Populationen."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Wie verlief die frühe Ausbreitung außerhalb Afrikas wahrscheinlich?",
+      "options": [
+        "Als eine einzige geplante Expedition",
+        "In vielen Bewegungen über zahlreiche Generationen",
+        "Erst nach der Erfindung von Schiffen",
+        "Ohne Anpassung an neue Lebensräume"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Abendkälte zieht auf. Eine Gruppe sammelt sich um eine dunkle Stelle am Boden. Ein kleines Glimmen wird sichtbar, aber die Szene wechselt noch nicht sofort in ein großes Feuer.",
+    "science": "Dmanisi ist ein sicherer früher Beleg außerhalb Afrikas. Routen, Anzahl und genaue Artzuordnung der frühen Ausbreitungen bleiben teilweise offen."
+  },
+  {
+    "id": 14,
+    "title": "Feuer verändert den Alltag",
+    "timeLabel": "Sicher kontrollierte Feuerstellen spätestens vor etwa 790.000 Jahren",
+    "duration": 45,
+    "durationLabel": "ca. 45 Sekunden",
+    "function": "Zeigt Nutzen und soziale Bedeutung des Feuers, ohne frühe unsichere Datierungen als Tatsache auszugeben.",
+    "background": "Ein geschützter Lagerplatz am Abend. Eine kleine Gruppe erhält ein vorhandenes Feuer, röstet Nahrung und hält Abstand zu Funken und Rauch.",
+    "camera": [
+      "Beginn auf einer einzelnen Glutstelle.",
+      "Langsame Kreisfahrt, bei der Gesichter nur vom Feuerlicht berührt werden."
+    ],
+    "animation": [
+      "Eine Person legt trockenes Holz nach; Flammen wachsen kurz und beruhigen sich.",
+      "Nahrung wird gewendet; Rauch zieht mit wechselndem Wind.",
+      "Am Rand weicht ein Tier vor dem Licht zurück."
+    ],
+    "sounds": [
+      "knisterndes Feuer",
+      "Abendwind",
+      "leise Gruppenlaute",
+      "ferne nachtaktive Tiere"
+    ],
+    "speaker": "Feuer ist mehr als Wärme. Es macht manche Nahrung leichter verdaulich, spendet Licht, kann Tiere fernhalten und schafft einen Treffpunkt. Sicher nachgewiesene Feuerstellen sind mindestens etwa 790.000 Jahre alt. Es gibt Hinweise, die noch weiter zurückreichen könnten - doch sie sind schwieriger zu deuten. Auch hier gilt: Ein verbrannter Fleck ist noch keine Küche. Entscheidend ist, ob Menschen Feuer wiederholt und kontrolliert nutzten.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Gesicherte Feuerstelle",
+        "text": "Wiederholte Feuer, verbrannte Materialien und ihre räumliche Anordnung helfen, kontrollierte Nutzung zu erkennen."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Kochen",
+        "text": "Erhitzte Nahrung kann leichter zu kauen und zu verdauen sein. Wann regelmäßiges Kochen begann, ist nicht genau geklärt."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Woran erkennen Forschende kontrollierte Feuernutzung?",
+      "options": [
+        "An jedem dunklen Stein",
+        "An wiederholten, geordneten Brandspuren und verbranntem Material",
+        "Nur an Höhlenmalerei",
+        "An Metallresten"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Funken steigen auf und werden zu Punkten eines verzweigten Stammbaums. Mehrere Punkte leuchten gleichzeitig in Afrika, Europa und Asien.",
+    "science": "Frühere mögliche Feuerbelege existieren, sind aber umstritten. Die Zeitangabe orientiert sich an gut abgesicherten Feuerstellen."
+  },
+  {
+    "id": 15,
+    "title": "Viele Arten von Menschen",
+    "timeLabel": "Vor etwa 700.000 bis 300.000 Jahren",
+    "duration": 48,
+    "durationLabel": "ca. 48 Sekunden",
+    "function": "Richtet den Blick vor Neandertalern, Denisova-Menschen und Homo sapiens erneut auf parallele Linien.",
+    "background": "Drei gleichzeitig sichtbare Landschaftsfenster: Afrika, Europa und Asien. Unterschiedliche Populationen passen sich regional an. Keine Fensterreihe wird als höherwertig dargestellt.",
+    "camera": [
+      "Langsame Fahrt von Fenster zu Fenster.",
+      "Am Ende Rückzug, sodass alle drei Räume gleichzeitig sichtbar bleiben."
+    ],
+    "animation": [
+      "Werkzeuge, Kleidung und Bewegungsmuster unterscheiden sich dezent nach Umwelt.",
+      "Eine vereinfachte Stammbaumgrafik verzweigt und verbindet sich an wenigen Stellen erneut."
+    ],
+    "sounds": [
+      "je Landschaft eigene, zurückhaltende Atmosphäre",
+      "Wind",
+      "Werkzeugarbeit",
+      "Wasser oder Schnee je Region"
+    ],
+    "speaker": "Je näher wir unserer Gegenwart kommen, desto voller wird die Welt der Menschenformen. Populationen leben in Afrika, Europa und Asien, trennen sich, begegnen sich später wieder und verändern sich weiter. Ältere Bücher ordneten viele Funde gern in eine saubere Reihe. Heute ist das Bild vorsichtiger: Manche Fossilien lassen sich nur schwer einer Art zuordnen, und Bezeichnungen wie Homo heidelbergensis werden unterschiedlich verwendet. Sicher ist vor allem die Verzweigung - nicht jede beschriftete Schublade.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Homo heidelbergensis?",
+        "text": "Der Name wird für unterschiedliche mittelpleistozäne Funde verwendet. Seine genaue Abgrenzung und Rolle sind umstritten."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Populationen statt Stufen",
+        "text": "Evolution wirkt in Populationen. Grenzen zwischen benannten Arten können im Fossilbericht unscharf sein."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Warum ist die Einteilung dieser Menschenformen schwierig?",
+      "options": [
+        "Weil Fossilien alle gleich aussehen",
+        "Weil Funde lückenhaft sind und Merkmale sich mosaikartig verändern",
+        "Weil es damals keine Knochen gab",
+        "Weil Artennamen verboten sind"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Das europäische Landschaftsfenster wird größer. Schnee zieht auf, doch das Bild bleibt bewohnt: Rauch steigt aus einem geschützten Lagerplatz.",
+    "science": "Die Episode vermeidet einen festen linearen Stammbaum für das Mittelpleistozän und markiert taxonomische Namen als wissenschaftliche Arbeitsbegriffe."
+  },
+  {
+    "id": 16,
+    "title": "Die Neandertaler",
+    "timeLabel": "Vor etwa 400.000 bis 40.000 Jahren",
+    "duration": 50,
+    "durationLabel": "ca. 50 Sekunden",
+    "function": "Korrigiert das Bild des groben Höhlenmenschen und zeigt Neandertaler als eigenständige, anpassungsfähige Menschenlinie.",
+    "background": "Eine kühle europäische Landschaft mit geschütztem Lagerplatz. Eine Gruppe bearbeitet Holz und Stein, versorgt ein verletztes Mitglied und plant die Nahrungssuche.",
+    "camera": [
+      "Ruhiger dokumentarischer Blick auf Tätigkeiten statt heroischer Porträts.",
+      "Kurze Nahaufnahmen von Hand, Werkzeugkante und fürsorglicher Geste."
+    ],
+    "animation": [
+      "Eine Person schäftet eine Steinspitze; eine andere legt Brennmaterial nach.",
+      "Ein älteres Gruppenmitglied bewegt sich vorsichtig und erhält Unterstützung.",
+      "Atem wird in kalter Luft nur leicht sichtbar."
+    ],
+    "sounds": [
+      "kalter Wind",
+      "Feuer",
+      "Stein und Holz",
+      "ruhige Stimmen ohne erfundene Sprache"
+    ],
+    "speaker": "Neandertaler sind keine unbeholfenen Vorstufen von uns. Sie leben Hunderttausende Jahre in Europa und Westasien, stellen anspruchsvolle Werkzeuge her, nutzen Feuer und kümmern sich offenbar auch um verletzte oder kranke Gruppenmitglieder. Ihr kräftiger Körper passt gut zu kalten Bedingungen. Gleichzeitig verändern sich ihre Kulturen über Zeit und Raum. Sie sind ein eigener Menschenzweig - und doch nicht völlig getrennt von uns, wie wir später sehen werden.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "An Kälte angepasst",
+        "text": "Ein gedrungener Körper und kurze Gliedmaßen verringern Wärmeverlust. Das ist eine Anpassung, kein Zeichen von Primitivität."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Fürsorge",
+        "text": "Verheilte schwere Verletzungen zeigen, dass einzelne Menschen längere Zeit mit Unterstützung ihrer Gruppe überlebten."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Welche Aussage über Neandertaler ist richtig?",
+      "options": [
+        "Sie konnten keine Werkzeuge herstellen.",
+        "Sie waren direkte primitive Stufen des modernen Menschen.",
+        "Sie waren eine eigenständige, anpassungsfähige Menschenlinie.",
+        "Sie lebten gleichzeitig mit Dinosauriern."
+      ],
+      "correctIndex": 2
+    },
+    "transition": "Eine Steinspitze wird im Feuerlicht gedreht. Ihre Kante wird zur Kante eines winzigen Knochenfragments in einem modernen Labor.",
+    "science": "Einzelne Verhaltensdeutungen - etwa Bestattungsrituale oder symbolische Handlungen - sind unterschiedlich gut belegt und werden deshalb nicht übersteigert."
+  },
+  {
+    "id": 17,
+    "title": "Die Denisova-Menschen",
+    "timeLabel": "Vor mehreren hunderttausend bis vor mindestens etwa 50.000 Jahren",
+    "duration": 55,
+    "durationLabel": "ca. 55 Sekunden",
+    "function": "Zeigt, wie DNA und alte Proteine eine lange kaum sichtbare Menschenlinie erkennbar machen und warum ihr Bild trotz neuer Funde unvollständig bleibt.",
+    "background": "Beginn in der Denisova-Höhle im Altai, dann Laboransicht mit einem winzigen Fingerknochen, einem Zahn und dem mehr als 146.000 Jahre alten Harbin-Schädel. Asiatische Landschaften erscheinen als zurückhaltende Möglichkeiten, nicht als vollständig gesicherte Lebensrekonstruktion.",
+    "camera": [
+      "Makroaufnahme des kleinen Fossilfragments.",
+      "Übergang von DNA- und Proteinmustern zur vorsichtigen Ansicht des Harbin-Schädels.",
+      "Verbindungslinien führen zu mehreren Regionen Asiens."
+    ],
+    "animation": [
+      "Der Harbin-Schädel wird als neuer molekular gestützter Beleg gezeigt, nicht als endgültiges Gesicht aller Denisova-Menschen.",
+      "Genabschnitte und Proteinmuster ordnen sich zu vergleichbaren Linien.",
+      "Eine Karte zeigt belegte Fundorte und große Wissenslücken statt einer flächendeckend sicheren Verbreitung."
+    ],
+    "sounds": [
+      "Höhlenwind",
+      "einzelne Wassertropfen",
+      "sehr dezente Laboratmosphäre",
+      "ruhiger Entdeckungston"
+    ],
+    "speaker": "Manchmal passt eine ganze Menschenlinie in eine winzige Schachtel. Denisova-Menschen wurden zuerst durch DNA aus einem kleinen Fingerknochen erkannt. Lange kannten wir fast nur Zähne und Bruchstücke. Seit 2025 geben alte Proteine und Erbgut aus Zahnstein einen viel größeren Hinweis: Auch der mehr als 146.000 Jahre alte Harbin-Schädel gehört sehr wahrscheinlich zu dieser Linie. Damit wird das Bild klarer, aber noch nicht vollständig. Genetische Spuren zeigen, dass Denisova-Populationen weit in Asien lebten und sich mit Neandertalern und Homo sapiens vermischten. Ein Mädchen mit Neandertaler-Mutter und Denisova-Vater macht solche Begegnungen besonders greifbar.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Erkannt durch Moleküle",
+        "text": "Denisova-Menschen wurden zuerst durch Erbgut erkannt. 2025 verbanden alte Proteine und mitochondriale DNA auch den Harbin-Schädel mit dieser Linie."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Ein Kind zweier Linien",
+        "text": "Ein Knochenfragment gehörte zu einem Mädchen mit einer Neandertaler-Mutter und einem Denisova-Vater."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Warum bleibt unser Bild der Denisova-Menschen trotz des Harbin-Schädels unvollständig?",
+      "options": [
+        "Ihre DNA ist unbekannt.",
+        "Die sicher zugeordneten Funde bleiben selten und stammen aus sehr unterschiedlichen Zeiten und Regionen.",
+        "Sie lebten ausschließlich im Meer.",
+        "Sie hinterließen nur Metallwerkzeuge."
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Die DNA-Linien laufen nicht in einer einzelnen Figur zusammen. Stattdessen führen mehrere afrikanische Fundpunkte in die nächste Szene.",
+    "science": "Die molekulare Zuordnung des Harbin-Schädels erweitert die Kenntnis des Aussehens deutlich. Zeitspanne, regionale Vielfalt, Lebensweise und taxonomische Benennung der Denisova-Menschen bleiben dennoch nur teilweise geklärt."
+  },
+  {
+    "id": 18,
+    "title": "Homo sapiens entsteht",
+    "timeLabel": "Seit mindestens etwa 300.000 Jahren",
+    "duration": 50,
+    "durationLabel": "ca. 50 Sekunden",
+    "function": "Erzählt den Ursprung unserer Art als panafrikanischen, schrittweisen Prozess statt als punktuelle Geburt.",
+    "background": "Mehrere afrikanische Landschaften und Fundorte: Nord-, Ost- und Südafrika. Jebel Irhoud ist ein wichtiger, aber nicht alleiniger Ort. Gruppen unterscheiden sich sichtbar, ohne moderne Kategorien rückzuprojizieren.",
+    "camera": [
+      "Karte Afrikas mit mehreren leuchtenden Fundpunkten.",
+      "Fließende Übergänge zwischen Landschaften und fossilen Schädelmerkmalen."
+    ],
+    "animation": [
+      "Gesichts- und Schädelmerkmale verändern sich mosaikartig, niemals als Morphing-Leiter.",
+      "Gruppen tauschen über Entfernungen hinweg Material und Wissen aus; die Wege bleiben hypothetisch markiert."
+    ],
+    "sounds": [
+      "regionale Naturatmosphären",
+      "Steinbearbeitung",
+      "Feuer",
+      "ruhige menschliche Aktivität"
+    ],
+    "speaker": "Unsere eigene Art erscheint nicht plötzlich an einem einzigen Geburtsort. Fossilien aus Jebel Irhoud in Marokko sind rund 300.000 Jahre alt. Weitere frühe Funde stammen aus anderen Teilen Afrikas. Manche Merkmale wirken schon modern, andere noch älter. Viele Forschende sprechen deshalb von einer panafrikanischen Entstehung: Populationen in verschiedenen Regionen bleiben über lange Zeit miteinander verbunden und tragen gemeinsam zur Entwicklung von Homo sapiens bei. Auch wir sind also das Ergebnis eines Netzes, nicht eines einzigen Punktes.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Jebel Irhoud",
+        "text": "Die rund 300.000 Jahre alten Funde aus Marokko gehören zu den ältesten sicher datierten Fossilien von Homo sapiens."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Panafrikanischer Ursprung",
+        "text": "Viele Befunde sprechen dafür, dass mehrere miteinander verbundene Populationen in Afrika an der Entstehung unserer Art beteiligt waren."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Wie wird der Ursprung von Homo sapiens heute häufig beschrieben?",
+      "options": [
+        "Als plötzliche Entstehung außerhalb Afrikas",
+        "Als schrittweiser, wahrscheinlich panafrikanischer Prozess",
+        "Als direkte Verwandlung eines Neandertalers",
+        "Als Folge der Landwirtschaft"
+      ],
+      "correctIndex": 1
+    },
+    "transition": "Mehrere Wege verlassen zu unterschiedlichen Zeiten Afrika. Einige verblassen, andere erreichen neue Regionen. Dort treffen sie auf bereits lebende Menschenformen.",
+    "science": "Das panafrikanische Modell ist gut begründet, wird aber weiter verfeinert. Exakte Populationen, Verbindungen und Zeitpunkte bleiben Forschungsgegenstand."
+  },
+  {
+    "id": 19,
+    "title": "Begegnungen und geteilte Geschichten",
+    "timeLabel": "Vor etwa 120.000 bis 40.000 Jahren",
+    "duration": 54,
+    "durationLabel": "ca. 54 Sekunden",
+    "function": "Zweiter großer Quiz- und Erkenntnismoment: Ausbreitung, Begegnung, Vermischung und kulturelle Vielfalt ohne Verdrängungs- oder Fortschrittsmythos.",
+    "background": "Weite Landschaften zwischen Afrika und Eurasien. Homo-sapiens-Gruppen begegnen Spuren und schließlich Menschen anderer Linien. Direkte Begegnungen bleiben ruhig und respektvoll; konkrete Sprache wird nicht erfunden.",
+    "camera": [
+      "Zunächst parallele Wege, dann vorsichtige Annäherung an eine gemeinsam genutzte Wasserstelle.",
+      "Später Rückzug auf eine Karte mit genetischen Verbindungslinien."
+    ],
+    "animation": [
+      "Blicke, Abstand und geteilte Aufmerksamkeit statt theatralischer Begrüßung.",
+      "Werkzeuge, Farbpigmente und Schmuckstücke erscheinen in verschiedenen Regionen und Zeiten.",
+      "Genetische Linien kreuzen sich an wenigen Stellen; keine Verschmelzung aller Figuren."
+    ],
+    "sounds": [
+      "Wind und Wasser",
+      "Werkzeuge",
+      "leise Stimmen ohne verständliche Wörter",
+      "kurzer ruhiger Erkenntnisklang beim Quiz"
+    ],
+    "speaker": "Als Homo sapiens sich weiter ausbreitet, ist die Welt nicht leer. Menschen treffen auf Neandertaler und Denisova-Populationen. Manche Gruppen konkurrieren vielleicht, manche gehen einander aus dem Weg, manche bekommen gemeinsame Kinder. Das Erbgut vieler heute lebender Menschen bewahrt Spuren solcher Begegnungen. Gleichzeitig entstehen in verschiedenen Regionen neue Werkzeuge, Schmuck, Bilder und weitreichende Netzwerke. Es gibt keinen einzigen Morgen, an dem ‚moderne Kultur‘ plötzlich eingeschaltet wird. Fähigkeiten wachsen, wandern, verschwinden und werden neu kombiniert.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Neandertaler-Erbgut",
+        "text": "Viele Menschen außerhalb Afrikas tragen heute einen kleinen Anteil DNA, der von Neandertalern stammt."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Denisova-Erbgut",
+        "text": "In einigen heutigen Populationen, besonders in Ozeanien und Teilen Asiens, sind deutliche Denisova-Anteile nachweisbar."
+      }
+    ],
+    "quiz": {
+      "kind": "stop",
+      "question": "Was zeigen genetische Daten über die Begegnungen verschiedener Menschenlinien?",
+      "options": [
+        "Sie hatten niemals Kontakt.",
+        "Nur Neandertaler überlebten bis heute unverändert.",
+        "Einige Populationen vermischten sich und hinterließen Spuren in heutigen Genomen.",
+        "Alle Menschenlinien waren genetisch identisch."
+      ],
+      "correctIndex": 2
+    },
+    "transition": "QUIZMOMENT B: Nach der Antwort werden die Verbindungslinien zu einem einzigen, weit verzweigten Netz der heute lebenden Menschheit. Das Netz liegt kurz über einer nächtlichen Erde und löst sich in Morgenlicht auf.",
+    "science": "Aus genetischen Spuren lassen sich Begegnungen ableiten, nicht jedoch konkrete persönliche Abläufe. Kulturelle Entwicklungen werden bewusst nicht nur Homo sapiens zugeschrieben."
+  },
+  {
+    "id": 20,
+    "title": "Eine Menschheit",
+    "timeLabel": "Heute",
+    "duration": 55,
+    "durationLabel": "ca. 55 Sekunden",
+    "function": "Feierliches, ruhiges Finale: gemeinsame Herkunft, heutige Vielfalt und Ausblick ohne Landwirtschaft vorwegzunehmen.",
+    "background": "Der Zeitfelsen steht heute in derselben Küstenlandschaft wie am Ende von Episode 1. Menschen selbst erscheinen nicht als vollständige Figuren. Sichtbar sind verschiedene Hände, die nacheinander Spuren, Werkzeuge und schließlich den Felsen berühren. Die letzte Hand ist wieder eine Kinderhand.",
+    "camera": [
+      "Langsame Rückfahrt vom Detail einer Hand zur ganzen Landschaft.",
+      "Am Ende Blick auf den Horizont; keine schnelle Montage."
+    ],
+    "animation": [
+      "Der Zeitfelsen glimmt warm und golden, ohne grelle Effekte.",
+      "Sehr feine Linien des Stammbaums leuchten kurz in seiner Oberfläche und verbinden sich nicht zu einer Rangordnung.",
+      "Einzelne Blätter und Vögel bewegen sich; die Kamera fährt langsam zurück."
+    ],
+    "sounds": [
+      "Wind",
+      "Wellen",
+      "Vögel",
+      "sehr zurückhaltendes finales Musikmotiv",
+      "zum Schluss wenige Sekunden natürliche Ruhe"
+    ],
+    "speaker": "Unsere Geschichte ist verzweigt, voller Seitenwege und Begegnungen. Viele Menschenformen lebten lange gleichzeitig. Einige verschwanden, andere hinterließen Spuren in unserem Erbgut. Heute gibt es nur noch eine Menschenart: Homo sapiens. Unsere sichtbare Vielfalt ist real und wertvoll, doch sie teilt uns nicht in biologische Menschenrassen. Wir sind eng miteinander verwandt und stammen letztlich aus afrikanischen Populationen. Deine Hand liegt wieder auf dem Zeitfelsen. Die Reise endet hier - vorerst. Denn was Menschen später mit ihrer Welt machen, ist ein neues Kapitel.",
+    "hotspots": [
+      {
+        "label": "Hotspot 1",
+        "title": "Eine Art",
+        "text": "Alle heute lebenden Menschen gehören zu Homo sapiens und können ihre Herkunft auf afrikanische Populationen zurückführen."
+      },
+      {
+        "label": "Hotspot 2",
+        "title": "Vielfalt ohne Rangordnung",
+        "text": "Menschliche Unterschiede entstanden durch Migration, Anpassung, Zufall und Vermischung. Sie bilden keine biologischen Rangstufen oder klar getrennten Rassen."
+      }
+    ],
+    "quiz": {
+      "kind": "optional",
+      "question": "Welche Aussage fasst Episode 2 am besten zusammen?",
+      "options": [
+        "Evolution führte geradlinig und zielgerichtet zum Menschen.",
+        "Nur eine Menschenform lebte jemals gleichzeitig.",
+        "Menschliche Evolution war verzweigt, und verschiedene Linien begegneten sich.",
+        "Landwirtschaft gehört zum Beginn der Menschenentwicklung."
+      ],
+      "correctIndex": 2
+    },
+    "transition": "Schlussbild: Die Kinderhand bleibt auf dem golden schimmernden Zeitfelsen. Langsame Rückfahrt. Schriftzug: ‚Zeitreise - Die Geschichte des Lebens‘. Darunter: ‚Episode 2 - Die Entwicklung des Menschen | Eine verzweigte Geschichte‘. Kein Ausblick auf Landwirtschaft im Bild; nur der Hinweis, dass ein neues Kapitel folgen kann.",
+    "science": "Die Formulierung zu biologischen Menschenrassen folgt dem heutigen wissenschaftlichen Konsens: Menschliche Variation ist überwiegend kontinuierlich und lässt sich nicht in natürliche Ranggruppen teilen."
+  }
+]

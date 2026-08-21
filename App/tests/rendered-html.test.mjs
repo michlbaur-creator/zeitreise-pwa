@@ -91,7 +91,7 @@ test("synchronisiert die Texteinblendungen mit Michas Aufnahmen", async () => {
   assert.match(visual, /progress >= cue\.at/);
 });
 
-test("kündigt als zweite Episode den Weg zum Menschen an", async () => {
+test("kündigt Episode 2 mit ihrem freigegebenen Titel an", async () => {
   const visual = await readFile(
     new URL("../app/components/SceneVisual.tsx", import.meta.url),
     "utf8",
@@ -101,12 +101,55 @@ test("kündigt als zweite Episode den Weg zum Menschen an", async () => {
     "utf8",
   );
 
-  assert.match(visual, /Episode 2 „Der Weg zum Menschen“/);
-  assert.match(sceneData, /Episode 2 „Der Weg zum Menschen“/);
+  assert.match(visual, /Episode 2 „Die Entwicklung des Menschen“/);
+  assert.match(sceneData, /Episode 2 „Die Entwicklung des Menschen“/);
   assert.doesNotMatch(
     visual,
     /Episode 2 „Das Zeitalter der Giganten“/,
   );
+});
+
+test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
+  const episodeTwo = JSON.parse(
+    await readFile(
+      new URL("../app/data/episode2.compact.generated.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  const episodeTwoApp = await readFile(
+    new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const home = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(episodeTwo.length, 14);
+  assert.deepEqual(
+    episodeTwo.map((scene) => scene.id),
+    Array.from({ length: 14 }, (_, index) => index + 1),
+  );
+  assert.equal(episodeTwo[0].title, "Der nächste Zeitsprung");
+  assert.equal(episodeTwo[13].title, "Eine Menschheit");
+  assert.deepEqual(
+    episodeTwo.filter((scene) => scene.quiz.kind === "stop").map((scene) => scene.id),
+    [6, 13],
+  );
+  assert.ok(episodeTwo.every((scene) => scene.hotspots.length === 2));
+  assert.ok(episodeTwo.every((scene) => scene.quiz.options.length === 4));
+  assert.ok(episodeTwo.every((scene) => scene.audioPath.endsWith(".m4a")));
+  await Promise.all(
+    episodeTwo.map((scene) =>
+      access(
+        new URL(`../public${scene.audioPath}`, import.meta.url),
+      ),
+    ),
+  );
+  assert.match(episodeTwoApp, /Sprecher: Micha/);
+  assert.match(episodeTwoApp, /Arbeitsfassung · Handy-Test/);
+  assert.match(episodeTwoApp, /Was ist sicher\?/);
+  assert.doesNotMatch(home, /href="\/episode-2\/"/);
 });
 
 test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async () => {
@@ -343,7 +386,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v64/);
+  assert.match(worker, /zeitreise-v78/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

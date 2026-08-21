@@ -1,6 +1,7 @@
-const CACHE_NAME = "zeitreise-v64";
+const CACHE_NAME = "zeitreise-v78";
 const APP_SHELL = [
   "/",
+  "/episode-2/",
   "/tierstammbaum/",
   "/ueber/",
   "/impressum/",
@@ -122,11 +123,78 @@ const SCENE_ASSETS = {
   ],
 };
 
+const EPISODE_TWO_ASSETS = {
+  1: [
+    "/assets/episode2/scene01/hintergrund-naechster-zeitsprung-v1.png",
+    "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png",
+    "/assets/episode2/audio/sprecher-szene-01-v1.m4a",
+  ],
+  2: [
+    "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png",
+    "/assets/episode2/scene03/hintergrund-welt-der-menschenaffen-v1.png",
+    "/assets/episode2/audio/sprecher-szene-02-v1.m4a",
+  ],
+  3: [
+    "/assets/episode2/scene04/hintergrund-afrika-im-wandel-v1.png",
+    "/assets/episode2/scene05/hintergrund-getrennte-wege-v1.png",
+    "/assets/episode2/audio/sprecher-szene-03-v1.m4a",
+  ],
+  4: [
+    "/assets/episode2/scene06/hintergrund-auf-zwei-beinen-v2.png",
+    "/assets/episode2/scene07/hintergrund-ardi-v1.png",
+    "/assets/episode2/audio/sprecher-szene-04-v1.m4a",
+  ],
+  5: [
+    "/assets/episode2/scene08/hintergrund-spuren-in-der-asche-v1.png",
+    "/assets/episode2/scene09/hintergrund-lucy-v2.png",
+    "/assets/episode2/audio/sprecher-szene-05-v1.m4a",
+  ],
+  6: [
+    "/assets/episode2/scene10/hintergrund-stein-wird-werkzeug-v1.png",
+    "/assets/episode2/audio/sprecher-szene-06-v1.m4a",
+  ],
+  7: [
+    "/assets/episode2/scene11/hintergrund-gattung-homo-v1.png",
+    "/assets/episode2/scene12/hintergrund-homo-erectus-v1.png",
+    "/assets/episode2/audio/sprecher-szene-07-v1.m4a",
+  ],
+  8: [
+    "/assets/episode2/scene13/hintergrund-erste-grosse-reise-v1.png",
+    "/assets/episode2/audio/sprecher-szene-08-v1.m4a",
+  ],
+  9: [
+    "/assets/episode2/scene14/hintergrund-feuer-veraendert-alltag-v1.png",
+    "/assets/episode2/audio/sprecher-szene-09-v1.m4a",
+  ],
+  10: [
+    "/assets/episode2/scene15/hintergrund-viele-arten-von-menschen-v1.png",
+    "/assets/episode2/audio/sprecher-szene-10-v1.m4a",
+  ],
+  11: [
+    "/assets/episode2/scene16/hintergrund-neandertaler-v1.png",
+    "/assets/episode2/audio/sprecher-szene-11-v1.m4a",
+  ],
+  12: [
+    "/assets/episode2/scene17/hintergrund-denisova-v1.png",
+    "/assets/episode2/audio/sprecher-szene-12-v1.m4a",
+  ],
+  13: [
+    "/assets/episode2/scene18/hintergrund-homo-sapiens-entsteht-v1.png",
+    "/assets/episode2/scene19/hintergrund-begegnungen-v1.png",
+    "/assets/episode2/audio/sprecher-szene-13-v1.m4a",
+  ],
+  14: [
+    "/assets/episode2/scene20/hintergrund-eine-menschheit-v1.png",
+    "/assets/episode2/audio/sprecher-szene-14-v1.m4a",
+  ],
+};
+
 self.addEventListener("message", (event) => {
   if (event.data?.type !== "CACHE_SCENES") return;
 
+  const source = event.data.episode === 2 ? EPISODE_TWO_ASSETS : SCENE_ASSETS;
   const assets = (event.data.sceneIds ?? []).flatMap(
-    (sceneId) => SCENE_ASSETS[sceneId] ?? [],
+    (sceneId) => source[sceneId] ?? [],
   );
 
   event.waitUntil(

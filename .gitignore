@@ -4,5 +4,6 @@
 # Private Ausgangsaufnahmen bleiben im Austauschordner; die freigegebenen
 # Testkopien liegen gezielt bei Szene 14.
 /Austausch/*.m4a
+/Austausch/ZeitreiseTon2/
 
 # Die Paketliste für pnpm wird mit dem Projekt gespeichert.

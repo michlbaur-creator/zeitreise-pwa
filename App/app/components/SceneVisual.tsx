@@ -2631,7 +2631,7 @@ export function SceneVisual({
         <div className="ending-title" aria-live="polite">
           <span>Zeitreise</span>
           <strong>Die Geschichte des Lebens</strong>
-          <small>Episode 2 „Der Weg zum Menschen“</small>
+          <small>Episode 2 „Die Entwicklung des Menschen“</small>
         </div>
       ) : null}
 
