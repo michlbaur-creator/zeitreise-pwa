@@ -344,6 +344,24 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
   assert.match(app, /zeitreise-resume-after-update/);
 });
 
+test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Sprecheraufnahme", async () => {
+  const app = await readFile(
+    new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const worker = await readFile(
+    new URL("../public/sw.js", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(app, /\/episode-2\/\?zeitreise-update=\$\{Date\.now\(\)\}/);
+  assert.match(app, /window\.setInterval\(checkForUpdate, 3 \* 60 \* 1000\)/);
+  assert.match(app, /updateViaCache: "none"/);
+  assert.match(app, /zeitreise-episode2-resume-after-update/);
+  assert.match(app, /if \(isPlayingRef\.current\)/);
+  assert.match(worker, /zeitreise-v80/);
+});
+
 test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () => {
   const app = await readFile(
     new URL("../app/ZeitreiseApp.tsx", import.meta.url),
@@ -402,7 +420,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v79/);
+  assert.match(worker, /zeitreise-v80/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
