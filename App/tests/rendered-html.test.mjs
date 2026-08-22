@@ -120,6 +120,10 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
     new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
     "utf8",
   );
+  const episodeTwoVisual = await readFile(
+    new URL("../app/episode-2/EpisodeTwoVisual.tsx", import.meta.url),
+    "utf8",
+  );
   const home = await readFile(
     new URL("../app/ZeitreiseApp.tsx", import.meta.url),
     "utf8",
@@ -150,6 +154,18 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, /Arbeitsfassung · Handy-Test/);
   assert.match(episodeTwoApp, /Was ist sicher\?/);
   assert.doesNotMatch(home, /href="\/episode-2\/"/);
+  assert.doesNotMatch(episodeTwoApp, /ep2-intro-tree/);
+  assert.match(episodeTwoVisual, /CompactFamilyTree/);
+  assert.doesNotMatch(
+    episodeTwoVisual,
+    /ep2-(sky|landscape|forest-elements|branching-elements|trace-elements|tool-elements|fire-elements|science-elements|time-rock-elements|dust)/,
+  );
+  await access(
+    new URL(
+      "../public/assets/episode2/scene18/hintergrund-homo-sapiens-entsteht-v2.png",
+      import.meta.url,
+    ),
+  );
 });
 
 test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async () => {
@@ -386,7 +402,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v78/);
+  assert.match(worker, /zeitreise-v79/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

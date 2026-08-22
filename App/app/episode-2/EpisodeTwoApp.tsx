@@ -296,7 +296,6 @@ export default function EpisodeTwoApp() {
     <main className="app-shell ep2-shell">
       {introOpen ? (
         <section className="ep2-intro" role="dialog" aria-modal="true" aria-label="Beginn von Episode 2">
-          <div className="ep2-intro-tree" aria-hidden="true"><i /><i /><i /><i /><i /></div>
           <div className="ep2-intro-copy">
             <p className="eyebrow">Zeitreise · Episode 2</p>
             <span className="ep2-preview-badge">Arbeitsfassung · Handy-Test</span>

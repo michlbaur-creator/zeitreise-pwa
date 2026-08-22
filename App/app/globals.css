@@ -162,26 +162,6 @@ button:disabled {
   font-size: 0.76rem;
 }
 
-.ep2-intro-tree,
-.ep2-intro-tree i {
-  position: absolute;
-  left: 50%;
-  bottom: -8%;
-  width: 3px;
-  height: 72%;
-  background: linear-gradient(transparent, rgba(227, 189, 121, 0.34));
-  transform-origin: bottom;
-}
-
-.ep2-intro-tree { animation: ep2-tree-rise 2.2s ease both; }
-.ep2-intro-tree i:nth-child(1) { height: 62%; transform: rotate(-48deg); }
-.ep2-intro-tree i:nth-child(2) { height: 55%; transform: rotate(-28deg); }
-.ep2-intro-tree i:nth-child(3) { height: 58%; transform: rotate(31deg); }
-.ep2-intro-tree i:nth-child(4) { height: 48%; transform: rotate(53deg); }
-.ep2-intro-tree i:nth-child(5) { height: 78%; transform: rotate(8deg); }
-
-@keyframes ep2-tree-rise { from { opacity: 0; transform: scaleY(0); } to { opacity: 1; transform: scaleY(1); } }
-
 .ep2-visual {
   position: relative;
   min-height: clamp(370px, 48vw, 650px);

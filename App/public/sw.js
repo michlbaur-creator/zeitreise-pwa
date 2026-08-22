@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v78";
+const CACHE_NAME = "zeitreise-v79";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -179,7 +179,7 @@ const EPISODE_TWO_ASSETS = {
     "/assets/episode2/audio/sprecher-szene-12-v1.m4a",
   ],
   13: [
-    "/assets/episode2/scene18/hintergrund-homo-sapiens-entsteht-v1.png",
+    "/assets/episode2/scene18/hintergrund-homo-sapiens-entsteht-v2.png",
     "/assets/episode2/scene19/hintergrund-begegnungen-v1.png",
     "/assets/episode2/audio/sprecher-szene-13-v1.m4a",
   ],

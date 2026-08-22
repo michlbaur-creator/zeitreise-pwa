@@ -161,7 +161,7 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
     sourceScenes: [18, 19],
     overlaySceneId: 19,
     images: [
-      { src: "/assets/episode2/scene18/hintergrund-homo-sapiens-entsteht-v1.png", role: "Beginn", description: "Panafrikanisches Netzwerk unserer Art" },
+      { src: "/assets/episode2/scene18/hintergrund-homo-sapiens-entsteht-v2.png", role: "Beginn", description: "Frühe Homo-sapiens-Gruppe in einer afrikanischen Landschaft" },
       { src: "/assets/episode2/scene19/hintergrund-begegnungen-v1.png", role: "Übergang", description: "Begegnungen verschiedener Menschenlinien" },
     ],
     movement: "Mehrere afrikanische Fundpunkte führen zu parallelen Wegen und schließlich zur gemeinsamen Wasserstelle.",
