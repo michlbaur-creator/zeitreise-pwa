@@ -11,6 +11,12 @@ export type EpisodeTwoCompactVisual = {
   }>;
   movement: string;
   treeStage?: "split" | "branches" | "network";
+  video?: {
+    src: string;
+    poster: string;
+    playback: "loop" | "hold";
+    volume: number;
+  };
 };
 
 export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
@@ -36,6 +42,12 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       { src: "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png", role: "Beginn", description: "Greifen, Klettern und räumliches Sehen" },
       { src: "/assets/episode2/scene03/hintergrund-welt-der-menschenaffen-v1.png", role: "Übergang", description: "Die spätere Vielfalt der Menschenaffen" },
     ],
+    video: {
+      src: "/assets/episode2/scene02/bewegung-primaten-veo-v1.mp4",
+      poster: "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png",
+      playback: "loop",
+      volume: 0.5,
+    },
     movement: "Die Kamera folgt zunächst einem Ast und öffnet sich dann zu einer weiteren Landschaft mit mehreren Formen.",
   },
   {
@@ -118,6 +130,12 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
     images: [
       { src: "/assets/episode2/scene14/hintergrund-feuer-veraendert-alltag-v1.png", role: "Hauptbild", description: "Feuer als Wärme, Werkzeug und Treffpunkt" },
     ],
+    video: {
+      src: "/assets/episode2/scene14/bewegung-feuer-veo-v1.mp4",
+      poster: "/assets/episode2/scene14/hintergrund-feuer-veraendert-alltag-v1.png",
+      playback: "loop",
+      volume: 0.5,
+    },
     movement: "Flammen, Rauch und wechselndes Feuerlicht bewegen sich zurückhaltend innerhalb des Bildes.",
   },
   {
@@ -141,6 +159,12 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
     images: [
       { src: "/assets/episode2/scene16/hintergrund-neandertaler-v1.png", role: "Hauptbild", description: "Werkzeug, Feuer, Anpassung und Fürsorge" },
     ],
+    video: {
+      src: "/assets/episode2/scene16/bewegung-neandertaler-veo-v1.mp4",
+      poster: "/assets/episode2/scene16/hintergrund-neandertaler-v1.png",
+      playback: "hold",
+      volume: 0.5,
+    },
     movement: "Ruhige Tätigkeiten im Lager; Hände, Feuer und fürsorgliche Geste stehen im Mittelpunkt.",
   },
   {
@@ -179,3 +203,9 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
     movement: "Goldenes Glimmen, wenige Blätter und Vögel sowie eine langsame Rückfahrt der Kamera.",
   },
 ];
+
+export function episodeTwoSceneHasVideo(sceneId: number) {
+  return episodeTwoCompactVisuals.some(
+    (scene) => scene.id === sceneId && Boolean(scene.video),
+  );
+}

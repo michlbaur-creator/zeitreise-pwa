@@ -9,6 +9,7 @@ import {
   episodeTwoScenes,
   type EpisodeTwoScene,
 } from "../data/episode2";
+import { episodeTwoSceneHasVideo } from "../data/episode2CompactVisuals";
 import type { SceneTheme } from "../data/scenes";
 import { EpisodeTwoVisual } from "./EpisodeTwoVisual";
 
@@ -101,11 +102,12 @@ export default function EpisodeTwoApp() {
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
   const stopIsOpen =
     scene.quiz.kind === "stop" && !completedStops.includes(scene.id);
+  const sceneUsesVideoSound = episodeTwoSceneHasVideo(scene.id);
   const activateAmbientSound = useAmbientSound(
     100 + scene.id,
     themeForScene(scene.id),
     isPlaying,
-    ambientEnabled,
+    ambientEnabled && !sceneUsesVideoSound,
     progress,
   );
 
@@ -452,6 +454,7 @@ export default function EpisodeTwoApp() {
             scene={scene}
             isPlaying={isPlaying}
             progress={progress}
+            soundEnabled={ambientEnabled}
             activeHotspot={activeHotspot}
             onHotspot={(index) => setActiveHotspot((value) => value === index ? null : index)}
           />

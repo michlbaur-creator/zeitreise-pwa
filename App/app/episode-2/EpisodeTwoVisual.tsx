@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import type { EpisodeTwoScene } from "../data/episode2";
 import { episodeTwoCompactVisuals } from "../data/episode2CompactVisuals";
 import { CompactFamilyTree } from "./bildfolge/CompactFamilyTree";
@@ -9,6 +9,7 @@ type Props = {
   scene: EpisodeTwoScene;
   isPlaying: boolean;
   progress: number;
+  soundEnabled: boolean;
   activeHotspot: number | null;
   onHotspot: (index: number) => void;
 };
@@ -25,6 +26,7 @@ export function EpisodeTwoVisual({
   scene,
   isPlaying,
   progress,
+  soundEnabled,
   activeHotspot,
   onHotspot,
 }: Props) {
@@ -33,6 +35,33 @@ export function EpisodeTwoVisual({
   const secondImageOpacity = Math.min(1, Math.max(0, (progress - 0.46) / 0.16));
   const treeOpacity = Math.min(1, Math.max(0, (progress - 0.38) / 0.18));
   const style = { "--ep2-progress": progress } as CSSProperties;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !visual?.video) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    video.volume = soundEnabled ? visual.video.volume : 0;
+    video.muted = !soundEnabled;
+
+    if (!isPlaying || reducedMotion) {
+      video.pause();
+      return;
+    }
+
+    void video.play().catch(() => {
+      // Das Standbild bleibt sichtbar, falls ein Browser Video mit Ton blockiert.
+    });
+  }, [isPlaying, soundEnabled, visual?.video]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || progress > 0.002 || video.currentTime < 0.15) return;
+    video.currentTime = 0;
+  }, [progress]);
 
   return (
     <div
@@ -51,6 +80,19 @@ export function EpisodeTwoVisual({
           key={image.src}
         />
       ))}
+
+      {visual?.video ? (
+        <video
+          ref={videoRef}
+          className="ep2-scene-video"
+          src={visual.video.src}
+          poster={visual.video.poster}
+          preload="metadata"
+          playsInline
+          loop={visual.video.playback === "loop"}
+          aria-hidden="true"
+        />
+      ) : null}
 
       {visual?.treeStage ? (
         <div className="ep2-family-tree-overlay" style={{ opacity: treeOpacity }}>

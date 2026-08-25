@@ -359,7 +359,41 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v80/);
+  assert.match(worker, /zeitreise-v83/);
+});
+
+test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
+  const app = await readFile(
+    new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const visual = await readFile(
+    new URL("../app/episode-2/EpisodeTwoVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const visuals = await readFile(
+    new URL("../app/data/episode2CompactVisuals.ts", import.meta.url),
+    "utf8",
+  );
+  const worker = await readFile(
+    new URL("../public/sw.js", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(visuals, /bewegung-primaten-veo-v1\.mp4/);
+  assert.match(visuals, /playback: "loop"/);
+  assert.match(visuals, /bewegung-feuer-veo-v1\.mp4/);
+  assert.match(visuals, /bewegung-neandertaler-veo-v1\.mp4/);
+  assert.match(visuals, /playback: "hold"/);
+  assert.match(visuals, /volume: 0\.5/);
+  assert.match(visual, /poster=\{visual\.video\.poster\}/);
+  assert.match(visual, /video\.pause\(\)/);
+  assert.match(visual, /video\.play\(\)/);
+  assert.match(visual, /video\.muted = !soundEnabled/);
+  assert.match(app, /ambientEnabled && !sceneUsesVideoSound/);
+  assert.match(worker, /bewegung-primaten-veo-v1\.mp4/);
+  assert.match(worker, /bewegung-feuer-veo-v1\.mp4/);
+  assert.match(worker, /bewegung-neandertaler-veo-v1\.mp4/);
 });
 
 test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () => {
@@ -420,7 +454,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v80/);
+  assert.match(worker, /zeitreise-v83/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
