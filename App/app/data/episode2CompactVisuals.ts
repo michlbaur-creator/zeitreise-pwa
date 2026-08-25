@@ -30,6 +30,12 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       { src: "/assets/episode2/scene01/hintergrund-naechster-zeitsprung-v1.png", role: "Beginn", description: "Anschluss an das kleine Säugetier und den Zeitfelsen" },
       { src: "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png", role: "Übergang", description: "Langsames Eintauchen in die Baumkronen" },
     ],
+    video: {
+      src: "/assets/episode2/scene01/bewegung-frueher-primat-veo-v1.mp4",
+      poster: "/assets/episode2/scene01/hintergrund-naechster-zeitsprung-v1.png",
+      playback: "hold",
+      volume: 0.5,
+    },
     movement: "Ruhiger Zeitsprung mit weicher Überblendung und anschließendem Vorwärtsflug in den Wald.",
   },
   {
@@ -60,6 +66,12 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       { src: "/assets/episode2/scene04/hintergrund-afrika-im-wandel-v1.png", role: "Beginn", description: "Afrikanisches Landschaftsmosaik im Wandel" },
       { src: "/assets/episode2/scene05/hintergrund-getrennte-wege-v1.png", role: "Übergang", description: "Verzweigung der verwandten Linien" },
     ],
+    video: {
+      src: "/assets/episode2/scene04/bewegung-getrennte-wege-veo-v1.mov",
+      poster: "/assets/episode2/scene04/hintergrund-afrika-im-wandel-v1.png",
+      playback: "hold",
+      volume: 0.5,
+    },
     movement: "Landschaftsteile verändern sich langsam; daraus entwickeln sich dezente verzweigte Linien.",
     treeStage: "split",
   },
@@ -119,6 +131,12 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
     images: [
       { src: "/assets/episode2/scene13/hintergrund-erste-grosse-reise-v1.png", role: "Hauptbild", description: "Generation für Generation in neue Lebensräume" },
     ],
+    video: {
+      src: "/assets/episode2/scene13/bewegung-erste-reise-veo-v1.mov",
+      poster: "/assets/episode2/scene13/hintergrund-erste-grosse-reise-v1.png",
+      playback: "loop",
+      volume: 0.5,
+    },
     movement: "Langsame Wanderung und Kartenrückzug; hier liegt der große musikalische Mittelübergang.",
   },
   {

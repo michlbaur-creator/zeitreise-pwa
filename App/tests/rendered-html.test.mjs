@@ -359,7 +359,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v83/);
+  assert.match(worker, /zeitreise-v84/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -381,6 +381,9 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   );
 
   assert.match(visuals, /bewegung-primaten-veo-v1\.mp4/);
+  assert.match(visuals, /bewegung-frueher-primat-veo-v1\.mp4/);
+  assert.match(visuals, /bewegung-getrennte-wege-veo-v1\.mov/);
+  assert.match(visuals, /bewegung-erste-reise-veo-v1\.mov/);
   assert.match(visuals, /playback: "loop"/);
   assert.match(visuals, /bewegung-feuer-veo-v1\.mp4/);
   assert.match(visuals, /bewegung-neandertaler-veo-v1\.mp4/);
@@ -391,9 +394,11 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   assert.match(visual, /video\.play\(\)/);
   assert.match(visual, /video\.muted = !soundEnabled/);
   assert.match(app, /ambientEnabled && !sceneUsesVideoSound/);
-  assert.match(worker, /bewegung-primaten-veo-v1\.mp4/);
-  assert.match(worker, /bewegung-feuer-veo-v1\.mp4/);
-  assert.match(worker, /bewegung-neandertaler-veo-v1\.mp4/);
+  assert.doesNotMatch(worker, /bewegung-primaten-veo-v1\.mp4/);
+  assert.doesNotMatch(worker, /bewegung-feuer-veo-v1\.mp4/);
+  assert.doesNotMatch(worker, /bewegung-neandertaler-veo-v1\.mp4/);
+  assert.match(worker, /isEpisodeTwoVideo/);
+  assert.match(worker, /event\.respondWith\(fetch\(event\.request\)\)/);
 });
 
 test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () => {
@@ -454,7 +459,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v83/);
+  assert.match(worker, /zeitreise-v84/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v83";
+const CACHE_NAME = "zeitreise-v84";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -132,7 +132,6 @@ const EPISODE_TWO_ASSETS = {
   2: [
     "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png",
     "/assets/episode2/scene03/hintergrund-welt-der-menschenaffen-v1.png",
-    "/assets/episode2/scene02/bewegung-primaten-veo-v1.mp4",
     "/assets/episode2/audio/sprecher-szene-02-v1.m4a",
   ],
   3: [
@@ -165,7 +164,6 @@ const EPISODE_TWO_ASSETS = {
   ],
   9: [
     "/assets/episode2/scene14/hintergrund-feuer-veraendert-alltag-v1.png",
-    "/assets/episode2/scene14/bewegung-feuer-veo-v1.mp4",
     "/assets/episode2/audio/sprecher-szene-09-v1.m4a",
   ],
   10: [
@@ -174,7 +172,6 @@ const EPISODE_TWO_ASSETS = {
   ],
   11: [
     "/assets/episode2/scene16/hintergrund-neandertaler-v1.png",
-    "/assets/episode2/scene16/bewegung-neandertaler-veo-v1.mp4",
     "/assets/episode2/audio/sprecher-szene-11-v1.m4a",
   ],
   12: [
@@ -232,6 +229,14 @@ self.addEventListener("fetch", (event) => {
 
   const requestUrl = new URL(event.request.url);
   if (requestUrl.origin !== self.location.origin) return;
+
+  const isEpisodeTwoVideo =
+    requestUrl.pathname.startsWith("/assets/episode2/") &&
+    /\.(?:mp4|mov|m4v)$/i.test(requestUrl.pathname);
+  if (isEpisodeTwoVideo) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
 
   if (event.request.mode === "navigate") {
     event.respondWith(
