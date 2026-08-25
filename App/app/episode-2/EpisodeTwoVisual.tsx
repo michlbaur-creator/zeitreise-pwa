@@ -69,6 +69,10 @@ export function EpisodeTwoVisual({
       style={style}
       aria-label={`Szenenbild für Szene ${scene.id}: ${scene.title}`}
     >
+      <div className="stage-topline">
+        <span className="time-card">{scene.timeLabel}</span>
+      </div>
+
       {visual?.images.map((image, index) => (
         <div
           className={`ep2-generated-background ep2-compact-background ep2-compact-background-${index === 0 ? "a" : "b"}`}

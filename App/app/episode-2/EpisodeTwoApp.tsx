@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  type PointerEvent as ReactPointerEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useAmbientSound } from "../audio/useAmbientSound";
 import { SiteFooter } from "../components/SiteFooter";
 import {
@@ -95,6 +101,12 @@ export default function EpisodeTwoApp() {
   const isPlayingRef = useRef(false);
   const updateWaitingRef = useRef(false);
   const updateReloadingRef = useRef(false);
+  const swipeStartRef = useRef<{
+    x: number;
+    y: number;
+    pointerId: number;
+    target: EventTarget | null;
+  } | null>(null);
 
   const scene = episodeTwoScenes[currentIndex];
   const narrationPath = scene.audioPath;
@@ -133,6 +145,64 @@ export default function EpisodeTwoApp() {
     setQuizChecked(false);
     window.localStorage.setItem("zeitreise-episode2-current-scene", String(nextIndex));
   }, []);
+
+  const startSceneSwipe = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      if (
+        !event.isPrimary ||
+        (event.pointerType === "mouse" && event.button !== 0)
+      ) {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      if (
+        target?.closest("button, a, input, textarea, select, [role='slider']")
+      ) {
+        return;
+      }
+
+      swipeStartRef.current = {
+        x: event.clientX,
+        y: event.clientY,
+        pointerId: event.pointerId,
+        target: event.target,
+      };
+    },
+    [],
+  );
+
+  const finishSceneSwipe = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      const start = swipeStartRef.current;
+      swipeStartRef.current = null;
+      if (!start || start.pointerId !== event.pointerId) return;
+
+      const target = start.target as HTMLElement | null;
+      if (
+        target?.closest("button, a, input, textarea, select, [role='slider']")
+      ) {
+        return;
+      }
+
+      const horizontalDistance = event.clientX - start.x;
+      const verticalDistance = event.clientY - start.y;
+      const isClearHorizontalSwipe =
+        Math.abs(horizontalDistance) >= 70 &&
+        Math.abs(horizontalDistance) > Math.abs(verticalDistance) * 1.25;
+
+      if (!isClearHorizontalSwipe) return;
+
+      if (horizontalDistance < 0) {
+        if (stopIsOpen) return;
+        ensureAmbientSound();
+        goToScene(currentIndex + 1, true);
+      } else {
+        goToScene(currentIndex - 1);
+      }
+    },
+    [currentIndex, ensureAmbientSound, goToScene, stopIsOpen],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -450,14 +520,23 @@ export default function EpisodeTwoApp() {
             </div>
           </div>
 
-          <EpisodeTwoVisual
-            scene={scene}
-            isPlaying={isPlaying}
-            progress={progress}
-            soundEnabled={ambientEnabled}
-            activeHotspot={activeHotspot}
-            onHotspot={(index) => setActiveHotspot((value) => value === index ? null : index)}
-          />
+          <div
+            className="scene-swipe-surface"
+            onPointerDown={startSceneSwipe}
+            onPointerUp={finishSceneSwipe}
+            onPointerCancel={() => {
+              swipeStartRef.current = null;
+            }}
+          >
+            <EpisodeTwoVisual
+              scene={scene}
+              isPlaying={isPlaying}
+              progress={progress}
+              soundEnabled={ambientEnabled}
+              activeHotspot={activeHotspot}
+              onHotspot={(index) => setActiveHotspot((value) => value === index ? null : index)}
+            />
+          </div>
 
           <audio
             ref={audioRef}
@@ -506,7 +585,7 @@ export default function EpisodeTwoApp() {
             <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }} disabled={currentIndex === episodeTwoScenes.length - 1 || stopIsOpen} title={stopIsOpen ? "Beantworte zuerst den Quizmoment." : undefined}>Weiter <span aria-hidden="true">→</span></button>
           </div>
           {stopIsOpen ? <p className="ep2-stop-hint">Diese Szene hält am Quizmoment an. Nach der richtigen Antwort geht die Reise weiter.</p> : null}
-          <p className="keyboard-hint">Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
+          <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode2-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
 

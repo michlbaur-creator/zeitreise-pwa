@@ -359,7 +359,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v84/);
+  assert.match(worker, /zeitreise-v85/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -399,6 +399,25 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   assert.doesNotMatch(worker, /bewegung-neandertaler-veo-v1\.mp4/);
   assert.match(worker, /isEpisodeTwoVideo/);
   assert.match(worker, /event\.respondWith\(fetch\(event\.request\)\)/);
+});
+
+test("zeigt in Episode 2 die Jahreszahl im Bild und wechselt per Wischbewegung", async () => {
+  const app = await readFile(
+    new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const visual = await readFile(
+    new URL("../app/episode-2/EpisodeTwoVisual.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(app, /className="scene-swipe-surface"/);
+  assert.match(app, /Math\.abs\(horizontalDistance\) >= 70/);
+  assert.match(app, /horizontalDistance < 0/);
+  assert.match(app, /if \(stopIsOpen\) return/);
+  assert.match(app, /goToScene\(currentIndex \+ 1, true\)/);
+  assert.match(visual, /className="time-card"/);
+  assert.match(visual, /\{scene\.timeLabel\}/);
 });
 
 test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () => {
@@ -459,7 +478,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v84/);
+  assert.match(worker, /zeitreise-v85/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
