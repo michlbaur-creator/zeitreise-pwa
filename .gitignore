@@ -6,4 +6,8 @@
 /Austausch/*.m4a
 /Austausch/ZeitreiseTon2/
 
+# Unbearbeitete Veo-Originale bleiben nur im lokalen Austauschordner.
+# Verwendete Kopien liegen mit eindeutigen Namen unter App/public/assets.
+/Austausch/Video-Clips/
+
 # Die Paketliste für pnpm wird mit dem Projekt gespeichert.
