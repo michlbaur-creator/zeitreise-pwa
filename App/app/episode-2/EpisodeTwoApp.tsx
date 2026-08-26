@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { useAmbientSound } from "../audio/useAmbientSound";
+import { FinalEpisodeQuiz } from "../components/FinalEpisodeQuiz";
 import { SiteFooter } from "../components/SiteFooter";
 import {
   episodeTwoMilestones,
@@ -23,6 +24,11 @@ import type { SceneTheme } from "../data/scenes";
 import { EpisodeTwoVisual } from "./EpisodeTwoVisual";
 
 type Panel = "sprecher" | "entdecken" | "wissen";
+
+const finalQuizSceneIds = new Set([1, 3, 5, 6, 8, 9, 11, 13, 14]);
+const finalQuizScenes = episodeTwoScenes.filter((scene) =>
+  finalQuizSceneIds.has(scene.id),
+);
 
 function twoDigits(value: number) {
   return String(value).padStart(2, "0");
@@ -96,7 +102,6 @@ export default function EpisodeTwoApp() {
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizChecked, setQuizChecked] = useState(false);
-  const [completedStops, setCompletedStops] = useState<number[]>([]);
   const [ambientEnabled, setAmbientEnabled] = useState(false);
   const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
   const progressRef = useRef(0);
@@ -115,8 +120,6 @@ export default function EpisodeTwoApp() {
   const narrationPath = episodeTwoSceneSoundtrack(scene.id) ?? scene.audioPath;
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
-  const stopIsOpen =
-    scene.quiz.kind === "stop" && !completedStops.includes(scene.id);
   const sceneUsesVideoSound = episodeTwoSceneHasVideo(scene.id);
   const activateAmbientSound = useAmbientSound(
     100 + scene.id,
@@ -197,14 +200,13 @@ export default function EpisodeTwoApp() {
       if (!isClearHorizontalSwipe) return;
 
       if (horizontalDistance < 0) {
-        if (stopIsOpen) return;
         ensureAmbientSound();
         goToScene(currentIndex + 1, true);
       } else {
         goToScene(currentIndex - 1);
       }
     },
-    [currentIndex, ensureAmbientSound, goToScene, stopIsOpen],
+    [currentIndex, ensureAmbientSound, goToScene],
   );
 
   useEffect(() => {
@@ -220,14 +222,6 @@ export default function EpisodeTwoApp() {
         storedIndex < episodeTwoScenes.length
       ) {
         setCurrentIndex(storedIndex);
-      }
-      try {
-        const storedStops = JSON.parse(
-          window.localStorage.getItem("zeitreise-episode2-quizstops") ?? "[]",
-        ) as number[];
-        setCompletedStops(storedStops.filter((id) => id === 6 || id === 13));
-      } catch {
-        setCompletedStops([]);
       }
       const introSeen =
         window.localStorage.getItem("zeitreise-episode2-intro-seen") === "1";
@@ -402,7 +396,7 @@ export default function EpisodeTwoApp() {
       const target = event.target as HTMLElement | null;
       if (target && ["INPUT", "BUTTON", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
       if (event.key === "ArrowLeft") goToScene(currentIndex - 1);
-      if (event.key === "ArrowRight" && !stopIsOpen) {
+      if (event.key === "ArrowRight") {
         ensureAmbientSound();
         goToScene(currentIndex + 1, true);
       }
@@ -420,7 +414,7 @@ export default function EpisodeTwoApp() {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [currentIndex, ensureAmbientSound, goToScene, isPlaying, progress, stopIsOpen]);
+  }, [currentIndex, ensureAmbientSound, goToScene, isPlaying, progress]);
 
   const startJourney = () => {
     window.localStorage.setItem("zeitreise-episode2-intro-seen", "1");
@@ -457,13 +451,6 @@ export default function EpisodeTwoApp() {
   const answerQuiz = (index: number) => {
     setSelectedOption(index);
     setQuizChecked(true);
-    if (index !== scene.quiz.correctIndex || scene.quiz.kind !== "stop") return;
-    const nextStops = [...new Set([...completedStops, scene.id])];
-    setCompletedStops(nextStops);
-    window.localStorage.setItem(
-      "zeitreise-episode2-quizstops",
-      JSON.stringify(nextStops),
-    );
   };
 
   const seek = (value: number) => {
@@ -519,7 +506,6 @@ export default function EpisodeTwoApp() {
             <div className="scene-facts">
               <span>{scene.durationLabel}</span>
               <span>{scene.timeLabel}</span>
-              {scene.quiz.kind === "stop" ? <em>Quiz-Halt</em> : null}
             </div>
           </div>
 
@@ -593,9 +579,12 @@ export default function EpisodeTwoApp() {
             )}
             <label className="scrubber"><span className="sr-only">Position in der Szene</span><input type="range" min="0" max="1000" value={Math.round(progress * 1000)} onChange={(event) => seek(Number(event.target.value) / 1000)} style={{ "--seek": `${progress * 100}%` } as React.CSSProperties} /></label>
             <span className="timecode">{formatTime(progress * scene.duration)} / {formatTime(scene.duration)}</span>
-            <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }} disabled={currentIndex === episodeTwoScenes.length - 1 || stopIsOpen} title={stopIsOpen ? "Beantworte zuerst den Quizmoment." : undefined}>Weiter <span aria-hidden="true">→</span></button>
+            <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }} disabled={currentIndex === episodeTwoScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
           </div>
-          {stopIsOpen ? <p className="ep2-stop-hint">Diese Szene hält am Quizmoment an. Nach der richtigen Antwort geht die Reise weiter.</p> : null}
+          <nav className="episode-series-nav" aria-label="Zwischen den Episoden wechseln">
+            <Link className="episode-series-button" href="/">← Episode 1</Link>
+            <button className="episode-series-button is-disabled" type="button" disabled aria-label="Episode 3 ist noch in Vorbereitung">Episode 3 →</button>
+          </nav>
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode2-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
@@ -612,7 +601,7 @@ export default function EpisodeTwoApp() {
           {panel === "entdecken" ? <section className="panel-section interactions">
             <div className="interaction-block ep2-hotspot-list"><div className="section-label"><span>Im Bild entdecken</span><i>2 Punkte</i></div>{scene.hotspots.map((hotspot, index) => <button type="button" onClick={() => setActiveHotspot(index)} key={hotspot.title}><span>{index + 1}</span><p><strong>{hotspot.title}</strong><small>{hotspot.text}</small></p></button>)}</div>
             <div className="interaction-block quiz-panel">
-              <div className="section-label"><span>{scene.quiz.kind === "stop" ? "Verbindlicher Quizmoment" : "Optionale Quizfrage"}</span>{scene.quiz.kind === "stop" && completedStops.includes(scene.id) ? <i className="correct-label">beantwortet</i> : null}</div>
+              <div className="section-label"><span>Optionale Quizfrage</span></div>
               <h3>{scene.quiz.question}</h3>
               <div className="quiz-options">{scene.quiz.options.map((option, index) => { const selected = selectedOption === index; const correct = quizChecked && selected && index === scene.quiz.correctIndex; const wrong = quizChecked && selected && index !== scene.quiz.correctIndex; return <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</button>; })}</div>
               {quizChecked ? <div className={`quiz-result ${selectedOption === scene.quiz.correctIndex ? "is-correct" : "is-wrong"}`} role="status"><strong>{selectedOption === scene.quiz.correctIndex ? "Richtig." : "Noch nicht richtig."}</strong>{selectedOption !== scene.quiz.correctIndex ? <span>Versuch es einfach noch einmal.</span> : null}</div> : null}
@@ -626,6 +615,20 @@ export default function EpisodeTwoApp() {
       <section className="ep2-scene-overview" aria-label="Alle Szenen von Episode 2">
         <div><p className="eyebrow">Die ganze Reise</p><h2>14 Stationen, viele Äste</h2></div>
         <div className="ep2-scene-grid">{episodeTwoScenes.map((item, index) => <button type="button" className={index === currentIndex ? "is-current" : ""} onClick={() => goToScene(index)} aria-current={index === currentIndex ? "step" : undefined} key={item.id}><span>{twoDigits(item.id)}</span><strong>{item.title}</strong><small>{item.timeLabel}</small></button>)}</div>
+      </section>
+
+      <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
+
+      <section className="ep3-outlook" aria-labelledby="episode-3-title">
+        <p className="eyebrow">Die Zeitreise geht weiter · Episode 3</p>
+        <h2 id="episode-3-title">Wie Menschen die Welt veränderten</h2>
+        <strong>Von den ersten Siedlungen bis heute</strong>
+        <p>
+          Sesshaftigkeit, Landwirtschaft, Städte, Ideen und Technik verändern
+          den Alltag – und schließlich den ganzen Planeten. Diese Episode ist
+          noch in Vorbereitung.
+        </p>
+        <button type="button" disabled>Episode 3 · demnächst</button>
       </section>
 
       <SiteFooter />

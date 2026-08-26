@@ -333,7 +333,7 @@
       }
     ],
     "quiz": {
-      "kind": "stop",
+      "kind": "optional",
       "question": "Was ist an den Werkzeugen von Lomekwi besonders wichtig?",
       "options": [
         "Sie bestanden aus Metall.",
@@ -706,7 +706,7 @@
       }
     ],
     "quiz": {
-      "kind": "stop",
+      "kind": "optional",
       "question": "Was zeigen genetische Daten über die Begegnungen verschiedener Menschenlinien?",
       "options": [
         "Sie hatten niemals Kontakt.",

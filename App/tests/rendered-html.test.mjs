@@ -138,7 +138,7 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.equal(episodeTwo[13].title, "Eine Menschheit");
   assert.deepEqual(
     episodeTwo.filter((scene) => scene.quiz.kind === "stop").map((scene) => scene.id),
-    [6, 13],
+    [],
   );
   assert.ok(episodeTwo.every((scene) => scene.hotspots.length === 2));
   assert.ok(episodeTwo.every((scene) => scene.quiz.options.length === 4));
@@ -156,6 +156,12 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(home, /href="\/episode-2\/"/);
   assert.match(home, /aria-label="Weiter zu Episode 2"/);
   assert.match(episodeTwoApp, /← Episode 1: Geschichte des Lebens/);
+  assert.match(episodeTwoApp, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} episode=\{2\} \/>/);
+  assert.match(episodeTwoApp, /Wie Menschen die Welt veränderten/);
+  assert.match(episodeTwoApp, /Von den ersten Siedlungen bis heute/);
+  assert.match(episodeTwoApp, /className="episode-series-button" href="\/"/);
+  assert.match(episodeTwoApp, /Episode 3 →<\/button>/);
+  assert.doesNotMatch(episodeTwoApp, /Quiz-Halt|stopIsOpen|episode2-quizstops/);
   assert.match(episodeTwoApp, /className="interaction-block ep2-hotspot-list"/);
   assert.doesNotMatch(episodeTwoVisual, /ep2-hotspot/);
   assert.doesNotMatch(episodeTwoApp, /ep2-intro-tree/);
@@ -363,7 +369,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v88/);
+  assert.match(worker, /zeitreise-v89/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -434,7 +440,7 @@ test("zeigt in Episode 2 die Jahreszahl im Bild und wechselt per Wischbewegung",
   assert.match(app, /className="scene-swipe-surface"/);
   assert.match(app, /Math\.abs\(horizontalDistance\) >= 70/);
   assert.match(app, /horizontalDistance < 0/);
-  assert.match(app, /if \(stopIsOpen\) return/);
+  assert.doesNotMatch(app, /stopIsOpen/);
   assert.match(app, /goToScene\(currentIndex \+ 1, true\)/);
   assert.match(visual, /className="time-card"/);
   assert.match(visual, /\{scene\.timeLabel\}/);
@@ -498,7 +504,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v88/);
+  assert.match(worker, /zeitreise-v89/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

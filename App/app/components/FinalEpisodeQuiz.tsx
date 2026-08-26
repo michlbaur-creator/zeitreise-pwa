@@ -1,8 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Scene } from "../data/scenes";
-
 type FinalQuestion = {
   sceneId: number;
   sceneTitle: string;
@@ -11,7 +9,23 @@ type FinalQuestion = {
   correctIndex: number;
 };
 
-export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
+type QuizScene = {
+  id: number;
+  title: string;
+  quiz?: {
+    question: string;
+    options: string[];
+    correctIndex: number;
+  } | null;
+};
+
+export function FinalEpisodeQuiz({
+  scenes,
+  episode = 1,
+}: {
+  scenes: QuizScene[];
+  episode?: 1 | 2;
+}) {
   const questions = useMemo<FinalQuestion[]>(
     () =>
       scenes
@@ -36,6 +50,9 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
 
   const question = questions[questionIndex];
   const isCorrect = selected === question.correctIndex;
+  const isEpisodeTwo = episode === 2;
+  const strongResult = Math.ceil(questions.length * 0.78);
+  const solidResult = Math.ceil(questions.length * 0.56);
 
   const reset = () => {
     setStarted(true);
@@ -71,10 +88,15 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
         <div className="final-quiz-intro">
           <div>
             <p className="eyebrow">Am Ende der Reise</p>
-            <h2 id="final-quiz-title">Das große Episode-1-Quiz</h2>
+            <h2 id="final-quiz-title">
+              {isEpisodeTwo
+                ? "Das große Episode-2-Quiz"
+                : "Das große Episode-1-Quiz"}
+            </h2>
             <p>
-              Neun Fragen aus neun Etappen deiner Zeitreise – von der jungen
-              Erde bis zum Asteroideneinschlag.
+              {isEpisodeTwo
+                ? "Neun Fragen zu Primaten, Zweibeinigkeit, Werkzeugen, Wanderungen und unseren menschlichen Verwandten."
+                : "Neun Fragen aus neun Etappen deiner Zeitreise – von der jungen Erde bis zum Asteroideneinschlag."}
             </p>
           </div>
           <button type="button" onClick={reset}>
@@ -90,16 +112,26 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
           <div>
             <p className="eyebrow">Dein Ergebnis</p>
             <h2 id="final-quiz-title">
-              {score >= 7
-                ? "Zeitreise bestanden!"
-                : score >= 5
-                  ? "Schon ziemlich erdgeschichtsfest."
-                  : "Die Erde gibt dir eine zweite Runde."}
+              {isEpisodeTwo
+                ? score >= strongResult
+                  ? "Spurensuche bestanden!"
+                  : score >= solidResult
+                    ? "Im Stammbaum gut orientiert."
+                    : "Ein paar Äste verdienen eine zweite Runde."
+                : score >= strongResult
+                  ? "Zeitreise bestanden!"
+                  : score >= solidResult
+                    ? "Schon ziemlich erdgeschichtsfest."
+                    : "Die Erde gibt dir eine zweite Runde."}
             </h2>
             <p>
-              {score >= 7
-                ? "Du hast die großen Wendepunkte der Erdgeschichte sicher im Blick."
-                : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."}
+              {isEpisodeTwo
+                ? score >= strongResult
+                  ? "Du behältst selbst in einer verzweigten Geschichte den Überblick."
+                  : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
+                : score >= strongResult
+                  ? "Du hast die großen Wendepunkte der Erdgeschichte sicher im Blick."
+                  : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."}
             </p>
             <button type="button" onClick={reset}>
               Noch einmal spielen
@@ -160,7 +192,9 @@ export function FinalEpisodeQuiz({ scenes }: { scenes: Scene[] }) {
                   role="status"
                 >
                   {isCorrect
-                    ? "Richtig – weiter durch die Erdgeschichte."
+                    ? isEpisodeTwo
+                      ? "Richtig – weiter auf der menschlichen Spur."
+                      : "Richtig – weiter durch die Erdgeschichte."
                     : "Nicht ganz – die Lösung bleibt noch verborgen."}
                 </p>
                 <button type="button" onClick={next}>
