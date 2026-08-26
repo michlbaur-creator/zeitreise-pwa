@@ -10,8 +10,6 @@ type Props = {
   isPlaying: boolean;
   progress: number;
   soundEnabled: boolean;
-  activeHotspot: number | null;
-  onHotspot: (index: number) => void;
 };
 
 function chapterForScene(sceneId: number) {
@@ -27,8 +25,6 @@ export function EpisodeTwoVisual({
   isPlaying,
   progress,
   soundEnabled,
-  activeHotspot,
-  onHotspot,
 }: Props) {
   const chapter = chapterForScene(scene.id);
   const visual = episodeTwoCompactVisuals.find((item) => item.id === scene.id);
@@ -104,18 +100,6 @@ export function EpisodeTwoVisual({
         </div>
       ) : null}
 
-      {scene.hotspots.map((hotspot, index) => (
-        <button
-          type="button"
-          className={`ep2-hotspot ep2-hotspot-${index + 1} ${activeHotspot === index ? "is-active" : ""}`}
-          onClick={() => onHotspot(index)}
-          aria-label={`${hotspot.title} öffnen`}
-          aria-pressed={activeHotspot === index}
-          key={hotspot.title}
-        >
-          <span>{index + 1}</span>
-        </button>
-      ))}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 # Zeitreise – Die Geschichte des Lebens
 
-Lokale technische Vorschau der verbindlichen Muster-Episode 1 mit allen
-22 Szenen.
+Technische Grundlage der öffentlichen Zeitreise mit Episode 1 und Episode 2.
 
 ## Lokal starten
 
@@ -27,7 +26,7 @@ Danach die angezeigte lokale Adresse im Browser öffnen. Üblicherweise ist das
 
 Die Ordner `Bilder`, `Audio` und `Animationen` enthalten noch keine fertigen
 Medien. Deshalb werden in der Vorschau bewusst neutrale Platzhalter verwendet.
-Es wurde nichts im Internet veröffentlicht.
+Die freigegebenen Fassungen werden unter `https://evo.mibaso.de` veröffentlicht.
 
 ## Prüfung
 

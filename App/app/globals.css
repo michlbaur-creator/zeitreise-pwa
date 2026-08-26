@@ -77,6 +77,17 @@ button:disabled {
   text-decoration: none;
 }
 
+.episode-switch-link {
+  text-decoration: none;
+}
+
+.episode-next-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .scene-facts em {
   padding: 5px 9px;
   border: 1px solid rgba(227, 189, 121, 0.35);
@@ -620,24 +631,6 @@ button:disabled {
 .ep2-visual.is-playing .ep2-dust i:nth-child(2n) { animation-delay: -3s; }
 @keyframes ep2-dust { to { translate: 24px -28px; opacity: .2; } }
 
-.ep2-hotspot {
-  position: absolute;
-  z-index: 30;
-  width: 42px;
-  aspect-ratio: 1;
-  padding: 0;
-  border: 1px solid rgba(251, 229, 184, .75);
-  border-radius: 50%;
-  background: rgba(9, 16, 14, .7);
-  box-shadow: 0 0 0 7px rgba(227, 189, 121, .12);
-  cursor: pointer;
-}
-.ep2-hotspot span { display: grid; place-items: center; width: 100%; height: 100%; color: var(--amber-soft); font-weight: 800; }
-.ep2-hotspot-1 { left: 22%; top: 37%; }.ep2-hotspot-2 { right: 22%; top: 58%; }
-.ep2-hotspot.is-active { background: var(--amber); color: #111; box-shadow: 0 0 0 9px rgba(227,189,121,.22); }
-.ep2-visual.is-playing .ep2-hotspot { animation: ep2-hotspot 2.2s ease-in-out infinite alternate; }
-@keyframes ep2-hotspot { to { box-shadow: 0 0 0 11px rgba(227, 189, 121, .05); } }
-
 .ep2-placeholder-note {
   position: absolute;
   z-index: 25;
@@ -703,7 +696,6 @@ button:disabled {
   .ep2-visual { min-height: 430px; border-radius: 14px; }
   .ep2-scene-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ep2-placeholder-note small { display: none; }
-  .ep2-hotspot-1 { left: 12%; }.ep2-hotspot-2 { right: 12%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

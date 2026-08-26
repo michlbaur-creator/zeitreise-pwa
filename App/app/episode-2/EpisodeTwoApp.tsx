@@ -499,7 +499,7 @@ export default function EpisodeTwoApp() {
           </div>
         </div>
         <div className="header-actions">
-          <Link className="quiet-button ep2-episode-link" href="/">← Episode 1</Link>
+          <Link className="quiet-button ep2-episode-link" href="/">← Episode 1: Geschichte des Lebens</Link>
           <button className="quiet-button" type="button" onClick={() => setIntroOpen(true)}>Anfang ansehen</button>
         </div>
       </header>
@@ -533,8 +533,6 @@ export default function EpisodeTwoApp() {
               isPlaying={isPlaying}
               progress={progress}
               soundEnabled={ambientEnabled}
-              activeHotspot={activeHotspot}
-              onHotspot={(index) => setActiveHotspot((value) => value === index ? null : index)}
             />
           </div>
 

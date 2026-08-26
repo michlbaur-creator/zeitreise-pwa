@@ -834,6 +834,9 @@ export default function ZeitreiseApp() {
           </div>
         </div>
         <div className="header-actions">
+          <Link className="quiet-button episode-switch-link" href="/episode-2/">
+            Episode 2 <span aria-hidden="true">→</span>
+          </Link>
           <button className="quiet-button intro-replay" type="button" onClick={replayIntro}>
             Anfang ansehen
           </button>
@@ -1025,18 +1028,27 @@ export default function ZeitreiseApp() {
               {formatTime(progress * scene.duration)} /{" "}
               {formatTime(scene.duration)}
             </span>
-            <button
-              className="next-control"
-              type="button"
-              onClick={() => {
-                ensureAmbientSound();
-                goToScene(currentIndex + 1, true);
-              }}
-              disabled={currentIndex === scenes.length - 1}
-              aria-label="Nächste Szene"
-            >
-              Weiter <span aria-hidden="true">→</span>
-            </button>
+            {currentIndex === scenes.length - 1 ? (
+              <Link
+                className="next-control episode-next-control"
+                href="/episode-2/"
+                aria-label="Weiter zu Episode 2"
+              >
+                Episode 2 <span aria-hidden="true">→</span>
+              </Link>
+            ) : (
+              <button
+                className="next-control"
+                type="button"
+                onClick={() => {
+                  ensureAmbientSound();
+                  goToScene(currentIndex + 1, true);
+                }}
+                aria-label="Nächste Szene"
+              >
+                Weiter <span aria-hidden="true">→</span>
+              </button>
+            )}
           </div>
           <p className="keyboard-hint">
             Wischen oder Pfeiltasten wechseln die Szene · Leertaste startet
