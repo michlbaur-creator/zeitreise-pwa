@@ -13,6 +13,10 @@ import { FinalEpisodeQuiz } from "./components/FinalEpisodeQuiz";
 import { SceneVisual } from "./components/SceneVisual";
 import { SiteFooter } from "./components/SiteFooter";
 import {
+  episodeOneSceneHasVideo,
+  episodeOneSceneSoundtrack,
+} from "./data/episode1Videos";
+import {
   narrationTracks,
   narrationVoiceForScene,
 } from "./data/narration";
@@ -243,7 +247,9 @@ export default function ZeitreiseApp() {
     ? [scene.quiz, followUpQuizzes[scene.id]].filter(Boolean)
     : [];
   const activeQuiz = sceneQuizzes[quizQuestionIndex];
-  const narrationPath = narrationTracks[scene.id];
+  const narrationPath =
+    episodeOneSceneSoundtrack(scene.id) ?? narrationTracks[scene.id];
+  const sceneUsesVideoSound = episodeOneSceneHasVideo(scene.id);
   const activeNarrationVoice = narrationVoiceForScene(scene.id);
   const narrationDisplayName = activeNarrationVoice.displayName;
   const discovered = discoveredByScene[String(scene.id)] ?? [];
@@ -255,7 +261,7 @@ export default function ZeitreiseApp() {
     scene.id,
     scene.theme,
     isPlaying,
-    ambientEnabled,
+    ambientEnabled && !sceneUsesVideoSound,
     progress,
   );
 
@@ -892,10 +898,6 @@ export default function ZeitreiseApp() {
               progress={progress}
               hasNarration={Boolean(narrationPath)}
               narrationVoiceName={narrationDisplayName}
-              activeHotspot={activeHotspot}
-              onHotspot={(index) =>
-                setActiveHotspot((value) => (value === index ? null : index))
-              }
               discoveryActive={discoveryActive}
               discovered={discovered}
               onDiscover={discover}
@@ -992,23 +994,35 @@ export default function ZeitreiseApp() {
                 <i />
               </span>
             </button>
-            <button
-              className={`sound-control ${ambientEnabled ? "is-on" : ""}`}
-              type="button"
-              aria-pressed={ambientEnabled}
-              aria-label={`Hintergrundatmosphäre ${
-                ambientEnabled ? "ausschalten" : "einschalten"
-              }`}
-              onClick={toggleAmbientSound}
-              title={
-                ambientEnabled
-                  ? "Hintergrundatmosphäre ausschalten"
-                  : "Hintergrundatmosphäre einschalten"
-              }
-            >
-              <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span>
-              <span className="sound-label">Atmosphäre</span>
-            </button>
+            {sceneUsesVideoSound ? (
+              <span
+                className="sound-control is-on ep2-mixed-sound"
+                role="status"
+                aria-label="Filmton und Sprecher sind zu einer Tonspur verbunden"
+                title="Filmton und Sprecher laufen gemeinsam"
+              >
+                <span aria-hidden="true">◖))</span>
+                <span className="sound-label">Filmton</span>
+              </span>
+            ) : (
+              <button
+                className={`sound-control ${ambientEnabled ? "is-on" : ""}`}
+                type="button"
+                aria-pressed={ambientEnabled}
+                aria-label={`Hintergrundatmosphäre ${
+                  ambientEnabled ? "ausschalten" : "einschalten"
+                }`}
+                onClick={toggleAmbientSound}
+                title={
+                  ambientEnabled
+                    ? "Hintergrundatmosphäre ausschalten"
+                    : "Hintergrundatmosphäre einschalten"
+                }
+              >
+                <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span>
+                <span className="sound-label">Atmosphäre</span>
+              </button>
+            )}
             <label className="scrubber">
               <span className="sr-only">Position in der Szene</span>
               <input
@@ -1104,6 +1118,28 @@ export default function ZeitreiseApp() {
 
           {panel === "interaktion" ? (
             <section className="panel-section interactions">
+              {scene.hotspots.length > 0 ? (
+                <div className="interaction-block hotspot-list">
+                  <div className="section-label">
+                    <span>Im Bild erklärt</span>
+                    <i>{scene.hotspots.length} Punkte</i>
+                  </div>
+                  {scene.hotspots.map((hotspot, index) => (
+                    <button
+                      type="button"
+                      onClick={() => setActiveHotspot(index)}
+                      key={`${hotspot.label}-${index}`}
+                    >
+                      <span>{index + 1}</span>
+                      <div>
+                        <strong>{hotspot.title ?? hotspot.label}</strong>
+                        <small>{hotspot.text}</small>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+
               {scene.discovery ? (
                 <div className="interaction-block discovery-panel">
                   <div className="section-label">
@@ -1211,7 +1247,7 @@ export default function ZeitreiseApp() {
                 </div>
               ) : null}
 
-              {!scene.discovery && !scene.quiz ? (
+              {!scene.discovery && !scene.quiz && scene.hotspots.length === 0 ? (
                 <div className="empty-interaction">
                   <span>Kein Zusatzinhalt vorgesehen</span>
                   <p>

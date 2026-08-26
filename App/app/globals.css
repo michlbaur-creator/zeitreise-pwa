@@ -1530,6 +1530,27 @@ button:disabled {
   animation-play-state: running;
 }
 
+.scene-visual.has-episode-one-video .world-camera {
+  inset: 0;
+  animation: none;
+}
+
+.scene-visual.has-episode-one-video
+  .world-camera
+  > :not(.episode-one-scene-video) {
+  display: none;
+}
+
+.episode-one-scene-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #17221f;
+}
+
 .scene-one-media {
   position: absolute;
   z-index: 0;
@@ -7181,7 +7202,6 @@ button:disabled {
   transition-duration: 240ms;
 }
 
-.hotspot-layer,
 .discovery-layer {
   position: absolute;
   z-index: 13;
@@ -7189,7 +7209,6 @@ button:disabled {
   pointer-events: none;
 }
 
-.hotspot-marker,
 .discovery-marker {
   position: absolute;
   display: grid;
@@ -7211,8 +7230,6 @@ button:disabled {
     background 180ms ease;
 }
 
-.hotspot-marker:hover,
-.hotspot-marker.is-active,
 .discovery-marker:hover,
 .discovery-marker.is-found {
   background: var(--amber);
@@ -7220,12 +7237,6 @@ button:disabled {
   transform: translate(-50%, -50%) scale(1.09);
 }
 
-.hotspot-marker span {
-  font-size: 1.1rem;
-  line-height: 1;
-}
-
-.hotspot-marker small,
 .discovery-marker small {
   position: absolute;
   left: 50%;
@@ -10206,7 +10217,6 @@ button:disabled {
     white-space: nowrap;
   }
 
-  .hotspot-marker small,
   .discovery-marker small {
     display: none;
   }
@@ -11063,11 +11073,6 @@ body.cinematic-intro-active {
     line-height: 1.3;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-  }
-
-  .hotspot-marker {
-    width: 42px;
-    height: 42px;
   }
 
   .discovery-marker {

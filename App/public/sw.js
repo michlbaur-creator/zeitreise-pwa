@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v92";
+const CACHE_NAME = "zeitreise-v93";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -64,11 +64,11 @@ const SCENE_ASSETS = {
   ],
   10: [
     "/assets/episode1/scene10/hintergrund-komplexe-einzeller-v1.png",
-    "/assets/episode1/scene10/sprecher-micha-v1.m4a",
+    "/assets/episode1/scene10/sprecher-und-veo-v1.m4a",
   ],
   11: [
     "/assets/episode1/scene11/hintergrund-erste-vielzeller-v1.png",
-    "/assets/episode1/scene11/sprecher-micha-v1.m4a",
+    "/assets/episode1/scene11/sprecher-und-veo-v1.m4a",
   ],
   12: [
     "/assets/episode1/scene12/hintergrund-ediacara-v1.png",
@@ -76,7 +76,7 @@ const SCENE_ASSETS = {
   ],
   13: [
     "/assets/episode1/scene13/hintergrund-kambrische-explosion-v1.png",
-    "/assets/episode1/scene13/sprecher-micha-v1.m4a",
+    "/assets/episode1/scene13/sprecher-und-veo-v1.m4a",
   ],
   14: [
     "/assets/episode1/scene14/hintergrund-erste-landpflanzen-v1.png",
@@ -85,12 +85,12 @@ const SCENE_ASSETS = {
   ],
   15: [
     "/assets/episode1/scene15/hintergrund-erste-landtiere-v1.png",
-    "/assets/episode1/scene15/sprecher-micha-v1.m4a",
+    "/assets/episode1/scene15/sprecher-und-veo-v1.m4a",
   ],
   16: [
     "/assets/episode1/scene16/hintergrund-tiktaalik-v1.png",
     "/assets/episode1/scene16/overlay-wassersplash-v1.png",
-    "/assets/episode1/scene16/sprecher-micha-v1.m4a",
+    "/assets/episode1/scene16/sprecher-und-veo-v1.m4a",
   ],
   17: [
     "/assets/episode1/scene17/hintergrund-amniotenei-v1.png",
@@ -99,7 +99,7 @@ const SCENE_ASSETS = {
   18: [
     "/assets/episode1/scene18/hintergrund-dinosaurier-v1.png",
     "/assets/episode1/scene18/overlay-wolkenschatten-v1.png",
-    "/assets/episode1/scene18/sprecher-micha-v1.m4a",
+    "/assets/episode1/scene18/sprecher-und-veo-v1.m4a",
   ],
   19: [
     "/assets/episode1/scene19/hintergrund-asteroid-morgen-v1.png",
@@ -115,7 +115,7 @@ const SCENE_ASSETS = {
   ],
   21: [
     "/assets/episode1/scene21/hintergrund-saeugetiere-v1.png",
-    "/assets/episode1/scene21/sprecher-micha-v1.m4a",
+    "/assets/episode1/scene21/sprecher-und-veo-v1.m4a",
   ],
   22: [
     "/assets/episode1/scene22/hintergrund-zeitfelsen-heute-v1.png",
@@ -230,10 +230,10 @@ self.addEventListener("fetch", (event) => {
   const requestUrl = new URL(event.request.url);
   if (requestUrl.origin !== self.location.origin) return;
 
-  const isEpisodeTwoVideo =
-    requestUrl.pathname.startsWith("/assets/episode2/") &&
+  const isStreamingVideo =
+    requestUrl.pathname.startsWith("/assets/") &&
     /\.(?:mp4|mov|m4v)$/i.test(requestUrl.pathname);
-  if (isEpisodeTwoVideo) {
+  if (isStreamingVideo) {
     event.respondWith(fetch(event.request));
     return;
   }

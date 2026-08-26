@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import {
   SCENE_THIRTEEN_ARMS_RACE_START,
   SCENE_THIRTEEN_DIVERSITY_START,
@@ -16,6 +16,7 @@ import {
   SCENE_TEN_VARIANTS,
 } from "../data/complexCellTiming";
 import { captionTracks } from "../data/captions";
+import { episodeOneSceneVideo } from "../data/episode1Videos";
 import {
   SCENE_NINETEEN_BLACKOUT_END,
   SCENE_NINETEEN_FLASH_END,
@@ -63,8 +64,6 @@ type SceneVisualProps = {
   progress: number;
   hasNarration: boolean;
   narrationVoiceName: string;
-  activeHotspot: number | null;
-  onHotspot: (index: number) => void;
   discoveryActive: boolean;
   discovered: number[];
   onDiscover: (index: number) => void;
@@ -77,33 +76,6 @@ const discoveryPositions = [
   { left: "82%", top: "26%" },
   { left: "34%", top: "57%" },
 ];
-
-const hotspotPositions: Partial<Record<number, CSSProperties[]>> = {
-  1: [{ left: "55%", top: "36%" }, { left: "52%", top: "73%" }],
-  2: [{ left: "72%", top: "18%" }, { left: "44%", top: "45%" }],
-  3: [{ left: "61%", top: "69%" }, { left: "83%", top: "28%" }],
-  4: [{ left: "60%", top: "74%" }, { left: "82%", top: "38%" }],
-  5: [{ left: "42%", top: "57%" }, { left: "78%", top: "29%" }],
-  6: [{ left: "76%", top: "34%" }, { left: "26%", top: "68%" }],
-  7: [{ left: "67%", top: "72%" }, { left: "22%", top: "56%" }],
-  8: [{ left: "72%", top: "29%" }, { left: "58%", top: "15%" }],
-  9: [{ left: "54%", top: "54%" }, { left: "61%", top: "59%" }],
-  10: [{ left: "29%", top: "57%" }, { left: "76%", top: "59%" }],
-  11: [{ left: "42%", top: "58%" }],
-  12: [{ left: "40%", top: "68%" }],
-  13: [{ left: "42%", top: "72%" }],
-  14: [{ left: "35%", top: "69%" }, { left: "68%", top: "68%" }],
-  15: [{ left: "57%", top: "64%" }, { left: "76%", top: "72%" }],
-  16: [{ left: "29%", top: "64%" }, { left: "62%", top: "47%" }],
-  17: [{ left: "66%", top: "74%" }, { left: "80%", top: "25%" }],
-  18: [
-    { left: "28%", top: "58%" },
-    { left: "79%", top: "22%" },
-    { left: "66%", top: "68%" },
-  ],
-  19: [{ left: "80%", top: "28%" }, { left: "28%", top: "59%" }],
-  21: [{ left: "35%", top: "69%" }],
-};
 
 const generatedBackgrounds: Partial<Record<number, string>> = {
   12: "/assets/episode1/scene12/hintergrund-ediacara-v1.png",
@@ -2118,12 +2090,38 @@ export function SceneVisual({
   progress,
   hasNarration,
   narrationVoiceName,
-  activeHotspot,
-  onHotspot,
   discoveryActive,
   discovered,
   onDiscover,
 }: SceneVisualProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const sceneVideo = episodeOneSceneVideo(scene.id);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !sceneVideo) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    video.muted = true;
+
+    if (!isPlaying || reducedMotion) {
+      video.pause();
+      return;
+    }
+
+    void video.play().catch(() => {
+      // Das ruhige Vorschaubild bleibt sichtbar, falls Video blockiert wird.
+    });
+  }, [isPlaying, sceneVideo]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || progress > 0.002 || video.currentTime < 0.15) return;
+    video.currentTime = 0;
+  }, [progress]);
+
   const parts = narrationParts(scene.speaker);
   const timedCaptions = captionTracks[scene.id];
   const activeCaption = timedCaptions
@@ -2152,7 +2150,6 @@ export function SceneVisual({
   const generatedBackground = generatedBackgrounds[scene.id];
   const sceneCollectionOverlays = collectionOverlays[scene.id] ?? [];
   const atmosphereProfile = atmosphereProfiles[scene.id];
-  const sceneHotspotPositions = hotspotPositions[scene.id] ?? discoveryPositions;
   const impactFlashOpacity =
     scene.id === 19
       ? phaseProgress(
@@ -2221,6 +2218,7 @@ export function SceneVisual({
           progress < 0.31 &&
           "is-dinosaur-footstep",
         generatedBackground && "has-scene-generated-media",
+        sceneVideo && "has-episode-one-video",
         isPlaying ? "is-playing" : "is-paused",
       ]
         .filter(Boolean)
@@ -2277,6 +2275,19 @@ export function SceneVisual({
       </div>
 
       <div className={`world-camera ${cameraClasses(scene.motions)}`}>
+        {sceneVideo ? (
+          <video
+            ref={videoRef}
+            className="episode-one-scene-video"
+            src={sceneVideo.src}
+            poster={sceneVideo.poster}
+            preload="metadata"
+            playsInline
+            muted
+            loop={sceneVideo.playback === "loop"}
+            aria-hidden="true"
+          />
+        ) : null}
         {isSceneOne ? (
           <div className="scene-one-media" aria-hidden="true">
             <img
@@ -2650,23 +2661,6 @@ export function SceneVisual({
         style={{ opacity: impactBlackoutOpacity }}
         aria-hidden="true"
       />
-
-      <div className="hotspot-layer" aria-label="Hotspots">
-        {scene.hotspots.map((hotspot, index) => (
-          <button
-            type="button"
-            className={`hotspot-marker ${activeHotspot === index ? "is-active" : ""}`}
-            style={sceneHotspotPositions[index] ?? discoveryPositions[index]}
-            onClick={() => onHotspot(index)}
-            aria-label={`Hotspot ${index + 1}: ${hotspot.label}`}
-            aria-pressed={activeHotspot === index}
-            key={hotspot.label}
-          >
-            <span aria-hidden="true">+</span>
-            <small>{hotspot.label}</small>
-          </button>
-        ))}
-      </div>
 
       {discoveryActive && scene.discovery ? (
         <div className="discovery-layer" aria-label={scene.discovery.label}>

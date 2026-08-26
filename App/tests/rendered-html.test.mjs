@@ -252,8 +252,8 @@ test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async
     new URL("../app/components/SceneVisual.tsx", import.meta.url),
     "utf8",
   );
-  assert.match(visual, /const hotspotPositions/);
-  assert.match(visual, /sceneHotspotPositions/);
+  assert.doesNotMatch(visual, /const hotspotPositions/);
+  assert.doesNotMatch(visual, /sceneHotspotPositions/);
   assert.doesNotMatch(visual, /Technische Bildvorschau/);
   assert.doesNotMatch(visual, /Medienplatzhalter/);
   assert.doesNotMatch(visual, /· Vorschau/);
@@ -376,7 +376,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v92/);
+  assert.match(worker, /zeitreise-v93/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -430,8 +430,87 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   assert.doesNotMatch(worker, /bewegung-primaten-veo-v1\.mp4/);
   assert.doesNotMatch(worker, /bewegung-feuer-veo-v1\.mp4/);
   assert.doesNotMatch(worker, /bewegung-neandertaler-veo-v1\.mp4/);
-  assert.match(worker, /isEpisodeTwoVideo/);
+  assert.match(worker, /isStreamingVideo/);
   assert.match(worker, /event\.respondWith\(fetch\(event\.request\)\)/);
+});
+
+test("spielt sieben ausgewählte Veo-Clips in Episode 1 mit gemeinsamer Tonspur", async () => {
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const visual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const videos = await readFile(
+    new URL("../app/data/episode1Videos.ts", import.meta.url),
+    "utf8",
+  );
+  const worker = await readFile(
+    new URL("../public/sw.js", import.meta.url),
+    "utf8",
+  );
+  const selectedScenes = [10, 11, 13, 15, 16, 18, 21];
+
+  assert.equal((videos.match(/sceneId: \d+/g) ?? []).length, 7);
+  assert.match(videos, /bewegung-komplexe-einzeller-veo-v1\.mp4/);
+  assert.match(videos, /bewegung-tiktaalik-veo-v1\.mp4[\s\S]*playback: "hold"/);
+  assert.match(videos, /bewegung-dinosaurier-veo-v1\.mp4/);
+  assert.match(videos, /playback: "loop"/);
+  assert.match(visual, /poster=\{sceneVideo\.poster\}/);
+  assert.match(visual, /loop=\{sceneVideo\.playback === "loop"\}/);
+  assert.match(visual, /video\.muted = true/);
+  assert.match(visual, /video\.play\(\)/);
+  assert.match(visual, /video\.pause\(\)/);
+  assert.match(app, /episodeOneSceneSoundtrack\(scene\.id\) \?\? narrationTracks\[scene\.id\]/);
+  assert.match(app, /ambientEnabled && !sceneUsesVideoSound/);
+  assert.match(app, /Filmton und Sprecher sind zu einer Tonspur verbunden/);
+
+  await Promise.all(
+    selectedScenes.flatMap((scene) => [
+      access(
+        new URL(
+          `../public/assets/episode1/scene${scene}/sprecher-und-veo-v1.m4a`,
+          import.meta.url,
+        ),
+      ),
+      access(
+        new URL(
+          `../public/assets/episode1/scene${scene}/${
+            {
+              10: "bewegung-komplexe-einzeller-veo-v1.mp4",
+              11: "bewegung-zellverbaende-veo-v1.mp4",
+              13: "bewegung-kambrium-veo-v1.mp4",
+              15: "bewegung-landtiere-veo-v1.mp4",
+              16: "bewegung-tiktaalik-veo-v1.mp4",
+              18: "bewegung-dinosaurier-veo-v1.mp4",
+              21: "bewegung-saeugetiere-veo-v1.mp4",
+            }[scene]
+          }`,
+          import.meta.url,
+        ),
+      ),
+    ]),
+  );
+
+  assert.doesNotMatch(worker, /bewegung-komplexe-einzeller-veo-v1\.mp4/);
+  assert.match(worker, /isStreamingVideo/);
+});
+
+test("erklärt Episode-1-Hotspots unter dem Bild ohne dauerhafte Pluszeichen", async () => {
+  const app = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const visual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(app, /Im Bild erklärt/);
+  assert.match(app, /scene\.hotspots\.map/);
+  assert.doesNotMatch(visual, /hotspot-layer|hotspot-marker/);
 });
 
 test("zeigt in Episode 2 die Jahreszahl im Bild und wechselt per Wischbewegung", async () => {
@@ -512,7 +591,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v92/);
+  assert.match(worker, /zeitreise-v93/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
