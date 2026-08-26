@@ -23,7 +23,7 @@ import {
 import type { SceneTheme } from "../data/scenes";
 import { EpisodeTwoVisual } from "./EpisodeTwoVisual";
 
-type Panel = "sprecher" | "entdecken" | "wissen";
+type Panel = "sprecher" | "entdecken" | "quiz";
 
 const finalQuizSceneIds = new Set([1, 3, 5, 6, 8, 9, 11, 13, 14]);
 const finalQuizScenes = episodeTwoScenes.filter((scene) =>
@@ -592,39 +592,44 @@ export default function EpisodeTwoApp() {
         <aside id="episode2-details" className={`content-panel ${detailsOpen ? "is-open" : ""}`}>
           <div className="panel-tabs" aria-label="Szeneninhalt">
             <button type="button" aria-pressed={panel === "sprecher"} className={panel === "sprecher" ? "is-active" : ""} onClick={() => setPanel("sprecher")}>Text lesen</button>
-            <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken &amp; Quiz</button>
-            <button type="button" aria-pressed={panel === "wissen"} className={panel === "wissen" ? "is-active" : ""} onClick={() => setPanel("wissen")}>Was ist sicher?</button>
+            <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button>
+            <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button>
           </div>
 
           {panel === "sprecher" ? <section className="panel-section"><div className="ep2-audio-note"><span aria-hidden="true">◖))</span><p><strong>Sprecher: Micha</strong><small>Die Aufnahme ist mit dem Ablauf dieser Szene verbunden.</small></p></div><blockquote>{scene.speaker}</blockquote></section> : null}
 
           {panel === "entdecken" ? <section className="panel-section interactions">
             <div className="interaction-block ep2-hotspot-list"><div className="section-label"><span>Im Bild entdecken</span><i>2 Punkte</i></div>{scene.hotspots.map((hotspot, index) => <button type="button" onClick={() => setActiveHotspot(index)} key={hotspot.title}><span>{index + 1}</span><p><strong>{hotspot.title}</strong><small>{hotspot.text}</small></p></button>)}</div>
+          </section> : null}
+
+          {panel === "quiz" ? <section className="panel-section interactions">
             <div className="interaction-block quiz-panel">
-              <div className="section-label"><span>Optionale Quizfrage</span></div>
+              <div className="section-label"><span>Quiz zu dieser Szene</span></div>
               <h3>{scene.quiz.question}</h3>
               <div className="quiz-options">{scene.quiz.options.map((option, index) => { const selected = selectedOption === index; const correct = quizChecked && selected && index === scene.quiz.correctIndex; const wrong = quizChecked && selected && index !== scene.quiz.correctIndex; return <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</button>; })}</div>
               {quizChecked ? <div className={`quiz-result ${selectedOption === scene.quiz.correctIndex ? "is-correct" : "is-wrong"}`} role="status"><strong>{selectedOption === scene.quiz.correctIndex ? "Richtig." : "Noch nicht richtig."}</strong>{selectedOption !== scene.quiz.correctIndex ? <span>Versuch es einfach noch einmal.</span> : null}</div> : null}
             </div>
           </section> : null}
-
-          {panel === "wissen" ? <section className="panel-section ep2-science-panel"><div className="ep2-certainty"><span>Wissenschaftlicher Hinweis</span><h3>So sicher ist die Darstellung</h3><p>{scene.science}</p></div><details><summary>Regiegrundlage dieser Szene</summary><p><strong>Bild:</strong> {scene.background}</p><p><strong>Bewegung:</strong> {scene.animation.join(" ")}</p><p><strong>Übergang:</strong> {scene.transition}</p></details><div className="ep2-sound-plan"><span>Vorgesehene Geräusche</span><p>{scene.sounds.join(" · ")}</p></div></section> : null}
         </aside>
       </div>
 
-      <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
+      {currentIndex === episodeTwoScenes.length - 1 ? (
+        <>
+          <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
 
-      <section className="ep3-outlook" aria-labelledby="episode-3-title">
-        <p className="eyebrow">Die Zeitreise geht weiter · Episode 3</p>
-        <h2 id="episode-3-title">Wie Menschen die Welt veränderten</h2>
-        <strong>Von den ersten Siedlungen bis heute</strong>
-        <p>
-          Sesshaftigkeit, Landwirtschaft, Städte, Ideen und Technik verändern
-          den Alltag – und schließlich den ganzen Planeten. Diese Episode ist
-          noch in Vorbereitung.
-        </p>
-        <button type="button" disabled>Episode 3 · demnächst</button>
-      </section>
+          <section className="ep3-outlook" aria-labelledby="episode-3-title">
+            <p className="eyebrow">Die Zeitreise geht weiter · Episode 3</p>
+            <h2 id="episode-3-title">Wie Menschen die Welt veränderten</h2>
+            <strong>Von den ersten Siedlungen bis heute</strong>
+            <p>
+              Sesshaftigkeit, Landwirtschaft, Städte, Ideen und Technik verändern
+              den Alltag – und schließlich den ganzen Planeten. Diese Episode ist
+              noch in Vorbereitung.
+            </p>
+            <button type="button" disabled>Episode 3 · demnächst</button>
+          </section>
+        </>
+      ) : null}
 
       <SiteFooter />
     </main>

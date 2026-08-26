@@ -755,9 +755,6 @@ button:disabled {
 .ep2-hotspot-list > button > span { display: grid; place-items: center; width: 28px; height: 28px; flex: 0 0 auto; border: 1px solid rgba(216,170,98,.4); border-radius: 50%; color: var(--amber-soft); font-size: .74rem; font-weight: 800; }
 .ep2-hotspot-list p { margin: 0; }.ep2-hotspot-list strong,.ep2-hotspot-list small { display: block; }.ep2-hotspot-list small { margin-top: 4px; color: var(--muted); line-height: 1.45; }
 
-.ep2-science-panel h3 { margin: 6px 0 10px; font-family: "Iowan Old Style", Georgia, serif; font-size: 1.35rem; font-weight: 500; }.ep2-science-panel p { color: var(--muted); line-height: 1.65; }.ep2-certainty { padding: 15px; border: 1px solid rgba(141,180,151,.25); border-radius: 13px; background: rgba(141,180,151,.05); }.ep2-certainty > span,.ep2-sound-plan > span { color: var(--green); font-size: .68rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
-.ep2-science-panel details { margin-top: 12px; border-bottom: 1px solid var(--line); }.ep2-science-panel summary { padding: 12px 0; cursor: pointer; color: var(--amber-soft); font-weight: 700; }.ep2-science-panel details p { font-size: .8rem; }.ep2-sound-plan { margin-top: 16px; }
-
 @media (max-width: 680px) {
   .ep2-shell .app-header { align-items: flex-start; }
   .ep2-shell .header-actions { flex-direction: column; align-items: stretch; }
