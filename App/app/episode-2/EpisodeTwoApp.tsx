@@ -15,7 +15,10 @@ import {
   episodeTwoScenes,
   type EpisodeTwoScene,
 } from "../data/episode2";
-import { episodeTwoSceneHasVideo } from "../data/episode2CompactVisuals";
+import {
+  episodeTwoSceneHasVideo,
+  episodeTwoSceneSoundtrack,
+} from "../data/episode2CompactVisuals";
 import type { SceneTheme } from "../data/scenes";
 import { EpisodeTwoVisual } from "./EpisodeTwoVisual";
 
@@ -109,7 +112,7 @@ export default function EpisodeTwoApp() {
   } | null>(null);
 
   const scene = episodeTwoScenes[currentIndex];
-  const narrationPath = scene.audioPath;
+  const narrationPath = episodeTwoSceneSoundtrack(scene.id) ?? scene.audioPath;
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
   const stopIsOpen =
@@ -532,7 +535,6 @@ export default function EpisodeTwoApp() {
               scene={scene}
               isPlaying={isPlaying}
               progress={progress}
-              soundEnabled={ambientEnabled}
             />
           </div>
 
@@ -575,9 +577,20 @@ export default function EpisodeTwoApp() {
               <span className="play-label">{isPlaying ? "Pause" : progress >= 1 ? "Noch einmal" : "Szene starten"}</span>
               <span className="play-wave" aria-hidden="true"><i /><i /><i /></span>
             </button>
-            <button className={`sound-control ${ambientEnabled ? "is-on" : ""}`} type="button" aria-pressed={ambientEnabled} onClick={toggleAmbient}>
-              <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span><span className="sound-label">Atmosphäre</span>
-            </button>
+            {sceneUsesVideoSound ? (
+              <span
+                className="sound-control is-on ep2-mixed-sound"
+                role="status"
+                aria-label="Filmton und Sprecher sind zu einer Tonspur verbunden"
+                title="Filmton und Sprecher laufen gemeinsam"
+              >
+                <span aria-hidden="true">◖))</span><span className="sound-label">Filmton</span>
+              </span>
+            ) : (
+              <button className={`sound-control ${ambientEnabled ? "is-on" : ""}`} type="button" aria-pressed={ambientEnabled} onClick={toggleAmbient}>
+                <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span><span className="sound-label">Atmosphäre</span>
+              </button>
+            )}
             <label className="scrubber"><span className="sr-only">Position in der Szene</span><input type="range" min="0" max="1000" value={Math.round(progress * 1000)} onChange={(event) => seek(Number(event.target.value) / 1000)} style={{ "--seek": `${progress * 100}%` } as React.CSSProperties} /></label>
             <span className="timecode">{formatTime(progress * scene.duration)} / {formatTime(scene.duration)}</span>
             <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }} disabled={currentIndex === episodeTwoScenes.length - 1 || stopIsOpen} title={stopIsOpen ? "Beantworte zuerst den Quizmoment." : undefined}>Weiter <span aria-hidden="true">→</span></button>

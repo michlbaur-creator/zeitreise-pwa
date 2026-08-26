@@ -9,7 +9,6 @@ type Props = {
   scene: EpisodeTwoScene;
   isPlaying: boolean;
   progress: number;
-  soundEnabled: boolean;
 };
 
 function chapterForScene(sceneId: number) {
@@ -24,7 +23,6 @@ export function EpisodeTwoVisual({
   scene,
   isPlaying,
   progress,
-  soundEnabled,
 }: Props) {
   const chapter = chapterForScene(scene.id);
   const visual = episodeTwoCompactVisuals.find((item) => item.id === scene.id);
@@ -40,8 +38,7 @@ export function EpisodeTwoVisual({
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    video.volume = soundEnabled ? visual.video.volume : 0;
-    video.muted = !soundEnabled;
+    video.muted = true;
 
     if (!isPlaying || reducedMotion) {
       video.pause();
@@ -51,7 +48,7 @@ export function EpisodeTwoVisual({
     void video.play().catch(() => {
       // Das Standbild bleibt sichtbar, falls ein Browser Video mit Ton blockiert.
     });
-  }, [isPlaying, soundEnabled, visual?.video]);
+  }, [isPlaying, visual?.video]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -89,6 +86,7 @@ export function EpisodeTwoVisual({
           poster={visual.video.poster}
           preload="metadata"
           playsInline
+          muted
           loop={visual.video.playback === "loop"}
           aria-hidden="true"
         />

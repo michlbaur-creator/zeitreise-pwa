@@ -7535,6 +7535,10 @@ button:disabled {
   color: #9fcbbb;
 }
 
+.ep2-mixed-sound {
+  cursor: default;
+}
+
 .sound-control span {
   color: currentColor;
   font-size: 0.74rem;

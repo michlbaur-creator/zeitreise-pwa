@@ -363,7 +363,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v86/);
+  assert.match(worker, /zeitreise-v87/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -392,12 +392,28 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   assert.match(visuals, /bewegung-feuer-veo-v1\.mp4/);
   assert.match(visuals, /bewegung-neandertaler-veo-v1\.mp4/);
   assert.match(visuals, /playback: "hold"/);
-  assert.match(visuals, /volume: 0\.5/);
+  assert.match(visuals, /sprecher-und-veo-szene-01-v1\.m4a/);
+  assert.match(visuals, /sprecher-und-veo-szene-11-v1\.m4a/);
+  assert.match(app, /episodeTwoSceneSoundtrack\(scene\.id\) \?\? scene\.audioPath/);
   assert.match(visual, /poster=\{visual\.video\.poster\}/);
   assert.match(visual, /video\.pause\(\)/);
   assert.match(visual, /video\.play\(\)/);
-  assert.match(visual, /video\.muted = !soundEnabled/);
+  assert.match(visual, /video\.muted = true/);
+  assert.match(visual, /muted/);
   assert.match(app, /ambientEnabled && !sceneUsesVideoSound/);
+  assert.match(app, /Filmton und Sprecher sind zu einer Tonspur verbunden/);
+  await Promise.all(
+    ["01", "02", "03", "08", "09", "11"].map((scene) =>
+      access(
+        new URL(
+          `../public/assets/episode2/audio/sprecher-und-veo-szene-${scene}-v1.m4a`,
+          import.meta.url,
+        ),
+      ),
+    ),
+  );
+  assert.match(worker, /sprecher-und-veo-szene-01-v1\.m4a/);
+  assert.match(worker, /sprecher-und-veo-szene-11-v1\.m4a/);
   assert.doesNotMatch(worker, /bewegung-primaten-veo-v1\.mp4/);
   assert.doesNotMatch(worker, /bewegung-feuer-veo-v1\.mp4/);
   assert.doesNotMatch(worker, /bewegung-neandertaler-veo-v1\.mp4/);
@@ -482,7 +498,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v86/);
+  assert.match(worker, /zeitreise-v87/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

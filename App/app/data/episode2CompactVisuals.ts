@@ -15,7 +15,7 @@ export type EpisodeTwoCompactVisual = {
     src: string;
     poster: string;
     playback: "loop" | "hold";
-    volume: number;
+    soundtrack: string;
   };
 };
 
@@ -34,7 +34,7 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       src: "/assets/episode2/scene01/bewegung-frueher-primat-veo-v1.mp4",
       poster: "/assets/episode2/scene01/hintergrund-naechster-zeitsprung-v1.png",
       playback: "hold",
-      volume: 0.5,
+      soundtrack: "/assets/episode2/audio/sprecher-und-veo-szene-01-v1.m4a",
     },
     movement: "Ruhiger Zeitsprung mit weicher Überblendung und anschließendem Vorwärtsflug in den Wald.",
   },
@@ -52,7 +52,7 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       src: "/assets/episode2/scene02/bewegung-primaten-veo-v1.mp4",
       poster: "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png",
       playback: "loop",
-      volume: 0.5,
+      soundtrack: "/assets/episode2/audio/sprecher-und-veo-szene-02-v1.m4a",
     },
     movement: "Die Kamera folgt zunächst einem Ast und öffnet sich dann zu einer weiteren Landschaft mit mehreren Formen.",
   },
@@ -70,7 +70,7 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       src: "/assets/episode2/scene04/bewegung-getrennte-wege-veo-v1.mov",
       poster: "/assets/episode2/scene04/hintergrund-afrika-im-wandel-v1.png",
       playback: "hold",
-      volume: 0.5,
+      soundtrack: "/assets/episode2/audio/sprecher-und-veo-szene-03-v1.m4a",
     },
     movement: "Landschaftsteile verändern sich langsam; daraus entwickeln sich dezente verzweigte Linien.",
     treeStage: "split",
@@ -135,7 +135,7 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       src: "/assets/episode2/scene13/bewegung-erste-reise-veo-v1.mov",
       poster: "/assets/episode2/scene13/hintergrund-erste-grosse-reise-v1.png",
       playback: "loop",
-      volume: 0.5,
+      soundtrack: "/assets/episode2/audio/sprecher-und-veo-szene-08-v1.m4a",
     },
     movement: "Langsame Wanderung und Kartenrückzug; hier liegt der große musikalische Mittelübergang.",
   },
@@ -152,7 +152,7 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       src: "/assets/episode2/scene14/bewegung-feuer-veo-v1.mp4",
       poster: "/assets/episode2/scene14/hintergrund-feuer-veraendert-alltag-v1.png",
       playback: "loop",
-      volume: 0.5,
+      soundtrack: "/assets/episode2/audio/sprecher-und-veo-szene-09-v1.m4a",
     },
     movement: "Flammen, Rauch und wechselndes Feuerlicht bewegen sich zurückhaltend innerhalb des Bildes.",
   },
@@ -181,7 +181,7 @@ export const episodeTwoCompactVisuals: EpisodeTwoCompactVisual[] = [
       src: "/assets/episode2/scene16/bewegung-neandertaler-veo-v1.mp4",
       poster: "/assets/episode2/scene16/hintergrund-neandertaler-v1.png",
       playback: "hold",
-      volume: 0.5,
+      soundtrack: "/assets/episode2/audio/sprecher-und-veo-szene-11-v1.m4a",
     },
     movement: "Ruhige Tätigkeiten im Lager; Hände, Feuer und fürsorgliche Geste stehen im Mittelpunkt.",
   },
@@ -226,4 +226,9 @@ export function episodeTwoSceneHasVideo(sceneId: number) {
   return episodeTwoCompactVisuals.some(
     (scene) => scene.id === sceneId && Boolean(scene.video),
   );
+}
+
+export function episodeTwoSceneSoundtrack(sceneId: number) {
+  return episodeTwoCompactVisuals.find((scene) => scene.id === sceneId)?.video
+    ?.soundtrack;
 }
