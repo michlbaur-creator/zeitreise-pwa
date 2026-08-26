@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v87";
+const CACHE_NAME = "zeitreise-v88";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -127,17 +127,17 @@ const EPISODE_TWO_ASSETS = {
   1: [
     "/assets/episode2/scene01/hintergrund-naechster-zeitsprung-v1.png",
     "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png",
-    "/assets/episode2/audio/sprecher-und-veo-szene-01-v1.m4a",
+    "/assets/episode2/audio/sprecher-und-veo-szene-01-v2.m4a",
   ],
   2: [
     "/assets/episode2/scene02/hintergrund-leben-in-den-baeumen-v1.png",
     "/assets/episode2/scene03/hintergrund-welt-der-menschenaffen-v1.png",
-    "/assets/episode2/audio/sprecher-und-veo-szene-02-v1.m4a",
+    "/assets/episode2/audio/sprecher-und-veo-szene-02-v2.m4a",
   ],
   3: [
     "/assets/episode2/scene04/hintergrund-afrika-im-wandel-v1.png",
     "/assets/episode2/scene05/hintergrund-getrennte-wege-v1.png",
-    "/assets/episode2/audio/sprecher-und-veo-szene-03-v1.m4a",
+    "/assets/episode2/audio/sprecher-und-veo-szene-03-v2.m4a",
   ],
   4: [
     "/assets/episode2/scene06/hintergrund-auf-zwei-beinen-v2.png",
@@ -160,11 +160,11 @@ const EPISODE_TWO_ASSETS = {
   ],
   8: [
     "/assets/episode2/scene13/hintergrund-erste-grosse-reise-v1.png",
-    "/assets/episode2/audio/sprecher-und-veo-szene-08-v1.m4a",
+    "/assets/episode2/audio/sprecher-und-veo-szene-08-v2.m4a",
   ],
   9: [
     "/assets/episode2/scene14/hintergrund-feuer-veraendert-alltag-v1.png",
-    "/assets/episode2/audio/sprecher-und-veo-szene-09-v1.m4a",
+    "/assets/episode2/audio/sprecher-und-veo-szene-09-v2.m4a",
   ],
   10: [
     "/assets/episode2/scene15/hintergrund-viele-arten-von-menschen-v1.png",
@@ -172,7 +172,7 @@ const EPISODE_TWO_ASSETS = {
   ],
   11: [
     "/assets/episode2/scene16/hintergrund-neandertaler-v1.png",
-    "/assets/episode2/audio/sprecher-und-veo-szene-11-v1.m4a",
+    "/assets/episode2/audio/sprecher-und-veo-szene-11-v2.m4a",
   ],
   12: [
     "/assets/episode2/scene17/hintergrund-denisova-v1.png",
