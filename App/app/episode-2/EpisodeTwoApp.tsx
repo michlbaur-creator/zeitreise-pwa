@@ -97,7 +97,7 @@ export default function EpisodeTwoApp() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [panel, setPanel] = useState<Panel>("entdecken");
-  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(true);
   const [introOpen, setIntroOpen] = useState(true);
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);

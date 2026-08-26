@@ -9311,28 +9311,31 @@ button:disabled {
 .site-footer-main {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 26px;
-}
-
-.site-footer-brand {
-  display: grid;
-  gap: 3px;
-}
-
-.site-footer-brand strong {
-  color: var(--amber-soft);
-  font-family: "Iowan Old Style", Georgia, serif;
-  font-size: 1.06rem;
-  font-weight: 500;
 }
 
 .site-footer-main nav {
   display: flex;
+  width: 100%;
   align-items: center;
-  justify-content: flex-end;
-  gap: 18px;
+  justify-content: flex-start;
+  gap: 10px;
   flex-wrap: wrap;
+}
+
+.site-footer-main nav a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #c6d0ca;
+  font-size: 0.7rem;
+  font-weight: 700;
 }
 
 .site-footer a {
@@ -11282,7 +11285,7 @@ body.cinematic-intro-active {
   .site-footer-main nav {
     display: grid;
     width: 100%;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.45fr) minmax(0, 0.8fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     justify-content: stretch;
     gap: 8px;
   }
@@ -11293,8 +11296,8 @@ body.cinematic-intro-active {
     align-items: center;
     padding: 8px 10px;
     border: 1px solid var(--line);
-    border-radius: 9px;
-    font-size: 0.64rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
     justify-content: center;
     text-align: center;
   }

@@ -10,10 +10,6 @@ export function SiteFooter() {
         </a>
       </nav>
       <div className="site-footer-main">
-        <div className="site-footer-brand">
-          <strong>Zeitreise</strong>
-          <span>Die Geschichte des Lebens</span>
-        </div>
         <nav aria-label="Fußnavigation">
           <Link href="/ueber/">Über mich</Link>
           <Link href="/impressum/">Impressum &amp; Datenschutz</Link>

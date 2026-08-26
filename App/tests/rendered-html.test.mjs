@@ -161,6 +161,7 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, />Text lesen<\/button>/);
   assert.match(episodeTwoApp, />Entdecken<\/button>/);
   assert.match(episodeTwoApp, />Quiz<\/button>/);
+  assert.match(episodeTwoApp, /const \[detailsOpen, setDetailsOpen\] = useState\(true\)/);
   assert.match(episodeTwoApp, /Wie Menschen die Welt veränderten/);
   assert.match(episodeTwoApp, /Von den ersten Siedlungen bis heute/);
   assert.match(episodeTwoApp, /className="episode-series-button" href="\/"/);
@@ -375,7 +376,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v91/);
+  assert.match(worker, /zeitreise-v92/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -493,6 +494,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(app, /Die nächste Frage kommt sofort\./);
   assert.match(footer, /Über mich/);
   assert.match(footer, /Impressum &amp; Datenschutz/);
+  assert.doesNotMatch(footer, /site-footer-brand|<strong>Zeitreise<\/strong>/);
   assert.match(footer, /mibaur@me\.com/);
   assert.doesNotMatch(footer, /Fauna entdecken/);
   assert.match(footer, /https:\/\/mibaso\.de/);
@@ -510,7 +512,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v91/);
+  assert.match(worker, /zeitreise-v92/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
