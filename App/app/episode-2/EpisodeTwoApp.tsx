@@ -612,11 +612,6 @@ export default function EpisodeTwoApp() {
         </aside>
       </div>
 
-      <section className="ep2-scene-overview" aria-label="Alle Szenen von Episode 2">
-        <div><p className="eyebrow">Die ganze Reise</p><h2>14 Stationen, viele Äste</h2></div>
-        <div className="ep2-scene-grid">{episodeTwoScenes.map((item, index) => <button type="button" className={index === currentIndex ? "is-current" : ""} onClick={() => goToScene(index)} aria-current={index === currentIndex ? "step" : undefined} key={item.id}><span>{twoDigits(item.id)}</span><strong>{item.title}</strong><small>{item.timeLabel}</small></button>)}</div>
-      </section>
-
       <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
 
       <section className="ep3-outlook" aria-labelledby="episode-3-title">

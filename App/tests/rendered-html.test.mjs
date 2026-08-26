@@ -162,6 +162,7 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, /className="episode-series-button" href="\/"/);
   assert.match(episodeTwoApp, /Episode 3 →<\/button>/);
   assert.doesNotMatch(episodeTwoApp, /Quiz-Halt|stopIsOpen|episode2-quizstops/);
+  assert.doesNotMatch(episodeTwoApp, /ep2-scene-overview|14 Stationen, viele Äste/);
   assert.match(episodeTwoApp, /className="interaction-block ep2-hotspot-list"/);
   assert.doesNotMatch(episodeTwoVisual, /ep2-hotspot/);
   assert.doesNotMatch(episodeTwoApp, /ep2-intro-tree/);
@@ -332,6 +333,7 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
 
   assert.match(styles, /bottom: max\(7px, env\(safe-area-inset-bottom\)\)/);
   assert.match(styles, /aspect-ratio: 16 \/ 9/);
+  assert.match(styles, /\.ep2-visual \{[\s\S]*?aspect-ratio: 4 \/ 3/);
   assert.match(styles, /-webkit-line-clamp: 2/);
   assert.match(styles, /@media \(max-width: 390px\)/);
   assert.match(
@@ -369,7 +371,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v89/);
+  assert.match(worker, /zeitreise-v90/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -504,7 +506,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v89/);
+  assert.match(worker, /zeitreise-v90/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
