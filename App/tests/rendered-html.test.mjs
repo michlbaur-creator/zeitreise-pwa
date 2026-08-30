@@ -214,6 +214,10 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     new URL("../app/components/EpisodeSeriesNav.tsx", import.meta.url),
     "utf8",
   );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
 
   const sceneIds = [...episodeThreeData.matchAll(/\{ id: (\d+), title:/g)].map(
     (match) => Number(match[1]),
@@ -240,6 +244,8 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     [...episodeThreeData.matchAll(/quiz: episodeThreeQuizzes\[\d+\]/g)].length,
     9,
   );
+  assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 36);
+  assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 36);
   assert.match(episodeThreeData, /kein WLAN/);
   assert.match(episodeThreeData, /nicht die Köpfe/);
   assert.match(episodeThreeData, /beachtliche Kulturleistung/);
@@ -273,6 +279,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /audioRef\.current\.currentTime = 0/);
   assert.match(episodeThreeApp, /useAmbientSound/);
   assert.match(episodeThreeApp, /ambientEnabled && !sceneHasVideo/);
+  assert.match(episodeThreeApp, /Quiz · Frage \{quizQuestionIndex \+ 1\} von \{scene\.quiz\.length\}/);
+  assert.match(episodeThreeApp, /Alle vier Fragen geschafft/);
+  assert.match(episodeThreeApp, /setQuizQuestionIndex\(\(value\) => value \+ 1\)/);
   assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 9);
   assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 6);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
@@ -297,10 +306,13 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeVisual, /playsInline/);
   assert.match(episodeThreeVisual, /element\.currentTime = 0/);
   assert.match(episodeThreeVisual, /element\.play\(\)/);
+  assert.match(styles, /min-height: clamp\(320px, 38vw, 520px\)/);
   assert.doesNotMatch(episodeThreeData, /playback:|"loop"/);
   assert.doesNotMatch(episodeThreeVisual, /\sloop(?:=|\s|>)/);
   assert.doesNotMatch(episodeThreePage, /index: false|Öffentliche Vorschau/);
   assert.doesNotMatch(episodeTwoApp, /Arbeitsfassung|nur per Direktlink|Übergangsentwurf/);
+  assert.match(episodeTwoApp, /aria-label="Weiter zu Episode 3"/);
+  assert.match(episodeTwoApp, /className="ep3-outlook-link" href="\/episode-3\/"/);
   await Promise.all([
     access(
       new URL(
@@ -572,7 +584,7 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
 
   assert.match(styles, /bottom: max\(7px, env\(safe-area-inset-bottom\)\)/);
   assert.match(styles, /aspect-ratio: 16 \/ 9/);
-  assert.match(styles, /\.ep2-visual \{[\s\S]*?aspect-ratio: 4 \/ 3/);
+  assert.match(styles, /\.ep2-visual \{[\s\S]*?aspect-ratio: 16 \/ 9/);
   assert.match(styles, /-webkit-line-clamp: 2/);
   assert.match(styles, /@media \(max-width: 390px\)/);
   assert.match(
@@ -610,7 +622,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v108/);
+  assert.match(worker, /zeitreise-v109/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -825,7 +837,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v108/);
+  assert.match(worker, /zeitreise-v109/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

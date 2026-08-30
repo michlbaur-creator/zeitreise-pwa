@@ -230,13 +230,20 @@ button:disabled {
   line-height: 1.65;
 }
 
-.ep3-outlook > button {
+.ep3-outlook > button,
+.ep3-outlook-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   min-height: 42px;
   padding: 9px 18px;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.035);
   color: var(--muted);
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .scene-facts em {
@@ -326,7 +333,7 @@ button:disabled {
 
 .ep2-visual {
   position: relative;
-  min-height: clamp(370px, 48vw, 650px);
+  min-height: clamp(320px, 38vw, 520px);
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -837,7 +844,7 @@ button:disabled {
   .ep2-shell .brand-lockup h1 span { display: block; margin: 5px 0 0; }
   .ep2-visual {
     min-height: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     border-radius: 14px;
   }
   .ep2-placeholder-note small { display: none; }
@@ -12443,6 +12450,6 @@ body.cinematic-intro-active {
 
   .ep3-visual {
     min-height: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
   }
 }

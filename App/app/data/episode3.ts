@@ -7,11 +7,11 @@ export type EpisodeThreeScene = {
     title: string;
     text: string;
   }[];
-  quiz: {
+  quiz: readonly {
     question: string;
     answers: readonly string[];
     correctAnswer: number;
-  };
+  }[];
   imageStatus: "ready" | "draft" | "open";
 };
 
@@ -228,87 +228,348 @@ const episodeThreeDiscoveries = {
 } as const;
 
 const episodeThreeQuizzes = {
-  1: {
-    question: "Warum springen wir für Episode 3 noch einmal zurück?",
-    answers: [
-      "Weil Homo sapiens erst jetzt entsteht.",
-      "Weil wir verfolgen wollen, wie Menschen ihre Umwelt verändern.",
-      "Weil zu dieser Zeit die ersten Menschen Europa erreichen.",
-    ],
-    correctAnswer: 1,
-  },
-  2: {
-    question: "Was benötigten Jäger und Sammler besonders?",
-    answers: [
-      "genaue Kenntnisse ihrer Umwelt",
-      "große Vorratshäuser aus Stein",
-      "gepflügte Felder",
-    ],
-    correctAnswer: 0,
-  },
-  3: {
-    question: "Was zeigt Göbekli Tepe besonders eindrucksvoll?",
-    answers: [
-      "Große Bauwerke waren erst mit Metallwerkzeugen möglich.",
-      "Auch Jäger und Sammler konnten große Gemeinschaftsprojekte organisieren.",
-      "Die Menschen lebten bereits in einem mächtigen Königreich.",
-    ],
-    correctAnswer: 1,
-  },
-  4: {
-    question: "Warum eignete sich der Ort besonders gut für eine dauerhafte Siedlung?",
-    answers: [
-      "Dort gab es eine zuverlässige Quelle.",
-      "Dort wurden bereits Eisenwerkzeuge hergestellt.",
-      "Dort verlief eine gepflasterte Straße.",
-    ],
-    correctAnswer: 0,
-  },
-  5: {
-    question: "Welche Pflanzen wurden beim Sammeln unbewusst bevorzugt?",
-    answers: [
-      "Pflanzen, deren Körner länger an der Ähre blieben",
-      "Pflanzen, deren Körner sofort herunterfielen",
-      "ausschließlich besonders niedrige Pflanzen",
-    ],
-    correctAnswer: 0,
-  },
-  6: {
-    question: "Wie entstanden aus Wildtieren domestizierte Herden?",
-    answers: [
-      "durch Auswahl und Haltung über viele Generationen",
-      "durch eine plötzliche körperliche Verwandlung",
-      "durch die Vermischung mit Hunden",
-    ],
-    correctAnswer: 0,
-  },
-  7: {
-    question: "Wo wurde die Landwirtschaft erfunden?",
-    answers: [
-      "ausschließlich in Vorderasien",
-      "gleichzeitig in allen Erdteilen",
-      "unabhängig in mehreren Regionen",
-    ],
-    correctAnswer: 2,
-  },
-  8: {
-    question: "Was war an Çatalhöyük besonders?",
-    answers: [
-      "Die Häuser standen weit voneinander entfernt.",
-      "Viele Häuser wurden über die Dächer betreten.",
-      "Die Bewohner benutzten bereits Eisenbahnen.",
-    ],
-    correctAnswer: 1,
-  },
-  9: {
-    question: "Welche Folgen hatte die Sesshaftigkeit?",
-    answers: [
-      "ausschließlich ein bequemeres und gesünderes Leben",
-      "mehr Nahrung und Menschen, aber auch neue Krankheiten und soziale Unterschiede",
-      "einen sofortigen Rückgang der Bevölkerung",
-    ],
-    correctAnswer: 1,
-  },
+  1: [
+    {
+      question: "Welche Aussage beschreibt den Ausgangspunkt von Episode 3 am besten?",
+      answers: [
+        "Homo sapiens entsteht erst am Ende der Eiszeit.",
+        "Körperlich moderne Menschen leben bereits da, aber unter völlig anderen Bedingungen.",
+        "Die Menschen unterscheiden sich körperlich stark von heutigen Menschen.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Warum reichen für diesen Zeitsprung ungefähr 14.000 Jahre statt Millionen?",
+      answers: [
+        "Weil es nun vor allem um Veränderungen der Lebensweise geht.",
+        "Weil Klima und Landschaft in dieser Zeit unverändert bleiben.",
+        "Weil Menschen erst seit 14.000 Jahren Werkzeuge benutzen.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Entwicklung passt zum Ende der letzten Eiszeit?",
+      answers: [
+        "Wälder breiten sich aus und Flussläufe verändern sich.",
+        "Alle Kontinente werden gleichzeitig vollständig eisfrei.",
+        "Neue Lebensräume verschwinden zugunsten einer einzigen Landschaftsform.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Schlussfolgerung wäre trotz fehlender Städte und Felder falsch?",
+      answers: [
+        "Die Lebensweise unterscheidet sich stark von unserer.",
+        "Die Menschen müssen ihre Umwelt sehr genau kennen.",
+        "Die Menschen sind weniger intelligent als wir.",
+      ],
+      correctAnswer: 2,
+    },
+  ],
+  2: [
+    {
+      question: "Warum bedeutet ein jahreszeitlicher Ortswechsel nicht, ziellos umherzuirren?",
+      answers: [
+        "Die Gruppen folgen einem festen Straßennetz.",
+        "Die Gruppen kennen Zeiten, Wege und Nahrungsangebote ihrer Landschaft.",
+        "Die Gruppen wechseln nur dann den Ort, wenn Nahrung vollständig verschwunden ist.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Fähigkeit machte eine vielfältige Ernährung ohne Ackerbau möglich?",
+      answers: [
+        "genaue Beobachtung und Verarbeitung vieler Pflanzen und Tiere",
+        "die Spezialisierung auf wenige besonders ertragreiche Tierarten",
+        "die dauerhafte Nutzung eines einzigen, besonders reichen Lagerplatzes",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Was zeigt der Hund in dieser Szene über die zeitliche Reihenfolge?",
+      answers: [
+        "Tierhaltung begann erst nach dem ersten Ackerbau.",
+        "Menschen lebten schon vor der Landwirtschaft mit domestizierten Tieren zusammen.",
+        "Hunde wurden gleichzeitig mit Schafen und Ziegen domestiziert.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Aussage trifft die Lebensweise dieser Gruppen am genauesten?",
+      answers: [
+        "Sie waren ständig unterwegs und konnten keine Lagerplätze wiederverwenden.",
+        "Sie nutzten ihre Umwelt planvoll, auch ohne Felder und dauerhafte Häuser.",
+        "Sie lebten ausschließlich von der Jagd auf große Tiere.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  3: [
+    {
+      question: "Welche Leistung wird durch die tonnenschweren Pfeiler besonders deutlich?",
+      answers: [
+        "langfristige Planung und Zusammenarbeit vieler Menschen",
+        "vor allem die außergewöhnliche Körperkraft einzelner Steinmetze",
+        "eine spontane Bautätigkeit ohne langfristige Organisation",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Warum lässt sich die genaue Funktion von Göbekli Tepe nicht sicher angeben?",
+      answers: [
+        "Die Anlage ist nur aus modernen Erzählungen bekannt.",
+        "Die Funde erlauben mehrere Deutungen, aber keine eindeutige Erklärung.",
+        "Alle Pfeiler wurden vollständig zerstört.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Was widerlegt der Bau am überzeugendsten?",
+      answers: [
+        "Dass Menschen ohne Landwirtschaft niemals zusammenarbeiteten.",
+        "Dass Kalkstein in der Region vorhanden war.",
+        "Dass Bilder von Tieren eine Bedeutung haben konnten.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Aussage trennt gesichertes Wissen und Vermutung korrekt?",
+      answers: [
+        "Die Pfeiler wurden gemeinsam errichtet; der genaue Zweck bleibt unklar.",
+        "Die Anlage war sicher ein Tempel für eine bekannte Gottheit.",
+        "Die Anlage war nachweislich der Sitz eines frühen Königreichs.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  4: [
+    {
+      question: "Welche natürliche Voraussetzung begünstigte die dauerhafte Besiedlung Jerichos?",
+      answers: [
+        "eine ganzjährig Wasser liefernde Quelle",
+        "eine nur während der Regenzeit gefüllte Wasserstelle",
+        "die Nähe zu wechselnden Wildherden ohne verlässliche Wasserquelle",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Aussage über die Mauer geht über den Forschungsstand hinaus?",
+      answers: [
+        "Sie könnte vor Hochwasser geschützt haben.",
+        "Sie diente mit Sicherheit ausschließlich der Abwehr von Feinden.",
+        "Sie könnte mehrere Aufgaben erfüllt haben.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Folge ergibt sich am unmittelbarsten daraus, dauerhaft zu bleiben?",
+      answers: [
+        "Stabilere Bauten, größere Vorräte und feste Nachbarschaften werden wichtiger.",
+        "Besitz verliert jede Bedeutung, weil niemand mehr unterwegs ist.",
+        "Jahreszeiten spielen für die Versorgung keine Rolle mehr.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Entwicklungskette passt zur Szene?",
+      answers: [
+        "Quelle → wiederkehrendes Lager → dauerhafte Siedlung → aufwendigere Bauten",
+        "wiederkehrendes Lager → Aufgabe des Ortes → Quelle → dauerhafte Siedlung",
+        "dauerhafte Siedlung → Quelle → saisonales Lager → aufwendigere Bauten",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  5: [
+    {
+      question: "Warum wurden Ähren mit länger haftenden Körnern häufiger weitervermehrt?",
+      answers: [
+        "Sie ließen sich leichter ernten und ihre Samen wurden häufiger gesammelt oder ausgesät.",
+        "Ihre Körner fielen früher aus und waren dadurch gleichmäßig am Boden verteilt.",
+        "Sie wuchsen nur weit entfernt von menschlich genutzten Lagerplätzen.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Warum kann man hier von unbewusster Auswahl sprechen?",
+      answers: [
+        "Menschen wählten bewusst bestimmte Gene aus, ohne Pflanzen auszusäen.",
+        "Wiederholtes Sammeln und Aussäen genügte, ohne die Genetik zu kennen.",
+        "Die Merkmale der Pflanzen veränderten sich ausschließlich durch das wärmere Klima.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Aussage beschreibt den Beginn des Ackerbaus am besten?",
+      answers: [
+        "Eine einzelne Person erfand ihn an einem genau bekannten Tag.",
+        "Er entstand schrittweise aus Beobachten, Sammeln, Ausprobieren und Wiederholen.",
+        "Er begann erst, nachdem alle Wildgetreidearten verschwunden waren.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Was ist für die Pflanze nützlich, für erntende Menschen aber ungünstig?",
+      answers: [
+        "reife Körner schnell zu Boden fallen zu lassen",
+        "größere Ähren auszubilden",
+        "Körner länger an der Ähre festzuhalten",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  6: [
+    {
+      question: "Wodurch beeinflussten Menschen die Entwicklung früher Herden besonders?",
+      answers: [
+        "Sie bestimmten zunehmend, welche Tiere sich fortpflanzten.",
+        "Sie fingen in jeder Generation neue Wildtiere und ließen alle gleich häufig Nachwuchs bekommen.",
+        "Sie schützten die Herden, ohne Auswahl bei Schlachtung oder Fortpflanzung zu treffen.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Warum ist Domestikation kein einzelner kurzer Vorgang?",
+      answers: [
+        "Körperbau und Verhalten verändern sich über viele Generationen.",
+        "Jedes Tier muss dafür dieselbe Fähigkeit neu erlernen.",
+        "Domestikation beginnt erst mit der Nutzung von Metallzäunen.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Kombination zeigt Nutzen und Aufwand der Tierhaltung?",
+      answers: [
+        "Fleisch und Felle – aber auch Füttern, Bewachen und Lenken der Tiere",
+        "weniger Nahrung – dafür keinerlei tägliche Arbeit",
+        "ausschließlich Arbeitskraft – aber keine weiteren tierischen Produkte",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Was unterscheidet Zähmung und Domestikation am besten?",
+      answers: [
+        "Zähmung betrifft einzelne Tiere, Domestikation verändert Populationen über Generationen.",
+        "Zähmung ist genetisch, Domestikation betrifft nur erlerntes Verhalten.",
+        "Zwischen beiden Begriffen gibt es keinen Unterschied.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  7: [
+    {
+      question: "Was bedeutet es, dass Landwirtschaft mehrere Ursprungsregionen hat?",
+      answers: [
+        "Alle Regionen übernahmen gleichzeitig dasselbe fertige System.",
+        "Landwirtschaft entstand unabhängig in mehreren Regionen.",
+        "Landwirtschaft entstand einmal und verbreitete sich unverändert über alle Kontinente.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Warum unterschieden sich die angebauten Pflanzen zwischen den Regionen?",
+      answers: [
+        "Menschen arbeiteten mit den Arten ihrer jeweiligen Umwelt.",
+        "Jede Region durfte nur eine einzige Pflanzenart nutzen.",
+        "Saatgut konnte damals grundsätzlich nicht weitergegeben werden.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Zuordnung passt zur Szene?",
+      answers: [
+        "Vorderasien – Weizen und Gerste; Ostasien – Reis und Hirse",
+        "Ostasien – Kartoffeln und Quinoa; Andenraum – Reis",
+        "Mittelamerika – Weizen; Vorderasien – Mais",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Erklärung passt am besten zu den ähnlichen Entwicklungen?",
+      answers: [
+        "Verschiedene Gruppen beobachteten Pflanzen und Tiere und fanden vergleichbare Lösungen.",
+        "Ein genialer Urbauernhof verschickte ein vollständiges Erfindungspaket.",
+        "Landwirtschaft entstand überall exakt zur selben Zeit.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  8: [
+    {
+      question: "Warum wurden viele Häuser in Çatalhöyük vermutlich über das Dach betreten?",
+      answers: [
+        "Die Häuser standen so dicht, dass zwischen ihnen kaum Straßen verliefen.",
+        "Die Dächer dienten ausschließlich als Speicher und durften unten nicht betreten werden.",
+        "Die Eingänge am Boden wurden nur während der Erntezeit genutzt.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Beobachtung spricht für ein arbeitsteiligeres Zusammenleben?",
+      answers: [
+        "Handwerker stellten unterschiedliche Werkzeuge, Gefäße und Schmuck her.",
+        "Jedes Haus stellte nachweislich alle benötigten Dinge vollständig selbst her.",
+        "Die Bewohner nutzten unterschiedliche Räume, aber immer dieselben Tätigkeiten.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Warum wird Çatalhöyük nicht einfach als Stadt im späteren Sinn bezeichnet?",
+      answers: [
+        "Die große und dichte Siedlung besitzt nicht automatisch alle Merkmale späterer Städte.",
+        "Dort lebten höchstens zwei Familien gleichzeitig.",
+        "Die Siedlung wurde nur während der Jagdsaison genutzt.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Aussage verbindet Bauweise und Alltag am besten?",
+      answers: [
+        "Dichte Bebauung verlagerte Wege auf die Dächer und machte das Zusammenleben komplexer.",
+        "Breite Straßen trennten Wohnen, Arbeiten und Lagern vollständig.",
+        "Die Dachwege verhinderten jede Form gemeinschaftlicher Arbeit.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  9: [
+    {
+      question: "Welche Bilanz der Sesshaftigkeit ist am treffendsten?",
+      answers: [
+        "Mehr Nahrung und größere Bevölkerungen gingen mit neuen Belastungen einher.",
+        "Sesshaftigkeit verbesserte Gesundheit und Gleichheit in jedem Fall.",
+        "Sesshaftigkeit führte überall sofort zu weniger Menschen.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Warum konnten sich manche Krankheitserreger leichter verbreiten?",
+      answers: [
+        "Viele Menschen und Tiere lebten dichter beieinander.",
+        "Menschen bewegten sich überhaupt nicht mehr außerhalb ihrer Häuser.",
+        "Wildpflanzen verschwanden vollständig aus der Ernährung.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Wie konnten größere Vorräte soziale Unterschiede verstärken?",
+      answers: [
+        "Vorräte machten Fragen nach Besitz und Kontrolle wichtiger.",
+        "Vorräte wurden grundsätzlich immer gleich verteilt.",
+        "Vorräte verhinderten jede Form von Arbeitsteilung.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Aussage vermeidet eine zu einfache Bewertung?",
+      answers: [
+        "Landwirtschaft war weder nur Fortschritt noch nur Rückschritt, sondern veränderte Chancen und Risiken.",
+        "Landwirtschaft hatte ausschließlich gesundheitliche Nachteile.",
+        "Landwirtschaft löste alle Versorgungsprobleme dauerhaft.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
 } as const;
 
 export const episodeThreeScenes: EpisodeThreeScene[] = [

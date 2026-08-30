@@ -578,7 +578,13 @@ export default function EpisodeTwoApp() {
             )}
             <label className="scrubber"><span className="sr-only">Position in der Szene</span><input type="range" min="0" max="1000" value={Math.round(progress * 1000)} onChange={(event) => seek(Number(event.target.value) / 1000)} style={{ "--seek": `${progress * 100}%` } as React.CSSProperties} /></label>
             <span className="timecode">{formatTime(progress * scene.duration)} / {formatTime(scene.duration)}</span>
-            <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }} disabled={currentIndex === episodeTwoScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
+            {currentIndex === episodeTwoScenes.length - 1 ? (
+              <Link className="next-control episode-next-control" href="/episode-3/" aria-label="Weiter zu Episode 3">
+                Episode 3 <span aria-hidden="true">→</span>
+              </Link>
+            ) : (
+              <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }}>Weiter <span aria-hidden="true">→</span></button>
+            )}
           </div>
           <EpisodeSeriesNav currentEpisode={2} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
@@ -626,6 +632,9 @@ export default function EpisodeTwoApp() {
               Nachbarn. Das verändert fast alles. Einschließlich der Frage, wer
               schon wieder den Eingang zugestellt hat.
             </p>
+            <Link className="ep3-outlook-link" href="/episode-3/">
+              Episode 3 beginnen <span aria-hidden="true">→</span>
+            </Link>
           </section>
         </>
       ) : null}

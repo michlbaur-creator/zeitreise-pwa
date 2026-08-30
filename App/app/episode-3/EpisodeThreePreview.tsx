@@ -93,6 +93,7 @@ export default function EpisodeThreePreview() {
   const [sceneDuration, setSceneDuration] = useState<number>(episodeThreeSceneDurations[1]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizChecked, setQuizChecked] = useState(false);
+  const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const [ambientEnabled, setAmbientEnabled] = useState(false);
   const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
   const progressRef = useRef(0);
@@ -105,6 +106,7 @@ export default function EpisodeThreePreview() {
   } | null>(null);
 
   const scene = episodeThreeScenes[currentIndex];
+  const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
   const narrationPath = episodeThreeSceneAudio[
     scene.id as keyof typeof episodeThreeSceneAudio
@@ -138,6 +140,7 @@ export default function EpisodeThreePreview() {
     setIsPlaying(true);
     setSelectedOption(null);
     setQuizChecked(false);
+    setQuizQuestionIndex(0);
     window.localStorage.setItem("zeitreise-episode3-current-scene", String(nextIndex));
   }, []);
 
@@ -168,6 +171,24 @@ export default function EpisodeThreePreview() {
   useEffect(() => {
     progressRef.current = progress;
   }, [progress]);
+
+  useEffect(() => {
+    if (
+      !quizChecked ||
+      selectedOption !== activeQuiz.correctAnswer ||
+      quizQuestionIndex >= scene.quiz.length - 1
+    ) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setQuizQuestionIndex((value) => value + 1);
+      setSelectedOption(null);
+      setQuizChecked(false);
+    }, 1100);
+
+    return () => window.clearTimeout(timer);
+  }, [activeQuiz.correctAnswer, quizChecked, quizQuestionIndex, scene.quiz.length, selectedOption]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -445,13 +466,13 @@ export default function EpisodeThreePreview() {
           {panel === "quiz" ? (
             <section className="panel-section interactions">
               <div className="interaction-block quiz-panel">
-                <div className="section-label"><span>Quiz zu dieser Szene</span></div>
-                <h3>{scene.quiz.question}</h3>
+                <div className="section-label"><span>Quiz · Frage {quizQuestionIndex + 1} von {scene.quiz.length}</span></div>
+                <h3>{activeQuiz.question}</h3>
                 <div className="quiz-options">
-                  {scene.quiz.answers.map((answer, index) => {
+                  {activeQuiz.answers.map((answer, index) => {
                     const selected = selectedOption === index;
-                    const correct = quizChecked && selected && index === scene.quiz.correctAnswer;
-                    const wrong = quizChecked && selected && index !== scene.quiz.correctAnswer;
+                    const correct = quizChecked && selected && index === activeQuiz.correctAnswer;
+                    const wrong = quizChecked && selected && index !== activeQuiz.correctAnswer;
                     return (
                       <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={answer}>
                         <span>{String.fromCharCode(65 + index)}</span>{answer}
@@ -460,9 +481,15 @@ export default function EpisodeThreePreview() {
                   })}
                 </div>
                 {quizChecked ? (
-                  <div className={`quiz-result ${selectedOption === scene.quiz.correctAnswer ? "is-correct" : "is-wrong"}`} role="status">
-                    <strong>{selectedOption === scene.quiz.correctAnswer ? "Richtig." : "Noch nicht richtig."}</strong>
-                    {selectedOption !== scene.quiz.correctAnswer ? <span>Versuch es einfach noch einmal.</span> : null}
+                  <div className={`quiz-result ${selectedOption === activeQuiz.correctAnswer ? "is-correct" : "is-wrong"}`} role="status">
+                    <strong>{selectedOption === activeQuiz.correctAnswer ? "Richtig." : "Noch nicht richtig."}</strong>
+                    {selectedOption !== activeQuiz.correctAnswer ? (
+                      <span>Versuch es einfach noch einmal.</span>
+                    ) : quizQuestionIndex < scene.quiz.length - 1 ? (
+                      <span>Die nächste Frage kommt sofort.</span>
+                    ) : (
+                      <span>Alle vier Fragen geschafft.</span>
+                    )}
                   </div>
                 ) : null}
               </div>
