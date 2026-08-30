@@ -227,6 +227,10 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     new URL("../app/globals.css", import.meta.url),
     "utf8",
   );
+  const ambientSound = await readFile(
+    new URL("../app/audio/useAmbientSound.ts", import.meta.url),
+    "utf8",
+  );
 
   const sceneIds = [...episodeThreeData.matchAll(/\{ id: (\d+), title:/g)].map(
     (match) => Number(match[1]),
@@ -291,6 +295,20 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /Quiz · Frage \{quizQuestionIndex \+ 1\} von \{scene\.quiz\.length\}/);
   assert.match(episodeThreeApp, /Beide Fragen geschafft/);
   assert.match(episodeThreeApp, /setQuizQuestionIndex\(\(value\) => value \+ 1\)/);
+  assert.match(episodeThreeData, /Welche Folgen hatte die Sesshaftigkeit\?/);
+  assert.match(episodeThreeData, /episodeThreeSceneImageSequences/);
+  assert.match(episodeThreeVisual, /ep3-scene-image-sequence/);
+  assert.match(episodeThreeVisual, /sequenceBlend/);
+  assert.match(episodeThreeApp, /questionCount=\{5\}/);
+  assert.match(episodeThreeApp, /randomize/);
+  assert.match(episodeThreeApp, /Teil 2: Städte, Schrift und Macht/);
+  assert.match(episodeThreeApp, /Aus Dörfern werden Städte/);
+  assert.match(episodeThreeApp, /scene\.id === 9 \? 1\.2 : 1/);
+  assert.match(episodeThreeApp, /audio\.preservesPitch = true/);
+  assert.match(episodeThreeApp, /audio\.duration \/ scenePlaybackRate/);
+  assert.match(ambientSound, /209: \["footsteps", "goats", "rustle"\]/);
+  assert.match(ambientSound, /progress >= 0\.94/);
+  assert.match(ambientSound, /from: 92/);
   assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 9);
   assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 6);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
@@ -379,7 +397,13 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     ),
     access(
       new URL(
-        "../public/assets/episode3/scene09/hintergrund-preis-des-bleibens-entwurf-v1.png",
+        "../public/assets/episode3/scene09/hintergrund-dorf-waechst-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene09/hintergrund-dorf-belastungen-v1.png",
         import.meta.url,
       ),
     ),
@@ -830,6 +854,8 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(app, /new Set\(\[1, 3, 5, 8, 11, 14, 17, 19, 21\]\)/);
   assert.match(app, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} \/>/);
   assert.match(finalQuiz, /Das große Episode-1-Quiz/);
+  assert.match(finalQuiz, /Das Abschlussquiz zu Teil 1/);
+  assert.match(finalQuiz, /Fünf zufällig ausgewählte Fragen/);
   assert.match(finalQuiz, /Frage \{questionIndex \+ 1\} von/);
   assert.match(finalQuiz, /onClick=\{\(\) => answer\(index\)\}/);
   assert.doesNotMatch(finalQuiz, /Antwort prüfen/);
@@ -1005,7 +1031,7 @@ test("vervollständigt die Entdeckungen in Szene 18", async () => {
   assert.match(app, /scene\.discovery\?\.explanations/);
 });
 
-test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async () => {
+test("verwendet für Episode 1 und das Schlussdorf passende Geräuschkulissen", async () => {
   const audio = await readFile(
     new URL("../app/audio/useAmbientSound.ts", import.meta.url),
     "utf8",
@@ -1015,12 +1041,13 @@ test("verwendet für alle 22 Szenen unterschiedliche Geräuschkulissen", async (
     "utf8",
   );
 
-  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 22);
+  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 23);
   assert.match(audio, /1: \["eruption", "steam"\]/);
   assert.match(audio, /4: \["bubbles", "steam", "waves"\]/);
   assert.match(audio, /18: \["footsteps", "insects", "roar"\]/);
   assert.match(audio, /19: \["impact", "insects", "roar"\]/);
   assert.match(audio, /22: \["birds", "waves"\]/);
+  assert.match(audio, /209: \["footsteps", "goats", "rustle"\]/);
   assert.match(app, /const activateAmbientSound = useAmbientSound\(/);
   assert.match(audio, /const activate = useCallback/);
   assert.match(audio, /return activate/);

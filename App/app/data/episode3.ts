@@ -57,7 +57,14 @@ export const episodeThreeSceneImages = {
   6: "/assets/episode3/scene06/hintergrund-aus-jagd-wird-herde-entwurf-v1.png",
   7: "/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
   8: "/assets/episode3/scene08/hintergrund-catalhoeyuek-entwurf-v1.png",
-  9: "/assets/episode3/scene09/hintergrund-preis-des-bleibens-entwurf-v1.png",
+  9: "/assets/episode3/scene09/hintergrund-dorf-waechst-v1.png",
+} as const;
+
+export const episodeThreeSceneImageSequences = {
+  9: [
+    "/assets/episode3/scene09/hintergrund-dorf-waechst-v1.png",
+    "/assets/episode3/scene09/hintergrund-dorf-belastungen-v1.png",
+  ],
 } as const;
 
 const episodeThreeSpeakerTexts = {
@@ -534,13 +541,13 @@ const episodeThreeQuizzes = {
   ],
   9: [
     {
-      question: "Welche Bilanz der Sesshaftigkeit ist am treffendsten?",
+      question: "Welche Folgen hatte die Sesshaftigkeit?",
       answers: [
-        "Mehr Nahrung und größere Bevölkerungen gingen mit neuen Belastungen einher.",
-        "Sesshaftigkeit verbesserte Gesundheit und Gleichheit in jedem Fall.",
-        "Sesshaftigkeit führte überall sofort zu weniger Menschen.",
+        "ausschließlich ein bequemeres und gesünderes Leben",
+        "mehr Nahrung und Menschen, aber auch neue Krankheiten und soziale Unterschiede",
+        "einen sofortigen Rückgang der Bevölkerung",
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
     },
     {
       question: "Warum konnten sich manche Krankheitserreger leichter verbreiten?",

@@ -22,11 +22,15 @@ type QuizScene = {
 export function FinalEpisodeQuiz({
   scenes,
   episode = 1,
+  questionCount,
+  randomize = false,
 }: {
   scenes: QuizScene[];
-  episode?: 1 | 2;
+  episode?: 1 | 2 | 3;
+  questionCount?: number;
+  randomize?: boolean;
 }) {
-  const questions = useMemo<FinalQuestion[]>(
+  const questionPool = useMemo<FinalQuestion[]>(
     () =>
       scenes
         .filter((scene) => scene.quiz)
@@ -39,6 +43,13 @@ export function FinalEpisodeQuiz({
         })),
     [scenes],
   );
+  const visibleQuestionCount = Math.min(
+    questionCount ?? questionPool.length,
+    questionPool.length,
+  );
+  const [questions, setQuestions] = useState<FinalQuestion[]>(() =>
+    questionPool.slice(0, visibleQuestionCount),
+  );
   const [started, setStarted] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -46,15 +57,22 @@ export function FinalEpisodeQuiz({
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  if (!questions.length) return null;
+  if (!questionPool.length || !questions.length) return null;
 
   const question = questions[questionIndex];
   const isCorrect = selected === question.correctIndex;
   const isEpisodeTwo = episode === 2;
+  const isEpisodeThree = episode === 3;
   const strongResult = Math.ceil(questions.length * 0.78);
   const solidResult = Math.ceil(questions.length * 0.56);
 
   const reset = () => {
+    const nextQuestions = randomize
+      ? [...questionPool]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, visibleQuestionCount)
+      : questionPool.slice(0, visibleQuestionCount);
+    setQuestions(nextQuestions);
     setStarted(true);
     setQuestionIndex(0);
     setSelected(null);
@@ -89,12 +107,16 @@ export function FinalEpisodeQuiz({
           <div>
             <p className="eyebrow">Am Ende der Reise</p>
             <h2 id="final-quiz-title">
-              {isEpisodeTwo
+              {isEpisodeThree
+                ? "Das Abschlussquiz zu Teil 1"
+                : isEpisodeTwo
                 ? "Das große Episode-2-Quiz"
                 : "Das große Episode-1-Quiz"}
             </h2>
             <p>
-              {isEpisodeTwo
+              {isEpisodeThree
+                ? "Fünf zufällig ausgewählte Fragen zu Sesshaftigkeit, Landwirtschaft und den ersten großen Siedlungen."
+                : isEpisodeTwo
                 ? "Neun Fragen zu Primaten, Zweibeinigkeit, Werkzeugen, Wanderungen und unseren menschlichen Verwandten."
                 : "Neun Fragen aus neun Etappen deiner Zeitreise – von der jungen Erde bis zum Asteroideneinschlag."}
             </p>
@@ -112,7 +134,13 @@ export function FinalEpisodeQuiz({
           <div>
             <p className="eyebrow">Dein Ergebnis</p>
             <h2 id="final-quiz-title">
-              {isEpisodeTwo
+              {isEpisodeThree
+                ? score >= strongResult
+                  ? "Bereit für die ersten Städte!"
+                  : score >= solidResult
+                    ? "Das Dorf wächst schon in deinem Kopf."
+                    : "Noch eine Runde durchs Dorf?"
+                : isEpisodeTwo
                 ? score >= strongResult
                   ? "Spurensuche bestanden!"
                   : score >= solidResult
@@ -125,7 +153,11 @@ export function FinalEpisodeQuiz({
                     : "Die Erde gibt dir eine zweite Runde."}
             </h2>
             <p>
-              {isEpisodeTwo
+              {isEpisodeThree
+                ? score >= strongResult
+                  ? "Du erkennst Chancen, Belastungen und offene Fragen des neuen Lebens sehr sicher."
+                  : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
+                : isEpisodeTwo
                 ? score >= strongResult
                   ? "Du behältst selbst in einer verzweigten Geschichte den Überblick."
                   : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
@@ -192,7 +224,9 @@ export function FinalEpisodeQuiz({
                   role="status"
                 >
                   {isCorrect
-                    ? isEpisodeTwo
+                    ? isEpisodeThree
+                      ? "Richtig – das Dorf wächst weiter."
+                      : isEpisodeTwo
                       ? "Richtig – weiter auf der menschlichen Spur."
                       : "Richtig – weiter durch die Erdgeschichte."
                     : "Nicht ganz – die Lösung bleibt noch verborgen."}

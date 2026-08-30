@@ -11,6 +11,7 @@ import {
 } from "react";
 import { useAmbientSound } from "../audio/useAmbientSound";
 import { EpisodeSeriesNav } from "../components/EpisodeSeriesNav";
+import { FinalEpisodeQuiz } from "../components/FinalEpisodeQuiz";
 import { SiteFooter } from "../components/SiteFooter";
 import {
   type EpisodeThreeScene,
@@ -25,6 +26,18 @@ import { EpisodeThreeVisual } from "./EpisodeThreeVisual";
 type Panel = "sprecher" | "entdecken" | "quiz";
 
 const sceneSymbols = ["↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖"];
+
+const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
+  scene.quiz.map((quiz) => ({
+    id: scene.id,
+    title: scene.title,
+    quiz: {
+      question: quiz.question,
+      options: [...quiz.answers],
+      correctIndex: quiz.correctAnswer,
+    },
+  })),
+);
 
 function twoDigits(value: number) {
   return String(value).padStart(2, "0");
@@ -111,6 +124,7 @@ export default function EpisodeThreePreview() {
   const scene = episodeThreeScenes[currentIndex];
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
+  const scenePlaybackRate = scene.id === 9 ? 1.2 : 1;
   const narrationPath = episodeThreeSceneAudio[
     scene.id as keyof typeof episodeThreeSceneAudio
   ];
@@ -485,8 +499,10 @@ export default function EpisodeThreePreview() {
             autoPlay={isPlaying}
             onLoadedMetadata={(event) => {
               const audio = event.currentTarget;
+              audio.playbackRate = scenePlaybackRate;
+              audio.preservesPitch = true;
               if (Number.isFinite(audio.duration) && audio.duration > 0) {
-                setSceneDuration(audio.duration);
+                setSceneDuration(audio.duration / scenePlaybackRate);
               }
             }}
             onCanPlay={(event) => {
@@ -595,6 +611,27 @@ export default function EpisodeThreePreview() {
           ) : null}
         </aside>
       </div>
+
+      {currentIndex === episodeThreeScenes.length - 1 ? (
+        <>
+          <FinalEpisodeQuiz
+            scenes={episodeThreeFinalQuizScenes}
+            episode={3}
+            questionCount={5}
+            randomize
+          />
+
+          <section className="ep3-outlook" aria-labelledby="episode-3-part-2-title">
+            <p className="eyebrow">Vorschau</p>
+            <h2 id="episode-3-part-2-title">Teil 2: Städte, Schrift und Macht</h2>
+            <p>
+              Aus Dörfern werden Städte. Vorräte müssen gezählt, Arbeiten verteilt
+              und Regeln festgelegt werden. Und irgendwann stellt jemand fest,
+              dass man Abgaben am besten schriftlich festhält.
+            </p>
+          </section>
+        </>
+      ) : null}
 
       <SiteFooter />
     </main>

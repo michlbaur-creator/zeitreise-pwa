@@ -17,6 +17,7 @@ type SoundEvent =
   | "croak"
   | "eruption"
   | "footsteps"
+  | "goats"
   | "impact"
   | "insects"
   | "rain"
@@ -183,6 +184,7 @@ const sceneEvents: Record<number, SoundEvent[]> = {
   20: ["rustle"],
   21: ["birds", "insects", "rustle"],
   22: ["birds", "waves"],
+  209: ["footsteps", "goats", "rustle"],
 };
 
 function createNoiseBuffer(
@@ -383,6 +385,15 @@ function playSoundEvent(
         filterType: "lowpass",
       });
       break;
+    case "goats":
+      playTone(context, destination, {
+        from: randomBetween(310, 390),
+        to: randomBetween(165, 220),
+        duration: randomBetween(0.32, 0.48),
+        level: 0.01,
+        type: "triangle",
+      });
+      break;
     case "impact":
       playNoiseBurst(context, destination, whiteNoise, {
         frequency: 1650,
@@ -485,6 +496,7 @@ const eventTiming: Record<SoundEvent, [number, number, number]> = {
   croak: [30, 30, 30],
   eruption: [6.5, 10.5, 2.2],
   footsteps: [3.2, 5.4, 1.2],
+  goats: [7.5, 13, 4.2],
   impact: [30, 30, 2.8],
   insects: [1.5, 3.7, 0.8],
   rain: [0.18, 0.48, 0.15],
@@ -523,7 +535,12 @@ export function useAmbientSound(
     whiteNoise: AudioBuffer;
     brownNoise: AudioBuffer;
   } | null>(null);
+  const endingToneSoundRef = useRef<{
+    context: AudioContext;
+    destination: AudioNode;
+  } | null>(null);
   const tiktaalikCroakPlayedRef = useRef(false);
+  const endingTonePlayedRef = useRef(false);
   const impactSceneRef = useRef(sceneId);
   const sceneProgressRef = useRef(progress);
   const [contextRevision, setContextRevision] = useState(0);
@@ -560,6 +577,7 @@ export function useAmbientSound(
       impactPlayedRef.current = false;
       survivorRustlePlayedRef.current = false;
       tiktaalikCroakPlayedRef.current = false;
+      endingTonePlayedRef.current = false;
     }
 
     if (context && rainBedGain && context.state !== "closed") {
@@ -657,6 +675,31 @@ export function useAmbientSound(
         );
       }
     }
+
+    if (sceneId === 209) {
+      if (progress < 0.9) endingTonePlayedRef.current = false;
+      const endingToneSound = endingToneSoundRef.current;
+      if (
+        isPlaying &&
+        !endingTonePlayedRef.current &&
+        progress >= 0.94 &&
+        endingToneSound &&
+        endingToneSound.context.state !== "closed"
+      ) {
+        endingTonePlayedRef.current = true;
+        playTone(
+          endingToneSound.context,
+          endingToneSound.destination,
+          {
+            from: 92,
+            to: 48,
+            duration: 2.6,
+            level: 0.026,
+            type: "sine",
+          },
+        );
+      }
+    }
   }, [isPlaying, progress, sceneId]);
 
   useEffect(() => {
@@ -717,6 +760,12 @@ export function useAmbientSound(
         destination: master,
         whiteNoise,
         brownNoise,
+      };
+    }
+    if (sceneId === 209) {
+      endingToneSoundRef.current = {
+        context,
+        destination: master,
       };
     }
 
@@ -799,6 +848,9 @@ export function useAmbientSound(
       }
       if (tiktaalikSoundRef.current?.destination === master) {
         tiktaalikSoundRef.current = null;
+      }
+      if (endingToneSoundRef.current?.destination === master) {
+        endingToneSoundRef.current = null;
       }
       timers.forEach((timer) => window.clearTimeout(timer));
       persistentNodes.forEach((node) => {

@@ -12383,6 +12383,37 @@ body.cinematic-intro-active {
   transform: none;
 }
 
+.ep3-scene-image-sequence,
+.ep3-sequence-image,
+.ep3-village-haze {
+  position: absolute;
+  inset: 0;
+}
+
+.ep3-scene-image-sequence {
+  overflow: hidden;
+}
+
+.ep3-sequence-image {
+  transition: opacity 500ms linear;
+  transform-origin: 64% 38%;
+}
+
+.ep3-sequence-image-b {
+  transform-origin: 68% 32%;
+}
+
+.ep3-village-haze {
+  background: linear-gradient(180deg, rgba(116, 96, 75, 0.16), transparent 58%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ep3-sequence-image {
+    transition-duration: 1ms;
+  }
+}
+
 .ep3-visual .ep3-scene-video {
   filter: none;
   object-fit: cover;
