@@ -1730,3 +1730,22 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 2,
   },
 };
+
+function compactQuizOptions(quiz: Quiz): Quiz {
+  if (quiz.options.length <= 3) return quiz;
+
+  const optionIndexes = quiz.correctIndex === 3 ? [0, 1, 3] : [0, 1, 2];
+  return {
+    ...quiz,
+    options: optionIndexes.map((index) => quiz.options[index]),
+    correctIndex: optionIndexes.indexOf(quiz.correctIndex),
+  };
+}
+
+scenes.forEach((scene) => {
+  if (scene.quiz) scene.quiz = compactQuizOptions(scene.quiz);
+});
+
+Object.entries(followUpQuizzes).forEach(([sceneId, quiz]) => {
+  followUpQuizzes[Number(sceneId)] = compactQuizOptions(quiz);
+});

@@ -120,6 +120,10 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
     new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
     "utf8",
   );
+  const episodeTwoData = await readFile(
+    new URL("../app/data/episode2.ts", import.meta.url),
+    "utf8",
+  );
   const episodeTwoVisual = await readFile(
     new URL("../app/episode-2/EpisodeTwoVisual.tsx", import.meta.url),
     "utf8",
@@ -141,7 +145,7 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
     [],
   );
   assert.ok(episodeTwo.every((scene) => scene.hotspots.length === 2));
-  assert.ok(episodeTwo.every((scene) => scene.quiz.options.length === 4));
+  assert.ok(episodeTwo.every((scene) => scene.quiz.options.length >= 3));
   assert.ok(episodeTwo.every((scene) => scene.audioPath.endsWith(".m4a")));
   await Promise.all(
     episodeTwo.map((scene) =>
@@ -161,6 +165,11 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, />Text lesen<\/button>/);
   assert.match(episodeTwoApp, />Entdecken<\/button>/);
   assert.match(episodeTwoApp, />Quiz<\/button>/);
+  assert.match(episodeTwoApp, /Quiz · Frage \{quizQuestionIndex \+ 1\} von \{sceneQuizzes\.length\}/);
+  assert.match(episodeTwoApp, /Beide Fragen geschafft\./);
+  assert.equal((episodeTwoData.match(/kind: "optional",/g) ?? []).length, 14);
+  assert.match(episodeTwoData, /followUpQuiz: EpisodeTwoQuiz/);
+  assert.match(episodeTwoData, /compactQuizOptions/);
   assert.match(episodeTwoApp, /const \[detailsOpen, setDetailsOpen\] = useState\(true\)/);
   assert.match(episodeTwoApp, /Wie Menschen die Welt veränderten/);
   assert.match(episodeTwoApp, /Von den ersten Siedlungen bis heute/);
@@ -241,7 +250,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     9,
   );
   assert.equal(
-    [...episodeThreeData.matchAll(/quiz: episodeThreeQuizzes\[\d+\]/g)].length,
+    [...episodeThreeData.matchAll(/quiz: \[episodeThreeQuizzes\[\d+\]\[\d+\], episodeThreeQuizzes\[\d+\]\[\d+\]\]/g)].length,
     9,
   );
   assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 36);
@@ -280,7 +289,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /useAmbientSound/);
   assert.match(episodeThreeApp, /ambientEnabled && !sceneHasVideo/);
   assert.match(episodeThreeApp, /Quiz · Frage \{quizQuestionIndex \+ 1\} von \{scene\.quiz\.length\}/);
-  assert.match(episodeThreeApp, /Alle vier Fragen geschafft/);
+  assert.match(episodeThreeApp, /Beide Fragen geschafft/);
   assert.match(episodeThreeApp, /setQuizQuestionIndex\(\(value\) => value \+ 1\)/);
   assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 9);
   assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 6);
@@ -630,7 +639,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /zeitreise-episode3-resume-after-update/);
   assert.match(episodeThreeApp, /zeitreise-episode3-app-version/);
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v110/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v111"/);
   assert.match(worker, /url\.pathname !== "\/episode-3\/"/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -847,7 +856,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v110/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v111"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

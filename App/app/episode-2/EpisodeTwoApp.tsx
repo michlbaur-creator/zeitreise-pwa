@@ -103,6 +103,7 @@ export default function EpisodeTwoApp() {
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizChecked, setQuizChecked] = useState(false);
+  const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const [ambientEnabled, setAmbientEnabled] = useState(false);
   const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
   const progressRef = useRef(0);
@@ -118,6 +119,8 @@ export default function EpisodeTwoApp() {
   } | null>(null);
 
   const scene = episodeTwoScenes[currentIndex];
+  const sceneQuizzes = [scene.quiz, scene.followUpQuiz];
+  const activeQuiz = sceneQuizzes[quizQuestionIndex];
   const narrationPath = episodeTwoSceneSoundtrack(scene.id) ?? scene.audioPath;
   const activeHotspotData =
     activeHotspot === null ? null : scene.hotspots[activeHotspot];
@@ -150,6 +153,7 @@ export default function EpisodeTwoApp() {
     setActiveHotspot(null);
     setSelectedOption(null);
     setQuizChecked(false);
+    setQuizQuestionIndex(0);
     window.localStorage.setItem("zeitreise-episode2-current-scene", String(nextIndex));
   }, []);
 
@@ -245,6 +249,24 @@ export default function EpisodeTwoApp() {
   useEffect(() => {
     isPlayingRef.current = isPlaying;
   }, [isPlaying]);
+
+  useEffect(() => {
+    if (
+      !quizChecked ||
+      selectedOption !== activeQuiz.correctIndex ||
+      quizQuestionIndex >= sceneQuizzes.length - 1
+    ) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setQuizQuestionIndex((value) => value + 1);
+      setSelectedOption(null);
+      setQuizChecked(false);
+    }, 1100);
+
+    return () => window.clearTimeout(timer);
+  }, [activeQuiz.correctIndex, quizChecked, quizQuestionIndex, sceneQuizzes.length, selectedOption]);
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development" || !("serviceWorker" in navigator)) {
@@ -450,6 +472,7 @@ export default function EpisodeTwoApp() {
   };
 
   const answerQuiz = (index: number) => {
+    if (selectedOption === activeQuiz.correctIndex) return;
     setSelectedOption(index);
     setQuizChecked(true);
   };
@@ -606,10 +629,10 @@ export default function EpisodeTwoApp() {
 
           {panel === "quiz" ? <section className="panel-section interactions">
             <div className="interaction-block quiz-panel">
-              <div className="section-label"><span>Quiz zu dieser Szene</span></div>
-              <h3>{scene.quiz.question}</h3>
-              <div className="quiz-options">{scene.quiz.options.map((option, index) => { const selected = selectedOption === index; const correct = quizChecked && selected && index === scene.quiz.correctIndex; const wrong = quizChecked && selected && index !== scene.quiz.correctIndex; return <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</button>; })}</div>
-              {quizChecked ? <div className={`quiz-result ${selectedOption === scene.quiz.correctIndex ? "is-correct" : "is-wrong"}`} role="status"><strong>{selectedOption === scene.quiz.correctIndex ? "Richtig." : "Noch nicht richtig."}</strong>{selectedOption !== scene.quiz.correctIndex ? <span>Versuch es einfach noch einmal.</span> : null}</div> : null}
+              <div className="section-label"><span>Quiz · Frage {quizQuestionIndex + 1} von {sceneQuizzes.length}</span></div>
+              <h3>{activeQuiz.question}</h3>
+              <div className="quiz-options">{activeQuiz.options.map((option, index) => { const selected = selectedOption === index; const correct = quizChecked && selected && index === activeQuiz.correctIndex; const wrong = quizChecked && selected && index !== activeQuiz.correctIndex; return <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</button>; })}</div>
+              {quizChecked ? <div className={`quiz-result ${selectedOption === activeQuiz.correctIndex ? "is-correct" : "is-wrong"}`} role="status"><strong>{selectedOption === activeQuiz.correctIndex ? "Richtig." : "Noch nicht richtig."}</strong>{selectedOption !== activeQuiz.correctIndex ? <span>Versuch es einfach noch einmal.</span> : quizQuestionIndex < sceneQuizzes.length - 1 ? <span>Die nächste Frage kommt sofort.</span> : <span>Beide Fragen geschafft.</span>}</div> : null}
             </div>
           </section> : null}
         </aside>

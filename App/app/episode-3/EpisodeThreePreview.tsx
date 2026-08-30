@@ -586,7 +586,7 @@ export default function EpisodeThreePreview() {
                     ) : quizQuestionIndex < scene.quiz.length - 1 ? (
                       <span>Die nächste Frage kommt sofort.</span>
                     ) : (
-                      <span>Alle vier Fragen geschafft.</span>
+                      <span>Beide Fragen geschafft.</span>
                     )}
                   </div>
                 ) : null}

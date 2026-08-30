@@ -573,15 +573,15 @@ const episodeThreeQuizzes = {
 } as const;
 
 export const episodeThreeScenes: EpisodeThreeScene[] = [
-  { id: 1, title: "Noch einmal zurück", timeLabel: "Um 12.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[1], discoveries: episodeThreeDiscoveries[1], quiz: episodeThreeQuizzes[1], imageStatus: "ready" },
-  { id: 2, title: "Leben ohne Acker", timeLabel: "Etwa 12.000 bis 10.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[2], discoveries: episodeThreeDiscoveries[2], quiz: episodeThreeQuizzes[2], imageStatus: "ready" },
-  { id: 3, title: "Steine für die Ewigkeit", timeLabel: "Göbekli Tepe, etwa 9.600 bis 8.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[3], discoveries: episodeThreeDiscoveries[3], quiz: episodeThreeQuizzes[3], imageStatus: "ready" },
-  { id: 4, title: "Ein Ort bleibt", timeLabel: "Jericho, 9. bis 8. Jahrtausend v. Chr.", speakerText: episodeThreeSpeakerTexts[4], discoveries: episodeThreeDiscoveries[4], quiz: episodeThreeQuizzes[4], imageStatus: "ready" },
-  { id: 5, title: "Eine Ähre verändert sich", timeLabel: "Etwa 9.500 bis 8.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[5], discoveries: episodeThreeDiscoveries[5], quiz: episodeThreeQuizzes[5], imageStatus: "ready" },
-  { id: 6, title: "Aus Jagd wird Herde", timeLabel: "Etwa 9.000 bis 7.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[6], discoveries: episodeThreeDiscoveries[6], quiz: episodeThreeQuizzes[6], imageStatus: "ready" },
-  { id: 7, title: "Eine Idee entsteht immer wieder", timeLabel: "Über mehrere Jahrtausende", speakerText: episodeThreeSpeakerTexts[7], discoveries: episodeThreeDiscoveries[7], quiz: episodeThreeQuizzes[7], imageStatus: "ready" },
-  { id: 8, title: "Leben Wand an Wand", timeLabel: "Çatalhöyük, etwa 7.400 bis 6.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[8], discoveries: episodeThreeDiscoveries[8], quiz: episodeThreeQuizzes[8], imageStatus: "ready" },
-  { id: 9, title: "Der Preis des Bleibens", timeLabel: "Etwa 7.000 bis 3.500 v. Chr.", speakerText: episodeThreeSpeakerTexts[9], discoveries: episodeThreeDiscoveries[9], quiz: episodeThreeQuizzes[9], imageStatus: "ready" },
+  { id: 1, title: "Noch einmal zurück", timeLabel: "Um 12.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[1], discoveries: episodeThreeDiscoveries[1], quiz: [episodeThreeQuizzes[1][1], episodeThreeQuizzes[1][3]], imageStatus: "ready" },
+  { id: 2, title: "Leben ohne Acker", timeLabel: "Etwa 12.000 bis 10.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[2], discoveries: episodeThreeDiscoveries[2], quiz: [episodeThreeQuizzes[2][0], episodeThreeQuizzes[2][3]], imageStatus: "ready" },
+  { id: 3, title: "Steine für die Ewigkeit", timeLabel: "Göbekli Tepe, etwa 9.600 bis 8.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[3], discoveries: episodeThreeDiscoveries[3], quiz: [episodeThreeQuizzes[3][1], episodeThreeQuizzes[3][3]], imageStatus: "ready" },
+  { id: 4, title: "Ein Ort bleibt", timeLabel: "Jericho, 9. bis 8. Jahrtausend v. Chr.", speakerText: episodeThreeSpeakerTexts[4], discoveries: episodeThreeDiscoveries[4], quiz: [episodeThreeQuizzes[4][1], episodeThreeQuizzes[4][3]], imageStatus: "ready" },
+  { id: 5, title: "Eine Ähre verändert sich", timeLabel: "Etwa 9.500 bis 8.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[5], discoveries: episodeThreeDiscoveries[5], quiz: [episodeThreeQuizzes[5][0], episodeThreeQuizzes[5][1]], imageStatus: "ready" },
+  { id: 6, title: "Aus Jagd wird Herde", timeLabel: "Etwa 9.000 bis 7.000 v. Chr.", speakerText: episodeThreeSpeakerTexts[6], discoveries: episodeThreeDiscoveries[6], quiz: [episodeThreeQuizzes[6][0], episodeThreeQuizzes[6][3]], imageStatus: "ready" },
+  { id: 7, title: "Eine Idee entsteht immer wieder", timeLabel: "Über mehrere Jahrtausende", speakerText: episodeThreeSpeakerTexts[7], discoveries: episodeThreeDiscoveries[7], quiz: [episodeThreeQuizzes[7][0], episodeThreeQuizzes[7][3]], imageStatus: "ready" },
+  { id: 8, title: "Leben Wand an Wand", timeLabel: "Çatalhöyük, etwa 7.400 bis 6.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[8], discoveries: episodeThreeDiscoveries[8], quiz: [episodeThreeQuizzes[8][2], episodeThreeQuizzes[8][3]], imageStatus: "ready" },
+  { id: 9, title: "Der Preis des Bleibens", timeLabel: "Etwa 7.000 bis 3.500 v. Chr.", speakerText: episodeThreeSpeakerTexts[9], discoveries: episodeThreeDiscoveries[9], quiz: [episodeThreeQuizzes[9][0], episodeThreeQuizzes[9][3]], imageStatus: "ready" },
 ];
 
 export const episodeThreeSceneOneImages = {
