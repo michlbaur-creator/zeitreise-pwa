@@ -9,13 +9,17 @@ import {
   useRef,
   useState,
 } from "react";
+import { useAmbientSound } from "../audio/useAmbientSound";
 import { EpisodeSeriesNav } from "../components/EpisodeSeriesNav";
 import { SiteFooter } from "../components/SiteFooter";
 import {
   type EpisodeThreeScene,
+  episodeThreeSceneAudio,
+  episodeThreeSceneDurations,
   episodeThreeSceneVideos,
   episodeThreeScenes,
 } from "../data/episode3";
+import type { SceneTheme } from "../data/scenes";
 import { EpisodeThreeVisual } from "./EpisodeThreeVisual";
 
 type Panel = "sprecher" | "entdecken" | "quiz";
@@ -31,9 +35,11 @@ function formatTime(seconds: number) {
   return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, "0")}`;
 }
 
-function durationForScene(scene: EpisodeThreeScene) {
-  const words = scene.speakerText.join(" ").trim().split(/\s+/).length;
-  return Math.max(24, Math.round(words / 2.35));
+function themeForScene(sceneId: number): SceneTheme {
+  if (sceneId === 1) return "shore";
+  if (sceneId === 4) return "atmosphere";
+  if (sceneId >= 8) return "present";
+  return "forest";
 }
 
 function EpisodeThreeTimeline({
@@ -84,10 +90,13 @@ export default function EpisodeThreePreview() {
   const [panel, setPanel] = useState<Panel>("entdecken");
   const [detailsOpen, setDetailsOpen] = useState(true);
   const [introOpen, setIntroOpen] = useState(true);
-  const [muted, setMuted] = useState(true);
+  const [sceneDuration, setSceneDuration] = useState<number>(episodeThreeSceneDurations[1]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizChecked, setQuizChecked] = useState(false);
+  const [ambientEnabled, setAmbientEnabled] = useState(false);
+  const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
   const progressRef = useRef(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const swipeStartRef = useRef<{
     x: number;
     y: number;
@@ -96,12 +105,34 @@ export default function EpisodeThreePreview() {
   } | null>(null);
 
   const scene = episodeThreeScenes[currentIndex];
-  const sceneDuration = durationForScene(scene);
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
+  const narrationPath = episodeThreeSceneAudio[
+    scene.id as keyof typeof episodeThreeSceneAudio
+  ];
+  const activateAmbientSound = useAmbientSound(
+    200 + scene.id,
+    themeForScene(scene.id),
+    isPlaying,
+    ambientEnabled && !sceneHasVideo,
+    progress,
+  );
+
+  const ensureAmbientSound = useCallback(() => {
+    if (ambientMutedByUser) return;
+    void activateAmbientSound().then((active) => {
+      if (active) setAmbientEnabled(true);
+    });
+  }, [activateAmbientSound, ambientMutedByUser]);
 
   const goToScene = useCallback((nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= episodeThreeScenes.length) return;
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     setCurrentIndex(nextIndex);
+    const nextSceneId = episodeThreeScenes[nextIndex].id as keyof typeof episodeThreeSceneDurations;
+    setSceneDuration(episodeThreeSceneDurations[nextSceneId]);
     setProgress(0);
     progressRef.current = 0;
     setIsPlaying(true);
@@ -127,7 +158,7 @@ export default function EpisodeThreePreview() {
         setCurrentIndex(storedIndex);
       }
       setIntroOpen(!introSeen);
-      setIsPlaying(introSeen);
+      setIsPlaying(false);
     });
     return () => {
       cancelled = true;
@@ -139,26 +170,14 @@ export default function EpisodeThreePreview() {
   }, [progress]);
 
   useEffect(() => {
-    if (!isPlaying) return;
-    let frame = 0;
-    let previous = window.performance.now();
-    const tick = (now: number) => {
-      const next = Math.min(
-        1,
-        progressRef.current + (now - previous) / (sceneDuration * 1000),
-      );
-      previous = now;
-      progressRef.current = next;
-      setProgress(next);
-      if (next >= 1) {
-        setIsPlaying(false);
-        return;
-      }
-      frame = window.requestAnimationFrame(tick);
-    };
-    frame = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(frame);
-  }, [isPlaying, sceneDuration]);
+    const audio = audioRef.current;
+    if (!audio || !narrationPath) return;
+    if (isPlaying) {
+      audio.play().catch(() => setIsPlaying(false));
+    } else {
+      audio.pause();
+    }
+  }, [isPlaying, narrationPath]);
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development" || !("serviceWorker" in navigator)) {
@@ -190,19 +209,24 @@ export default function EpisodeThreePreview() {
       const target = event.target as HTMLElement | null;
       if (target && ["INPUT", "BUTTON", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
       if (event.key === "ArrowLeft") goToScene(currentIndex - 1);
-      if (event.key === "ArrowRight") goToScene(currentIndex + 1);
+      if (event.key === "ArrowRight") {
+        ensureAmbientSound();
+        goToScene(currentIndex + 1);
+      }
       if (event.key === " ") {
         event.preventDefault();
         if (progress >= 1) {
           progressRef.current = 0;
           setProgress(0);
+          if (audioRef.current) audioRef.current.currentTime = 0;
         }
+        if (!isPlaying) ensureAmbientSound();
         setIsPlaying((value) => !value);
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [currentIndex, goToScene, progress]);
+  }, [currentIndex, ensureAmbientSound, goToScene, isPlaying, progress]);
 
   const startSceneSwipe = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
@@ -232,9 +256,15 @@ export default function EpisodeThreePreview() {
   const startJourney = () => {
     window.localStorage.setItem("zeitreise-episode3-intro-seen", "1");
     setIntroOpen(false);
+    setAmbientMutedByUser(false);
+    void activateAmbientSound().then((active) => {
+      if (active) setAmbientEnabled(true);
+    });
     setCurrentIndex(0);
+    setSceneDuration(episodeThreeSceneDurations[1]);
     setProgress(0);
     progressRef.current = 0;
+    if (audioRef.current) audioRef.current.currentTime = 0;
     setIsPlaying(true);
   };
 
@@ -242,14 +272,32 @@ export default function EpisodeThreePreview() {
     if (progress >= 1) {
       progressRef.current = 0;
       setProgress(0);
+      if (audioRef.current) audioRef.current.currentTime = 0;
     }
+    if (!isPlaying) ensureAmbientSound();
     setIsPlaying((value) => !value);
+  };
+
+  const toggleAmbient = () => {
+    if (ambientEnabled) {
+      setAmbientEnabled(false);
+      setAmbientMutedByUser(true);
+      return;
+    }
+    setAmbientMutedByUser(false);
+    void activateAmbientSound().then((active) => {
+      if (active) setAmbientEnabled(true);
+    });
   };
 
   const seek = (value: number) => {
     const safe = Math.min(1, Math.max(0, value));
     progressRef.current = safe;
     setProgress(safe);
+    const audio = audioRef.current;
+    if (audio && Number.isFinite(audio.duration) && audio.duration > 0) {
+      audio.currentTime = safe * audio.duration;
+    }
   };
 
   const answerQuiz = (index: number) => {
@@ -267,7 +315,7 @@ export default function EpisodeThreePreview() {
             <strong>Wie Menschen die Welt veränderten</strong>
             <p>Die Reise geht in der Welt vor ungefähr 14.000 Jahren weiter.</p>
             <button type="button" onClick={startJourney}>Episode beginnen <span aria-hidden="true">→</span></button>
-            <button className="ep2-intro-back" type="button" onClick={() => { setIntroOpen(false); setIsPlaying(true); }}>Direkt zur ersten Szene</button>
+            <button className="ep2-intro-back" type="button" onClick={startJourney}>Direkt zur ersten Szene</button>
           </div>
         </section>
       ) : null}
@@ -307,10 +355,39 @@ export default function EpisodeThreePreview() {
             <EpisodeThreeVisual
               scene={scene}
               isPlaying={isPlaying}
-              muted={muted}
               progress={progress}
             />
           </div>
+
+          <audio
+            ref={audioRef}
+            src={narrationPath}
+            preload="metadata"
+            autoPlay={isPlaying}
+            onLoadedMetadata={(event) => {
+              const audio = event.currentTarget;
+              if (Number.isFinite(audio.duration) && audio.duration > 0) {
+                setSceneDuration(audio.duration);
+              }
+            }}
+            onCanPlay={(event) => {
+              const audio = event.currentTarget;
+              if (!isPlaying || !audio.paused) return;
+              audio.play().catch(() => setIsPlaying(false));
+            }}
+            onTimeUpdate={(event) => {
+              const audio = event.currentTarget;
+              if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+              const next = Math.min(1, audio.currentTime / audio.duration);
+              progressRef.current = next;
+              setProgress(next);
+            }}
+            onEnded={() => {
+              progressRef.current = 1;
+              setProgress(1);
+              setIsPlaying(false);
+            }}
+          />
 
           <div className="player-controls">
             <button className="round-control" type="button" onClick={() => goToScene(currentIndex - 1)} disabled={currentIndex === 0} aria-label="Vorherige Szene">←</button>
@@ -319,12 +396,18 @@ export default function EpisodeThreePreview() {
               <span className="play-label">{isPlaying ? "Pause" : progress >= 1 ? "Noch einmal" : "Szene starten"}</span>
               <span className="play-wave" aria-hidden="true"><i /><i /><i /></span>
             </button>
-            <button className={`sound-control ${sceneHasVideo && !muted ? "is-on" : ""}`} type="button" aria-pressed={sceneHasVideo && !muted} onClick={() => setMuted((value) => !value)} disabled={!sceneHasVideo}>
-              <span aria-hidden="true">{sceneHasVideo && !muted ? "◖))" : "◖×"}</span><span className="sound-label">Filmton</span>
-            </button>
+            {sceneHasVideo ? (
+              <span className="sound-control is-on ep2-mixed-sound" role="status" aria-label="Filmton und Sprecher sind zu einer Tonspur verbunden">
+                <span aria-hidden="true">◖))</span><span className="sound-label">Filmton</span>
+              </span>
+            ) : (
+              <button className={`sound-control ${ambientEnabled ? "is-on" : ""}`} type="button" aria-pressed={ambientEnabled} onClick={toggleAmbient}>
+                <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span><span className="sound-label">Atmosphäre</span>
+              </button>
+            )}
             <label className="scrubber"><span className="sr-only">Position in der Szene</span><input type="range" min="0" max="1000" value={Math.round(progress * 1000)} onChange={(event) => seek(Number(event.target.value) / 1000)} style={{ "--seek": `${progress * 100}%` } as CSSProperties} /></label>
             <span className="timecode">{formatTime(progress * sceneDuration)} / {formatTime(sceneDuration)}</span>
-            <button className="next-control" type="button" onClick={() => goToScene(currentIndex + 1)} disabled={currentIndex === episodeThreeScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
+            <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1); }} disabled={currentIndex === episodeThreeScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
           </div>
           <EpisodeSeriesNav currentEpisode={3} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
@@ -340,6 +423,7 @@ export default function EpisodeThreePreview() {
 
           {panel === "sprecher" ? (
             <section className="panel-section ep3-speaker-text">
+              <div className="ep2-audio-note"><span aria-hidden="true">◖))</span><p><strong>Sprecher: Micha</strong><small>Die Aufnahme ist mit dem Ablauf dieser Szene verbunden.</small></p></div>
               <blockquote>{scene.speakerText.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</blockquote>
             </section>
           ) : null}

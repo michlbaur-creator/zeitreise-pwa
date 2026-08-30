@@ -10,11 +10,10 @@ import {
 type Props = {
   scene: EpisodeThreeScene;
   isPlaying: boolean;
-  muted: boolean;
   progress: number;
 };
 
-export function EpisodeThreeVisual({ scene, isPlaying, muted, progress }: Props) {
+export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const video = episodeThreeSceneVideos[
     scene.id as keyof typeof episodeThreeSceneVideos
@@ -26,7 +25,7 @@ export function EpisodeThreeVisual({ scene, isPlaying, muted, progress }: Props)
   useEffect(() => {
     const element = videoRef.current;
     if (!element || !video) return;
-    element.muted = muted;
+    element.muted = true;
     if (!isPlaying) {
       element.pause();
       return;
@@ -35,7 +34,7 @@ export function EpisodeThreeVisual({ scene, isPlaying, muted, progress }: Props)
       element.muted = true;
       void element.play().catch(() => undefined);
     });
-  }, [isPlaying, muted, scene.id, video]);
+  }, [isPlaying, scene.id, video]);
 
   useEffect(() => {
     const element = videoRef.current;
@@ -65,7 +64,7 @@ export function EpisodeThreeVisual({ scene, isPlaying, muted, progress }: Props)
           poster={image}
           preload="metadata"
           playsInline
-          muted={muted}
+          muted
           aria-hidden="true"
           key={video}
         />

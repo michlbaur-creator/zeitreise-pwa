@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v107";
+const CACHE_NAME = "zeitreise-v108";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -194,30 +194,39 @@ const EPISODE_THREE_ASSETS = {
   1: [
     "/assets/episode3/scene01/hintergrund-zeitfelsen-heute-v1.png",
     "/assets/episode3/scene01/hintergrund-zeitfelsen-12000-vchr-v1.png",
+    "/assets/episode3/audio/sprecher-und-veo-szene-01-v1.m4a",
   ],
   2: [
     "/assets/episode3/scene02/hintergrund-leben-ohne-acker-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-und-veo-szene-02-v1.m4a",
   ],
   3: [
     "/assets/episode3/scene03/hintergrund-goebekli-tepe-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-und-veo-szene-03-v1.m4a",
   ],
   4: [
     "/assets/episode3/scene04/hintergrund-jericho-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-und-veo-szene-04-v1.m4a",
   ],
   5: [
     "/assets/episode3/scene05/hintergrund-aehre-veraendert-sich-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-szene-05-v1.m4a",
   ],
   6: [
     "/assets/episode3/scene06/hintergrund-aus-jagd-wird-herde-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-und-veo-szene-06-v1.m4a",
   ],
   7: [
     "/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-szene-07-v1.m4a",
   ],
   8: [
     "/assets/episode3/scene08/hintergrund-catalhoeyuek-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-und-veo-szene-08-v1.m4a",
   ],
   9: [
     "/assets/episode3/scene09/hintergrund-preis-des-bleibens-entwurf-v1.png",
+    "/assets/episode3/audio/sprecher-szene-09-v1.m4a",
   ],
 };
 

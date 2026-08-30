@@ -24,6 +24,30 @@ export const episodeThreeSceneVideos = {
   8: "/assets/episode3/scene08/bewegung-catalhoeyuek-veo-v1.mp4",
 } as const;
 
+export const episodeThreeSceneAudio = {
+  1: "/assets/episode3/audio/sprecher-und-veo-szene-01-v1.m4a",
+  2: "/assets/episode3/audio/sprecher-und-veo-szene-02-v1.m4a",
+  3: "/assets/episode3/audio/sprecher-und-veo-szene-03-v1.m4a",
+  4: "/assets/episode3/audio/sprecher-und-veo-szene-04-v1.m4a",
+  5: "/assets/episode3/audio/sprecher-szene-05-v1.m4a",
+  6: "/assets/episode3/audio/sprecher-und-veo-szene-06-v1.m4a",
+  7: "/assets/episode3/audio/sprecher-szene-07-v1.m4a",
+  8: "/assets/episode3/audio/sprecher-und-veo-szene-08-v1.m4a",
+  9: "/assets/episode3/audio/sprecher-szene-09-v1.m4a",
+} as const;
+
+export const episodeThreeSceneDurations = {
+  1: 58,
+  2: 62,
+  3: 68,
+  4: 72,
+  5: 53,
+  6: 51,
+  7: 58,
+  8: 51,
+  9: 82,
+} as const;
+
 export const episodeThreeSceneImages = {
   1: "/assets/episode3/scene01/hintergrund-zeitfelsen-heute-v1.png",
   2: "/assets/episode3/scene02/hintergrund-leben-ohne-acker-entwurf-v1.png",

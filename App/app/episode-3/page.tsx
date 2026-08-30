@@ -3,11 +3,7 @@ import EpisodeThreePreview from "./EpisodeThreePreview";
 
 export const metadata: Metadata = {
   title: "Episode 3 – Vom Wandern zum Bleiben | Zeitreise",
-  description: "Öffentliche Vorschau zu Teil 1 von Episode 3: Vom Wandern zum Bleiben.",
-  robots: {
-    index: false,
-    follow: false,
-  },
+  description: "Episode 3 der Zeitreise: Vom Wandern zum Bleiben.",
 };
 
 export default function EpisodeThreePage() {

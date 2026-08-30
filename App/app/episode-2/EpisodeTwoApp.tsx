@@ -470,7 +470,6 @@ export default function EpisodeTwoApp() {
         <section className="ep2-intro" role="dialog" aria-modal="true" aria-label="Beginn von Episode 2">
           <div className="ep2-intro-copy">
             <p className="eyebrow">Zeitreise · Episode 2</p>
-            <span className="ep2-preview-badge">Arbeitsfassung · Handy-Test</span>
             <h2>Die Entwicklung des Menschen</h2>
             <strong>Eine verzweigte Geschichte</strong>
             <p>Die Reise geht beim kleinen Säugetier aus Episode 1 weiter.</p>
@@ -485,7 +484,6 @@ export default function EpisodeTwoApp() {
           <div className="brand-mark" aria-hidden="true"><span /></div>
           <div>
             <p className="eyebrow">Episode 2</p>
-            <span className="ep2-preview-badge">Arbeitsfassung · noch nicht vollständig</span>
             <h1>Zeitreise <span>Die Entwicklung des Menschen · Eine verzweigte Geschichte</span></h1>
           </div>
         </div>
@@ -616,7 +614,7 @@ export default function EpisodeTwoApp() {
           <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
 
           <section className="ep3-outlook" aria-labelledby="episode-3-title">
-            <p className="eyebrow">Übergangsentwurf · Episode 2 → 3</p>
+            <p className="eyebrow">Weiter zu Episode 3</p>
             <h2 id="episode-3-title">Vom Wandern zum Bleiben</h2>
             <strong>Wie Menschen die Welt veränderten</strong>
             <span className="ep3-outlook-period">Von den ersten Siedlungen bis heute</span>
@@ -628,7 +626,6 @@ export default function EpisodeTwoApp() {
               Nachbarn. Das verändert fast alles. Einschließlich der Frage, wer
               schon wieder den Eingang zugestellt hat.
             </p>
-            <span className="ep3-outlook-private">Episode 3 · nur per Direktlink</span>
           </section>
         </>
       ) : null}
