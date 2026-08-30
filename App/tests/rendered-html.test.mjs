@@ -607,9 +607,13 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
   assert.match(app, /zeitreise-resume-after-update/);
 });
 
-test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Sprecheraufnahme", async () => {
+test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprecheraufnahme", async () => {
   const app = await readFile(
     new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeThreeApp = await readFile(
+    new URL("../app/episode-3/EpisodeThreePreview.tsx", import.meta.url),
     "utf8",
   );
   const worker = await readFile(
@@ -622,7 +626,13 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v109/);
+  assert.match(episodeThreeApp, /\/episode-3\/\?zeitreise-update=\$\{Date\.now\(\)\}/);
+  assert.match(episodeThreeApp, /zeitreise-episode3-resume-after-update/);
+  assert.match(episodeThreeApp, /zeitreise-episode3-app-version/);
+  assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
+  assert.match(worker, /zeitreise-v110/);
+  assert.match(worker, /url\.pathname !== "\/episode-3\/"/);
+  assert.match(worker, /client\.navigate\(url\.href\)/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -837,7 +847,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v109/);
+  assert.match(worker, /zeitreise-v110/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

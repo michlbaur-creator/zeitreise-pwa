@@ -98,6 +98,9 @@ export default function EpisodeThreePreview() {
   const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isPlayingRef = useRef(false);
+  const updateWaitingRef = useRef(false);
+  const updateReloadingRef = useRef(false);
   const swipeStartRef = useRef<{
     x: number;
     y: number;
@@ -153,6 +156,11 @@ export default function EpisodeThreePreview() {
       );
       const introSeen =
         window.localStorage.getItem("zeitreise-episode3-intro-seen") === "1";
+      const resumeAfterUpdate =
+        window.localStorage.getItem("zeitreise-episode3-resume-after-update") === "1";
+      if (resumeAfterUpdate) {
+        window.localStorage.removeItem("zeitreise-episode3-resume-after-update");
+      }
       if (
         Number.isInteger(storedIndex) &&
         storedIndex >= 0 &&
@@ -160,7 +168,7 @@ export default function EpisodeThreePreview() {
       ) {
         setCurrentIndex(storedIndex);
       }
-      setIntroOpen(!introSeen);
+      setIntroOpen(!introSeen && !resumeAfterUpdate);
       setIsPlaying(false);
     });
     return () => {
@@ -171,6 +179,10 @@ export default function EpisodeThreePreview() {
   useEffect(() => {
     progressRef.current = progress;
   }, [progress]);
+
+  useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
 
   useEffect(() => {
     if (
@@ -208,6 +220,92 @@ export default function EpisodeThreePreview() {
       .register("/sw.js", { updateViaCache: "none" })
       .catch(() => undefined);
   }, []);
+
+  const reloadForUpdate = useCallback(() => {
+    if (updateReloadingRef.current) return;
+    updateReloadingRef.current = true;
+    window.localStorage.setItem("zeitreise-episode3-resume-after-update", "1");
+    window.location.reload();
+  }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") return;
+
+    let disposed = false;
+    let checking = false;
+
+    const checkForUpdate = async () => {
+      if (checking || !window.navigator.onLine) return;
+      checking = true;
+
+      try {
+        const response = await fetch(
+          `/episode-3/?zeitreise-update=${Date.now()}`,
+          { method: "HEAD", cache: "no-store" },
+        );
+        if (!response.ok || disposed) return;
+
+        const serverModified = response.headers.get("last-modified") ?? "";
+        const signature =
+          response.headers.get("etag") ||
+          serverModified ||
+          response.headers.get("content-length") ||
+          "";
+        const knownSignature =
+          window.localStorage.getItem("zeitreise-episode3-app-version") ?? "";
+        const serverTime = Date.parse(serverModified);
+        const pageTime = Date.parse(document.lastModified);
+        const pageIsOlder =
+          Number.isFinite(serverTime) &&
+          Number.isFinite(pageTime) &&
+          serverTime > pageTime + 1000;
+        const versionChanged =
+          Boolean(knownSignature) &&
+          Boolean(signature) &&
+          knownSignature !== signature;
+
+        if (signature) {
+          window.localStorage.setItem("zeitreise-episode3-app-version", signature);
+        }
+
+        const registration = await navigator.serviceWorker?.getRegistration();
+        await registration?.update();
+
+        if (!pageIsOlder && !versionChanged) return;
+        if (isPlayingRef.current) {
+          updateWaitingRef.current = true;
+        } else {
+          reloadForUpdate();
+        }
+      } catch {
+        return;
+      } finally {
+        checking = false;
+      }
+    };
+
+    const checkWhenVisible = () => {
+      if (document.visibilityState === "visible") void checkForUpdate();
+    };
+
+    void checkForUpdate();
+    const timer = window.setInterval(checkForUpdate, 3 * 60 * 1000);
+    window.addEventListener("focus", checkForUpdate);
+    window.addEventListener("pageshow", checkForUpdate);
+    document.addEventListener("visibilitychange", checkWhenVisible);
+
+    return () => {
+      disposed = true;
+      window.clearInterval(timer);
+      window.removeEventListener("focus", checkForUpdate);
+      window.removeEventListener("pageshow", checkForUpdate);
+      document.removeEventListener("visibilitychange", checkWhenVisible);
+    };
+  }, [reloadForUpdate]);
+
+  useEffect(() => {
+    if (!isPlaying && updateWaitingRef.current) reloadForUpdate();
+  }, [isPlaying, reloadForUpdate]);
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development" || !("serviceWorker" in navigator)) {

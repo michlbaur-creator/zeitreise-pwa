@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v109";
+const CACHE_NAME = "zeitreise-v110";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -256,17 +256,31 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches
-      .keys()
-      .then((keys) =>
-        Promise.all(
-          keys
-            .filter((key) => key !== CACHE_NAME)
-            .map((key) => caches.delete(key)),
-        ),
-      ),
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(
+        keys
+          .filter((key) => key !== CACHE_NAME)
+          .map((key) => caches.delete(key)),
+      );
+      await self.clients.claim();
+
+      if (CACHE_NAME === "zeitreise-v110") {
+        const windows = await self.clients.matchAll({
+          type: "window",
+          includeUncontrolled: true,
+        });
+        await Promise.all(
+          windows.map((client) => {
+            const url = new URL(client.url);
+            if (url.pathname !== "/episode-3/") return undefined;
+            url.searchParams.set("zeitreise-update", "v110");
+            return client.navigate(url.href).catch(() => undefined);
+          }),
+        );
+      }
+    })(),
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
