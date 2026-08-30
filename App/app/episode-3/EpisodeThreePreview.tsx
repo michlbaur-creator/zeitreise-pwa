@@ -1,445 +1,391 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import {
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { EpisodeSeriesNav } from "../components/EpisodeSeriesNav";
 import { SiteFooter } from "../components/SiteFooter";
 import {
   type EpisodeThreeScene,
-  episodeThreeSceneOneImages,
-  episodeThreeSceneTwoDraft,
-  episodeThreeSceneThreeDraft,
-  episodeThreeSceneFourDraft,
-  episodeThreeSceneFiveDraft,
-  episodeThreeSceneSixDraft,
-  episodeThreeSceneSevenDraft,
-  episodeThreeSceneEightDraft,
-  episodeThreeSceneNineDraft,
   episodeThreeSceneVideos,
   episodeThreeScenes,
 } from "../data/episode3";
+import { EpisodeThreeVisual } from "./EpisodeThreeVisual";
 
-function EpisodeThreeClip({
-  src,
-  poster,
-  label,
-  playback,
-  className = "",
-}: {
-  src: string;
-  poster: string;
-  label: string;
-  playback: "loop" | "hold";
-  className?: string;
-}) {
-  return (
-    <video
-      className={`ep3-scene-video ${className}`.trim()}
-      src={src}
-      poster={poster}
-      aria-label={label}
-      controls
-      loop={playback === "loop"}
-      playsInline
-      preload="metadata"
-    />
-  );
+type Panel = "sprecher" | "entdecken" | "quiz";
+
+const sceneSymbols = ["↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖"];
+
+function twoDigits(value: number) {
+  return String(value).padStart(2, "0");
 }
 
-function SpeakerText({
+function formatTime(seconds: number) {
+  const safe = Math.max(0, Math.round(seconds));
+  return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, "0")}`;
+}
+
+function durationForScene(scene: EpisodeThreeScene) {
+  const words = scene.speakerText.join(" ").trim().split(/\s+/).length;
+  return Math.max(24, Math.round(words / 2.35));
+}
+
+function EpisodeThreeTimeline({
   scene,
-  initiallyOpen = false,
+  onSelect,
 }: {
   scene: EpisodeThreeScene;
-  initiallyOpen?: boolean;
+  onSelect: (index: number) => void;
 }) {
+  const activeIndex = scene.id - 1;
+  const travelled = (activeIndex / (episodeThreeScenes.length - 1)) * 100;
+
   return (
-    <details className="ep3-script" open={initiallyOpen}>
-      <summary>
-        <span>Sprechertext lesen</span>
-        <small>{scene.timeLabel}</small>
-      </summary>
-      <div className="ep3-script-copy">
-        {scene.speakerText.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+    <nav className="earth-timeline ep2-timeline ep3-timeline" aria-label="Navigation durch Episode 3">
+      <div className="earth-timeline-current">
+        <span>Du bist hier</span>
+        <strong>{scene.timeLabel}</strong>
       </div>
-      <p className="ep3-script-status">
-        Rekonstruierte Arbeitsgrundlage · Sprecheraufnahme steht noch aus
-      </p>
-    </details>
-  );
-}
-
-function SceneActivities({ scene }: { scene: EpisodeThreeScene }) {
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-
-  return (
-    <>
-      <details className="ep3-activities">
-        <summary>
-          <span>Entdecken &amp; Szenenquiz</span>
-          <small>2 Wissenspunkte · 1 Frage</small>
-        </summary>
-        <div className="ep3-activities-grid">
-          <section className="ep3-discoveries" aria-label={`Entdecken in Szene ${scene.id}`}>
-            <p className="eyebrow">Entdecken</p>
-            {scene.discoveries.map((discovery) => (
-              <article key={discovery.title}>
-                <h3>{discovery.title}</h3>
-                <p>{discovery.text}</p>
-              </article>
-            ))}
-          </section>
-
-          <section className="ep3-scene-quiz" aria-labelledby={`ep3-quiz-${scene.id}`}>
-            <p className="eyebrow">Quiz</p>
-            <h3 id={`ep3-quiz-${scene.id}`}>{scene.quiz.question}</h3>
-            <div className="ep3-quiz-answers">
-              {scene.quiz.answers.map((answer, answerIndex) => {
-                const isSelected = selectedAnswer === answerIndex;
-                const isCorrect = answerIndex === scene.quiz.correctAnswer;
-                const resultClass = selectedAnswer === null
-                  ? ""
-                  : isCorrect
-                    ? "is-correct"
-                    : isSelected
-                      ? "is-wrong"
-                      : "";
-
-                return (
-                  <button
-                    type="button"
-                    className={resultClass}
-                    aria-pressed={isSelected}
-                    key={answer}
-                    onClick={() => setSelectedAnswer(answerIndex)}
-                  >
-                    {answer}
-                  </button>
-                );
-              })}
-            </div>
-            {selectedAnswer !== null ? (
-              <p className="ep3-quiz-result" role="status">
-                {selectedAnswer === scene.quiz.correctAnswer
-                  ? "Richtig."
-                  : "Noch nicht. Versuch es noch einmal."}
-              </p>
-            ) : null}
-          </section>
+      <div className="earth-timeline-scroll">
+        <div className="earth-timeline-track" aria-hidden="true">
+          <span style={{ width: `${travelled}%` }} />
         </div>
-        <p className="ep3-activity-status">Rekonstruierte Arbeitsgrundlage</p>
-      </details>
-      <EpisodeSeriesNav currentEpisode={3} />
-    </>
+        <div className="earth-timeline-stops">
+          {episodeThreeScenes.map((item, index) => (
+            <button
+              type="button"
+              className={index === activeIndex ? "is-current" : ""}
+              onClick={() => onSelect(index)}
+              aria-current={index === activeIndex ? "step" : undefined}
+              aria-label={`Szene ${item.id}: ${item.title}, ${item.timeLabel}`}
+              key={item.id}
+            >
+              <i aria-hidden="true">{sceneSymbols[index]}</i>
+              <span>{item.title}</span>
+              <small>{item.timeLabel}</small>
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
   );
 }
 
 export default function EpisodeThreePreview() {
-  const [pastVisible, setPastVisible] = useState(false);
-  const readyScenes = episodeThreeScenes.filter(
-    (scene) => scene.imageStatus === "ready",
-  ).length;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [panel, setPanel] = useState<Panel>("entdecken");
+  const [detailsOpen, setDetailsOpen] = useState(true);
+  const [introOpen, setIntroOpen] = useState(true);
+  const [muted, setMuted] = useState(true);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [quizChecked, setQuizChecked] = useState(false);
+  const progressRef = useRef(0);
+  const swipeStartRef = useRef<{
+    x: number;
+    y: number;
+    pointerId: number;
+    target: EventTarget | null;
+  } | null>(null);
+
+  const scene = episodeThreeScenes[currentIndex];
+  const sceneDuration = durationForScene(scene);
+  const sceneHasVideo = scene.id in episodeThreeSceneVideos;
+
+  const goToScene = useCallback((nextIndex: number) => {
+    if (nextIndex < 0 || nextIndex >= episodeThreeScenes.length) return;
+    setCurrentIndex(nextIndex);
+    setProgress(0);
+    progressRef.current = 0;
+    setIsPlaying(true);
+    setSelectedOption(null);
+    setQuizChecked(false);
+    window.localStorage.setItem("zeitreise-episode3-current-scene", String(nextIndex));
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    window.queueMicrotask(() => {
+      if (cancelled) return;
+      const storedIndex = Number(
+        window.localStorage.getItem("zeitreise-episode3-current-scene") ?? "0",
+      );
+      const introSeen =
+        window.localStorage.getItem("zeitreise-episode3-intro-seen") === "1";
+      if (
+        Number.isInteger(storedIndex) &&
+        storedIndex >= 0 &&
+        storedIndex < episodeThreeScenes.length
+      ) {
+        setCurrentIndex(storedIndex);
+      }
+      setIntroOpen(!introSeen);
+      setIsPlaying(introSeen);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    let frame = 0;
+    let previous = window.performance.now();
+    const tick = (now: number) => {
+      const next = Math.min(
+        1,
+        progressRef.current + (now - previous) / (sceneDuration * 1000),
+      );
+      previous = now;
+      progressRef.current = next;
+      setProgress(next);
+      if (next >= 1) {
+        setIsPlaying(false);
+        return;
+      }
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [isPlaying, sceneDuration]);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development" || !("serviceWorker" in navigator)) {
+      return;
+    }
+    navigator.serviceWorker
+      .register("/sw.js", { updateViaCache: "none" })
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development" || !("serviceWorker" in navigator)) {
+      return;
+    }
+    const sceneIds = [scene.id, episodeThreeScenes[currentIndex + 1]?.id].filter(
+      (sceneId): sceneId is number => typeof sceneId === "number",
+    );
+    void navigator.serviceWorker.ready.then((registration) => {
+      registration.active?.postMessage({
+        type: "CACHE_SCENES",
+        episode: 3,
+        sceneIds,
+      });
+    });
+  }, [currentIndex, scene.id]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && ["INPUT", "BUTTON", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
+      if (event.key === "ArrowLeft") goToScene(currentIndex - 1);
+      if (event.key === "ArrowRight") goToScene(currentIndex + 1);
+      if (event.key === " ") {
+        event.preventDefault();
+        if (progress >= 1) {
+          progressRef.current = 0;
+          setProgress(0);
+        }
+        setIsPlaying((value) => !value);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [currentIndex, goToScene, progress]);
+
+  const startSceneSwipe = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest("button, a, input, textarea, select, [role='slider']")) return;
+    swipeStartRef.current = {
+      x: event.clientX,
+      y: event.clientY,
+      pointerId: event.pointerId,
+      target: event.target,
+    };
+  }, []);
+
+  const finishSceneSwipe = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    const start = swipeStartRef.current;
+    swipeStartRef.current = null;
+    if (!start || start.pointerId !== event.pointerId) return;
+    const horizontalDistance = event.clientX - start.x;
+    const verticalDistance = event.clientY - start.y;
+    if (
+      Math.abs(horizontalDistance) < 70 ||
+      Math.abs(horizontalDistance) <= Math.abs(verticalDistance) * 1.25
+    ) return;
+    goToScene(currentIndex + (horizontalDistance < 0 ? 1 : -1));
+  }, [currentIndex, goToScene]);
+
+  const startJourney = () => {
+    window.localStorage.setItem("zeitreise-episode3-intro-seen", "1");
+    setIntroOpen(false);
+    setCurrentIndex(0);
+    setProgress(0);
+    progressRef.current = 0;
+    setIsPlaying(true);
+  };
+
+  const togglePlayback = () => {
+    if (progress >= 1) {
+      progressRef.current = 0;
+      setProgress(0);
+    }
+    setIsPlaying((value) => !value);
+  };
+
+  const seek = (value: number) => {
+    const safe = Math.min(1, Math.max(0, value));
+    progressRef.current = safe;
+    setProgress(safe);
+  };
+
+  const answerQuiz = (index: number) => {
+    setSelectedOption(index);
+    setQuizChecked(true);
+  };
 
   return (
-    <main className="app-shell ep3-shell">
-      <header className="app-header ep3-header">
+    <main className="app-shell ep2-shell ep3-shell">
+      {introOpen ? (
+        <section className="ep2-intro" role="dialog" aria-modal="true" aria-label="Beginn von Episode 3">
+          <div className="ep2-intro-copy">
+            <p className="eyebrow">Zeitreise · Episode 3</p>
+            <h2>Vom Wandern zum Bleiben</h2>
+            <strong>Wie Menschen die Welt veränderten</strong>
+            <p>Die Reise geht in der Welt vor ungefähr 14.000 Jahren weiter.</p>
+            <button type="button" onClick={startJourney}>Episode beginnen <span aria-hidden="true">→</span></button>
+            <button className="ep2-intro-back" type="button" onClick={() => { setIntroOpen(false); setIsPlaying(true); }}>Direkt zur ersten Szene</button>
+          </div>
+        </section>
+      ) : null}
+
+      <header className="app-header">
         <div className="brand-lockup">
           <div className="brand-mark" aria-hidden="true"><span /></div>
           <div>
-            <p className="eyebrow">Episode 3 · Teil 1</p>
-            <span className="ep3-preview-badge">Öffentliche Vorschau · nur per Direktlink</span>
+            <p className="eyebrow">Episode 3</p>
             <h1>Zeitreise <span>Vom Wandern zum Bleiben</span></h1>
           </div>
         </div>
         <div className="header-actions">
-          <Link className="quiet-button ep3-back-link" href="/episode-2/">← Episode 2</Link>
+          <Link className="quiet-button ep2-episode-link" href="/episode-2/">← Episode 2</Link>
+          <button className="quiet-button intro-replay" type="button" onClick={() => { setIsPlaying(false); setIntroOpen(true); }}>Anfang ansehen</button>
         </div>
       </header>
 
-      <section className="ep3-preview-lead">
-        <div>
-          <p className="eyebrow">Wie Menschen die Welt veränderten</p>
-          <h2>Der erste große Umbau beginnt.</h2>
-          <p>
-            Die vollständige technische Bildfolge liegt nun vor: neun kurze
-            Stationen, leicht erzählt und mit dem vertiefenden Wissen im
-            Hintergrund. Alle neun Szenenbilder sind jetzt gemeinsam
-            freigegeben. Die rekonstruierten Sprechertexte stehen direkt bei
-            den Bildern zum Mitlesen bereit.
-          </p>
-        </div>
-        <div className="ep3-progress" aria-label={`${readyScenes} von ${episodeThreeScenes.length} Szenenbildern freigegeben`}>
-          <strong>{readyScenes}/{episodeThreeScenes.length}</strong>
-          <span>Szenenbilder freigegeben</span>
-        </div>
-      </section>
+      <EpisodeThreeTimeline scene={scene} onSelect={goToScene} />
 
-      <section className="ep3-scene-preview" aria-labelledby="ep3-scene-one-title">
-        <div className="scene-heading ep3-scene-heading">
-          <div>
-            <p className="eyebrow">Szene 01 von 09</p>
-            <h2 id="ep3-scene-one-title">Noch einmal zurück</h2>
+      <div className="workspace">
+        <section className="player-column">
+          <div className="scene-heading">
+            <div>
+              <p className="eyebrow">Szene {twoDigits(scene.id)} von {episodeThreeScenes.length}</p>
+              <h2>{scene.title}</h2>
+            </div>
+            <div className="scene-facts"><span>{scene.timeLabel}</span></div>
           </div>
-          <div className="scene-facts">
-            <span>Um 12.000 v. Chr.</span>
-            <em>Bildpaar fertig</em>
-          </div>
-        </div>
 
-        <div className={`ep3-time-transition ${pastVisible ? "shows-past" : "shows-present"}`}>
           <div
-            className="ep3-time-image ep3-time-image-present"
-            style={{ backgroundImage: `url("${episodeThreeSceneOneImages.present}")` }}
-            aria-hidden="true"
-          />
-          <div
-            className="ep3-time-image ep3-time-image-past"
-            style={{ backgroundImage: `url("${episodeThreeSceneOneImages.past}")` }}
-            aria-hidden="true"
-          />
-          {pastVisible ? (
-            <EpisodeThreeClip
-              className="ep3-time-video"
-              src={episodeThreeSceneVideos[1].src}
-              poster={episodeThreeSceneOneImages.past}
-              label="Veo-Clip: Zeitsprung zur Landschaft um 12.000 vor Christus"
-              playback={episodeThreeSceneVideos[1].playback}
+            className="scene-swipe-surface"
+            onPointerDown={startSceneSwipe}
+            onPointerUp={finishSceneSwipe}
+            onPointerCancel={() => { swipeStartRef.current = null; }}
+          >
+            <EpisodeThreeVisual
+              scene={scene}
+              isPlaying={isPlaying}
+              muted={muted}
+              progress={progress}
             />
-          ) : null}
-          <div className="ep3-time-caption" aria-live="polite">
-            <span>{pastVisible ? "Um 12.000 v. Chr." : "Heute"}</span>
-            <strong>{pastVisible ? "Die Reise geht weiter." : "Der Zeitfelsen wartet schon."}</strong>
           </div>
-        </div>
 
-        <div className="ep3-transition-controls" aria-label="Bildübergang prüfen">
-          <button
-            type="button"
-            className={!pastVisible ? "is-active" : ""}
-            aria-pressed={!pastVisible}
-            onClick={() => setPastVisible(false)}
-          >
-            Heute
-          </button>
-          <button
-            type="button"
-            className={pastVisible ? "is-active" : ""}
-            aria-pressed={pastVisible}
-            onClick={() => setPastVisible(true)}
-          >
-            Zeitsprung starten <span aria-hidden="true">→</span>
-          </button>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[0]} initiallyOpen />
-        <SceneActivities scene={episodeThreeScenes[0]} />
-      </section>
+          <div className="player-controls">
+            <button className="round-control" type="button" onClick={() => goToScene(currentIndex - 1)} disabled={currentIndex === 0} aria-label="Vorherige Szene">←</button>
+            <button className={`play-control ${isPlaying ? "is-playing" : ""}`} type="button" onClick={togglePlayback}>
+              <span className="play-orb" style={{ "--play-progress": `${progress * 100}%` } as CSSProperties} aria-hidden="true"><i /></span>
+              <span className="play-label">{isPlaying ? "Pause" : progress >= 1 ? "Noch einmal" : "Szene starten"}</span>
+              <span className="play-wave" aria-hidden="true"><i /><i /><i /></span>
+            </button>
+            <button className={`sound-control ${sceneHasVideo && !muted ? "is-on" : ""}`} type="button" aria-pressed={sceneHasVideo && !muted} onClick={() => setMuted((value) => !value)} disabled={!sceneHasVideo}>
+              <span aria-hidden="true">{sceneHasVideo && !muted ? "◖))" : "◖×"}</span><span className="sound-label">Filmton</span>
+            </button>
+            <label className="scrubber"><span className="sr-only">Position in der Szene</span><input type="range" min="0" max="1000" value={Math.round(progress * 1000)} onChange={(event) => seek(Number(event.target.value) / 1000)} style={{ "--seek": `${progress * 100}%` } as CSSProperties} /></label>
+            <span className="timecode">{formatTime(progress * sceneDuration)} / {formatTime(sceneDuration)}</span>
+            <button className="next-control" type="button" onClick={() => goToScene(currentIndex + 1)} disabled={currentIndex === episodeThreeScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
+          </div>
+          <EpisodeSeriesNav currentEpisode={3} />
+          <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
+          <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode3-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
+        </section>
 
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-two-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneTwoDraft}")` }}
-        >
-          <EpisodeThreeClip
-            src={episodeThreeSceneVideos[2].src}
-            poster={episodeThreeSceneTwoDraft}
-            label="Veo-Clip: Jägerinnen und Sammlerinnen ernten wilde Gräser und verarbeiten Samen"
-            playback={episodeThreeSceneVideos[2].playback}
-          />
-        </div>
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 02 · Bild freigegeben</p>
-          <h2 id="ep3-scene-two-title">Leben ohne Acker</h2>
-          <p>
-            Sammeln, mahlen, weiterziehen: Das Bild zeigt viel Wissen und viel
-            Arbeit – aber noch kein Feld, keine Herde und kein festes Dorf.
-          </p>
-          <span>Veo-Clip · Endlosschleife</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[1]} />
-        <SceneActivities scene={episodeThreeScenes[1]} />
-      </section>
+        <aside id="episode3-details" className={`content-panel ${detailsOpen ? "is-open" : ""}`}>
+          <div className="panel-tabs" aria-label="Szeneninhalt">
+            <button type="button" aria-pressed={panel === "sprecher"} className={panel === "sprecher" ? "is-active" : ""} onClick={() => setPanel("sprecher")}>Text lesen</button>
+            <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button>
+            <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button>
+          </div>
 
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-three-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneThreeDraft}")` }}
-        >
-          <EpisodeThreeClip
-            src={episodeThreeSceneVideos[3].src}
-            poster={episodeThreeSceneThreeDraft}
-            label="Veo-Clip: Menschen bearbeiten und bewegen T-förmige Kalksteinpfeiler bei Göbekli Tepe"
-            playback={episodeThreeSceneVideos[3].playback}
-          />
-        </div>
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 03 · Bild freigegeben</p>
-          <h2 id="ep3-scene-three-title">Steine für die Ewigkeit</h2>
-          <p>
-            T-förmige Kalksteinpfeiler, Steinwerkzeuge und gemeinsame Arbeit:
-            Göbekli Tepe zeigt, welche großen Vorhaben Menschen schon vor rund
-            11.000 Jahren organisieren konnten. Die genaue Funktion der Anlagen
-            kennen wir bis heute nicht.
-          </p>
-          <span>Veo-Clip · Endlosschleife</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[2]} />
-        <SceneActivities scene={episodeThreeScenes[2]} />
-      </section>
+          {panel === "sprecher" ? (
+            <section className="panel-section ep3-speaker-text">
+              <blockquote>{scene.speakerText.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</blockquote>
+            </section>
+          ) : null}
 
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-four-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneFourDraft}")` }}
-        >
-          <EpisodeThreeClip
-            src={episodeThreeSceneVideos[4].src}
-            poster={episodeThreeSceneFourDraft}
-            label="Veo-Clip: frühes Jericho an der Quelle mit Lehmziegelhäusern, Mauer und Turm"
-            playback={episodeThreeSceneVideos[4].playback}
-          />
-        </div>
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 04 · Bild freigegeben</p>
-          <h2 id="ep3-scene-four-title">Ein Ort bleibt</h2>
-          <p>
-            Das Bild zeigt das frühe Jericho an der Quelle – mit runden
-            Lehmziegelhäusern, Mauer und Turm.
-          </p>
-          <span>Veo-Clip · Endlosschleife</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[3]} />
-        <SceneActivities scene={episodeThreeScenes[3]} />
-      </section>
+          {panel === "entdecken" ? (
+            <section className="panel-section interactions">
+              <div className="interaction-block ep3-discovery-list">
+                <div className="section-label"><span>Entdecken</span><i>2 Punkte</i></div>
+                {scene.discoveries.map((discovery, index) => (
+                  <article key={discovery.title}>
+                    <span>{index + 1}</span>
+                    <p><strong>{discovery.title}</strong><small>{discovery.text}</small></p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-five-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneFiveDraft}")` }}
-          role="img"
-          aria-label="Freigegebenes Szenenbild: frühe Getreideähren und eine ruhige Ernte von Hand über viele Generationen"
-        />
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 05 · Bild freigegeben</p>
-          <h2 id="ep3-scene-five-title">Eine Ähre verändert sich</h2>
-          <p>
-            Das freigegebene Bild zeigt frühe Getreideähren bei der Ernte. Manche
-            Ähren bleiben am Halm ganz, während wilde Formen ihre Körner
-            leichter verlieren.
-          </p>
-          <span>Bild freigegeben</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[4]} />
-        <SceneActivities scene={episodeThreeScenes[4]} />
-      </section>
-
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-six-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneSixDraft}")` }}
-        >
-          <EpisodeThreeClip
-            src={episodeThreeSceneVideos[6].src}
-            poster={episodeThreeSceneSixDraft}
-            label="Veo-Clip: frühe, noch wild wirkende Ziegenherde unter menschlicher Betreuung"
-            playback={episodeThreeSceneVideos[6].playback}
-          />
-        </div>
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 06 · Bild freigegeben</p>
-          <h2 id="ep3-scene-six-title">Aus Jagd wird Herde</h2>
-          <p>
-            Das freigegebene Bild zeigt eine frühe, noch wild wirkende
-            Ziegenherde unter menschlicher Betreuung.
-          </p>
-          <span>Veo-Clip · Endlosschleife</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[5]} />
-        <SceneActivities scene={episodeThreeScenes[5]} />
-      </section>
-
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-seven-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneSevenDraft}")` }}
-          role="img"
-          aria-label="Freigegebenes Szenenbild: drei getrennte Anfänge des Pflanzenanbaus mit frühem Getreide, Reis und teosinteartigem Mais"
-        />
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 07 · Bild freigegeben</p>
-          <h2 id="ep3-scene-seven-title">Eine Idee entsteht immer wieder</h2>
-          <p>
-            Das freigegebene Bild stellt drei getrennte Entwicklungen
-            nebeneinander: frühes Getreide in Südwestasien, Reis in Ostasien
-            und teosinteartige Frühformen des Maises in Mesoamerika. Die
-            Bildteile sind ein Vergleich, kein gemeinsamer Ort.
-          </p>
-          <span>Bild freigegeben</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[6]} />
-        <SceneActivities scene={episodeThreeScenes[6]} />
-      </section>
-
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-eight-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneEightDraft}")` }}
-        >
-          <EpisodeThreeClip
-            src={episodeThreeSceneVideos[8].src}
-            poster={episodeThreeSceneEightDraft}
-            label="Veo-Clip: dicht aneinandergefügte Lehmziegelhäuser in Çatalhöyük mit Wegen und Zugängen über die Dächer"
-            playback={episodeThreeSceneVideos[8].playback}
-          />
-        </div>
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 08 · Bild freigegeben</p>
-          <h2 id="ep3-scene-eight-title">Leben Wand an Wand</h2>
-          <p>
-            Das freigegebene Bild zeigt Çatalhöyüks dicht aneinandergefügte
-            Lehmziegelhäuser. Zwischen ihnen liegen keine normalen Straßen;
-            Menschen bewegen sich über die Dächer und steigen durch Öffnungen
-            in ihre Häuser hinab.
-          </p>
-          <span>Veo-Clip · Endlosschleife</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[7]} />
-        <SceneActivities scene={episodeThreeScenes[7]} />
-      </section>
-
-      <section className="ep3-next-draft" aria-labelledby="ep3-scene-nine-title">
-        <div
-          className="ep3-next-draft-image"
-          style={{ backgroundImage: `url("${episodeThreeSceneNineDraft}")` }}
-          role="img"
-          aria-label="Freigegebenes Szenenbild: wiederholte Mahlarbeit, Herdrauch, Tierhaltung und Abfälle nahe an einer frühen dauerhaften Siedlung"
-        />
-        <div className="ep3-next-draft-copy">
-          <p className="eyebrow">Szene 09 · Bild freigegeben</p>
-          <h2 id="ep3-scene-nine-title">Der Preis des Bleibens</h2>
-          <p>
-            Das freigegebene Bild bündelt belegte Belastungen der ersten
-            dauerhaften Siedlungen: wiederholte Arbeit beim Mahlen, Rauch sowie
-            Tierhaltung und Abfälle nahe an den Häusern. Sichtbare Krankheit
-            wird nicht behauptet.
-          </p>
-          <span>Bild freigegeben</span>
-        </div>
-        <SpeakerText scene={episodeThreeScenes[8]} />
-        <SceneActivities scene={episodeThreeScenes[8]} />
-      </section>
-
-      <aside className="ep3-editorial-note">
-        <p className="eyebrow">Redaktioneller Schutz</p>
-        <h2>Freigegebene Texte bleiben unangetastet.</h2>
-        <p>
-          Die Sprechertexte wurden wortgetreu aus dem rekonstruierten Dokument
-          im Austauschordner übernommen und sind hier ausdrücklich noch als
-          Arbeitsgrundlage gekennzeichnet. Hotspots und Quizfragen folgen aus
-          demselben Verlauf; die Vorschau erfindet dafür keine Ersatzfassung.
-        </p>
-      </aside>
+          {panel === "quiz" ? (
+            <section className="panel-section interactions">
+              <div className="interaction-block quiz-panel">
+                <div className="section-label"><span>Quiz zu dieser Szene</span></div>
+                <h3>{scene.quiz.question}</h3>
+                <div className="quiz-options">
+                  {scene.quiz.answers.map((answer, index) => {
+                    const selected = selectedOption === index;
+                    const correct = quizChecked && selected && index === scene.quiz.correctAnswer;
+                    const wrong = quizChecked && selected && index !== scene.quiz.correctAnswer;
+                    return (
+                      <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={answer}>
+                        <span>{String.fromCharCode(65 + index)}</span>{answer}
+                      </button>
+                    );
+                  })}
+                </div>
+                {quizChecked ? (
+                  <div className={`quiz-result ${selectedOption === scene.quiz.correctAnswer ? "is-correct" : "is-wrong"}`} role="status">
+                    <strong>{selectedOption === scene.quiz.correctAnswer ? "Richtig." : "Noch nicht richtig."}</strong>
+                    {selectedOption !== scene.quiz.correctAnswer ? <span>Versuch es einfach noch einmal.</span> : null}
+                  </div>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
+        </aside>
+      </div>
 
       <SiteFooter />
     </main>

@@ -12368,3 +12368,81 @@ body.cinematic-intro-active {
     transition-duration: 1ms;
   }
 }
+
+.ep3-visual .ep3-generated-background {
+  background-position: center;
+  background-size: cover;
+  filter: none;
+  transform: none;
+}
+
+.ep3-visual .ep3-scene-video {
+  filter: none;
+  object-fit: cover;
+  transform: none;
+}
+
+.ep3-timeline .earth-timeline-stops {
+  min-width: 780px;
+}
+
+.ep3-speaker-text blockquote {
+  margin: 0;
+}
+
+.ep3-speaker-text blockquote p {
+  margin: 0 0 1em;
+  color: var(--muted);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  line-height: 1.7;
+}
+
+.ep3-speaker-text blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.ep3-discovery-list article {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 11px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.ep3-discovery-list article > span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(216, 170, 98, 0.42);
+  border-radius: 50%;
+  color: var(--amber-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+  place-items: center;
+}
+
+.ep3-discovery-list article p,
+.ep3-discovery-list article strong,
+.ep3-discovery-list article small {
+  display: block;
+  margin: 0;
+}
+
+.ep3-discovery-list article small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.48;
+}
+
+@media (max-width: 760px) {
+  .ep3-timeline .earth-timeline-stops {
+    min-width: 650px;
+  }
+
+  .ep3-visual {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+}

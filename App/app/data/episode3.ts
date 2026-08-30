@@ -16,30 +16,24 @@ export type EpisodeThreeScene = {
 };
 
 export const episodeThreeSceneVideos = {
-  1: {
-    src: "/assets/episode3/scene01/bewegung-zeitsprung-veo-v1.mp4",
-    playback: "hold",
-  },
-  2: {
-    src: "/assets/episode3/scene02/bewegung-leben-ohne-acker-veo-v1.mp4",
-    playback: "loop",
-  },
-  3: {
-    src: "/assets/episode3/scene03/bewegung-goebekli-tepe-veo-v1.mp4",
-    playback: "loop",
-  },
-  4: {
-    src: "/assets/episode3/scene04/bewegung-jericho-veo-v1.mp4",
-    playback: "loop",
-  },
-  6: {
-    src: "/assets/episode3/scene06/bewegung-ziegenherde-veo-v1.mp4",
-    playback: "loop",
-  },
-  8: {
-    src: "/assets/episode3/scene08/bewegung-catalhoeyuek-veo-v1.mp4",
-    playback: "loop",
-  },
+  1: "/assets/episode3/scene01/bewegung-zeitsprung-veo-v1.mp4",
+  2: "/assets/episode3/scene02/bewegung-leben-ohne-acker-veo-v1.mp4",
+  3: "/assets/episode3/scene03/bewegung-goebekli-tepe-veo-v1.mp4",
+  4: "/assets/episode3/scene04/bewegung-jericho-veo-v1.mp4",
+  6: "/assets/episode3/scene06/bewegung-ziegenherde-veo-v1.mp4",
+  8: "/assets/episode3/scene08/bewegung-catalhoeyuek-veo-v1.mp4",
+} as const;
+
+export const episodeThreeSceneImages = {
+  1: "/assets/episode3/scene01/hintergrund-zeitfelsen-heute-v1.png",
+  2: "/assets/episode3/scene02/hintergrund-leben-ohne-acker-entwurf-v1.png",
+  3: "/assets/episode3/scene03/hintergrund-goebekli-tepe-entwurf-v1.png",
+  4: "/assets/episode3/scene04/hintergrund-jericho-entwurf-v1.png",
+  5: "/assets/episode3/scene05/hintergrund-aehre-veraendert-sich-entwurf-v1.png",
+  6: "/assets/episode3/scene06/hintergrund-aus-jagd-wird-herde-entwurf-v1.png",
+  7: "/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
+  8: "/assets/episode3/scene08/hintergrund-catalhoeyuek-entwurf-v1.png",
+  9: "/assets/episode3/scene09/hintergrund-preis-des-bleibens-entwurf-v1.png",
 } as const;
 
 const episodeThreeSpeakerTexts = {

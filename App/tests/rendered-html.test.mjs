@@ -186,13 +186,17 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   );
 });
 
-test("legt Episode 3 Teil 1 als öffentliche Direktlink-Vorschau an", async () => {
+test("legt Episode 3 im Format von Episode 2 als Direktlink an", async () => {
   const episodeThreeData = await readFile(
     new URL("../app/data/episode3.ts", import.meta.url),
     "utf8",
   );
   const episodeThreeApp = await readFile(
     new URL("../app/episode-3/EpisodeThreePreview.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeThreeVisual = await readFile(
+    new URL("../app/episode-3/EpisodeThreeVisual.tsx", import.meta.url),
     "utf8",
   );
   const episodeThreePage = await readFile(
@@ -247,27 +251,31 @@ test("legt Episode 3 Teil 1 als öffentliche Direktlink-Vorschau an", async () =
   assert.match(episodeThreeData, /Leben mit den Verstorbenen/);
   assert.match(episodeThreeData, /unabhängig in mehreren Regionen/);
   assert.match(episodeThreeApp, /Vom Wandern zum Bleiben/);
-  assert.match(episodeThreeApp, /Leben ohne Acker/);
-  assert.match(episodeThreeApp, /Steine für die Ewigkeit/);
-  assert.match(episodeThreeApp, /Ein Ort bleibt/);
-  assert.match(episodeThreeApp, /Eine Ähre verändert sich/);
-  assert.match(episodeThreeApp, /Aus Jagd wird Herde/);
-  assert.match(episodeThreeApp, /Eine Idee entsteht immer wieder/);
-  assert.match(episodeThreeApp, /Leben Wand an Wand/);
-  assert.match(episodeThreeApp, /Der Preis des Bleibens/);
-  assert.match(episodeThreeApp, /vollständige technische Bildfolge/);
-  assert.match(episodeThreeApp, /Szenenbilder freigegeben/);
-  assert.match(episodeThreeApp, /Sprechertext lesen/);
-  assert.match(episodeThreeApp, /Rekonstruierte Arbeitsgrundlage/);
-  assert.match(episodeThreeApp, /Sprecheraufnahme steht noch aus/);
-  assert.match(episodeThreeApp, /Entdecken &amp; Szenenquiz/);
-  assert.match(episodeThreeApp, /2 Wissenspunkte · 1 Frage/);
-  assert.match(episodeThreeApp, /Noch nicht. Versuch es noch einmal./);
+  assert.match(episodeThreeData, /Leben ohne Acker/);
+  assert.match(episodeThreeData, /Steine für die Ewigkeit/);
+  assert.match(episodeThreeData, /Ein Ort bleibt/);
+  assert.match(episodeThreeData, /Eine Ähre verändert sich/);
+  assert.match(episodeThreeData, /Aus Jagd wird Herde/);
+  assert.match(episodeThreeData, /Eine Idee entsteht immer wieder/);
+  assert.match(episodeThreeData, /Leben Wand an Wand/);
+  assert.match(episodeThreeData, /Der Preis des Bleibens/);
+  assert.match(episodeThreeApp, /className="workspace"/);
+  assert.match(episodeThreeApp, /className="player-controls"/);
+  assert.match(episodeThreeApp, /<EpisodeThreeTimeline/);
+  assert.match(episodeThreeApp, /<EpisodeThreeVisual/);
+  assert.match(episodeThreeApp, />Text lesen</);
+  assert.match(episodeThreeApp, />Entdecken</);
+  assert.match(episodeThreeApp, />Quiz</);
+  assert.match(episodeThreeApp, /setIsPlaying\(true\)/);
+  assert.match(episodeThreeApp, /Noch nicht richtig/);
   assert.doesNotMatch(
     episodeThreeApp,
     /Arbeitsentwurf|Bildprüfung noch offen|Freigabe des Bildes noch offen/,
   );
-  assert.match(episodeThreeApp, /Freigegebene Texte bleiben unangetastet/);
+  assert.doesNotMatch(
+    episodeThreeApp,
+    /Öffentliche Vorschau|vollständige technische Bildfolge|Szenenbilder freigegeben|Rekonstruierte Arbeitsgrundlage|Sprecheraufnahme steht noch aus|Freigegebene Texte bleiben unangetastet/,
+  );
   assert.match(episodeOneApp, /<EpisodeSeriesNav currentEpisode=\{1\} \/>/);
   assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
   assert.match(episodeThreeApp, /<EpisodeSeriesNav currentEpisode=\{3\} \/>/);
@@ -279,16 +287,12 @@ test("legt Episode 3 Teil 1 als öffentliche Direktlink-Vorschau an", async () =
   assert.match(episodeSeriesNav, /aria-disabled="true"/);
   assert.match(episodeSeriesNav, /Nur per Direktlink/);
   assert.match(episodeSeriesNav, /aria-current="page"/);
-  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[1\]/);
-  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[2\]/);
-  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[3\]/);
-  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[4\]/);
-  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[6\]/);
-  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[8\]/);
-  assert.equal((episodeThreeData.match(/playback: "loop"/g) ?? []).length, 5);
-  assert.equal((episodeThreeData.match(/playback: "hold"/g) ?? []).length, 1);
-  assert.match(episodeThreeApp, /loop=\{playback === "loop"\}/);
-  assert.match(episodeThreeApp, /Öffentliche Vorschau · nur per Direktlink/);
+  assert.equal((episodeThreeData.match(/bewegung-[^"\n]+\.mp4/g) ?? []).length, 6);
+  assert.match(episodeThreeVisual, /playsInline/);
+  assert.match(episodeThreeVisual, /element\.currentTime = 0/);
+  assert.match(episodeThreeVisual, /element\.play\(\)/);
+  assert.doesNotMatch(episodeThreeData, /playback:|"loop"/);
+  assert.doesNotMatch(episodeThreeVisual, /\sloop(?:=|\s|>)/);
   assert.match(episodeThreePage, /index: false/);
   assert.doesNotMatch(episodeTwoApp, /href="\/episode-3\/"/);
   await Promise.all([
@@ -583,7 +587,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v106/);
+  assert.match(worker, /zeitreise-v107/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -798,7 +802,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v106/);
+  assert.match(worker, /zeitreise-v107/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
