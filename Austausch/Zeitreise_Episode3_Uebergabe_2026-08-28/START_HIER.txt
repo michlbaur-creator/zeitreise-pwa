@@ -1,0 +1,13 @@
+Wir setzen das lokale Projekt „Zeitreise-PWA“ fort.
+
+1. Lies zuerst die AGENTS.md im Projektordner.
+2. Lies danach:
+   Austausch/Zeitreise_Episode3_Uebergabe_2026-08-28/UEBERGABE_EPISODE3.md
+3. Vergleiche den beigefügten Ordner „Projektstand“ mit dem vorhandenen lokalen
+   App-Ordner und integriere ausschließlich die dort beschriebenen Änderungen
+   für Episode 3. Bestehende Arbeiten an Episode 1 und 2 dürfen nicht
+   überschrieben werden.
+4. Öffne anschließend eine echte lokale Browser-Vorschau von /episode-3/.
+5. Noch nichts veröffentlichen.
+
+Frage Micha nur, wenn beim Vergleich ein echter inhaltlicher Konflikt auftaucht.
