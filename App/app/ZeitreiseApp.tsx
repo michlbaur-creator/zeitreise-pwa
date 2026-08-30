@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useAmbientSound } from "./audio/useAmbientSound";
 import { FinalEpisodeQuiz } from "./components/FinalEpisodeQuiz";
+import { EpisodeSeriesNav } from "./components/EpisodeSeriesNav";
 import { SceneVisual } from "./components/SceneVisual";
 import { SiteFooter } from "./components/SiteFooter";
 import {
@@ -1064,6 +1065,7 @@ export default function ZeitreiseApp() {
               </button>
             )}
           </div>
+          <EpisodeSeriesNav currentEpisode={1} />
           <p className="keyboard-hint">
             Wischen oder Pfeiltasten wechseln die Szene · Leertaste startet
             oder pausiert

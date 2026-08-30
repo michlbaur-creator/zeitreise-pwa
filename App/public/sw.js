@@ -1,7 +1,8 @@
-const CACHE_NAME = "zeitreise-v93";
+const CACHE_NAME = "zeitreise-v106";
 const APP_SHELL = [
   "/",
   "/episode-2/",
+  "/episode-3/",
   "/tierstammbaum/",
   "/ueber/",
   "/impressum/",
@@ -189,10 +190,45 @@ const EPISODE_TWO_ASSETS = {
   ],
 };
 
+const EPISODE_THREE_ASSETS = {
+  1: [
+    "/assets/episode3/scene01/hintergrund-zeitfelsen-heute-v1.png",
+    "/assets/episode3/scene01/hintergrund-zeitfelsen-12000-vchr-v1.png",
+  ],
+  2: [
+    "/assets/episode3/scene02/hintergrund-leben-ohne-acker-entwurf-v1.png",
+  ],
+  3: [
+    "/assets/episode3/scene03/hintergrund-goebekli-tepe-entwurf-v1.png",
+  ],
+  4: [
+    "/assets/episode3/scene04/hintergrund-jericho-entwurf-v1.png",
+  ],
+  5: [
+    "/assets/episode3/scene05/hintergrund-aehre-veraendert-sich-entwurf-v1.png",
+  ],
+  6: [
+    "/assets/episode3/scene06/hintergrund-aus-jagd-wird-herde-entwurf-v1.png",
+  ],
+  7: [
+    "/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
+  ],
+  8: [
+    "/assets/episode3/scene08/hintergrund-catalhoeyuek-entwurf-v1.png",
+  ],
+  9: [
+    "/assets/episode3/scene09/hintergrund-preis-des-bleibens-entwurf-v1.png",
+  ],
+};
+
 self.addEventListener("message", (event) => {
   if (event.data?.type !== "CACHE_SCENES") return;
 
-  const source = event.data.episode === 2 ? EPISODE_TWO_ASSETS : SCENE_ASSETS;
+  const source = event.data.episode === 3
+    ? EPISODE_THREE_ASSETS
+    : event.data.episode === 2
+      ? EPISODE_TWO_ASSETS
+      : SCENE_ASSETS;
   const assets = (event.data.sceneIds ?? []).flatMap(
     (sceneId) => source[sceneId] ?? [],
   );

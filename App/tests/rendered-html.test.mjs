@@ -164,8 +164,10 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, /const \[detailsOpen, setDetailsOpen\] = useState\(true\)/);
   assert.match(episodeTwoApp, /Wie Menschen die Welt veränderten/);
   assert.match(episodeTwoApp, /Von den ersten Siedlungen bis heute/);
-  assert.match(episodeTwoApp, /className="episode-series-button" href="\/"/);
-  assert.match(episodeTwoApp, /Episode 3 →<\/button>/);
+  assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
+  assert.match(episodeTwoApp, /Übergangsentwurf · Episode 2 → 3/);
+  assert.match(episodeTwoApp, /Episode 3 · nur per Direktlink/);
+  assert.doesNotMatch(episodeTwoApp, /href="\/episode-3\/"/);
   assert.doesNotMatch(episodeTwoApp, /Quiz-Halt|stopIsOpen|episode2-quizstops/);
   assert.doesNotMatch(episodeTwoApp, /ep2-scene-overview|14 Stationen, viele Äste/);
   assert.match(episodeTwoApp, /className="interaction-block ep2-hotspot-list"/);
@@ -182,6 +184,211 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
       import.meta.url,
     ),
   );
+});
+
+test("legt Episode 3 Teil 1 als öffentliche Direktlink-Vorschau an", async () => {
+  const episodeThreeData = await readFile(
+    new URL("../app/data/episode3.ts", import.meta.url),
+    "utf8",
+  );
+  const episodeThreeApp = await readFile(
+    new URL("../app/episode-3/EpisodeThreePreview.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeThreePage = await readFile(
+    new URL("../app/episode-3/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeTwoApp = await readFile(
+    new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeOneApp = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeSeriesNav = await readFile(
+    new URL("../app/components/EpisodeSeriesNav.tsx", import.meta.url),
+    "utf8",
+  );
+
+  const sceneIds = [...episodeThreeData.matchAll(/\{ id: (\d+), title:/g)].map(
+    (match) => Number(match[1]),
+  );
+  assert.deepEqual(
+    sceneIds,
+    Array.from({ length: 9 }, (_, index) => index + 1),
+  );
+  assert.equal(
+    [...episodeThreeData.matchAll(/\{ id: \d+, title: [^\n]+imageStatus: "ready" \}/g)].length,
+    9,
+  );
+  assert.match(episodeThreeData, /Noch einmal zurück/);
+  assert.match(episodeThreeData, /Der Preis des Bleibens/);
+  assert.equal(
+    [...episodeThreeData.matchAll(/speakerText: episodeThreeSpeakerTexts\[\d+\]/g)].length,
+    9,
+  );
+  assert.equal(
+    [...episodeThreeData.matchAll(/discoveries: episodeThreeDiscoveries\[\d+\]/g)].length,
+    9,
+  );
+  assert.equal(
+    [...episodeThreeData.matchAll(/quiz: episodeThreeQuizzes\[\d+\]/g)].length,
+    9,
+  );
+  assert.match(episodeThreeData, /kein WLAN/);
+  assert.match(episodeThreeData, /nicht die Köpfe/);
+  assert.match(episodeThreeData, /beachtliche Kulturleistung/);
+  assert.match(episodeThreeData, /genialen Urbauern/);
+  assert.match(episodeThreeData, /Berufsverkehr verläuft über die Dächer/);
+  assert.match(episodeThreeData, /Städte, Schrift, Herrscher und Steuern/);
+  assert.match(episodeThreeData, /Der Hund war schon da/);
+  assert.match(episodeThreeData, /Leben mit den Verstorbenen/);
+  assert.match(episodeThreeData, /unabhängig in mehreren Regionen/);
+  assert.match(episodeThreeApp, /Vom Wandern zum Bleiben/);
+  assert.match(episodeThreeApp, /Leben ohne Acker/);
+  assert.match(episodeThreeApp, /Steine für die Ewigkeit/);
+  assert.match(episodeThreeApp, /Ein Ort bleibt/);
+  assert.match(episodeThreeApp, /Eine Ähre verändert sich/);
+  assert.match(episodeThreeApp, /Aus Jagd wird Herde/);
+  assert.match(episodeThreeApp, /Eine Idee entsteht immer wieder/);
+  assert.match(episodeThreeApp, /Leben Wand an Wand/);
+  assert.match(episodeThreeApp, /Der Preis des Bleibens/);
+  assert.match(episodeThreeApp, /vollständige technische Bildfolge/);
+  assert.match(episodeThreeApp, /Szenenbilder freigegeben/);
+  assert.match(episodeThreeApp, /Sprechertext lesen/);
+  assert.match(episodeThreeApp, /Rekonstruierte Arbeitsgrundlage/);
+  assert.match(episodeThreeApp, /Sprecheraufnahme steht noch aus/);
+  assert.match(episodeThreeApp, /Entdecken &amp; Szenenquiz/);
+  assert.match(episodeThreeApp, /2 Wissenspunkte · 1 Frage/);
+  assert.match(episodeThreeApp, /Noch nicht. Versuch es noch einmal./);
+  assert.doesNotMatch(
+    episodeThreeApp,
+    /Arbeitsentwurf|Bildprüfung noch offen|Freigabe des Bildes noch offen/,
+  );
+  assert.match(episodeThreeApp, /Freigegebene Texte bleiben unangetastet/);
+  assert.match(episodeOneApp, /<EpisodeSeriesNav currentEpisode=\{1\} \/>/);
+  assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
+  assert.match(episodeThreeApp, /<EpisodeSeriesNav currentEpisode=\{3\} \/>/);
+  assert.equal((episodeSeriesNav.match(/\{ id: \d,/g) ?? []).length, 3);
+  assert.match(episodeSeriesNav, /href: "\/"/);
+  assert.match(episodeSeriesNav, /href: "\/episode-2\/"/);
+  assert.doesNotMatch(episodeSeriesNav, /href: "\/episode-3\/"/);
+  assert.match(episodeSeriesNav, /episode\.id === 3/);
+  assert.match(episodeSeriesNav, /aria-disabled="true"/);
+  assert.match(episodeSeriesNav, /Nur per Direktlink/);
+  assert.match(episodeSeriesNav, /aria-current="page"/);
+  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[1\]/);
+  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[2\]/);
+  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[3\]/);
+  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[4\]/);
+  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[6\]/);
+  assert.match(episodeThreeApp, /episodeThreeSceneVideos\[8\]/);
+  assert.equal((episodeThreeData.match(/playback: "loop"/g) ?? []).length, 5);
+  assert.equal((episodeThreeData.match(/playback: "hold"/g) ?? []).length, 1);
+  assert.match(episodeThreeApp, /loop=\{playback === "loop"\}/);
+  assert.match(episodeThreeApp, /Öffentliche Vorschau · nur per Direktlink/);
+  assert.match(episodeThreePage, /index: false/);
+  assert.doesNotMatch(episodeTwoApp, /href="\/episode-3\/"/);
+  await Promise.all([
+    access(
+      new URL(
+        "../public/assets/episode3/scene01/hintergrund-zeitfelsen-heute-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene01/hintergrund-zeitfelsen-12000-vchr-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene02/hintergrund-leben-ohne-acker-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene03/hintergrund-goebekli-tepe-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene04/hintergrund-jericho-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene05/hintergrund-aehre-veraendert-sich-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene06/hintergrund-aus-jagd-wird-herde-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene08/hintergrund-catalhoeyuek-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene09/hintergrund-preis-des-bleibens-entwurf-v1.png",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene01/bewegung-zeitsprung-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene02/bewegung-leben-ohne-acker-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene04/bewegung-jericho-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene03/bewegung-goebekli-tepe-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene06/bewegung-ziegenherde-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene08/bewegung-catalhoeyuek-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
+  ]);
 });
 
 test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async () => {
@@ -376,7 +583,7 @@ test("aktualisiert auch Episode 2 automatisch und ohne Unterbrechung der Spreche
   assert.match(app, /updateViaCache: "none"/);
   assert.match(app, /zeitreise-episode2-resume-after-update/);
   assert.match(app, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /zeitreise-v93/);
+  assert.match(worker, /zeitreise-v106/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -591,7 +798,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /zeitreise-v93/);
+  assert.match(worker, /zeitreise-v106/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

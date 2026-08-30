@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useAmbientSound } from "../audio/useAmbientSound";
 import { FinalEpisodeQuiz } from "../components/FinalEpisodeQuiz";
+import { EpisodeSeriesNav } from "../components/EpisodeSeriesNav";
 import { SiteFooter } from "../components/SiteFooter";
 import {
   episodeTwoMilestones,
@@ -581,10 +582,7 @@ export default function EpisodeTwoApp() {
             <span className="timecode">{formatTime(progress * scene.duration)} / {formatTime(scene.duration)}</span>
             <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }} disabled={currentIndex === episodeTwoScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
           </div>
-          <nav className="episode-series-nav" aria-label="Zwischen den Episoden wechseln">
-            <Link className="episode-series-button" href="/">← Episode 1</Link>
-            <button className="episode-series-button is-disabled" type="button" disabled aria-label="Episode 3 ist noch in Vorbereitung">Episode 3 →</button>
-          </nav>
+          <EpisodeSeriesNav currentEpisode={2} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode2-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
@@ -618,15 +616,19 @@ export default function EpisodeTwoApp() {
           <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
 
           <section className="ep3-outlook" aria-labelledby="episode-3-title">
-            <p className="eyebrow">Die Zeitreise geht weiter · Episode 3</p>
-            <h2 id="episode-3-title">Wie Menschen die Welt veränderten</h2>
-            <strong>Von den ersten Siedlungen bis heute</strong>
+            <p className="eyebrow">Übergangsentwurf · Episode 2 → 3</p>
+            <h2 id="episode-3-title">Vom Wandern zum Bleiben</h2>
+            <strong>Wie Menschen die Welt veränderten</strong>
+            <span className="ep3-outlook-period">Von den ersten Siedlungen bis heute</span>
             <p>
-              Sesshaftigkeit, Landwirtschaft, Städte, Ideen und Technik verändern
-              den Alltag – und schließlich den ganzen Planeten. Diese Episode ist
-              noch in Vorbereitung.
+              Am Ende von Episode 2 lebt Homo sapiens auf mehreren Kontinenten.
+              Viele Gruppen ziehen mit den Jahreszeiten und kennen ihre Landschaft
+              genau. Dann bleiben einige länger: Aus Lagerplätzen werden Siedlungen,
+              aus wilden Gräsern Felder – und aus gelegentlichen Begegnungen feste
+              Nachbarn. Das verändert fast alles. Einschließlich der Frage, wer
+              schon wieder den Eingang zugestellt hat.
             </p>
-            <button type="button" disabled>Episode 3 · demnächst</button>
+            <span className="ep3-outlook-private">Episode 3 · nur per Direktlink</span>
           </section>
         </>
       ) : null}
