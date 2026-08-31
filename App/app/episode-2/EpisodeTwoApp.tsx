@@ -22,9 +22,7 @@ import {
   episodeTwoSceneHasVideo,
   episodeTwoSceneSoundtrack,
 } from "../data/episode2CompactVisuals";
-import { episodeThreePart } from "../data/episode3Parts";
 import type { SceneTheme } from "../data/scenes";
-import { EpisodeThreeThread } from "../episode-3/EpisodeThreePartGuide";
 import { EpisodeTwoVisual } from "./EpisodeTwoVisual";
 
 type Panel = "sprecher" | "entdecken" | "quiz";
@@ -33,7 +31,6 @@ const finalQuizSceneIds = new Set([1, 3, 5, 6, 8, 9, 11, 13, 14]);
 const finalQuizScenes = episodeTwoScenes.filter((scene) =>
   finalQuizSceneIds.has(scene.id),
 );
-const episodeThreePartOne = episodeThreePart(1);
 
 function twoDigits(value: number) {
   return String(value).padStart(2, "0");
@@ -650,28 +647,7 @@ export default function EpisodeTwoApp() {
       </div>
 
       {currentIndex === episodeTwoScenes.length - 1 ? (
-        <>
-          <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
-
-          <section className="ep3-outlook" aria-labelledby="episode-3-title">
-            <p className="eyebrow">Weiter zu Episode 3 · Teil 1 von 4</p>
-            <h2 id="episode-3-title">{episodeThreePartOne.title}</h2>
-            <strong>{episodeThreePartOne.guidingQuestion}</strong>
-            <div className="ep3-outlook-object" aria-label={`Gegenstand im Mittelpunkt: ${episodeThreePartOne.object}`}>
-              <span aria-hidden="true">{episodeThreePartOne.symbol}</span>
-              <small>{episodeThreePartOne.object}</small>
-            </div>
-            <TimeZoomTransition
-              level={3}
-              progress={0}
-              caption="Wir zoomen ein letztes Mal: Aus den letzten 0,13 Sekunden der Erdzeituhr wird das breite Zeitband von 12.000 v. Chr. bis heute."
-            />
-            <EpisodeThreeThread activePart={1} />
-            <Link className="ep3-outlook-link" href="/episode-3/">
-              Episode 3 beginnen <span aria-hidden="true">→</span>
-            </Link>
-          </section>
-        </>
+        <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
       ) : null}
 
       <SiteFooter />

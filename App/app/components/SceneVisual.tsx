@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, type CSSProperties } from "react";
 import {
   SCENE_THIRTEEN_ARMS_RACE_START,
@@ -2639,11 +2640,19 @@ export function SceneVisual({
       ) : null}
 
       {showEnding ? (
-        <div className="ending-title" aria-live="polite">
+        <Link
+          className="ending-title is-clickable"
+          href="/episode-2/"
+          aria-label="Episode 2 beginnen: Die Entwicklung des Menschen"
+          aria-live="polite"
+        >
           <span>Zeitreise</span>
           <strong>Die Geschichte des Lebens</strong>
           <small>Episode 2 „Die Entwicklung des Menschen“</small>
-        </div>
+          <em className="chapter-link-hint">
+            Episode 2 beginnen <span aria-hidden="true">→</span>
+          </em>
+        </Link>
       ) : null}
 
       {scene.id === 19 &&

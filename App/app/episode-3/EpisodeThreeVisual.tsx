@@ -9,16 +9,21 @@ import {
   episodeThreeSceneVideos,
   episodeThreeMotionPreviewScenes,
 } from "../data/episode3";
-import { episodeThreePart } from "../data/episode3Parts";
-import { EpisodeThreeThread } from "./EpisodeThreePartGuide";
+import { EpisodeThreeChapterEnding } from "./EpisodeThreePartGuide";
 
 type Props = {
   scene: EpisodeThreeScene;
   isPlaying: boolean;
   progress: number;
+  onChapterContinue?: () => void;
 };
 
-export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
+export function EpisodeThreeVisual({
+  scene,
+  isPlaying,
+  progress,
+  onChapterContinue,
+}: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const video = episodeThreeSceneVideos[
     scene.id as keyof typeof episodeThreeSceneVideos
@@ -35,8 +40,7 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
   );
   const sequenceBlend = Math.min(1, Math.max(0, (progress - 0.38) / 0.24));
   const nextPartId = scene.id === 9 ? 2 : scene.id === 15 ? 3 : null;
-  const nextPart = nextPartId ? episodeThreePart(nextPartId) : null;
-  const showPartTransition = nextPart && progress >= 0.72;
+  const showPartTransition = nextPartId && progress >= 0.72;
 
   useEffect(() => {
     const element = videoRef.current;
@@ -118,18 +122,12 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
         />
       ) : null}
       {showPartTransition ? (
-        <div className="ep3-chapter-ending" aria-live="polite">
-          <div className="ep3-chapter-object" aria-hidden="true">
-            <span>{nextPart.symbol}</span>
-            <small>{nextPart.object}</small>
-          </div>
-          <div className="ep3-chapter-ending-copy">
-            <span>Die Reise geht weiter · Teil {nextPart.id} von 4</span>
-            <strong>{nextPart.title}</strong>
-            <p>{nextPart.guidingQuestion}</p>
-          </div>
-          <EpisodeThreeThread activePart={nextPart.id} />
-        </div>
+        <EpisodeThreeChapterEnding
+          partId={nextPartId}
+          onContinue={nextPartId === 2 ? onChapterContinue : undefined}
+          actionLabel={nextPartId === 2 ? "Teil 2 beginnen" : undefined}
+          statusLabel={nextPartId === 3 ? "Teil 3 folgt" : undefined}
+        />
       ) : null}
     </div>
   );

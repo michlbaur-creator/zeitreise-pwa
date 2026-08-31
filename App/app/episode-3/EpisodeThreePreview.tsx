@@ -512,6 +512,7 @@ export default function EpisodeThreePreview() {
               scene={scene}
               isPlaying={isPlaying}
               progress={progress}
+              onChapterContinue={scene.id === 9 ? () => goToScene(9) : undefined}
             />
           </div>
 

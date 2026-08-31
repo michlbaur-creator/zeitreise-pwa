@@ -3,6 +3,7 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import type { EpisodeTwoScene } from "../data/episode2";
 import { episodeTwoCompactVisuals } from "../data/episode2CompactVisuals";
+import { EpisodeThreeChapterEnding } from "../episode-3/EpisodeThreePartGuide";
 import { CompactFamilyTree } from "./bildfolge/CompactFamilyTree";
 
 type Props = {
@@ -96,6 +97,14 @@ export function EpisodeTwoVisual({
         <div className="ep2-family-tree-overlay" style={{ opacity: treeOpacity }}>
           <CompactFamilyTree stage={visual.treeStage} overlay />
         </div>
+      ) : null}
+
+      {scene.id === 14 && progress >= 0.72 ? (
+        <EpisodeThreeChapterEnding
+          partId={1}
+          href="/episode-3/"
+          actionLabel="Episode 3 beginnen"
+        />
       ) : null}
 
     </div>

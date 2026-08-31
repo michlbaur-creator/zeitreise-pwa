@@ -171,8 +171,9 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoData, /followUpQuiz: EpisodeTwoQuiz/);
   assert.match(episodeTwoData, /compactQuizOptions/);
   assert.match(episodeTwoApp, /const \[detailsOpen, setDetailsOpen\] = useState\(true\)/);
-  assert.match(episodeTwoApp, /episodeThreePartOne\.guidingQuestion/);
-  assert.match(episodeTwoApp, /<EpisodeThreeThread activePart=\{1\} \/>/);
+  assert.match(episodeTwoVisual, /<EpisodeThreeChapterEnding/);
+  assert.match(episodeTwoVisual, /partId=\{1\}/);
+  assert.match(episodeTwoVisual, /href="\/episode-3\/"/);
   assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
   assert.match(episodeTwoApp, /Weiter zu Episode 3/);
   assert.doesNotMatch(episodeTwoApp, /Übergangsentwurf|nur per Direktlink/);
@@ -213,6 +214,10 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   );
   const episodeTwoApp = await readFile(
     new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeTwoVisual = await readFile(
+    new URL("../app/episode-2/EpisodeTwoVisual.tsx", import.meta.url),
     "utf8",
   );
   const episodeOneApp = await readFile(
@@ -318,8 +323,8 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeVisual, /sequenceBlend/);
   assert.match(episodeThreeApp, /questionCount=\{5\}/);
   assert.match(episodeThreeApp, /randomize/);
-  assert.match(episodeThreeVisual, /episodeThreePart\(nextPartId\)/);
-  assert.match(episodeThreeVisual, /nextPart\.guidingQuestion/);
+  assert.match(episodeThreeVisual, /<EpisodeThreeChapterEnding/);
+  assert.match(episodeThreeVisual, /partId=\{nextPartId\}/);
   assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
   assert.match(episodeThreeApp, /episodePart=\{2\}/);
   assert.match(episodeThreeApp, /celebratePerfect/);
@@ -362,7 +367,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.doesNotMatch(episodeThreePage, /index: false|Öffentliche Vorschau/);
   assert.doesNotMatch(episodeTwoApp, /Arbeitsfassung|nur per Direktlink|Übergangsentwurf/);
   assert.match(episodeTwoApp, /aria-label="Weiter zu Episode 3"/);
-  assert.match(episodeTwoApp, /className="ep3-outlook-link" href="\/episode-3\/"/);
+  assert.match(episodeTwoVisual, /href="\/episode-3\/"/);
   await Promise.all([
     access(
       new URL(
@@ -558,6 +563,14 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
     new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
     "utf8",
   );
+  const episodeTwoVisual = await readFile(
+    new URL("../app/episode-2/EpisodeTwoVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const sceneVisual = await readFile(
+    new URL("../app/components/SceneVisual.tsx", import.meta.url),
+    "utf8",
+  );
   const episodeThreeApp = await readFile(
     new URL("../app/episode-3/EpisodeThreePreview.tsx", import.meta.url),
     "utf8",
@@ -577,14 +590,23 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.match(parts, /fossile Energie menschliche Möglichkeiten vervielfacht\?/);
   assert.match(parts, /"Vorräte"[\s\S]*"Organisation"[\s\S]*"Vernetzung"[\s\S]*"Beschleunigung"[\s\S]*"planetare Wirkung"/);
   assert.match(guide, /Vier Teile · vier Leitfragen/);
-  assert.match(episodeTwoApp, /Weiter zu Episode 3 · Teil 1 von 4/);
+  assert.match(episodeTwoVisual, /<EpisodeThreeChapterEnding/);
+  assert.match(episodeTwoVisual, /scene\.id === 14 && progress >= 0\.72/);
+  assert.match(episodeTwoVisual, /href="\/episode-3\/"/);
+  assert.doesNotMatch(episodeTwoApp, /<section className="ep3-outlook"/);
   assert.match(episodeThreeApp, /<EpisodeThreePartOverview activePart=\{1\} \/>/);
   assert.doesNotMatch(episodeThreeApp, /<section className="ep3-outlook"/);
   assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
   assert.match(visual, /scene\.id === 9 \? 2 : scene\.id === 15 \? 3/);
   assert.match(visual, /progress >= 0\.72/);
-  assert.match(visual, /className="ep3-chapter-ending"/);
+  assert.match(visual, /<EpisodeThreeChapterEnding/);
+  assert.match(visual, /onContinue=\{nextPartId === 2 \? onChapterContinue : undefined\}/);
+  assert.match(episodeThreeApp, /onChapterContinue=\{scene\.id === 9 \? \(\) => goToScene\(9\) : undefined\}/);
+  assert.match(guide, /className="ep3-chapter-ending is-clickable"/);
+  assert.match(sceneVisual, /className="ending-title is-clickable"/);
+  assert.match(sceneVisual, /href="\/episode-2\/"/);
   assert.match(styles, /\.ep3-chapter-ending/);
+  assert.match(styles, /\.ep3-chapter-ending\.is-clickable/);
   assert.match(styles, /\.app-shell > \.final-quiz/);
 });
 
@@ -793,7 +815,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v115"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v116"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1015,7 +1037,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v115"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v116"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
