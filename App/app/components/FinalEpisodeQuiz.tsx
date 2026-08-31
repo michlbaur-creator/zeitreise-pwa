@@ -22,13 +22,17 @@ type QuizScene = {
 export function FinalEpisodeQuiz({
   scenes,
   episode = 1,
+  episodePart = 1,
   questionCount,
   randomize = false,
+  celebratePerfect = false,
 }: {
   scenes: QuizScene[];
   episode?: 1 | 2 | 3;
+  episodePart?: 1 | 2;
   questionCount?: number;
   randomize?: boolean;
+  celebratePerfect?: boolean;
 }) {
   const questionPool = useMemo<FinalQuestion[]>(
     () =>
@@ -63,6 +67,8 @@ export function FinalEpisodeQuiz({
   const isCorrect = selected === question.correctIndex;
   const isEpisodeTwo = episode === 2;
   const isEpisodeThree = episode === 3;
+  const isEpisodeThreePartTwo = isEpisodeThree && episodePart === 2;
+  const perfectResult = score === questions.length;
   const strongResult = Math.ceil(questions.length * 0.78);
   const solidResult = Math.ceil(questions.length * 0.56);
 
@@ -93,6 +99,7 @@ export function FinalEpisodeQuiz({
   const next = () => {
     if (questionIndex === questions.length - 1) {
       setFinished(true);
+      if (celebratePerfect && perfectResult) playPerfectFanfare();
       return;
     }
     setQuestionIndex((value) => value + 1);
@@ -107,14 +114,18 @@ export function FinalEpisodeQuiz({
           <div>
             <p className="eyebrow">Am Ende der Reise</p>
             <h2 id="final-quiz-title">
-              {isEpisodeThree
+              {isEpisodeThreePartTwo
+                ? "Das Abschlussquiz zu Städte, Schrift und Macht"
+                : isEpisodeThree
                 ? "Das Abschlussquiz zu Teil 1"
                 : isEpisodeTwo
                 ? "Das große Episode-2-Quiz"
                 : "Das große Episode-1-Quiz"}
             </h2>
             <p>
-              {isEpisodeThree
+              {isEpisodeThreePartTwo
+                ? "Fünf zufällig ausgewählte Fragen aus den zwölf Fragen zu Uruk, Arbeitsteilung, Schrift, Verwaltung und Macht."
+                : isEpisodeThree
                 ? "Fünf zufällig ausgewählte Fragen zu Sesshaftigkeit, Landwirtschaft und den ersten großen Siedlungen."
                 : isEpisodeTwo
                 ? "Neun Fragen zu Primaten, Zweibeinigkeit, Werkzeugen, Wanderungen und unseren menschlichen Verwandten."
@@ -126,7 +137,12 @@ export function FinalEpisodeQuiz({
           </button>
         </div>
       ) : finished ? (
-        <div className="final-quiz-result" aria-live="polite">
+        <div className={`final-quiz-result ${celebratePerfect && perfectResult ? "is-perfect" : ""}`} aria-live="polite">
+          {celebratePerfect && perfectResult ? (
+            <div className="final-quiz-fireworks" aria-hidden="true">
+              {Array.from({ length: 18 }, (_, index) => <i key={index} />)}
+            </div>
+          ) : null}
           <span className="final-score">
             {score}
             <small>von {questions.length}</small>
@@ -134,7 +150,15 @@ export function FinalEpisodeQuiz({
           <div>
             <p className="eyebrow">Dein Ergebnis</p>
             <h2 id="final-quiz-title">
-              {isEpisodeThree
+              {isEpisodeThreePartTwo
+                ? perfectResult
+                  ? "Fünf von fünf – du hättest den Speicher von Uruk im Griff!"
+                  : score >= strongResult
+                    ? "Die Listen sind fast vollständig."
+                    : score >= solidResult
+                      ? "Die Stadtverwaltung nimmt Form an."
+                      : "Noch eine Runde durch Uruk?"
+                : isEpisodeThree
                 ? score >= strongResult
                   ? "Bereit für die ersten Städte!"
                   : score >= solidResult
@@ -153,7 +177,11 @@ export function FinalEpisodeQuiz({
                     : "Die Erde gibt dir eine zweite Runde."}
             </h2>
             <p>
-              {isEpisodeThree
+              {isEpisodeThreePartTwo
+                ? perfectResult
+                  ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
+                  : "Beim zweiten Durchgang kennst du Speicher, Tafeln und Machtverhältnisse schon genauer."
+                : isEpisodeThree
                 ? score >= strongResult
                   ? "Du erkennst Chancen, Belastungen und offene Fragen des neuen Lebens sehr sicher."
                   : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
@@ -224,7 +252,9 @@ export function FinalEpisodeQuiz({
                   role="status"
                 >
                   {isCorrect
-                    ? isEpisodeThree
+                    ? isEpisodeThreePartTwo
+                      ? "Richtig – die Verwaltung behält den Überblick."
+                      : isEpisodeThree
                       ? "Richtig – das Dorf wächst weiter."
                       : isEpisodeTwo
                       ? "Richtig – weiter auf der menschlichen Spur."
@@ -244,4 +274,34 @@ export function FinalEpisodeQuiz({
       )}
     </section>
   );
+}
+
+function playPerfectFanfare() {
+  if (typeof window === "undefined") return;
+  const AudioContextClass = window.AudioContext;
+  if (!AudioContextClass) return;
+
+  const context = new AudioContextClass();
+  const master = context.createGain();
+  master.gain.setValueAtTime(0.0001, context.currentTime);
+  master.gain.exponentialRampToValueAtTime(0.16, context.currentTime + 0.03);
+  master.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 1.9);
+  master.connect(context.destination);
+
+  [261.63, 329.63, 392, 523.25].forEach((frequency, index) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    const start = context.currentTime + index * 0.16;
+    oscillator.type = "triangle";
+    oscillator.frequency.setValueAtTime(frequency, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(0.32, start + 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.72);
+    oscillator.connect(gain);
+    gain.connect(master);
+    oscillator.start(start);
+    oscillator.stop(start + 0.75);
+  });
+
+  window.setTimeout(() => void context.close(), 2300);
 }

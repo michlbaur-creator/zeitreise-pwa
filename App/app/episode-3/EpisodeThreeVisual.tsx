@@ -3,9 +3,11 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import {
   type EpisodeThreeScene,
+  episodeThreeGraphicScenes,
   episodeThreeSceneImageSequences,
   episodeThreeSceneImages,
   episodeThreeSceneVideos,
+  episodeThreeMotionPreviewScenes,
 } from "../data/episode3";
 
 type Props = {
@@ -25,6 +27,10 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
   const imageSequence = episodeThreeSceneImageSequences[
     scene.id as keyof typeof episodeThreeSceneImageSequences
   ];
+  const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 13);
+  const isMotionPreview = episodeThreeMotionPreviewScenes.includes(
+    scene.id as 11 | 14,
+  );
   const sequenceBlend = Math.min(1, Math.max(0, (progress - 0.38) / 0.24));
 
   useEffect(() => {
@@ -49,14 +55,16 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
 
   return (
     <div
-      className={`ep2-visual ep3-visual ${isPlaying ? "is-playing" : ""}`}
+      className={`ep2-visual ep3-visual ${isPlaying ? "is-playing" : ""} ${isMotionPreview ? "is-motion-preview" : ""}`}
       style={{ "--ep2-progress": progress } as CSSProperties}
       aria-label={`Szenenbild für Szene ${scene.id}: ${scene.title}`}
     >
       <div className="stage-topline">
         <span className="time-card">{scene.timeLabel}</span>
       </div>
-      {imageSequence ? (
+      {isGraphicScene ? (
+        <ClayWritingTimeline progress={progress} />
+      ) : imageSequence ? (
         <div className="ep3-scene-image-sequence" aria-hidden="true">
           <div
             className="ep2-generated-background ep3-generated-background ep3-sequence-image ep3-sequence-image-a"
@@ -82,7 +90,12 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
       ) : (
         <div
           className="ep2-generated-background ep3-generated-background"
-          style={{ backgroundImage: `url("${image}")` }}
+          style={{
+            backgroundImage: `url("${image}")`,
+            transform: isMotionPreview
+              ? `scale(${1.035 + progress * 0.055}) translateX(${(0.5 - progress) * 1.2}%)`
+              : undefined,
+          }}
           aria-hidden="true"
         />
       )}
@@ -99,6 +112,49 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
           key={video}
         />
       ) : null}
+    </div>
+  );
+}
+
+function ClayWritingTimeline({ progress }: { progress: number }) {
+  const activeStep = progress < 0.34 ? 0 : progress < 0.7 ? 1 : 2;
+  const stages = [
+    {
+      time: "um 3.300 v. Chr.",
+      title: "Menge und Gut",
+      description: "Zahlzeichen treffen auf einfache Bildzeichen.",
+      marks: ["○", "○", "◇", "│", "│"],
+    },
+    {
+      time: "um 3.100 v. Chr.",
+      title: "Proto-Keilschrift",
+      description: "Verwaltung wird dauerhaft in Ton festgehalten.",
+      marks: ["〉", "⋔", "│", "⌃", "〉"],
+    },
+    {
+      time: "um 2.600 v. Chr.",
+      title: "Keilzeichen",
+      description: "Abstrakte Zeichen können zunehmend Sprache wiedergeben.",
+      marks: ["⋔", "〉", "⌃", "│", "⋔", "〉"],
+    },
+  ];
+
+  return (
+    <div className="ep3-writing-timeline" aria-hidden="true">
+      <div className="ep3-writing-line"><i style={{ width: `${progress * 100}%` }} /></div>
+      {stages.map((stage, index) => (
+        <article
+          className={index <= activeStep ? "is-revealed" : ""}
+          key={stage.time}
+        >
+          <span>{stage.time}</span>
+          <div className={`ep3-clay-tablet ep3-clay-tablet-${index + 1}`}>
+            {stage.marks.map((mark, markIndex) => <i key={`${mark}-${markIndex}`}>{mark}</i>)}
+          </div>
+          <strong>{stage.title}</strong>
+          <small>{stage.description}</small>
+        </article>
+      ))}
     </div>
   );
 }

@@ -34,6 +34,12 @@ export const episodeThreeSceneAudio = {
   7: "/assets/episode3/audio/sprecher-szene-07-v1.m4a",
   8: "/assets/episode3/audio/sprecher-und-veo-szene-08-v1.m4a",
   9: "/assets/episode3/audio/sprecher-szene-09-v1.m4a",
+  10: "/assets/episode3/audio/vorschau-szene-10-v1.m4a",
+  11: "/assets/episode3/audio/vorschau-szene-11-v1.m4a",
+  12: "/assets/episode3/audio/vorschau-szene-12-v1.m4a",
+  13: "/assets/episode3/audio/vorschau-szene-13-v1.m4a",
+  14: "/assets/episode3/audio/vorschau-szene-14-v1.m4a",
+  15: "/assets/episode3/audio/vorschau-szene-15-v1.m4a",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -46,6 +52,12 @@ export const episodeThreeSceneDurations = {
   7: 58,
   8: 51,
   9: 82,
+  10: 37,
+  11: 38,
+  12: 40,
+  13: 40,
+  14: 40,
+  15: 42,
 } as const;
 
 export const episodeThreeSceneImages = {
@@ -58,6 +70,11 @@ export const episodeThreeSceneImages = {
   7: "/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
   8: "/assets/episode3/scene08/hintergrund-catalhoeyuek-entwurf-v1.png",
   9: "/assets/episode3/scene09/hintergrund-dorf-waechst-v1.png",
+  10: "/assets/episode3/scene10/hintergrund-dorfvorrat-v1.png",
+  11: "/assets/episode3/scene11/hintergrund-uruk-kanalstadt-v1.png",
+  12: "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
+  14: "/assets/episode3/scene14/hintergrund-rationsverwaltung-v1.png",
+  15: "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
 } as const;
 
 export const episodeThreeSceneImageSequences = {
@@ -65,7 +82,22 @@ export const episodeThreeSceneImageSequences = {
     "/assets/episode3/scene09/hintergrund-dorf-waechst-v1.png",
     "/assets/episode3/scene09/hintergrund-dorf-belastungen-v1.png",
   ],
+  10: [
+    "/assets/episode3/scene10/hintergrund-dorfvorrat-v1.png",
+    "/assets/episode3/scene10/hintergrund-stadtspeicher-v1.png",
+  ],
+  12: [
+    "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
+    "/assets/episode3/scene12/hintergrund-spezialisierte-werkstaetten-v1.png",
+  ],
+  15: [
+    "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
+    "/assets/episode3/scene15/hintergrund-macht-buendelt-sich-v1.png",
+  ],
 } as const;
+
+export const episodeThreeGraphicScenes = [13] as const;
+export const episodeThreeMotionPreviewScenes = [11, 14] as const;
 
 const episodeThreeSpeakerTexts = {
   1: [
@@ -138,6 +170,44 @@ const episodeThreeSpeakerTexts = {
     "Aus kleinen Siedlungen entstehen schließlich größere Zentren.",
     "Dort warten bereits die nächsten Erfindungen: Städte, Schrift, Herrscher und Steuern.",
     "Irgendjemand musste ja auf die Idee kommen.",
+  ],
+  10: [
+    "Teil 1 endete vor einem großen Vorratsspeicher. Und damit beginnt ein überraschend modernes Problem: Wer zählt eigentlich das ganze Getreide?",
+    "In einem kleinen Dorf weiß man vielleicht noch, wer drei Körbe Gerste gebracht hat. In einer wachsenden Stadt kommen ständig neue Lieferungen an. Ein Teil wird verteilt, ein Teil bleibt als Saatgut, und ein Teil soll den nächsten Winter überstehen.",
+    "Dafür braucht es Maße, Regeln und Menschen, die den Überblick behalten.",
+    "Aus Vorräten entsteht Verwaltung. Der erste Großstadtstress beginnt also nicht im Berufsverkehr, sondern in der Lagerliste.",
+  ],
+  11: [
+    "Um etwa 3.200 vor Christus wächst im Süden Mesopotamiens Uruk. Eine der größten bekannten Siedlungen ihrer Zeit.",
+    "Hier stehen nicht einfach nur sehr viele Häuser. Kanäle bringen Wasser zu den Feldern und Waren in die Stadt. Bauern liefern Getreide, Boote transportieren Schilf und Holz, Werkstätten verarbeiten Rohstoffe. Dazwischen erheben sich große öffentliche und religiöse Bauten aus Lehmziegeln.",
+    "Die Stadt lebt von ihrem Umland – und das Umland von ihren Märkten und Handwerkern.",
+    "Uruk ist ein gewaltiges Netzwerk. Nur besteht das Netz hauptsächlich aus Wasserwegen, Schlamm und ziemlich vielen Körben.",
+  ],
+  12: [
+    "In einem Dorf stellen viele Familien einen großen Teil dessen her, was sie benötigen. In der Stadt verändert sich das.",
+    "Manche Menschen töpfern, andere weben Stoffe, bauen Häuser, bearbeiten Metall, steuern Boote oder verwalten Vorräte. Wer sich auf eine Tätigkeit konzentriert, sammelt Erfahrung und kann besonders gute Arbeit leisten.",
+    "Doch Spezialisierung bedeutet auch Abhängigkeit. Eine Weberin erzeugt keine eigene Gerste. Ein Töpfer kann seine Gefäße bewundern – satt wird er davon nur sehr begrenzt.",
+    "Damit Arbeitsteilung funktioniert, müssen Nahrung, Rohstoffe und fertige Waren zuverlässig ausgetauscht oder verteilt werden.",
+  ],
+  13: [
+    "Um etwa 3.300 vor Christus tauchen im südlichen Mesopotamien kleine beschriftete Tontafeln auf.",
+    "Darauf stehen zunächst keine Romane. Zu sehen sind Zahlen und vereinfachte Zeichen für Getreide, Tiere oder andere Güter. Wer etwas liefert oder erhält, hinterlässt nun eine dauerhafte Spur.",
+    "Im Laufe der Jahrhunderte werden die Zeichen abstrakter. Ein Griffel drückt keilförmige Spuren in den weichen Ton. Schließlich kann man damit nicht nur Mengen, sondern auch Namen, Sprache, Verträge und Geschichten festhalten.",
+    "Die Schrift beginnt also nicht mit einem Bestseller. Eher mit einer ziemlich gründlichen Bestandsaufnahme.",
+  ],
+  14: [
+    "Ein Schreiber hält fest, wie viel Getreide geliefert wird. Ein Siegel zeigt, wer den Vorgang bestätigt. Später vermerkt eine weitere Tafel, welche Rationen Arbeiter erhalten.",
+    "Das klingt trocken. Tatsächlich verändert es das Zusammenleben erheblich.",
+    "Eine Aufzeichnung kann geprüft werden, wenn die Beteiligten längst nicht mehr im Raum sind. Sie entscheidet mit, wer etwas bekommt, wer noch liefern muss und wessen Anspruch anerkannt wird.",
+    "Wer Maße, Speicher und Listen kontrolliert, gewinnt deshalb Einfluss.",
+    "Die Tontafel ist gewissermaßen eine sehr frühe Tabellenkalkulation – nur ohne Löschtaste und mit deutlich mehr Lehm an den Fingern.",
+  ],
+  15: [
+    "Kanäle müssen gereinigt, Mauern gebaut und Vorräte geschützt werden. Je größer die Stadt wird, desto wichtiger wird die Frage: Wer entscheidet?",
+    "Große Haushalte, Tempel und Amtsträger organisieren Arbeit und Verteilung. Später treten Herrscher immer deutlicher hervor. Sie lassen bauen, führen Kriege und präsentieren sich als Beschützer ihrer Stadt.",
+    "Gemeinsame Organisation kann Erstaunliches leisten. Sie kann Macht aber auch ungleich verteilen. Manche geben Anweisungen, andere tragen die Ziegel.",
+    "Von nun an verändern Menschen nicht mehr nur Landschaften. Sie halten auch Besitz, Pflichten und Befehle schriftlich fest.",
+    "Und gebrannter Ton kann sich sehr lange erinnern.",
   ],
 } as const;
 
@@ -230,6 +300,66 @@ const episodeThreeDiscoveries = {
     {
       title: "Neue Belastungen",
       text: "Einseitigere Ernährung, schwere Arbeit und dichteres Zusammenleben erhöhten in vielen Populationen gesundheitliche Risiken.",
+    },
+  ],
+  10: [
+    {
+      title: "Messen vor dem Schreiben",
+      text: "Standardisierte Gefäße und Zahlzeichen halfen, Mengen vergleichbar und Lieferungen nachvollziehbar zu machen.",
+    },
+    {
+      title: "Speicher bedeutet nicht König",
+      text: "Ein großer Speicher belegt Organisation, aber nicht automatisch das Eigentum eines einzelnen Herrschers.",
+    },
+  ],
+  11: [
+    {
+      title: "Stadt am Wasser",
+      text: "Uruk lag in einer von Flussarmen, Kanälen und Feuchtgebieten geprägten Landschaft – nicht mitten in heutiger Wüste.",
+    },
+    {
+      title: "Stadt und Umland",
+      text: "Die Stadt brauchte Nahrung und Rohstoffe aus ihrer Umgebung; das Umland nutzte Handwerk, Märkte und zentrale Einrichtungen.",
+    },
+  ],
+  12: [
+    {
+      title: "Arbeit gegen Rationen",
+      text: "Städtische Arbeitskräfte konnten Getreide, Öl oder andere Güter als Versorgung für ihre Tätigkeit erhalten.",
+    },
+    {
+      title: "Textilien als Großaufgabe",
+      text: "Wollverarbeitung wurde zu einer wichtigen spezialisierten Produktion und benötigte zahlreiche Arbeitskräfte.",
+    },
+  ],
+  13: [
+    {
+      title: "Proto-Keilschrift",
+      text: "Die frühesten Tafeln aus Uruk verbinden Zahlzeichen mit vereinfachten Zeichen für Güter; viele Texte bleiben schwer eindeutig zu lesen.",
+    },
+    {
+      title: "Nicht nur ein Ursprung",
+      text: "Schriftsysteme entstanden in verschiedenen Weltregionen unabhängig voneinander. Uruk ist ein besonders frühes, gut belegtes Beispiel.",
+    },
+  ],
+  14: [
+    {
+      title: "Rollsiegel",
+      text: "Ein gravierter Steinzylinder hinterließ auf feuchtem Ton ein wiedererkennbares Bild – ähnlich einer Kennzeichnung oder Unterschrift.",
+    },
+    {
+      title: "Was Listen nicht zeigen",
+      text: "Verwaltungstexte überliefern besonders die Sicht der Einrichtungen, die Güter erfassten und verteilten.",
+    },
+  ],
+  15: [
+    {
+      title: "Frühe Stadtstaaten",
+      text: "Im frühen 3. Jahrtausend v. Chr. prägten mehrere eigenständige Stadtstaaten das südliche Mesopotamien.",
+    },
+    {
+      title: "Macht wächst schrittweise",
+      text: "Große Bauten beweisen Organisation. Wie Tempel, Haushalte, Versammlungen und Herrscher dabei zusammenwirkten, veränderte sich über lange Zeit.",
     },
   ],
 } as const;
@@ -577,6 +707,126 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
   ],
+  10: [
+    {
+      question: "Warum reichen Absprachen allein bei sehr großen Vorräten immer weniger aus?",
+      answers: [
+        "Weil Getreide nur schriftlich haltbar bleibt.",
+        "Weil Lieferungen und Verteilungen über viele Personen und Zeiträume nachvollziehbar sein müssen.",
+        "Weil in Städten niemand mehr rechnen kann.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Was lässt sich aus einem großen zentralen Speicher allein nicht sicher schließen?",
+      answers: [
+        "Der Zugang zu den Vorräten musste organisiert werden.",
+        "Sämtliches Getreide gehörte einem einzigen König.",
+        "Mengen und Ausgaben spielten eine wichtige Rolle.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  11: [
+    {
+      question: "Welches Merkmal macht Uruk mehr als nur zu einem sehr großen Dorf?",
+      answers: [
+        "Jede Familie produziert weiterhin alles selbst.",
+        "Unterschiedliche Stadtbereiche, Berufe und Versorgungssysteme greifen ineinander.",
+        "Alle Gebäude bestehen aus Stein.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Warum fördern Kanäle zugleich Zusammenarbeit und Verwaltung?",
+      answers: [
+        "Sie bewässern Felder ohne menschliche Arbeit.",
+        "Sie machen Vorräte überflüssig.",
+        "Bau, Reinigung und Wasserverteilung müssen über einzelne Haushalte hinaus koordiniert werden.",
+      ],
+      correctAnswer: 2,
+    },
+  ],
+  12: [
+    {
+      question: "Welche Folge hat zunehmende Arbeitsteilung?",
+      answers: [
+        "Jeder Haushalt wird vollständig unabhängig.",
+        "Fachwissen wächst, zugleich nimmt die gegenseitige Abhängigkeit zu.",
+        "Landwirtschaft wird sofort bedeutungslos.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welcher Fund wäre der stärkste Hinweis auf organisierte Arbeitsteilung?",
+      answers: [
+        "Ein einzelnes besonders schönes Gefäß.",
+        "Werkstattbereiche und Rationslisten für verschiedene Berufsgruppen.",
+        "Mehrere gleich große Wohnhäuser.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  13: [
+    {
+      question: "Wozu dienten viele der frühesten bekannten Tafeln aus Uruk?",
+      answers: [
+        "Zur Aufzeichnung langer Heldengeschichten.",
+        "Zur Erfassung von Mengen, Gütern und Rationen.",
+        "Zur Darstellung heutiger Buchstaben.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Warum ist Proto-Keilschrift nicht einfach mit späterer Keilschrift gleichzusetzen?",
+      answers: [
+        "Sie wurde ausschließlich auf Holz geschrieben.",
+        "Ihre frühen Zeichen erfassten Informationen noch begrenzter und waren oft schwer eindeutig zu lesen.",
+        "Sie verwendete bereits dasselbe Alphabet wie wir.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  14: [
+    {
+      question: "Wodurch vergrößert ein schriftlicher Eintrag die Reichweite einer Entscheidung?",
+      answers: [
+        "Er verhindert jede falsche Angabe.",
+        "Er kann später und auch ohne Anwesenheit aller Beteiligten geprüft werden.",
+        "Er macht mündliche Kommunikation unmöglich.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Fundkombination spricht besonders für organisierte Kontrolle?",
+      answers: [
+        "Standardisierte Maße, administrative Tafeln, Siegel und zentrale Speicher.",
+        "Einige unterschiedliche Kochtöpfe in Wohnhäusern.",
+        "Eine unbeschriftete Stadtmauer.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  15: [
+    {
+      question: "Warum beweist ein großer Gemeinschaftsbau noch keinen allmächtigen König?",
+      answers: [
+        "Monumentalbauten können niemals von Herrschern angeordnet werden.",
+        "Auch andere Institutionen oder gemeinschaftliche Formen können große Arbeiten organisieren.",
+        "Könige lebten grundsätzlich außerhalb der Städte.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Aussage beschreibt das Verhältnis von Schrift und Macht am besten?",
+      answers: [
+        "Schrift diente ausschließlich dazu, Herrscher zu loben.",
+        "Schrift machte Machtunterschiede unmöglich.",
+        "Schrift erleichterte Verwaltung und Kontrolle, überliefert aber häufig besonders die Sicht mächtiger Institutionen.",
+      ],
+      correctAnswer: 2,
+    },
+  ],
 } as const;
 
 export const episodeThreeScenes: EpisodeThreeScene[] = [
@@ -589,6 +839,12 @@ export const episodeThreeScenes: EpisodeThreeScene[] = [
   { id: 7, title: "Eine Idee entsteht immer wieder", timeLabel: "Über mehrere Jahrtausende", speakerText: episodeThreeSpeakerTexts[7], discoveries: episodeThreeDiscoveries[7], quiz: [episodeThreeQuizzes[7][0], episodeThreeQuizzes[7][3]], imageStatus: "ready" },
   { id: 8, title: "Leben Wand an Wand", timeLabel: "Çatalhöyük, etwa 7.400 bis 6.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[8], discoveries: episodeThreeDiscoveries[8], quiz: [episodeThreeQuizzes[8][2], episodeThreeQuizzes[8][3]], imageStatus: "ready" },
   { id: 9, title: "Der Preis des Bleibens", timeLabel: "Etwa 7.000 bis 3.500 v. Chr.", speakerText: episodeThreeSpeakerTexts[9], discoveries: episodeThreeDiscoveries[9], quiz: [episodeThreeQuizzes[9][0], episodeThreeQuizzes[9][3]], imageStatus: "ready" },
+  { id: 10, title: "Wer zählt eigentlich das ganze Getreide?", timeLabel: "Etwa 3.500 bis 3.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[10], discoveries: episodeThreeDiscoveries[10], quiz: [episodeThreeQuizzes[10][0], episodeThreeQuizzes[10][1]], imageStatus: "ready" },
+  { id: 11, title: "Eine Stadt aus Lehm und Wasser", timeLabel: "Uruk, um 3.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[11], discoveries: episodeThreeDiscoveries[11], quiz: [episodeThreeQuizzes[11][0], episodeThreeQuizzes[11][1]], imageStatus: "ready" },
+  { id: 12, title: "Nicht alle machen alles", timeLabel: "Spätes 4. Jahrtausend v. Chr.", speakerText: episodeThreeSpeakerTexts[12], discoveries: episodeThreeDiscoveries[12], quiz: [episodeThreeQuizzes[12][0], episodeThreeQuizzes[12][1]], imageStatus: "ready" },
+  { id: 13, title: "Wenn Zahlen zu Zeichen werden", timeLabel: "Etwa 3.300 bis 2.600 v. Chr.", speakerText: episodeThreeSpeakerTexts[13], discoveries: episodeThreeDiscoveries[13], quiz: [episodeThreeQuizzes[13][0], episodeThreeQuizzes[13][1]], imageStatus: "ready" },
+  { id: 14, title: "Die Macht der Liste", timeLabel: "Etwa 3.200 bis 2.900 v. Chr.", speakerText: episodeThreeSpeakerTexts[14], discoveries: episodeThreeDiscoveries[14], quiz: [episodeThreeQuizzes[14][0], episodeThreeQuizzes[14][1]], imageStatus: "ready" },
+  { id: 15, title: "Wer entscheidet für die Stadt?", timeLabel: "Etwa 3.000 bis 2.700 v. Chr.", speakerText: episodeThreeSpeakerTexts[15], discoveries: episodeThreeDiscoveries[15], quiz: [episodeThreeQuizzes[15][0], episodeThreeQuizzes[15][1]], imageStatus: "ready" },
 ];
 
 export const episodeThreeSceneOneImages = {

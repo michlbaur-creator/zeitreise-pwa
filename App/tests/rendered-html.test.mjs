@@ -237,28 +237,28 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   );
   assert.deepEqual(
     sceneIds,
-    Array.from({ length: 9 }, (_, index) => index + 1),
+    Array.from({ length: 15 }, (_, index) => index + 1),
   );
   assert.equal(
     [...episodeThreeData.matchAll(/\{ id: \d+, title: [^\n]+imageStatus: "ready" \}/g)].length,
-    9,
+    15,
   );
   assert.match(episodeThreeData, /Noch einmal zurück/);
   assert.match(episodeThreeData, /Der Preis des Bleibens/);
   assert.equal(
     [...episodeThreeData.matchAll(/speakerText: episodeThreeSpeakerTexts\[\d+\]/g)].length,
-    9,
+    15,
   );
   assert.equal(
     [...episodeThreeData.matchAll(/discoveries: episodeThreeDiscoveries\[\d+\]/g)].length,
-    9,
+    15,
   );
   assert.equal(
     [...episodeThreeData.matchAll(/quiz: \[episodeThreeQuizzes\[\d+\]\[\d+\], episodeThreeQuizzes\[\d+\]\[\d+\]\]/g)].length,
-    9,
+    15,
   );
-  assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 36);
-  assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 36);
+  assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 48);
+  assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 48);
   assert.match(episodeThreeData, /kein WLAN/);
   assert.match(episodeThreeData, /nicht die Köpfe/);
   assert.match(episodeThreeData, /beachtliche Kulturleistung/);
@@ -277,6 +277,12 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeData, /Eine Idee entsteht immer wieder/);
   assert.match(episodeThreeData, /Leben Wand an Wand/);
   assert.match(episodeThreeData, /Der Preis des Bleibens/);
+  assert.match(episodeThreeData, /Wer zählt eigentlich das ganze Getreide/);
+  assert.match(episodeThreeData, /Eine Stadt aus Lehm und Wasser/);
+  assert.match(episodeThreeData, /Nicht alle machen alles/);
+  assert.match(episodeThreeData, /Wenn Zahlen zu Zeichen werden/);
+  assert.match(episodeThreeData, /Die Macht der Liste/);
+  assert.match(episodeThreeData, /Wer entscheidet für die Stadt/);
   assert.match(episodeThreeApp, /className="workspace"/);
   assert.match(episodeThreeApp, /className="player-controls"/);
   assert.match(episodeThreeApp, /<EpisodeThreeTimeline/);
@@ -303,6 +309,10 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /randomize/);
   assert.match(episodeThreeApp, /Teil 2: Städte, Schrift und Macht/);
   assert.match(episodeThreeApp, /Aus Dörfern werden Städte/);
+  assert.match(episodeThreeApp, /episodePart=\{2\}/);
+  assert.match(episodeThreeApp, /celebratePerfect/);
+  assert.match(episodeThreeVisual, /ClayWritingTimeline/);
+  assert.match(episodeThreeVisual, /is-motion-preview/);
   assert.match(episodeThreeApp, /scene\.id === 9 \? 1\.2 : 1/);
   assert.match(episodeThreeApp, /audio\.preservesPitch = true/);
   assert.match(episodeThreeApp, /audio\.duration \/ scenePlaybackRate/);
@@ -311,6 +321,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(ambientSound, /from: 92/);
   assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 9);
   assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 6);
+  assert.equal((episodeThreeData.match(/vorschau-szene-\d{2}-v1\.m4a/g) ?? []).length, 6);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
   assert.doesNotMatch(
     episodeThreeApp,
@@ -458,6 +469,30 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     ].map((fileName) =>
       access(
         new URL(`../public/assets/episode3/audio/${fileName}`, import.meta.url),
+      ),
+    ),
+  );
+  await Promise.all(
+    [
+      "scene10/hintergrund-dorfvorrat-v1.png",
+      "scene10/hintergrund-stadtspeicher-v1.png",
+      "scene11/hintergrund-uruk-kanalstadt-v1.png",
+      "scene12/hintergrund-nahrungsanlieferung-v1.png",
+      "scene12/hintergrund-spezialisierte-werkstaetten-v1.png",
+      "scene14/hintergrund-rationsverwaltung-v1.png",
+      "scene15/hintergrund-gemeinschaftsarbeit-v1.png",
+      "scene15/hintergrund-macht-buendelt-sich-v1.png",
+    ].map((assetPath) =>
+      access(new URL(`../public/assets/episode3/${assetPath}`, import.meta.url)),
+    ),
+  );
+  await Promise.all(
+    [10, 11, 12, 13, 14, 15].map((sceneId) =>
+      access(
+        new URL(
+          `../public/assets/episode3/audio/vorschau-szene-${sceneId}-v1.m4a`,
+          import.meta.url,
+        ),
       ),
     ),
   );
@@ -663,7 +698,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /zeitreise-episode3-resume-after-update/);
   assert.match(episodeThreeApp, /zeitreise-episode3-app-version/);
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v111"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v112"/);
   assert.match(worker, /url\.pathname !== "\/episode-3\/"/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -855,7 +890,10 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(app, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} \/>/);
   assert.match(finalQuiz, /Das große Episode-1-Quiz/);
   assert.match(finalQuiz, /Das Abschlussquiz zu Teil 1/);
+  assert.match(finalQuiz, /Das Abschlussquiz zu Städte, Schrift und Macht/);
   assert.match(finalQuiz, /Fünf zufällig ausgewählte Fragen/);
+  assert.match(finalQuiz, /final-quiz-fireworks/);
+  assert.match(finalQuiz, /playPerfectFanfare/);
   assert.match(finalQuiz, /Frage \{questionIndex \+ 1\} von/);
   assert.match(finalQuiz, /onClick=\{\(\) => answer\(index\)\}/);
   assert.doesNotMatch(finalQuiz, /Antwort prüfen/);
@@ -882,7 +920,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v111"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v112"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

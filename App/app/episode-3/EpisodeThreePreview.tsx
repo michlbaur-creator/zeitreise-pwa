@@ -25,7 +25,10 @@ import { EpisodeThreeVisual } from "./EpisodeThreeVisual";
 
 type Panel = "sprecher" | "entdecken" | "quiz";
 
-const sceneSymbols = ["↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖"];
+const sceneSymbols = [
+  "↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖",
+  "▤", "◫", "⚒", "✎", "◉", "◆",
+];
 
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
   scene.quiz.map((quiz) => ({
@@ -37,6 +40,13 @@ const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
       correctIndex: quiz.correctAnswer,
     },
   })),
+);
+
+const episodeThreePartOneQuizScenes = episodeThreeFinalQuizScenes.filter(
+  (scene) => scene.id <= 9,
+);
+const episodeThreePartTwoQuizScenes = episodeThreeFinalQuizScenes.filter(
+  (scene) => scene.id >= 10,
 );
 
 function twoDigits(value: number) {
@@ -122,6 +132,7 @@ export default function EpisodeThreePreview() {
   } | null>(null);
 
   const scene = episodeThreeScenes[currentIndex];
+  const partTwoActive = scene.id >= 10;
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
   const scenePlaybackRate = scene.id === 9 ? 1.2 : 1;
@@ -458,7 +469,7 @@ export default function EpisodeThreePreview() {
           <div className="brand-mark" aria-hidden="true"><span /></div>
           <div>
             <p className="eyebrow">Episode 3</p>
-            <h1>Zeitreise <span>Vom Wandern zum Bleiben</span></h1>
+            <h1>Zeitreise <span>{partTwoActive ? "Städte, Schrift und Macht" : "Vom Wandern zum Bleiben"}</span></h1>
           </div>
         </div>
         <div className="header-actions">
@@ -558,7 +569,17 @@ export default function EpisodeThreePreview() {
 
           {panel === "sprecher" ? (
             <section className="panel-section ep3-speaker-text">
-              <div className="ep2-audio-note"><span aria-hidden="true">◖))</span><p><strong>Sprecher: Micha</strong><small>Die Aufnahme ist mit dem Ablauf dieser Szene verbunden.</small></p></div>
+              <div className="ep2-audio-note">
+                <span aria-hidden="true">◖))</span>
+                <p>
+                  <strong>{partTwoActive ? "Vorläufige Vorschau-Stimme" : "Sprecher: Micha"}</strong>
+                  <small>
+                    {partTwoActive
+                      ? "Michas endgültige Aufnahme steht für diese Szene noch aus."
+                      : "Die Aufnahme ist mit dem Ablauf dieser Szene verbunden."}
+                  </small>
+                </p>
+              </div>
               <blockquote>{scene.speakerText.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</blockquote>
             </section>
           ) : null}
@@ -612,25 +633,39 @@ export default function EpisodeThreePreview() {
         </aside>
       </div>
 
-      {currentIndex === episodeThreeScenes.length - 1 ? (
+      {scene.id === 9 ? (
         <>
           <FinalEpisodeQuiz
-            scenes={episodeThreeFinalQuizScenes}
+            scenes={episodeThreePartOneQuizScenes}
             episode={3}
             questionCount={5}
             randomize
           />
 
           <section className="ep3-outlook" aria-labelledby="episode-3-part-2-title">
-            <p className="eyebrow">Vorschau</p>
+            <p className="eyebrow">Die Reise geht weiter</p>
             <h2 id="episode-3-part-2-title">Teil 2: Städte, Schrift und Macht</h2>
             <p>
               Aus Dörfern werden Städte. Vorräte müssen gezählt, Arbeiten verteilt
               und Regeln festgelegt werden. Und irgendwann stellt jemand fest,
               dass man Abgaben am besten schriftlich festhält.
             </p>
+            <button type="button" onClick={() => goToScene(9)}>
+              Teil 2 beginnen <span aria-hidden="true">→</span>
+            </button>
           </section>
         </>
+      ) : null}
+
+      {scene.id === 15 ? (
+        <FinalEpisodeQuiz
+          scenes={episodeThreePartTwoQuizScenes}
+          episode={3}
+          episodePart={2}
+          questionCount={5}
+          randomize
+          celebratePerfect
+        />
       ) : null}
 
       <SiteFooter />
