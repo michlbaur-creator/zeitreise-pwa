@@ -192,6 +192,37 @@ button:disabled {
   letter-spacing: -0.03em;
 }
 
+.ep3-outlook-object {
+  display: inline-grid;
+  grid-template-columns: 42px auto;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 7px 14px 7px 8px;
+  border: 1px solid rgba(216, 170, 98, 0.28);
+  border-radius: 999px;
+  background: rgba(216, 170, 98, 0.07);
+}
+
+.ep3-outlook-object > span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(216, 170, 98, 0.42);
+  border-radius: 50%;
+  color: var(--amber-soft);
+  font-size: 1.1rem;
+  place-items: center;
+}
+
+.ep3-outlook-object > small {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .ep3-outlook-private {
   display: inline-flex;
   align-items: center;
@@ -244,6 +275,115 @@ button:disabled {
   color: var(--muted);
   font-weight: 800;
   text-decoration: none;
+}
+
+.ep3-part-overview {
+  width: min(900px, 100%);
+  margin: 18px auto 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(216, 170, 98, 0.16);
+  text-align: left;
+}
+
+.ep3-part-overview > .eyebrow {
+  text-align: center;
+}
+
+.ep3-part-overview ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ep3-part-overview li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 9px;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  opacity: 0.64;
+}
+
+.ep3-part-overview li.is-current {
+  border-color: rgba(216, 170, 98, 0.45);
+  background: rgba(216, 170, 98, 0.08);
+  opacity: 1;
+}
+
+.ep3-part-overview li > span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(216, 170, 98, 0.35);
+  border-radius: 50%;
+  color: var(--amber-soft);
+  place-items: center;
+}
+
+.ep3-part-overview small,
+.ep3-part-overview strong,
+.ep3-part-overview li p {
+  display: block;
+}
+
+.ep3-part-overview small {
+  color: var(--amber-soft);
+  font-size: 0.55rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ep3-part-overview strong {
+  margin-top: 2px;
+  color: var(--ink);
+  font-family: "Iowan Old Style", Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.ep3-part-overview li p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.63rem;
+  line-height: 1.38;
+}
+
+.ep3-development-thread {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  width: min(820px, 100%);
+  margin: 16px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ep3-development-thread li {
+  position: relative;
+  padding: 8px 5px;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  color: rgba(207, 214, 209, 0.42);
+  font-size: clamp(0.48rem, 0.9vw, 0.62rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.ep3-development-thread li.is-passed {
+  border-color: rgba(216, 170, 98, 0.34);
+  color: rgba(216, 203, 179, 0.66);
+}
+
+.ep3-development-thread li.is-current {
+  border-color: var(--amber-soft);
+  color: var(--amber-soft);
 }
 
 .scene-facts em {
@@ -7255,6 +7395,94 @@ button:disabled {
   font-size: 0.71rem;
 }
 
+.ep3-chapter-ending {
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(90px, 0.28fr) minmax(0, 1fr);
+  align-content: center;
+  align-items: center;
+  gap: clamp(16px, 3vw, 34px);
+  padding: clamp(24px, 5vw, 64px);
+  background:
+    radial-gradient(circle at 16% 50%, rgba(216, 170, 98, 0.16), transparent 27%),
+    linear-gradient(115deg, rgba(7, 12, 10, 0.94), rgba(10, 18, 16, 0.86));
+  animation: ep3-chapter-appear 1.8s ease both;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.ep3-chapter-object {
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+}
+
+.ep3-chapter-object > span {
+  display: grid;
+  width: clamp(72px, 10vw, 118px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(216, 170, 98, 0.48);
+  border-radius: 50%;
+  background: rgba(216, 170, 98, 0.08);
+  box-shadow: 0 0 34px rgba(216, 170, 98, 0.08);
+  color: var(--amber-soft);
+  font-size: clamp(1.7rem, 4vw, 3.2rem);
+  place-items: center;
+}
+
+.ep3-chapter-object > small {
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ep3-chapter-ending-copy > span {
+  color: var(--amber-soft);
+  font-size: clamp(0.55rem, 1vw, 0.72rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ep3-chapter-ending-copy > strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(1.7rem, 4vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.ep3-chapter-ending-copy > p {
+  max-width: 760px;
+  margin: 13px 0 0;
+  color: #e2d4bc;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(0.95rem, 2vw, 1.45rem);
+  line-height: 1.35;
+}
+
+.ep3-chapter-ending > .ep3-development-thread {
+  grid-column: 1 / -1;
+  margin-top: 2px;
+}
+
+@keyframes ep3-chapter-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes ending-appear {
   from {
     opacity: 0;
@@ -9157,6 +9385,7 @@ button:disabled {
 }
 
 .final-quiz {
+  position: relative;
   margin-top: clamp(28px, 5vw, 64px);
   padding: clamp(22px, 4vw, 48px);
   border: 1px solid rgba(216, 170, 98, 0.3);
@@ -9165,6 +9394,14 @@ button:disabled {
     radial-gradient(circle at 88% 5%, rgba(216, 170, 98, 0.13), transparent 32%),
     linear-gradient(145deg, #14201d, #0e1715);
   box-shadow: var(--shadow);
+}
+
+.app-shell > .final-quiz {
+  margin-top: 18px;
+  border-color: rgba(216, 170, 98, 0.5);
+  box-shadow:
+    0 20px 55px rgba(0, 0, 0, 0.3),
+    inset 0 1px rgba(255, 225, 171, 0.08);
 }
 
 .final-quiz h2 {
@@ -13094,5 +13331,55 @@ body.cinematic-intro-active {
 
   .earth-timeline-current .time-zoom-mark {
     margin-left: 0;
+  }
+
+  .ep3-part-overview ol {
+    grid-template-columns: 1fr;
+  }
+
+  .ep3-part-overview li {
+    padding: 9px;
+  }
+
+  .ep3-chapter-ending {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 13px 15px;
+  }
+
+  .ep3-chapter-object {
+    display: none;
+  }
+
+  .ep3-chapter-ending-copy > span {
+    font-size: 0.43rem;
+  }
+
+  .ep3-chapter-ending-copy > strong {
+    margin-top: 3px;
+    font-size: clamp(1rem, 5.7vw, 1.38rem);
+  }
+
+  .ep3-chapter-ending-copy > p {
+    margin-top: 5px;
+    font-size: clamp(0.63rem, 3vw, 0.78rem);
+    line-height: 1.22;
+  }
+
+  .ep3-chapter-ending > .ep3-development-thread {
+    margin-top: 2px;
+  }
+
+  .ep3-development-thread {
+    gap: 3px;
+  }
+
+  .ep3-development-thread li {
+    overflow: hidden;
+    padding: 4px 1px;
+    font-size: 0.39rem;
+    letter-spacing: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

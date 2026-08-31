@@ -171,8 +171,8 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoData, /followUpQuiz: EpisodeTwoQuiz/);
   assert.match(episodeTwoData, /compactQuizOptions/);
   assert.match(episodeTwoApp, /const \[detailsOpen, setDetailsOpen\] = useState\(true\)/);
-  assert.match(episodeTwoApp, /Wie Menschen die Welt veränderten/);
-  assert.match(episodeTwoApp, /Von den ersten Siedlungen bis heute/);
+  assert.match(episodeTwoApp, /episodeThreePartOne\.guidingQuestion/);
+  assert.match(episodeTwoApp, /<EpisodeThreeThread activePart=\{1\} \/>/);
   assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
   assert.match(episodeTwoApp, /Weiter zu Episode 3/);
   assert.doesNotMatch(episodeTwoApp, /Übergangsentwurf|nur per Direktlink/);
@@ -318,8 +318,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeVisual, /sequenceBlend/);
   assert.match(episodeThreeApp, /questionCount=\{5\}/);
   assert.match(episodeThreeApp, /randomize/);
-  assert.match(episodeThreeApp, /Teil 2: Städte, Schrift und Macht/);
-  assert.match(episodeThreeApp, /Aus Dörfern werden Städte/);
+  assert.match(episodeThreeVisual, /episodeThreePart\(nextPartId\)/);
+  assert.match(episodeThreeVisual, /nextPart\.guidingQuestion/);
+  assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
   assert.match(episodeThreeApp, /episodePart=\{2\}/);
   assert.match(episodeThreeApp, /celebratePerfect/);
   assert.match(episodeThreeVisual, /ClayWritingTimeline/);
@@ -539,9 +540,52 @@ test("erklärt die drei Zeitebenen mit einem wiederkehrenden Zeit-Zoom", async (
   assert.match(episodeTwoApp, /<TimeZoomMark level=\{2\}/);
   assert.match(episodeTwoApp, /<TimeZoomTransition\s+level=\{2\}/);
   assert.match(episodeThreeApp, /<TimeZoomMark level=\{3\}/);
-  assert.equal((episodeThreeApp.match(/<TimeZoomTransition/g) ?? []).length, 2);
+  assert.equal((episodeThreeApp.match(/<TimeZoomTransition/g) ?? []).length, 1);
   assert.match(styles, /\.time-zoom-transition/);
   assert.match(styles, /@keyframes time-zoom-focus/);
+});
+
+test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", async () => {
+  const parts = await readFile(
+    new URL("../app/data/episode3Parts.ts", import.meta.url),
+    "utf8",
+  );
+  const guide = await readFile(
+    new URL("../app/episode-3/EpisodeThreePartGuide.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeTwoApp = await readFile(
+    new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeThreeApp = await readFile(
+    new URL("../app/episode-3/EpisodeThreePreview.tsx", import.meta.url),
+    "utf8",
+  );
+  const visual = await readFile(
+    new URL("../app/episode-3/EpisodeThreeVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(parts, /Was verändert sich, wenn Menschen bleiben\?/);
+  assert.match(parts, /Was passiert, wenn Vorräte organisiert werden müssen\?/);
+  assert.match(parts, /Waren, Ideen, Menschen – und Krankheiten – immer weiter reisen\?/);
+  assert.match(parts, /fossile Energie menschliche Möglichkeiten vervielfacht\?/);
+  assert.match(parts, /"Vorräte"[\s\S]*"Organisation"[\s\S]*"Vernetzung"[\s\S]*"Beschleunigung"[\s\S]*"planetare Wirkung"/);
+  assert.match(guide, /Vier Teile · vier Leitfragen/);
+  assert.match(episodeTwoApp, /Weiter zu Episode 3 · Teil 1 von 4/);
+  assert.match(episodeThreeApp, /<EpisodeThreePartOverview activePart=\{1\} \/>/);
+  assert.doesNotMatch(episodeThreeApp, /<section className="ep3-outlook"/);
+  assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
+  assert.match(visual, /scene\.id === 9 \? 2 : scene\.id === 15 \? 3/);
+  assert.match(visual, /progress >= 0\.72/);
+  assert.match(visual, /className="ep3-chapter-ending"/);
+  assert.match(styles, /\.ep3-chapter-ending/);
+  assert.match(styles, /\.app-shell > \.final-quiz/);
 });
 
 test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async () => {
@@ -744,7 +788,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /zeitreise-episode3-resume-after-update/);
   assert.match(episodeThreeApp, /zeitreise-episode3-app-version/);
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v113"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v114"/);
   assert.match(worker, /url\.pathname !== "\/episode-3\/"/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -966,7 +1010,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v113"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v114"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

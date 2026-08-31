@@ -21,7 +21,9 @@ import {
   episodeThreeSceneVideos,
   episodeThreeScenes,
 } from "../data/episode3";
+import { episodeThreePart } from "../data/episode3Parts";
 import type { SceneTheme } from "../data/scenes";
+import { EpisodeThreePartOverview } from "./EpisodeThreePartGuide";
 import { EpisodeThreeVisual } from "./EpisodeThreeVisual";
 
 type Panel = "sprecher" | "entdecken" | "quiz";
@@ -49,6 +51,7 @@ const episodeThreePartOneQuizScenes = episodeThreeFinalQuizScenes.filter(
 const episodeThreePartTwoQuizScenes = episodeThreeFinalQuizScenes.filter(
   (scene) => scene.id >= 10,
 );
+const episodeThreePartOne = episodeThreePart(1);
 
 function twoDigits(value: number) {
   return String(value).padStart(2, "0");
@@ -456,9 +459,9 @@ export default function EpisodeThreePreview() {
       {introOpen ? (
         <section className="ep2-intro" role="dialog" aria-modal="true" aria-label="Beginn von Episode 3">
           <div className="ep2-intro-copy">
-            <p className="eyebrow">Zeitreise · Episode 3</p>
-            <h2>Vom Wandern zum Bleiben</h2>
-            <strong>Wie Menschen die Welt veränderten</strong>
+            <p className="eyebrow">Zeitreise · Episode 3 · Teil 1 von 4</p>
+            <h2>{episodeThreePartOne.title}</h2>
+            <strong>{episodeThreePartOne.guidingQuestion}</strong>
             <p>Die Reise geht in der Welt vor ungefähr 14.000 Jahren weiter.</p>
             <TimeZoomTransition
               level={3}
@@ -466,6 +469,7 @@ export default function EpisodeThreePreview() {
               caption="Diese rund 14.000 Jahre belegen auf der großen Erdzeituhr nur etwa 0,13 Sekunden. Für Episode 3 machen wir daraus ein breites Zeitband von 12.000 v. Chr. bis heute."
             />
             <button type="button" onClick={startJourney}>Episode beginnen <span aria-hidden="true">→</span></button>
+            <EpisodeThreePartOverview activePart={1} />
             <button className="ep2-intro-back" type="button" onClick={startJourney}>Direkt zur ersten Szene</button>
           </div>
         </section>
@@ -641,32 +645,12 @@ export default function EpisodeThreePreview() {
       </div>
 
       {scene.id === 9 ? (
-        <>
-          <FinalEpisodeQuiz
-            scenes={episodeThreePartOneQuizScenes}
-            episode={3}
-            questionCount={5}
-            randomize
-          />
-
-          <section className="ep3-outlook" aria-labelledby="episode-3-part-2-title">
-            <p className="eyebrow">Die Reise geht weiter</p>
-            <h2 id="episode-3-part-2-title">Teil 2: Städte, Schrift und Macht</h2>
-            <TimeZoomTransition
-              level={3}
-              progress={0.61}
-              caption="Der erste Teil endet um 3.500 v. Chr. Der Maßstab bleibt gleich – der Zeitzeiger fährt nun weiter zu Städten, Schrift und Macht."
-            />
-            <p>
-              Aus Dörfern werden Städte. Vorräte müssen gezählt, Arbeiten verteilt
-              und Regeln festgelegt werden. Und irgendwann stellt jemand fest,
-              dass man Abgaben am besten schriftlich festhält.
-            </p>
-            <button type="button" onClick={() => goToScene(9)}>
-              Teil 2 beginnen <span aria-hidden="true">→</span>
-            </button>
-          </section>
-        </>
+        <FinalEpisodeQuiz
+          scenes={episodeThreePartOneQuizScenes}
+          episode={3}
+          questionCount={5}
+          randomize
+        />
       ) : null}
 
       {scene.id === 15 ? (

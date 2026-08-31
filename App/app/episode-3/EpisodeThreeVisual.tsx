@@ -9,6 +9,8 @@ import {
   episodeThreeSceneVideos,
   episodeThreeMotionPreviewScenes,
 } from "../data/episode3";
+import { episodeThreePart } from "../data/episode3Parts";
+import { EpisodeThreeThread } from "./EpisodeThreePartGuide";
 
 type Props = {
   scene: EpisodeThreeScene;
@@ -32,6 +34,9 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
     scene.id as 13 | 14,
   );
   const sequenceBlend = Math.min(1, Math.max(0, (progress - 0.38) / 0.24));
+  const nextPartId = scene.id === 9 ? 2 : scene.id === 15 ? 3 : null;
+  const nextPart = nextPartId ? episodeThreePart(nextPartId) : null;
+  const showPartTransition = nextPart && progress >= 0.72;
 
   useEffect(() => {
     const element = videoRef.current;
@@ -111,6 +116,20 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
           aria-hidden="true"
           key={video}
         />
+      ) : null}
+      {showPartTransition ? (
+        <div className="ep3-chapter-ending" aria-live="polite">
+          <div className="ep3-chapter-object" aria-hidden="true">
+            <span>{nextPart.symbol}</span>
+            <small>{nextPart.object}</small>
+          </div>
+          <div className="ep3-chapter-ending-copy">
+            <span>Die Reise geht weiter · Teil {nextPart.id} von 4</span>
+            <strong>{nextPart.title}</strong>
+            <p>{nextPart.guidingQuestion}</p>
+          </div>
+          <EpisodeThreeThread activePart={nextPart.id} />
+        </div>
       ) : null}
     </div>
   );

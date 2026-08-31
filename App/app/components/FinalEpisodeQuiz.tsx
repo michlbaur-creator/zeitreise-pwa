@@ -112,7 +112,13 @@ export function FinalEpisodeQuiz({
       {!started ? (
         <div className="final-quiz-intro">
           <div>
-            <p className="eyebrow">Am Ende der Reise</p>
+            <p className="eyebrow">
+              {isEpisodeThreePartTwo
+                ? "Teil 2 abgeschlossen"
+                : isEpisodeThree
+                  ? "Teil 1 abgeschlossen"
+                  : "Am Ende der Reise"}
+            </p>
             <h2 id="final-quiz-title">
               {isEpisodeThreePartTwo
                 ? "Das Abschlussquiz zu Städte, Schrift und Macht"
