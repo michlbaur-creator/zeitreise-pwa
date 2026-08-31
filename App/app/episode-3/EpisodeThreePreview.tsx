@@ -255,7 +255,9 @@ export default function EpisodeThreePreview() {
     if (updateReloadingRef.current) return;
     updateReloadingRef.current = true;
     window.localStorage.setItem("zeitreise-episode3-resume-after-update", "1");
-    window.location.reload();
+    const updateUrl = new URL(window.location.href);
+    updateUrl.searchParams.set("zeitreise-update", String(Date.now()));
+    window.location.replace(updateUrl.href);
   }, []);
 
   useEffect(() => {
@@ -290,7 +292,6 @@ export default function EpisodeThreePreview() {
           Number.isFinite(pageTime) &&
           serverTime > pageTime + 1000;
         const versionChanged =
-          Boolean(knownSignature) &&
           Boolean(signature) &&
           knownSignature !== signature;
 

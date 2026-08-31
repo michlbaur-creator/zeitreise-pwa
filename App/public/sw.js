@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v114";
+const CACHE_NAME = "zeitreise-v115";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -291,7 +291,7 @@ self.addEventListener("activate", (event) => {
       );
       await self.clients.claim();
 
-      if (CACHE_NAME === "zeitreise-v110") {
+      if (CACHE_NAME === "zeitreise-v115") {
         const windows = await self.clients.matchAll({
           type: "window",
           includeUncontrolled: true,
@@ -299,8 +299,7 @@ self.addEventListener("activate", (event) => {
         await Promise.all(
           windows.map((client) => {
             const url = new URL(client.url);
-            if (url.pathname !== "/episode-3/") return undefined;
-            url.searchParams.set("zeitreise-update", "v110");
+            url.searchParams.set("zeitreise-update", CACHE_NAME);
             return client.navigate(url.href).catch(() => undefined);
           }),
         );
