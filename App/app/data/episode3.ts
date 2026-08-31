@@ -35,10 +35,10 @@ export const episodeThreeSceneAudio = {
   8: "/assets/episode3/audio/sprecher-und-veo-szene-08-v1.m4a",
   9: "/assets/episode3/audio/sprecher-szene-09-v1.m4a",
   10: "/assets/episode3/audio/vorschau-szene-10-v1.m4a",
-  11: "/assets/episode3/audio/vorschau-szene-11-v1.m4a",
-  12: "/assets/episode3/audio/vorschau-szene-12-v1.m4a",
-  13: "/assets/episode3/audio/vorschau-szene-13-v1.m4a",
-  14: "/assets/episode3/audio/vorschau-szene-14-v1.m4a",
+  11: "/assets/episode3/audio/vorschau-szene-12-v1.m4a",
+  12: "/assets/episode3/audio/vorschau-szene-13-v1.m4a",
+  13: "/assets/episode3/audio/vorschau-szene-14-v1.m4a",
+  14: "/assets/episode3/audio/vorschau-szene-11-v1.m4a",
   15: "/assets/episode3/audio/vorschau-szene-15-v1.m4a",
 } as const;
 
@@ -53,10 +53,10 @@ export const episodeThreeSceneDurations = {
   8: 51,
   9: 82,
   10: 37,
-  11: 38,
+  11: 40,
   12: 40,
   13: 40,
-  14: 40,
+  14: 38,
   15: 42,
 } as const;
 
@@ -71,9 +71,9 @@ export const episodeThreeSceneImages = {
   8: "/assets/episode3/scene08/hintergrund-catalhoeyuek-entwurf-v1.png",
   9: "/assets/episode3/scene09/hintergrund-dorf-waechst-v1.png",
   10: "/assets/episode3/scene10/hintergrund-dorfvorrat-v1.png",
-  11: "/assets/episode3/scene11/hintergrund-uruk-kanalstadt-v1.png",
-  12: "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
-  14: "/assets/episode3/scene14/hintergrund-rationsverwaltung-v1.png",
+  11: "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
+  13: "/assets/episode3/scene14/hintergrund-rationsverwaltung-v1.png",
+  14: "/assets/episode3/scene11/hintergrund-uruk-kanalstadt-v1.png",
   15: "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
 } as const;
 
@@ -86,7 +86,7 @@ export const episodeThreeSceneImageSequences = {
     "/assets/episode3/scene10/hintergrund-dorfvorrat-v1.png",
     "/assets/episode3/scene10/hintergrund-stadtspeicher-v1.png",
   ],
-  12: [
+  11: [
     "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
     "/assets/episode3/scene12/hintergrund-spezialisierte-werkstaetten-v1.png",
   ],
@@ -96,8 +96,8 @@ export const episodeThreeSceneImageSequences = {
   ],
 } as const;
 
-export const episodeThreeGraphicScenes = [13] as const;
-export const episodeThreeMotionPreviewScenes = [11, 14] as const;
+export const episodeThreeGraphicScenes = [12] as const;
+export const episodeThreeMotionPreviewScenes = [13, 14] as const;
 
 const episodeThreeSpeakerTexts = {
   1: [
@@ -178,28 +178,28 @@ const episodeThreeSpeakerTexts = {
     "Also braucht man Maße, Regeln und Menschen, die den Überblick behalten. Aus Vorräten entsteht Verwaltung. Und plötzlich hat jemand einen ziemlich verantwortungsvollen Job – mit sehr vielen Körben.",
   ],
   11: [
-    "Wir sind um 3.200 vor Christus im Süden Mesopotamiens, im Gebiet des heutigen Irak. Mesopotamien bedeutet Land zwischen den Flüssen – gemeint sind Euphrat und Tigris.",
-    "Hier wächst Uruk, eine der größten bekannten Städte ihrer Zeit. Und Uruk ist nicht einfach nur ein Dorf mit sehr, sehr vielen Häusern.",
-    "Kanäle bringen Wasser zu den Feldern und Waren in die Stadt. Bauern liefern Getreide, Boote transportieren Schilf und Holz, Werkstätten verarbeiten Rohstoffe. Dazwischen stehen große öffentliche und religiöse Bauten aus Lehmziegeln.",
-    "Die Stadt braucht ihr Umland – und das Umland braucht Märkte und Handwerker. Uruk ist ein gewaltiges Netzwerk. Nur besteht dieses Netz hauptsächlich aus Wasserwegen, Schlamm und ziemlich vielen Körben.",
-  ],
-  12: [
     "In einem Dorf stellen viele Familien einen großen Teil von dem selbst her, was sie brauchen. In einer Stadt wird das schwierig. Dafür sind es einfach zu viele Menschen und zu viele Aufgaben.",
     "Also teilen sie die Arbeit auf. Manche töpfern, andere weben Stoffe, bauen Häuser, bearbeiten Metall, steuern Boote oder kümmern sich um die Vorräte. Wer immer wieder dasselbe macht, sammelt Erfahrung und wird meistens ziemlich gut darin.",
     "Das hat allerdings einen Haken: Alle werden voneinander abhängig. Eine Weberin baut nicht nebenbei noch Gerste an. Und ein Töpfer kann seine Gefäße zwar bewundern – aufessen kann er sie nicht.",
     "Nahrung, Rohstoffe und fertige Waren müssen deshalb zuverlässig verteilt werden. Dafür reicht Zurufen bald nicht mehr aus.",
   ],
-  13: [
+  12: [
     "Und genau hier kommen kleine Tafeln aus feuchtem Ton ins Spiel. Um etwa 3.300 vor Christus beginnen Menschen im südlichen Mesopotamien, Zahlen und einfache Zeichen hineinzudrücken.",
     "Darauf stehen zunächst keine Heldengeschichten und auch keine Liebesbriefe. Es geht um Getreide, Tiere, Gefäße und Rationen. Wer etwas liefert oder bekommt, hinterlässt nun eine Spur, die länger hält als das Gedächtnis des Verwalters.",
     "Im Laufe der Jahrhunderte werden die Zeichen abstrakter. Ein Griffel drückt keilförmige Spuren in den Ton. Später lassen sich damit auch Namen, Sprache, Verträge und Geschichten festhalten.",
     "Die Schrift beginnt also nicht mit einem Bestseller. Eher mit einer ziemlich gründlichen Bestandsaufnahme.",
   ],
-  14: [
+  13: [
     "Eine Liste wirkt erst einmal nicht besonders mächtig. Kein Schwert, keine Krone – nur ein Stück Ton. Trotzdem kann sie darüber entscheiden, wer Getreide bekommt und wer noch etwas liefern muss.",
     "Ein Schreiber hält die Menge fest. Ein Siegel zeigt, wer den Vorgang bestätigt. Auf einer weiteren Tafel steht vielleicht, welche Rationen Arbeiter erhalten.",
     "Das Entscheidende ist: Die Aufzeichnung kann noch geprüft werden, wenn längst nicht mehr alle Beteiligten im Raum sind. Da hilft dann auch kein: Aber ich hatte doch fünf Körbe abgeliefert.",
     "Wer Maße, Speicher und Listen kontrolliert, bekommt deshalb Einfluss. Die Tontafel wird zum Gedächtnis der Verwaltung – und dieses Gedächtnis hat erstaunlich wenig Humor.",
+  ],
+  14: [
+    "Wir sind um 3.200 vor Christus im Süden Mesopotamiens, im Gebiet des heutigen Irak. Mesopotamien bedeutet Land zwischen den Flüssen – gemeint sind Euphrat und Tigris.",
+    "Hier wächst Uruk, eine der größten bekannten Städte ihrer Zeit. Und Uruk ist nicht einfach nur ein Dorf mit sehr, sehr vielen Häusern.",
+    "Kanäle bringen Wasser zu den Feldern und Waren in die Stadt. Bauern liefern Getreide, Boote transportieren Schilf und Holz, Werkstätten verarbeiten Rohstoffe. Dazwischen stehen große öffentliche und religiöse Bauten aus Lehmziegeln.",
+    "Die Stadt braucht ihr Umland – und das Umland braucht Märkte und Handwerker. Uruk ist ein gewaltiges Netzwerk. Nur besteht dieses Netz hauptsächlich aus Wasserwegen, Schlamm und ziemlich vielen Körben.",
   ],
   15: [
     "Hier wird gearbeitet. Kanäle müssen gereinigt, Mauern gebaut und Vorräte geschützt werden. Die Stadt wird größer, und eine Frage wird immer wichtiger: Wer entscheidet denn jetzt eigentlich, wer was zu machen hat? Wer organisiert die ganze Arbeit?",
@@ -313,16 +313,6 @@ const episodeThreeDiscoveries = {
   ],
   11: [
     {
-      title: "Zwischen Euphrat und Tigris",
-      text: "Mesopotamien lag im Gebiet von Euphrat und Tigris, größtenteils im heutigen Irak. Uruk befand sich im Süden dieser Region in einer von Flussarmen, Kanälen und Feuchtgebieten geprägten Landschaft.",
-    },
-    {
-      title: "Stadt und Umland",
-      text: "Die Stadt brauchte Nahrung und Rohstoffe aus ihrer Umgebung; das Umland nutzte Handwerk, Märkte und zentrale Einrichtungen.",
-    },
-  ],
-  12: [
-    {
       title: "Arbeit gegen Rationen",
       text: "Städtische Arbeitskräfte konnten Getreide, Öl oder andere Güter als Versorgung für ihre Tätigkeit erhalten.",
     },
@@ -331,7 +321,7 @@ const episodeThreeDiscoveries = {
       text: "Wollverarbeitung wurde zu einer wichtigen spezialisierten Produktion und benötigte zahlreiche Arbeitskräfte.",
     },
   ],
-  13: [
+  12: [
     {
       title: "Proto-Keilschrift",
       text: "Die frühesten Tafeln aus Uruk verbinden Zahlzeichen mit vereinfachten Zeichen für Güter; viele Texte bleiben schwer eindeutig zu lesen.",
@@ -341,7 +331,7 @@ const episodeThreeDiscoveries = {
       text: "Schriftsysteme entstanden in verschiedenen Weltregionen unabhängig voneinander. Uruk ist ein besonders frühes, gut belegtes Beispiel.",
     },
   ],
-  14: [
+  13: [
     {
       title: "Rollsiegel",
       text: "Ein gravierter Steinzylinder hinterließ auf feuchtem Ton ein wiedererkennbares Bild – ähnlich einer Kennzeichnung oder Unterschrift.",
@@ -349,6 +339,16 @@ const episodeThreeDiscoveries = {
     {
       title: "Was Listen nicht zeigen",
       text: "Verwaltungstexte überliefern besonders die Sicht der Einrichtungen, die Güter erfassten und verteilten.",
+    },
+  ],
+  14: [
+    {
+      title: "Zwischen Euphrat und Tigris",
+      text: "Mesopotamien lag im Gebiet von Euphrat und Tigris, größtenteils im heutigen Irak. Uruk befand sich im Süden dieser Region in einer von Flussarmen, Kanälen und Feuchtgebieten geprägten Landschaft.",
+    },
+    {
+      title: "Stadt und Umland",
+      text: "Die Stadt brauchte Nahrung und Rohstoffe aus ihrer Umgebung; das Umland nutzte Handwerk, Märkte und zentrale Einrichtungen.",
     },
   ],
   15: [
@@ -728,26 +728,6 @@ const episodeThreeQuizzes = {
   ],
   11: [
     {
-      question: "Wo lag Uruk im südlichen Mesopotamien?",
-      answers: [
-        "Am Nil im heutigen Ägypten.",
-        "Im Gebiet von Euphrat und Tigris, im heutigen Irak.",
-        "Am Indus im heutigen Pakistan.",
-      ],
-      correctAnswer: 1,
-    },
-    {
-      question: "Warum fördern Kanäle zugleich Zusammenarbeit und Verwaltung?",
-      answers: [
-        "Sie bewässern Felder ohne menschliche Arbeit.",
-        "Sie machen Vorräte überflüssig.",
-        "Bau, Reinigung und Wasserverteilung müssen über einzelne Haushalte hinaus koordiniert werden.",
-      ],
-      correctAnswer: 2,
-    },
-  ],
-  12: [
-    {
       question: "Welche Folge hat zunehmende Arbeitsteilung?",
       answers: [
         "Jeder Haushalt wird vollständig unabhängig.",
@@ -766,7 +746,7 @@ const episodeThreeQuizzes = {
       correctAnswer: 1,
     },
   ],
-  13: [
+  12: [
     {
       question: "Wozu dienten viele der frühesten bekannten Tafeln aus Uruk?",
       answers: [
@@ -786,7 +766,7 @@ const episodeThreeQuizzes = {
       correctAnswer: 1,
     },
   ],
-  14: [
+  13: [
     {
       question: "Wodurch vergrößert ein schriftlicher Eintrag die Reichweite einer Entscheidung?",
       answers: [
@@ -804,6 +784,26 @@ const episodeThreeQuizzes = {
         "Eine unbeschriftete Stadtmauer.",
       ],
       correctAnswer: 0,
+    },
+  ],
+  14: [
+    {
+      question: "Wo lag Uruk im südlichen Mesopotamien?",
+      answers: [
+        "Am Nil im heutigen Ägypten.",
+        "Im Gebiet von Euphrat und Tigris, im heutigen Irak.",
+        "Am Indus im heutigen Pakistan.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Warum fördern Kanäle zugleich Zusammenarbeit und Verwaltung?",
+      answers: [
+        "Sie bewässern Felder ohne menschliche Arbeit.",
+        "Sie machen Vorräte überflüssig.",
+        "Bau, Reinigung und Wasserverteilung müssen über einzelne Haushalte hinaus koordiniert werden.",
+      ],
+      correctAnswer: 2,
     },
   ],
   15: [
@@ -839,10 +839,10 @@ export const episodeThreeScenes: EpisodeThreeScene[] = [
   { id: 8, title: "Leben Wand an Wand", timeLabel: "Çatalhöyük, etwa 7.400 bis 6.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[8], discoveries: episodeThreeDiscoveries[8], quiz: [episodeThreeQuizzes[8][2], episodeThreeQuizzes[8][3]], imageStatus: "ready" },
   { id: 9, title: "Der Preis des Bleibens", timeLabel: "Etwa 7.000 bis 3.500 v. Chr.", speakerText: episodeThreeSpeakerTexts[9], discoveries: episodeThreeDiscoveries[9], quiz: [episodeThreeQuizzes[9][0], episodeThreeQuizzes[9][3]], imageStatus: "ready" },
   { id: 10, title: "Wer zählt eigentlich das ganze Getreide?", timeLabel: "Etwa 3.500 bis 3.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[10], discoveries: episodeThreeDiscoveries[10], quiz: [episodeThreeQuizzes[10][0], episodeThreeQuizzes[10][1]], imageStatus: "ready" },
-  { id: 11, title: "Eine Stadt aus Lehm und Wasser", timeLabel: "Uruk, um 3.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[11], discoveries: episodeThreeDiscoveries[11], quiz: [episodeThreeQuizzes[11][0], episodeThreeQuizzes[11][1]], imageStatus: "ready" },
-  { id: 12, title: "Nicht alle machen alles", timeLabel: "Spätes 4. Jahrtausend v. Chr.", speakerText: episodeThreeSpeakerTexts[12], discoveries: episodeThreeDiscoveries[12], quiz: [episodeThreeQuizzes[12][0], episodeThreeQuizzes[12][1]], imageStatus: "ready" },
-  { id: 13, title: "Wenn Zahlen zu Zeichen werden", timeLabel: "Etwa 3.300 bis 2.600 v. Chr.", speakerText: episodeThreeSpeakerTexts[13], discoveries: episodeThreeDiscoveries[13], quiz: [episodeThreeQuizzes[13][0], episodeThreeQuizzes[13][1]], imageStatus: "ready" },
-  { id: 14, title: "Die Macht der Liste", timeLabel: "Etwa 3.200 bis 2.900 v. Chr.", speakerText: episodeThreeSpeakerTexts[14], discoveries: episodeThreeDiscoveries[14], quiz: [episodeThreeQuizzes[14][0], episodeThreeQuizzes[14][1]], imageStatus: "ready" },
+  { id: 11, title: "Nicht alle machen alles", timeLabel: "Spätes 4. Jahrtausend v. Chr.", speakerText: episodeThreeSpeakerTexts[11], discoveries: episodeThreeDiscoveries[11], quiz: [episodeThreeQuizzes[11][0], episodeThreeQuizzes[11][1]], imageStatus: "ready" },
+  { id: 12, title: "Wenn Zahlen zu Zeichen werden", timeLabel: "Etwa 3.300 bis 2.600 v. Chr.", speakerText: episodeThreeSpeakerTexts[12], discoveries: episodeThreeDiscoveries[12], quiz: [episodeThreeQuizzes[12][0], episodeThreeQuizzes[12][1]], imageStatus: "ready" },
+  { id: 13, title: "Die Macht der Liste", timeLabel: "Etwa 3.200 bis 2.900 v. Chr.", speakerText: episodeThreeSpeakerTexts[13], discoveries: episodeThreeDiscoveries[13], quiz: [episodeThreeQuizzes[13][0], episodeThreeQuizzes[13][1]], imageStatus: "ready" },
+  { id: 14, title: "Eine Stadt aus Lehm und Wasser", timeLabel: "Uruk, um 3.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[14], discoveries: episodeThreeDiscoveries[14], quiz: [episodeThreeQuizzes[14][0], episodeThreeQuizzes[14][1]], imageStatus: "ready" },
   { id: 15, title: "Wer entscheidet für die Stadt?", timeLabel: "Etwa 3.000 bis 2.700 v. Chr.", speakerText: episodeThreeSpeakerTexts[15], discoveries: episodeThreeDiscoveries[15], quiz: [episodeThreeQuizzes[15][0], episodeThreeQuizzes[15][1]], imageStatus: "ready" },
 ];
 

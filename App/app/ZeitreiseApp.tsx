@@ -13,6 +13,7 @@ import { FinalEpisodeQuiz } from "./components/FinalEpisodeQuiz";
 import { EpisodeSeriesNav } from "./components/EpisodeSeriesNav";
 import { SceneVisual } from "./components/SceneVisual";
 import { SiteFooter } from "./components/SiteFooter";
+import { TimeZoomMark, TimeZoomTransition } from "./components/TimeZoom";
 import {
   episodeOneSceneHasVideo,
   episodeOneSceneSoundtrack,
@@ -145,6 +146,7 @@ function EarthTimeline({
       <div className="earth-timeline-current">
         <span>Du bist hier</span>
         <strong>{timeLabel ?? earthMilestones[activeMilestone].age}</strong>
+        <TimeZoomMark level={1} progress={travelled / 100} />
       </div>
       <div className="earth-timeline-scroll">
         <div className="earth-timeline-track" aria-hidden="true">
@@ -796,6 +798,12 @@ export default function ZeitreiseApp() {
             <p>Wir verlassen unsere Zeit.</p>
             <strong>Unsere Reise beginnt vor 4,6 Milliarden Jahren.</strong>
           </div>
+
+          <TimeZoomTransition
+            level={1}
+            progress={0}
+            caption="Wir legen die gesamte Erdgeschichte auf eine einzige Uhr. Erst danach zoomen wir immer weiter in ihre allerletzten Augenblicke hinein."
+          />
 
           <div className="intro-time-machine" aria-hidden="true">
             <div className="intro-time-labels">

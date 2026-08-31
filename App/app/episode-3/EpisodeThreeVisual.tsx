@@ -27,9 +27,9 @@ export function EpisodeThreeVisual({ scene, isPlaying, progress }: Props) {
   const imageSequence = episodeThreeSceneImageSequences[
     scene.id as keyof typeof episodeThreeSceneImageSequences
   ];
-  const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 13);
+  const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 12);
   const isMotionPreview = episodeThreeMotionPreviewScenes.includes(
-    scene.id as 11 | 14,
+    scene.id as 13 | 14,
   );
   const sequenceBlend = Math.min(1, Math.max(0, (progress - 0.38) / 0.24));
 

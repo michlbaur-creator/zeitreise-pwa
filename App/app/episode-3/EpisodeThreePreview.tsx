@@ -13,6 +13,7 @@ import { useAmbientSound } from "../audio/useAmbientSound";
 import { EpisodeSeriesNav } from "../components/EpisodeSeriesNav";
 import { FinalEpisodeQuiz } from "../components/FinalEpisodeQuiz";
 import { SiteFooter } from "../components/SiteFooter";
+import { TimeZoomMark, TimeZoomTransition } from "../components/TimeZoom";
 import {
   type EpisodeThreeScene,
   episodeThreeSceneAudio,
@@ -27,7 +28,7 @@ type Panel = "sprecher" | "entdecken" | "quiz";
 
 const sceneSymbols = [
   "↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖",
-  "▤", "◫", "⚒", "✎", "◉", "◆",
+  "▤", "⚒", "✎", "◉", "◫", "◆",
 ];
 
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
@@ -80,6 +81,7 @@ function EpisodeThreeTimeline({
       <div className="earth-timeline-current">
         <span>Du bist hier</span>
         <strong>{scene.timeLabel}</strong>
+        <TimeZoomMark level={3} progress={travelled / 100} />
       </div>
       <div className="earth-timeline-scroll">
         <div className="earth-timeline-track" aria-hidden="true">
@@ -458,6 +460,11 @@ export default function EpisodeThreePreview() {
             <h2>Vom Wandern zum Bleiben</h2>
             <strong>Wie Menschen die Welt veränderten</strong>
             <p>Die Reise geht in der Welt vor ungefähr 14.000 Jahren weiter.</p>
+            <TimeZoomTransition
+              level={3}
+              progress={0}
+              caption="Diese rund 14.000 Jahre belegen auf der großen Erdzeituhr nur etwa 0,13 Sekunden. Für Episode 3 machen wir daraus ein breites Zeitband von 12.000 v. Chr. bis heute."
+            />
             <button type="button" onClick={startJourney}>Episode beginnen <span aria-hidden="true">→</span></button>
             <button className="ep2-intro-back" type="button" onClick={startJourney}>Direkt zur ersten Szene</button>
           </div>
@@ -645,6 +652,11 @@ export default function EpisodeThreePreview() {
           <section className="ep3-outlook" aria-labelledby="episode-3-part-2-title">
             <p className="eyebrow">Die Reise geht weiter</p>
             <h2 id="episode-3-part-2-title">Teil 2: Städte, Schrift und Macht</h2>
+            <TimeZoomTransition
+              level={3}
+              progress={0.61}
+              caption="Der erste Teil endet um 3.500 v. Chr. Der Maßstab bleibt gleich – der Zeitzeiger fährt nun weiter zu Städten, Schrift und Macht."
+            />
             <p>
               Aus Dörfern werden Städte. Vorräte müssen gezählt, Arbeiten verteilt
               und Regeln festgelegt werden. Und irgendwann stellt jemand fest,

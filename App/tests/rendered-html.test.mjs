@@ -239,6 +239,17 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     sceneIds,
     Array.from({ length: 15 }, (_, index) => index + 1),
   );
+  const sceneTitles = [
+    ...episodeThreeData.matchAll(/\{ id: \d+, title: "([^"]+)"/g),
+  ].map((match) => match[1]);
+  assert.deepEqual(sceneTitles.slice(9), [
+    "Wer zählt eigentlich das ganze Getreide?",
+    "Nicht alle machen alles",
+    "Wenn Zahlen zu Zeichen werden",
+    "Die Macht der Liste",
+    "Eine Stadt aus Lehm und Wasser",
+    "Wer entscheidet für die Stadt?",
+  ]);
   assert.equal(
     [...episodeThreeData.matchAll(/\{ id: \d+, title: [^\n]+imageStatus: "ready" \}/g)].length,
     15,
@@ -498,6 +509,41 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   );
 });
 
+test("erklärt die drei Zeitebenen mit einem wiederkehrenden Zeit-Zoom", async () => {
+  const episodeOneApp = await readFile(
+    new URL("../app/ZeitreiseApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeTwoApp = await readFile(
+    new URL("../app/episode-2/EpisodeTwoApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const episodeThreeApp = await readFile(
+    new URL("../app/episode-3/EpisodeThreePreview.tsx", import.meta.url),
+    "utf8",
+  );
+  const timeZoom = await readFile(
+    new URL("../app/components/TimeZoom.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(timeZoom, /12 Stunden Erdzeit/);
+  assert.match(timeZoom, /letzte 67 Sekunden/);
+  assert.match(timeZoom, /letzte 0,13 Sekunden/);
+  assert.match(episodeOneApp, /<TimeZoomMark level=\{1\}/);
+  assert.match(episodeOneApp, /<TimeZoomTransition\s+level=\{1\}/);
+  assert.match(episodeTwoApp, /<TimeZoomMark level=\{2\}/);
+  assert.match(episodeTwoApp, /<TimeZoomTransition\s+level=\{2\}/);
+  assert.match(episodeThreeApp, /<TimeZoomMark level=\{3\}/);
+  assert.equal((episodeThreeApp.match(/<TimeZoomTransition/g) ?? []).length, 2);
+  assert.match(styles, /\.time-zoom-transition/);
+  assert.match(styles, /@keyframes time-zoom-focus/);
+});
+
 test("enthält die Medienbestände für die Vorschau der Szenen 1 bis 22", async () => {
   const assetPaths = [
     "scene01/hintergrund-vulkanische-kueste.png",
@@ -698,7 +744,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /zeitreise-episode3-resume-after-update/);
   assert.match(episodeThreeApp, /zeitreise-episode3-app-version/);
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v112"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v113"/);
   assert.match(worker, /url\.pathname !== "\/episode-3\/"/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -920,7 +966,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v112"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v113"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

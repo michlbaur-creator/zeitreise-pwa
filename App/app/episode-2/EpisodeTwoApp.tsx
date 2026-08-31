@@ -12,6 +12,7 @@ import { useAmbientSound } from "../audio/useAmbientSound";
 import { FinalEpisodeQuiz } from "../components/FinalEpisodeQuiz";
 import { EpisodeSeriesNav } from "../components/EpisodeSeriesNav";
 import { SiteFooter } from "../components/SiteFooter";
+import { TimeZoomMark, TimeZoomTransition } from "../components/TimeZoom";
 import {
   episodeTwoMilestones,
   episodeTwoScenes,
@@ -67,6 +68,7 @@ function EpisodeTwoTimeline({
       <div className="earth-timeline-current">
         <span>Du bist hier</span>
         <strong>{scene.timeLabel}</strong>
+        <TimeZoomMark level={2} progress={travelled / 100} />
       </div>
       <div className="earth-timeline-scroll">
         <div className="earth-timeline-track" aria-hidden="true">
@@ -496,6 +498,11 @@ export default function EpisodeTwoApp() {
             <h2>Die Entwicklung des Menschen</h2>
             <strong>Eine verzweigte Geschichte</strong>
             <p>Die Reise geht beim kleinen Säugetier aus Episode 1 weiter.</p>
+            <TimeZoomTransition
+              level={2}
+              progress={0.02}
+              caption="Auf der großen Erdzeituhr erscheinen die ersten Homininen erst in den letzten ungefähr 67 Sekunden. Genau diese Sekunden ziehen wir jetzt auseinander."
+            />
             <button type="button" onClick={startJourney}>Episode beginnen <span aria-hidden="true">→</span></button>
             <button className="ep2-intro-back" type="button" onClick={() => setIntroOpen(false)}>Direkt zur Übersicht</button>
           </div>

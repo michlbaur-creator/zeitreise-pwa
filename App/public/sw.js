@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v112";
+const CACHE_NAME = "zeitreise-v113";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -234,20 +234,20 @@ const EPISODE_THREE_ASSETS = {
     "/assets/episode3/audio/vorschau-szene-10-v1.m4a",
   ],
   11: [
-    "/assets/episode3/scene11/hintergrund-uruk-kanalstadt-v1.png",
-    "/assets/episode3/audio/vorschau-szene-11-v1.m4a",
-  ],
-  12: [
     "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
     "/assets/episode3/scene12/hintergrund-spezialisierte-werkstaetten-v1.png",
     "/assets/episode3/audio/vorschau-szene-12-v1.m4a",
   ],
-  13: [
+  12: [
     "/assets/episode3/audio/vorschau-szene-13-v1.m4a",
   ],
-  14: [
+  13: [
     "/assets/episode3/scene14/hintergrund-rationsverwaltung-v1.png",
     "/assets/episode3/audio/vorschau-szene-14-v1.m4a",
+  ],
+  14: [
+    "/assets/episode3/scene11/hintergrund-uruk-kanalstadt-v1.png",
+    "/assets/episode3/audio/vorschau-szene-11-v1.m4a",
   ],
   15: [
     "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
