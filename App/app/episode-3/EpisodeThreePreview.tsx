@@ -123,9 +123,10 @@ export default function EpisodeThreePreview() {
   const [quizChecked, setQuizChecked] = useState(false);
   const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const [ambientEnabled, setAmbientEnabled] = useState(false);
-  const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
+  const [soundMuted, setSoundMuted] = useState(false);
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const soundMutedRef = useRef(false);
   const isPlayingRef = useRef(false);
   const updateWaitingRef = useRef(false);
   const updateReloadingRef = useRef(false);
@@ -137,6 +138,7 @@ export default function EpisodeThreePreview() {
   } | null>(null);
 
   const scene = episodeThreeScenes[currentIndex];
+  const isPartEndingScene = scene.id === 9 || scene.id === 15;
   const partTwoActive = scene.id >= 10;
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
@@ -148,16 +150,16 @@ export default function EpisodeThreePreview() {
     200 + scene.id,
     themeForScene(scene.id),
     isPlaying,
-    ambientEnabled && !sceneHasVideo,
+    ambientEnabled && !soundMuted && !sceneHasVideo,
     progress,
   );
 
   const ensureAmbientSound = useCallback(() => {
-    if (ambientMutedByUser) return;
+    if (soundMutedRef.current) return;
     void activateAmbientSound().then((active) => {
-      if (active) setAmbientEnabled(true);
+      if (active && !soundMutedRef.current) setAmbientEnabled(true);
     });
-  }, [activateAmbientSound, ambientMutedByUser]);
+  }, [activateAmbientSound]);
 
   const goToScene = useCallback((nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= episodeThreeScenes.length) return;
@@ -174,6 +176,7 @@ export default function EpisodeThreePreview() {
     setSelectedOption(null);
     setQuizChecked(false);
     setQuizQuestionIndex(0);
+    setPanel("entdecken");
     window.localStorage.setItem("zeitreise-episode3-current-scene", String(nextIndex));
   }, []);
 
@@ -181,6 +184,8 @@ export default function EpisodeThreePreview() {
     let cancelled = false;
     window.queueMicrotask(() => {
       if (cancelled) return;
+      const currentUrl = new URL(window.location.href);
+      const startAtBeginning = currentUrl.searchParams.get("start") === "1";
       const storedIndex = Number(
         window.localStorage.getItem("zeitreise-episode3-current-scene") ?? "0",
       );
@@ -191,7 +196,17 @@ export default function EpisodeThreePreview() {
       if (resumeAfterUpdate) {
         window.localStorage.removeItem("zeitreise-episode3-resume-after-update");
       }
-      if (
+      if (startAtBeginning) {
+        setCurrentIndex(0);
+        setSceneDuration(episodeThreeSceneDurations[1]);
+        window.localStorage.setItem("zeitreise-episode3-current-scene", "0");
+        currentUrl.searchParams.delete("start");
+        window.history.replaceState(
+          null,
+          "",
+          `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`,
+        );
+      } else if (
         Number.isInteger(storedIndex) &&
         storedIndex >= 0 &&
         storedIndex < episodeThreeScenes.length
@@ -406,7 +421,8 @@ export default function EpisodeThreePreview() {
   const startJourney = () => {
     window.localStorage.setItem("zeitreise-episode3-intro-seen", "1");
     setIntroOpen(false);
-    setAmbientMutedByUser(false);
+    soundMutedRef.current = false;
+    setSoundMuted(false);
     void activateAmbientSound().then((active) => {
       if (active) setAmbientEnabled(true);
     });
@@ -428,16 +444,17 @@ export default function EpisodeThreePreview() {
     setIsPlaying((value) => !value);
   };
 
-  const toggleAmbient = () => {
-    if (ambientEnabled) {
+  const toggleSound = () => {
+    const nextMuted = !soundMuted;
+    soundMutedRef.current = nextMuted;
+    setSoundMuted(nextMuted);
+
+    if (nextMuted) {
       setAmbientEnabled(false);
-      setAmbientMutedByUser(true);
       return;
     }
-    setAmbientMutedByUser(false);
-    void activateAmbientSound().then((active) => {
-      if (active) setAmbientEnabled(true);
-    });
+
+    if (!sceneHasVideo) ensureAmbientSound();
   };
 
   const seek = (value: number) => {
@@ -519,6 +536,7 @@ export default function EpisodeThreePreview() {
           <audio
             ref={audioRef}
             src={narrationPath}
+            muted={soundMuted}
             preload="metadata"
             autoPlay={isPlaying}
             onLoadedMetadata={(event) => {
@@ -555,29 +573,47 @@ export default function EpisodeThreePreview() {
               <span className="play-label">{isPlaying ? "Pause" : progress >= 1 ? "Noch einmal" : "Szene starten"}</span>
               <span className="play-wave" aria-hidden="true"><i /><i /><i /></span>
             </button>
-            {sceneHasVideo ? (
-              <span className="sound-control is-on ep2-mixed-sound" role="status" aria-label="Filmton und Sprecher sind zu einer Tonspur verbunden">
-                <span aria-hidden="true">◖))</span><span className="sound-label">Filmton</span>
-              </span>
-            ) : (
-              <button className={`sound-control ${ambientEnabled ? "is-on" : ""}`} type="button" aria-pressed={ambientEnabled} onClick={toggleAmbient}>
-                <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span><span className="sound-label">Atmosphäre</span>
-              </button>
-            )}
+            <button
+              className={`sound-control ${soundMuted ? "" : "is-on"}`}
+              type="button"
+              aria-pressed={!soundMuted}
+              aria-label={`Ton ${soundMuted ? "einschalten" : "ausschalten"}`}
+              onClick={toggleSound}
+            >
+              <span aria-hidden="true">{soundMuted ? "◖×" : "◖))"}</span><span className="sound-label">Ton</span>
+            </button>
             <label className="scrubber"><span className="sr-only">Position in der Szene</span><input type="range" min="0" max="1000" value={Math.round(progress * 1000)} onChange={(event) => seek(Number(event.target.value) / 1000)} style={{ "--seek": `${progress * 100}%` } as CSSProperties} /></label>
             <span className="timecode">{formatTime(progress * sceneDuration)} / {formatTime(sceneDuration)}</span>
             <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1); }} disabled={currentIndex === episodeThreeScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
           </div>
+          {scene.id === 9 ? (
+            <FinalEpisodeQuiz
+              scenes={episodeThreePartOneQuizScenes}
+              episode={3}
+              questionCount={5}
+              randomize
+            />
+          ) : null}
+          {scene.id === 15 ? (
+            <FinalEpisodeQuiz
+              scenes={episodeThreePartTwoQuizScenes}
+              episode={3}
+              episodePart={2}
+              questionCount={5}
+              randomize
+              celebratePerfect
+            />
+          ) : null}
           <EpisodeSeriesNav currentEpisode={3} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode3-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
 
         <aside id="episode3-details" className={`content-panel ${detailsOpen ? "is-open" : ""}`}>
-          <div className="panel-tabs" aria-label="Szeneninhalt">
+          <div className={`panel-tabs ${isPartEndingScene ? "is-two-tabs" : ""}`} aria-label="Szeneninhalt">
             <button type="button" aria-pressed={panel === "sprecher"} className={panel === "sprecher" ? "is-active" : ""} onClick={() => setPanel("sprecher")}>Text lesen</button>
             <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button>
-            <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button>
+            {!isPartEndingScene ? <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button> : null}
           </div>
 
           {panel === "sprecher" ? (
@@ -611,7 +647,7 @@ export default function EpisodeThreePreview() {
             </section>
           ) : null}
 
-          {panel === "quiz" ? (
+          {panel === "quiz" && !isPartEndingScene ? (
             <section className="panel-section interactions">
               <div className="interaction-block quiz-panel">
                 <div className="section-label"><span>Quiz · Frage {quizQuestionIndex + 1} von {scene.quiz.length}</span></div>
@@ -645,26 +681,6 @@ export default function EpisodeThreePreview() {
           ) : null}
         </aside>
       </div>
-
-      {scene.id === 9 ? (
-        <FinalEpisodeQuiz
-          scenes={episodeThreePartOneQuizScenes}
-          episode={3}
-          questionCount={5}
-          randomize
-        />
-      ) : null}
-
-      {scene.id === 15 ? (
-        <FinalEpisodeQuiz
-          scenes={episodeThreePartTwoQuizScenes}
-          episode={3}
-          episodePart={2}
-          questionCount={5}
-          randomize
-          celebratePerfect
-        />
-      ) : null}
 
       <SiteFooter />
     </main>

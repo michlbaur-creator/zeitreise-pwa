@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   SCENE_NINETEEN_BLACKOUT_END,
   SCENE_NINETEEN_IMPACT,
-  SCENE_NINETEEN_SILENCE_START,
 } from "../data/impactTiming";
 import { rainIntensityForScene } from "../data/rainTiming";
 import type { SceneTheme } from "../data/scenes";
@@ -591,23 +590,16 @@ export function useAmbientSound(
     }
 
     if (sceneId === 19) {
-      if (progress < SCENE_NINETEEN_SILENCE_START - 0.04) {
+      if (progress < SCENE_NINETEEN_IMPACT - 0.2) {
         impactPlayedRef.current = false;
       }
 
       const impactSound = impactSoundRef.current;
       if (!impactSound || impactSound.context.state === "closed") return;
 
-      const isSilent =
-        progress >= SCENE_NINETEEN_SILENCE_START &&
-        progress < SCENE_NINETEEN_IMPACT;
       const master = impactSound.destination as GainNode;
       master.gain.cancelScheduledValues(impactSound.context.currentTime);
-      master.gain.setTargetAtTime(
-        isSilent ? 0.0001 : 1.05,
-        impactSound.context.currentTime,
-        isSilent ? 0.08 : 0.025,
-      );
+      master.gain.setTargetAtTime(1.05, impactSound.context.currentTime, 0.025);
 
       if (
         isPlaying &&
@@ -809,10 +801,14 @@ export function useAmbientSound(
       const [minimum, maximum, initial] = eventTiming[event];
       const run = () => {
         if (disposed) return;
-        const rainIsAudible =
+        const eventIsAudible =
           event !== "rain" ||
           rainIntensityForScene(sceneId, sceneProgressRef.current) > 0;
-        if (rainIsAudible) {
+        const dinosaurMorningIsAudible =
+          sceneId !== 19 ||
+          sceneProgressRef.current < SCENE_NINETEEN_IMPACT ||
+          (event !== "roar" && event !== "insects");
+        if (eventIsAudible && dinosaurMorningIsAudible) {
           playSoundEvent(event, context, master, whiteNoise, brownNoise);
         }
         const timer = window.setTimeout(

@@ -173,7 +173,10 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, /const \[detailsOpen, setDetailsOpen\] = useState\(true\)/);
   assert.match(episodeTwoVisual, /<EpisodeThreeChapterEnding/);
   assert.match(episodeTwoVisual, /partId=\{1\}/);
-  assert.match(episodeTwoVisual, /href="\/episode-3\/"/);
+  assert.match(episodeTwoVisual, /href="\/episode-3\/\?start=1"/);
+  assert.match(episodeTwoApp, /isEndingQuizScene = scene\.id === 14/);
+  assert.match(episodeTwoApp, /panel === "quiz" && !isEndingQuizScene/);
+  assert.match(episodeTwoApp, /searchParams\.get\("start"\) === "1"/);
   assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
   assert.match(episodeTwoApp, /Weiter zu Episode 3/);
   assert.doesNotMatch(episodeTwoApp, /Übergangsentwurf|nur per Direktlink/);
@@ -313,7 +316,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /onTimeUpdate/);
   assert.match(episodeThreeApp, /audioRef\.current\.currentTime = 0/);
   assert.match(episodeThreeApp, /useAmbientSound/);
-  assert.match(episodeThreeApp, /ambientEnabled && !sceneHasVideo/);
+  assert.match(episodeThreeApp, /ambientEnabled && !soundMuted && !sceneHasVideo/);
   assert.match(episodeThreeApp, /Quiz · Frage \{quizQuestionIndex \+ 1\} von \{scene\.quiz\.length\}/);
   assert.match(episodeThreeApp, /Beide Fragen geschafft/);
   assert.match(episodeThreeApp, /setQuizQuestionIndex\(\(value\) => value \+ 1\)/);
@@ -367,7 +370,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.doesNotMatch(episodeThreePage, /index: false|Öffentliche Vorschau/);
   assert.doesNotMatch(episodeTwoApp, /Arbeitsfassung|nur per Direktlink|Übergangsentwurf/);
   assert.match(episodeTwoApp, /aria-label="Weiter zu Episode 3"/);
-  assert.match(episodeTwoVisual, /href="\/episode-3\/"/);
+  assert.match(episodeTwoVisual, /href="\/episode-3\/\?start=1"/);
   await Promise.all([
     access(
       new URL(
@@ -592,7 +595,7 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.match(guide, /Vier Teile · vier Leitfragen/);
   assert.match(episodeTwoVisual, /<EpisodeThreeChapterEnding/);
   assert.match(episodeTwoVisual, /scene\.id === 14 && progress >= 0\.72/);
-  assert.match(episodeTwoVisual, /href="\/episode-3\/"/);
+  assert.match(episodeTwoVisual, /href="\/episode-3\/\?start=1"/);
   assert.doesNotMatch(episodeTwoApp, /<section className="ep3-outlook"/);
   assert.match(episodeThreeApp, /<EpisodeThreePartOverview activePart=\{1\} \/>/);
   assert.doesNotMatch(episodeThreeApp, /<section className="ep3-outlook"/);
@@ -604,7 +607,11 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.match(episodeThreeApp, /onChapterContinue=\{scene\.id === 9 \? \(\) => goToScene\(9\) : undefined\}/);
   assert.match(guide, /className="ep3-chapter-ending is-clickable"/);
   assert.match(sceneVisual, /className="ending-title is-clickable"/);
-  assert.match(sceneVisual, /href="\/episode-2\/"/);
+  assert.match(sceneVisual, /href="\/episode-2\/\?start=1"/);
+  assert.match(episodeThreeApp, /isPartEndingScene = scene\.id === 9 \|\| scene\.id === 15/);
+  assert.match(episodeThreeApp, /panel === "quiz" && !isPartEndingScene/);
+  assert.match(episodeThreeApp, /searchParams\.get\("start"\) === "1"/);
+  assert.match(styles, /\.player-column > \.final-quiz/);
   assert.match(styles, /\.ep3-chapter-ending/);
   assert.match(styles, /\.ep3-chapter-ending\.is-clickable/);
   assert.match(styles, /\.app-shell > \.final-quiz/);
@@ -771,8 +778,12 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
     styles,
     /@media \(max-width: 760px\) and \(orientation: landscape\) and \(max-height: 500px\)/,
   );
-  assert.match(app, /className="sound-label">Atmosphäre/);
-  assert.match(app, /Hintergrundatmosphäre \$\{/);
+  assert.match(app, /className="sound-label">Ton/);
+  assert.match(app, /aria-label=\{`Ton \$\{soundMuted/);
+  assert.match(app, /muted=\{soundMuted\}/);
+  assert.match(app, /soundMutedRef\.current = nextMuted/);
+  assert.match(app, /const \[detailsOpen, setDetailsOpen\] = useState\(true\)/);
+  assert.match(app, /<SceneVisual\s+key=\{scene\.id\}/);
   assert.match(app, /const \[ambientEnabled, setAmbientEnabled\] = useState\(false\)/);
   assert.match(app, /activateAmbientSound\(\)/);
   assert.match(app, /className="scene-swipe-surface"/);
@@ -815,7 +826,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v116"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v117"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -854,8 +865,9 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   assert.match(visual, /video\.play\(\)/);
   assert.match(visual, /video\.muted = true/);
   assert.match(visual, /muted/);
-  assert.match(app, /ambientEnabled && !sceneUsesVideoSound/);
-  assert.match(app, /Filmton und Sprecher sind zu einer Tonspur verbunden/);
+  assert.match(app, /ambientEnabled && !soundMuted && !sceneUsesVideoSound/);
+  assert.match(app, /muted=\{soundMuted\}/);
+  assert.match(app, /onClick=\{toggleSound\}/);
   await Promise.all(
     ["01", "02", "03", "08", "09", "11"].map((scene) =>
       access(
@@ -905,8 +917,9 @@ test("spielt sieben ausgewählte Veo-Clips in Episode 1 mit gemeinsamer Tonspur"
   assert.match(visual, /video\.play\(\)/);
   assert.match(visual, /video\.pause\(\)/);
   assert.match(app, /episodeOneSceneSoundtrack\(scene\.id\) \?\? narrationTracks\[scene\.id\]/);
-  assert.match(app, /ambientEnabled && !sceneUsesVideoSound/);
-  assert.match(app, /Filmton und Sprecher sind zu einer Tonspur verbunden/);
+  assert.match(app, /ambientEnabled && !soundMuted && !sceneUsesVideoSound/);
+  assert.match(app, /muted=\{soundMuted\}/);
+  assert.match(app, /onClick=\{toggleSound\}/);
 
   await Promise.all(
     selectedScenes.flatMap((scene) => [
@@ -1037,7 +1050,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v116"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v117"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
@@ -1235,6 +1248,12 @@ test("inszeniert in Szene 19 genau einen synchronisierten Einschlag", async () =
   assert.match(audio, /event !== "impact"/);
   assert.match(audio, /!impactPlayedRef\.current/);
   assert.match(timing, /SCENE_NINETEEN_IMPACT = 0\.625/);
+  assert.doesNotMatch(sceneVisual, /Absolute Stille|silence-card/);
+  assert.doesNotMatch(timing, /SILENCE_START/);
+  assert.match(sceneVisual, /className="impact-aftermath-background"/);
+  assert.match(css, /hintergrund-nach-einschlag-v1\.png/);
+  assert.match(css, /\.impact-aftermath-background/);
+  assert.match(audio, /dinosaurMorningIsAudible/);
   assert.doesNotMatch(css, /collection-meteor 12s ease-in-out infinite/);
 });
 

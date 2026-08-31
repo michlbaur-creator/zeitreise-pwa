@@ -102,7 +102,7 @@ export function EpisodeTwoVisual({
       {scene.id === 14 && progress >= 0.72 ? (
         <EpisodeThreeChapterEnding
           partId={1}
-          href="/episode-3/"
+          href="/episode-3/?start=1"
           actionLabel="Episode 3 beginnen"
         />
       ) : null}

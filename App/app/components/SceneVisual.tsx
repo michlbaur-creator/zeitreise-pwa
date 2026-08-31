@@ -23,7 +23,6 @@ import {
   SCENE_NINETEEN_FLASH_END,
   SCENE_NINETEEN_IMPACT,
   SCENE_NINETEEN_METEOR_START,
-  SCENE_NINETEEN_SILENCE_START,
 } from "../data/impactTiming";
 import {
   SCENE_EIGHT_ADAPTATION,
@@ -1959,6 +1958,7 @@ function MeteorImpactAnimation({ progress }: { progress: number }) {
       />
       <span className="impact-core" />
       <span className="impact-pressure-wave" />
+      <span className="impact-aftermath-background" />
       <span className="impact-aftermath-veil" />
       <span className="impact-ash-field">
         {Array.from({ length: 18 }, (_, index) => (
@@ -2642,7 +2642,7 @@ export function SceneVisual({
       {showEnding ? (
         <Link
           className="ending-title is-clickable"
-          href="/episode-2/"
+          href="/episode-2/?start=1"
           aria-label="Episode 2 beginnen: Die Entwicklung des Menschen"
           aria-live="polite"
         >
@@ -2655,11 +2655,6 @@ export function SceneVisual({
         </Link>
       ) : null}
 
-      {scene.id === 19 &&
-      progress >= SCENE_NINETEEN_SILENCE_START &&
-      progress < SCENE_NINETEEN_IMPACT ? (
-        <div className="silence-card">Absolute Stille · 2 Sekunden</div>
-      ) : null}
       <div
         className="impact-flash"
         style={{ opacity: impactFlashOpacity }}

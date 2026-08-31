@@ -107,9 +107,10 @@ export default function EpisodeTwoApp() {
   const [quizChecked, setQuizChecked] = useState(false);
   const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const [ambientEnabled, setAmbientEnabled] = useState(false);
-  const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
+  const [soundMuted, setSoundMuted] = useState(false);
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const soundMutedRef = useRef(false);
   const isPlayingRef = useRef(false);
   const updateWaitingRef = useRef(false);
   const updateReloadingRef = useRef(false);
@@ -121,6 +122,7 @@ export default function EpisodeTwoApp() {
   } | null>(null);
 
   const scene = episodeTwoScenes[currentIndex];
+  const isEndingQuizScene = scene.id === 14;
   const sceneQuizzes = [scene.quiz, scene.followUpQuiz];
   const activeQuiz = sceneQuizzes[quizQuestionIndex];
   const narrationPath = episodeTwoSceneSoundtrack(scene.id) ?? scene.audioPath;
@@ -131,16 +133,16 @@ export default function EpisodeTwoApp() {
     100 + scene.id,
     themeForScene(scene.id),
     isPlaying,
-    ambientEnabled && !sceneUsesVideoSound,
+    ambientEnabled && !soundMuted && !sceneUsesVideoSound,
     progress,
   );
 
   const ensureAmbientSound = useCallback(() => {
-    if (ambientMutedByUser) return;
+    if (soundMutedRef.current) return;
     void activateAmbientSound().then((active) => {
-      if (active) setAmbientEnabled(true);
+      if (active && !soundMutedRef.current) setAmbientEnabled(true);
     });
-  }, [activateAmbientSound, ambientMutedByUser]);
+  }, [activateAmbientSound]);
 
   const goToScene = useCallback((nextIndex: number, play = false) => {
     if (nextIndex < 0 || nextIndex >= episodeTwoScenes.length) return;
@@ -156,6 +158,7 @@ export default function EpisodeTwoApp() {
     setSelectedOption(null);
     setQuizChecked(false);
     setQuizQuestionIndex(0);
+    setPanel("entdecken");
     window.localStorage.setItem("zeitreise-episode2-current-scene", String(nextIndex));
   }, []);
 
@@ -220,10 +223,21 @@ export default function EpisodeTwoApp() {
     let cancelled = false;
     window.queueMicrotask(() => {
       if (cancelled) return;
+      const currentUrl = new URL(window.location.href);
+      const startAtBeginning = currentUrl.searchParams.get("start") === "1";
       const storedIndex = Number(
         window.localStorage.getItem("zeitreise-episode2-current-scene") ?? "0",
       );
-      if (
+      if (startAtBeginning) {
+        setCurrentIndex(0);
+        window.localStorage.setItem("zeitreise-episode2-current-scene", "0");
+        currentUrl.searchParams.delete("start");
+        window.history.replaceState(
+          null,
+          "",
+          `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`,
+        );
+      } else if (
         Number.isInteger(storedIndex) &&
         storedIndex >= 0 &&
         storedIndex < episodeTwoScenes.length
@@ -445,7 +459,8 @@ export default function EpisodeTwoApp() {
   const startJourney = () => {
     window.localStorage.setItem("zeitreise-episode2-intro-seen", "1");
     setIntroOpen(false);
-    setAmbientMutedByUser(false);
+    soundMutedRef.current = false;
+    setSoundMuted(false);
     void activateAmbientSound().then((active) => {
       if (active) setAmbientEnabled(true);
     });
@@ -462,16 +477,17 @@ export default function EpisodeTwoApp() {
     setIsPlaying((value) => !value);
   };
 
-  const toggleAmbient = () => {
-    if (ambientEnabled) {
+  const toggleSound = () => {
+    const nextMuted = !soundMuted;
+    soundMutedRef.current = nextMuted;
+    setSoundMuted(nextMuted);
+
+    if (nextMuted) {
       setAmbientEnabled(false);
-      setAmbientMutedByUser(true);
       return;
     }
-    setAmbientMutedByUser(false);
-    void activateAmbientSound().then((active) => {
-      if (active) setAmbientEnabled(true);
-    });
+
+    if (!sceneUsesVideoSound) ensureAmbientSound();
   };
 
   const answerQuiz = (index: number) => {
@@ -557,6 +573,7 @@ export default function EpisodeTwoApp() {
           <audio
             ref={audioRef}
             src={narrationPath}
+            muted={soundMuted}
             preload="metadata"
             autoPlay={isPlaying}
             onCanPlay={(event) => {
@@ -593,40 +610,38 @@ export default function EpisodeTwoApp() {
               <span className="play-label">{isPlaying ? "Pause" : progress >= 1 ? "Noch einmal" : "Szene starten"}</span>
               <span className="play-wave" aria-hidden="true"><i /><i /><i /></span>
             </button>
-            {sceneUsesVideoSound ? (
-              <span
-                className="sound-control is-on ep2-mixed-sound"
-                role="status"
-                aria-label="Filmton und Sprecher sind zu einer Tonspur verbunden"
-                title="Filmton und Sprecher laufen gemeinsam"
-              >
-                <span aria-hidden="true">◖))</span><span className="sound-label">Filmton</span>
-              </span>
-            ) : (
-              <button className={`sound-control ${ambientEnabled ? "is-on" : ""}`} type="button" aria-pressed={ambientEnabled} onClick={toggleAmbient}>
-                <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span><span className="sound-label">Atmosphäre</span>
-              </button>
-            )}
+            <button
+              className={`sound-control ${soundMuted ? "" : "is-on"}`}
+              type="button"
+              aria-pressed={!soundMuted}
+              aria-label={`Ton ${soundMuted ? "einschalten" : "ausschalten"}`}
+              onClick={toggleSound}
+            >
+              <span aria-hidden="true">{soundMuted ? "◖×" : "◖))"}</span><span className="sound-label">Ton</span>
+            </button>
             <label className="scrubber"><span className="sr-only">Position in der Szene</span><input type="range" min="0" max="1000" value={Math.round(progress * 1000)} onChange={(event) => seek(Number(event.target.value) / 1000)} style={{ "--seek": `${progress * 100}%` } as React.CSSProperties} /></label>
             <span className="timecode">{formatTime(progress * scene.duration)} / {formatTime(scene.duration)}</span>
             {currentIndex === episodeTwoScenes.length - 1 ? (
-              <Link className="next-control episode-next-control" href="/episode-3/" aria-label="Weiter zu Episode 3">
+              <Link className="next-control episode-next-control" href="/episode-3/?start=1" aria-label="Weiter zu Episode 3">
                 Episode 3 <span aria-hidden="true">→</span>
               </Link>
             ) : (
               <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1, true); }}>Weiter <span aria-hidden="true">→</span></button>
             )}
           </div>
+          {isEndingQuizScene ? (
+            <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
+          ) : null}
           <EpisodeSeriesNav currentEpisode={2} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode2-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
 
         <aside id="episode2-details" className={`content-panel ${detailsOpen ? "is-open" : ""}`}>
-          <div className="panel-tabs" aria-label="Szeneninhalt">
+          <div className={`panel-tabs ${isEndingQuizScene ? "is-two-tabs" : ""}`} aria-label="Szeneninhalt">
             <button type="button" aria-pressed={panel === "sprecher"} className={panel === "sprecher" ? "is-active" : ""} onClick={() => setPanel("sprecher")}>Text lesen</button>
             <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button>
-            <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button>
+            {!isEndingQuizScene ? <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button> : null}
           </div>
 
           {panel === "sprecher" ? <section className="panel-section"><div className="ep2-audio-note"><span aria-hidden="true">◖))</span><p><strong>Sprecher: Micha</strong><small>Die Aufnahme ist mit dem Ablauf dieser Szene verbunden.</small></p></div><blockquote>{scene.speaker}</blockquote></section> : null}
@@ -635,7 +650,7 @@ export default function EpisodeTwoApp() {
             <div className="interaction-block ep2-hotspot-list"><div className="section-label"><span>Im Bild entdecken</span><i>2 Punkte</i></div>{scene.hotspots.map((hotspot, index) => <button type="button" onClick={() => setActiveHotspot(index)} key={hotspot.title}><span>{index + 1}</span><p><strong>{hotspot.title}</strong><small>{hotspot.text}</small></p></button>)}</div>
           </section> : null}
 
-          {panel === "quiz" ? <section className="panel-section interactions">
+          {panel === "quiz" && !isEndingQuizScene ? <section className="panel-section interactions">
             <div className="interaction-block quiz-panel">
               <div className="section-label"><span>Quiz · Frage {quizQuestionIndex + 1} von {sceneQuizzes.length}</span></div>
               <h3>{activeQuiz.question}</h3>
@@ -645,10 +660,6 @@ export default function EpisodeTwoApp() {
           </section> : null}
         </aside>
       </div>
-
-      {currentIndex === episodeTwoScenes.length - 1 ? (
-        <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
-      ) : null}
 
       <SiteFooter />
     </main>

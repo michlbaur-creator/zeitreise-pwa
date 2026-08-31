@@ -215,7 +215,7 @@ export default function ZeitreiseApp() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [panel, setPanel] = useState<Panel>("interaktion");
-  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(true);
   const [introOpen, setIntroOpen] = useState(true);
   const [introReady, setIntroReady] = useState(false);
   const [introClosing, setIntroClosing] = useState(false);
@@ -232,9 +232,10 @@ export default function ZeitreiseApp() {
     useState<InstallPromptEvent | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [ambientEnabled, setAmbientEnabled] = useState(false);
-  const [ambientMutedByUser, setAmbientMutedByUser] = useState(false);
+  const [soundMuted, setSoundMuted] = useState(false);
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const soundMutedRef = useRef(false);
   const isPlayingRef = useRef(false);
   const updateWaitingRef = useRef(false);
   const updateReloadingRef = useRef(false);
@@ -264,16 +265,18 @@ export default function ZeitreiseApp() {
     scene.id,
     scene.theme,
     isPlaying,
-    ambientEnabled && !sceneUsesVideoSound,
+    ambientEnabled && !soundMuted && !sceneUsesVideoSound,
     progress,
   );
 
   const ensureAmbientSound = useCallback(() => {
-    if (ambientMutedByUser) return;
+    if (soundMutedRef.current) return;
     void activateAmbientSound().then((activated) => {
-      if (activated && !ambientEnabled) setAmbientEnabled(true);
+      if (activated && !soundMutedRef.current && !ambientEnabled) {
+        setAmbientEnabled(true);
+      }
     });
-  }, [activateAmbientSound, ambientEnabled, ambientMutedByUser]);
+  }, [activateAmbientSound, ambientEnabled]);
 
   useEffect(() => {
     if (!introOpen) return;
@@ -683,17 +686,17 @@ export default function ZeitreiseApp() {
     setIsPlaying((value) => !value);
   };
 
-  const toggleAmbientSound = () => {
-    if (ambientEnabled) {
+  const toggleSound = () => {
+    const nextMuted = !soundMuted;
+    soundMutedRef.current = nextMuted;
+    setSoundMuted(nextMuted);
+
+    if (nextMuted) {
       setAmbientEnabled(false);
-      setAmbientMutedByUser(true);
       return;
     }
 
-    setAmbientMutedByUser(false);
-    void activateAmbientSound().then((activated) => {
-      if (activated) setAmbientEnabled(true);
-    });
+    if (!sceneUsesVideoSound) ensureAmbientSound();
   };
 
   const seek = (next: number) => {
@@ -744,7 +747,8 @@ export default function ZeitreiseApp() {
     window.localStorage.setItem("zeitreise-intro-seen", "1");
     goToScene(0);
     setIntroClosing(true);
-    setAmbientMutedByUser(false);
+    soundMutedRef.current = false;
+    setSoundMuted(false);
     void activateAmbientSound().then((activated) => {
       if (activated) setAmbientEnabled(true);
     });
@@ -903,6 +907,7 @@ export default function ZeitreiseApp() {
             }}
           >
             <SceneVisual
+              key={scene.id}
               scene={scene}
               isPlaying={isPlaying}
               progress={progress}
@@ -918,6 +923,7 @@ export default function ZeitreiseApp() {
             <audio
               ref={audioRef}
               src={narrationPath}
+              muted={soundMuted}
               preload="metadata"
               autoPlay={isPlaying}
               onCanPlay={(event) => {
@@ -1004,35 +1010,17 @@ export default function ZeitreiseApp() {
                 <i />
               </span>
             </button>
-            {sceneUsesVideoSound ? (
-              <span
-                className="sound-control is-on ep2-mixed-sound"
-                role="status"
-                aria-label="Filmton und Sprecher sind zu einer Tonspur verbunden"
-                title="Filmton und Sprecher laufen gemeinsam"
-              >
-                <span aria-hidden="true">◖))</span>
-                <span className="sound-label">Filmton</span>
-              </span>
-            ) : (
-              <button
-                className={`sound-control ${ambientEnabled ? "is-on" : ""}`}
-                type="button"
-                aria-pressed={ambientEnabled}
-                aria-label={`Hintergrundatmosphäre ${
-                  ambientEnabled ? "ausschalten" : "einschalten"
-                }`}
-                onClick={toggleAmbientSound}
-                title={
-                  ambientEnabled
-                    ? "Hintergrundatmosphäre ausschalten"
-                    : "Hintergrundatmosphäre einschalten"
-                }
-              >
-                <span aria-hidden="true">{ambientEnabled ? "◖))" : "◖×"}</span>
-                <span className="sound-label">Atmosphäre</span>
-              </button>
-            )}
+            <button
+              className={`sound-control ${soundMuted ? "" : "is-on"}`}
+              type="button"
+              aria-pressed={!soundMuted}
+              aria-label={`Ton ${soundMuted ? "einschalten" : "ausschalten"}`}
+              onClick={toggleSound}
+              title={`Ton ${soundMuted ? "einschalten" : "ausschalten"}`}
+            >
+              <span aria-hidden="true">{soundMuted ? "◖×" : "◖))"}</span>
+              <span className="sound-label">Ton</span>
+            </button>
             <label className="scrubber">
               <span className="sr-only">Position in der Szene</span>
               <input
@@ -1055,7 +1043,7 @@ export default function ZeitreiseApp() {
             {currentIndex === scenes.length - 1 ? (
               <Link
                 className="next-control episode-next-control"
-                href="/episode-2/"
+                href="/episode-2/?start=1"
                 aria-label="Weiter zu Episode 2"
               >
                 Episode 2 <span aria-hidden="true">→</span>
