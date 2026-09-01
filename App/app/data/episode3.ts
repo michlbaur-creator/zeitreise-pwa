@@ -41,6 +41,9 @@ export const episodeThreeSceneAudio = {
   13: "/assets/episode3/audio/sprecher-szene-13-v1.m4a",
   14: "/assets/episode3/audio/sprecher-und-veo-szene-14-v1.m4a",
   15: "/assets/episode3/audio/sprecher-szene-15-v1.m4a",
+  16: "/assets/episode3/audio/vorschau-szene-16-v1.wav",
+  17: "/assets/episode3/audio/vorschau-szene-17-v1.wav",
+  18: "/assets/episode3/audio/vorschau-szene-18-v1.wav",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -59,6 +62,9 @@ export const episodeThreeSceneDurations = {
   13: 55,
   14: 74,
   15: 66,
+  16: 36,
+  17: 36,
+  18: 41,
 } as const;
 
 export const episodeThreeSceneImages = {
@@ -76,6 +82,8 @@ export const episodeThreeSceneImages = {
   13: "/assets/episode3/scene14/hintergrund-rationsverwaltung-v1.png",
   14: "/assets/episode3/scene11/hintergrund-uruk-kanalstadt-v1.png",
   15: "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
+  16: "/assets/episode3/scene16/hintergrund-segelhandel-v1.png",
+  17: "/assets/episode3/scene17/hintergrund-seidenstrassen-karawane-v1.png",
 } as const;
 
 export const episodeThreeSceneImageSequences = {
@@ -99,9 +107,13 @@ export const episodeThreeSceneImageSequences = {
     "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
     "/assets/episode3/scene15/hintergrund-macht-buendelt-sich-v1.png",
   ],
+  17: [
+    "/assets/episode3/scene17/hintergrund-seidenstrassen-karawane-v1.png",
+    "/assets/episode3/scene17/hintergrund-seidenstrassen-handelsstadt-v1.png",
+  ],
 } as const;
 
-export const episodeThreeGraphicScenes = [12] as const;
+export const episodeThreeGraphicScenes = [12, 18] as const;
 
 const episodeThreeSpeakerTexts = {
   1: [
@@ -211,6 +223,23 @@ const episodeThreeSpeakerTexts = {
     "Große Haushalte, Tempel und Amtsträger beginnen, die Arbeit zu organisieren und zu verteilen. Nicht überall geschieht das gleich, und nicht sofort sitzt ein allmächtiger König auf dem Thron. Aber die ersten Chefs treten immer deutlicher hervor.",
     "Diese Herrscher lassen bauen, führen Kriege und präsentieren sich auch als Beschützer ihrer Stadt.",
     "Von nun an verändern Menschen nicht mehr nur Landschaften. Sie halten auch Besitz, Pflichten und Befehle schriftlich fest.",
+  ],
+  16: [
+    "Die Stadt hat jetzt Vorräte, Werkstätten – und ziemlich schnell auch eine Wunschliste. Holz, Metalle, Gewürze und schöne Stoffe gibt es nämlich selten direkt vor der Haustür.",
+    "Also werden Flüsse und Meere zu Verkehrswegen. Ein Segelschiff ist dabei so etwas wie ein Lastwagen mit sehr viel Wasser unter den Reifen: Es kann schwere Ladung viel weiter transportieren als ein Träger.",
+    "Häfen wachsen, Händler knüpfen Kontakte, und ein Gegenstand kann durch viele Hände wandern, bevor er ankommt. Entfernung verschwindet nicht. Aber sie wird handelbar – wenn Wind, Wetter und Vertrauen mitspielen.",
+  ],
+  17: [
+    "Auf der Karte sieht sie gern wie eine dicke Linie aus: die Seidenstraße. Tatsächlich war sie ein ganzes Netz aus Land- und Seewegen.",
+    "Fast niemand reiste vom Mittelmeer bis nach China. Waren wurden weiterverkauft, umgeladen und manchmal so oft weitergereicht, dass sie unterwegs vermutlich mehr Besitzer hatten als ein heutiges Schulbuch.",
+    "Mit Seide, Gewürzen oder Glas reisten auch Sprachen, Religionen und technische Ideen. Die Seidenstraße war also ungefähr so sehr eine einzelne Straße wie das Internet ein einzelnes Kabel.",
+    "Entscheidend war das Netz – und die vielen Menschen dazwischen.",
+  ],
+  18: [
+    "Eine Rolle Seide wirkt kostbar. Ein Blatt Papier eher nicht. Trotzdem verändert gerade dieses unscheinbare Blatt die Welt.",
+    "Die Papierherstellung entwickelt sich in China und verbreitet sich über Jahrhunderte durch Asien, die arabischsprachige Welt und schließlich nach Europa. Auf Papier lassen sich Verträge, Rechenwege und Geschichten leichter speichern und transportieren.",
+    "Dabei wird Wissen nicht einfach kopiert wie eine Datei. Menschen übersetzen, prüfen, ergänzen und bauen es um. Auch unsere Ziffern machen so eine Reise: Sie entstehen in Südasien und gelangen über arabischsprachige Gelehrte nach Europa.",
+    "Ideen brauchen eben keinen Pass – aber Menschen, die sie verstehen.",
   ],
 } as const;
 
@@ -363,6 +392,36 @@ const episodeThreeDiscoveries = {
     {
       title: "Macht wächst schrittweise",
       text: "Große Bauten beweisen Organisation. Wie Tempel, Haushalte, Versammlungen und Herrscher dabei zusammenwirkten, veränderte sich über lange Zeit.",
+    },
+  ],
+  16: [
+    {
+      title: "Fremde Materialien als Spuren",
+      text: "Holz, Edelsteine oder Metalle aus weit entfernten Regionen zeigen Archäologen, dass schon frühe Städte über mehrstufige Handelsnetze verbunden waren.",
+    },
+    {
+      title: "Der Wind als Fahrplan",
+      text: "Im Indischen Ozean nutzten Seeleute wiederkehrende Monsunwinde. Wer zur falschen Zeit losfuhr, bekam keinen verspäteten Zug – sondern möglicherweise monatelangen Gegenwind.",
+    },
+  ],
+  17: [
+    {
+      title: "Eigentlich: Seidenstraßen",
+      text: "Händler nutzten unterschiedliche Land- und Seewege und legten meistens nur einzelne Abschnitte zurück.",
+    },
+    {
+      title: "Städte als Knotenpunkte",
+      text: "In Handelsstädten trafen Kaufleute, Handwerker, Gelehrte und Reisende aufeinander. Dort wurden nicht nur Waren, sondern auch Sprachen, Religionen und Techniken weitergegeben.",
+    },
+  ],
+  18: [
+    {
+      title: "Papier reist doppelt",
+      text: "Zunächst wurde fertiges Papier gehandelt. Später verbreitete sich auch das Wissen, wie man es herstellt.",
+    },
+    {
+      title: "Warum heißen sie „arabische Zahlen“?",
+      text: "Unser Zahlensystem entwickelte sich in Südasien. Arabischsprachige Gelehrte übernahmen und erweiterten es; über ihre Schriften gelangte es nach Europa.",
     },
   ],
 } as const;
@@ -830,6 +889,66 @@ const episodeThreeQuizzes = {
       correctAnswer: 2,
     },
   ],
+  16: [
+    {
+      question: "Was kann ein weit entfernt abgebauter Stein in einer alten Stadt belegen?",
+      answers: [
+        "Der Stein wurde sicher direkt neben der Stadt gefunden.",
+        "Der Stein kann über mehrere Handelsstationen weitergereicht worden sein.",
+        "Ein einzelner Händler muss die gesamte Strecke gereist sein.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Warum veränderten Schiffe den Handel besonders stark?",
+      answers: [
+        "Sie konnten schwere Waren vergleichsweise weit transportieren.",
+        "Sie machten Händler unabhängig von Wind und Wetter.",
+        "Durch sie wurden Häfen und Zwischenstationen überflüssig.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  17: [
+    {
+      question: "Warum ist der Begriff „Seidenstraße“ etwas irreführend?",
+      answers: [
+        "Auf den Wegen wurde überhaupt keine Seide transportiert.",
+        "Es handelte sich um ein Netz vieler Land- und Seewege.",
+        "Die Straße verband lediglich zwei benachbarte Städte.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Folge hatten solche Handelsnetze?",
+      answers: [
+        "Es reisten ausschließlich Luxuswaren.",
+        "Ideen und Religionen blieben auf ihre Herkunftsorte beschränkt.",
+        "Waren, Wissen und Vorstellungen veränderten sich unterwegs und beeinflussten neue Regionen.",
+      ],
+      correctAnswer: 2,
+    },
+  ],
+  18: [
+    {
+      question: "Was geschieht normalerweise, wenn Wissen durch verschiedene Kulturen reist?",
+      answers: [
+        "Es bleibt vollkommen unverändert.",
+        "Es wird übersetzt, geprüft und häufig weiterentwickelt.",
+        "Es verschwindet, sobald der ursprüngliche Erfinder stirbt.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Beschreibung unserer heutigen Ziffern ist richtig?",
+      answers: [
+        "Sie entstanden in Südasien und gelangten über arabischsprachige Gelehrte nach Europa.",
+        "Sie wurden vollständig im mittelalterlichen Europa erfunden.",
+        "Sie wurden zuerst von Seefahrern als Geheimschrift benutzt.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
 } as const;
 
 export const episodeThreeScenes: EpisodeThreeScene[] = [
@@ -848,6 +967,9 @@ export const episodeThreeScenes: EpisodeThreeScene[] = [
   { id: 13, title: "Die Macht der Liste", timeLabel: "Etwa 3.200 bis 2.900 v. Chr.", speakerText: episodeThreeSpeakerTexts[13], discoveries: episodeThreeDiscoveries[13], quiz: [episodeThreeQuizzes[13][0], episodeThreeQuizzes[13][1]], imageStatus: "ready" },
   { id: 14, title: "Eine Stadt aus Lehm und Wasser", timeLabel: "Uruk, um 3.200 v. Chr.", speakerText: episodeThreeSpeakerTexts[14], discoveries: episodeThreeDiscoveries[14], quiz: [episodeThreeQuizzes[14][0], episodeThreeQuizzes[14][1]], imageStatus: "ready" },
   { id: 15, title: "Wer entscheidet für die Stadt?", timeLabel: "Etwa 3.000 bis 2.700 v. Chr.", speakerText: episodeThreeSpeakerTexts[15], discoveries: episodeThreeDiscoveries[15], quiz: [episodeThreeQuizzes[15][0], episodeThreeQuizzes[15][1]], imageStatus: "ready" },
+  { id: 16, title: "Ein Segel macht die Welt kleiner", timeLabel: "Seit dem 3. Jahrtausend v. Chr.", speakerText: episodeThreeSpeakerTexts[16], discoveries: episodeThreeDiscoveries[16], quiz: [episodeThreeQuizzes[16][0], episodeThreeQuizzes[16][1]], imageStatus: "draft" },
+  { id: 17, title: "Keine Straße, sondern ein Netz", timeLabel: "Etwa 2. Jahrhundert v. Chr. bis 15. Jahrhundert n. Chr.", speakerText: episodeThreeSpeakerTexts[17], discoveries: episodeThreeDiscoveries[17], quiz: [episodeThreeQuizzes[17][0], episodeThreeQuizzes[17][1]], imageStatus: "draft" },
+  { id: 18, title: "Ein Blatt macht Karriere", timeLabel: "Über viele Jahrhunderte bis ins späte Mittelalter", speakerText: episodeThreeSpeakerTexts[18], discoveries: episodeThreeDiscoveries[18], quiz: [episodeThreeQuizzes[18][0], episodeThreeQuizzes[18][1]], imageStatus: "ready" },
 ];
 
 export const episodeThreeSceneOneImages = {

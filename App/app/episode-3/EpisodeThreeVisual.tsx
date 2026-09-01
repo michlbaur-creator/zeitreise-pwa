@@ -33,7 +33,7 @@ export function EpisodeThreeVisual({
   const imageSequence = episodeThreeSceneImageSequences[
     scene.id as keyof typeof episodeThreeSceneImageSequences
   ];
-  const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 12);
+  const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 12 | 18);
   const [sequenceStart, sequenceEnd] = sequenceWindowForScene(scene.id);
   const sequenceBlend = Math.min(
     1,
@@ -72,7 +72,11 @@ export function EpisodeThreeVisual({
         <span className="time-card">{scene.timeLabel}</span>
       </div>
       {isGraphicScene ? (
-        <ClayWritingTimeline progress={progress} />
+        scene.id === 18 ? (
+          <KnowledgeJourney progress={progress} />
+        ) : (
+          <ClayWritingTimeline progress={progress} />
+        )
       ) : imageSequence ? (
         <div className="ep3-scene-image-sequence" aria-hidden="true">
           <div
@@ -121,9 +125,8 @@ export function EpisodeThreeVisual({
       {showPartTransition ? (
         <EpisodeThreeChapterEnding
           partId={nextPartId}
-          onContinue={nextPartId === 2 ? onChapterContinue : undefined}
-          actionLabel={nextPartId === 2 ? "Teil 2 beginnen" : undefined}
-          statusLabel={nextPartId === 3 ? "Teil 3 folgt" : undefined}
+          onContinue={onChapterContinue}
+          actionLabel={`Teil ${nextPartId} beginnen`}
         />
       ) : null}
     </div>
@@ -177,6 +180,47 @@ function ClayWritingTimeline({ progress }: { progress: number }) {
           <small>{stage.description}</small>
         </article>
       ))}
+    </div>
+  );
+}
+
+function KnowledgeJourney({ progress }: { progress: number }) {
+  const paperProgress = Math.min(1, progress / 0.78);
+  const numberProgress = Math.min(1, Math.max(0, (progress - 0.34) / 0.58));
+  const activePaperStop = paperProgress < 0.38 ? 0 : paperProgress < 0.72 ? 1 : 2;
+  const activeNumberStop = numberProgress < 0.48 ? 0 : numberProgress < 0.82 ? 1 : 2;
+
+  return (
+    <div className="ep3-knowledge-journey" aria-hidden="true">
+      <div className="ep3-knowledge-heading">
+        <span>Wissen unterwegs</span>
+        <strong>Nicht nur kopiert. Übersetzt, geprüft, weitergedacht.</strong>
+      </div>
+
+      <div className="ep3-knowledge-route ep3-paper-route">
+        <div className="ep3-route-label"><i>▱</i><span>Papier</span></div>
+        <div className="ep3-route-track"><i style={{ width: `${paperProgress * 100}%` }} /></div>
+        {["China", "Asien · arabischsprachige Welt", "Europa"].map((label, index) => (
+          <span className={index <= activePaperStop ? "is-active" : ""} key={label}>
+            <i>{index + 1}</i>{label}
+          </span>
+        ))}
+      </div>
+
+      <div className="ep3-knowledge-route ep3-number-route">
+        <div className="ep3-route-label"><i>9</i><span>Ziffern</span></div>
+        <div className="ep3-route-track"><i style={{ width: `${numberProgress * 100}%` }} /></div>
+        {["Südasien", "arabischsprachige Gelehrte", "Europa"].map((label, index) => (
+          <span className={index <= activeNumberStop ? "is-active" : ""} key={label}>
+            <i>{index + 1}</i>{label}
+          </span>
+        ))}
+      </div>
+
+      <div className={`ep3-knowledge-result ${progress > 0.82 ? "is-visible" : ""}`}>
+        <span>Übersetzen</span><i>+</i><span>Prüfen</span><i>+</i><span>Ergänzen</span>
+        <strong>Wissen verändert sich auf der Reise.</strong>
+      </div>
     </div>
   );
 }

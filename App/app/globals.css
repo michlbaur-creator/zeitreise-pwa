@@ -13280,6 +13280,174 @@ body.cinematic-intro-active {
   text-shadow: 0 1px rgba(255, 224, 174, 0.16);
 }
 
+.ep3-knowledge-journey {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr 1fr auto;
+  gap: clamp(8px, 1.4vw, 16px);
+  padding: clamp(56px, 7.5vw, 86px) clamp(18px, 5vw, 68px) clamp(18px, 3vw, 34px);
+  color: #f4ead7;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(65, 124, 128, 0.2), transparent 30%),
+    radial-gradient(circle at 82% 72%, rgba(192, 137, 66, 0.16), transparent 34%),
+    linear-gradient(145deg, #162628, #171b1c 58%, #211a14);
+  overflow: hidden;
+}
+
+.ep3-knowledge-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(237, 202, 145, 0.2);
+}
+
+.ep3-knowledge-heading span {
+  color: var(--ep3-gold);
+  font-size: clamp(0.58rem, 1vw, 0.76rem);
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ep3-knowledge-heading strong {
+  color: rgba(244, 234, 215, 0.72);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(0.66rem, 1.15vw, 0.9rem);
+  font-weight: 500;
+  text-align: right;
+}
+
+.ep3-knowledge-route {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(8px, 2vw, 28px);
+  padding: 4px 0 2px clamp(48px, 7vw, 76px);
+}
+
+.ep3-route-label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: clamp(38px, 5vw, 56px);
+  color: var(--ep3-gold);
+  transform: translateY(-50%);
+}
+
+.ep3-route-label > i {
+  display: grid;
+  width: clamp(30px, 4.4vw, 48px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(231, 194, 127, 0.42);
+  border-radius: 11px 4px 10px 5px;
+  background: rgba(249, 231, 197, 0.08);
+  font-family: Georgia, serif;
+  font-size: clamp(1rem, 2.1vw, 1.55rem);
+  font-style: normal;
+  place-items: center;
+}
+
+.ep3-route-label > span {
+  font-size: clamp(0.48rem, 0.8vw, 0.63rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ep3-route-track {
+  position: absolute;
+  right: 4%;
+  bottom: 29px;
+  left: calc(clamp(48px, 7vw, 76px) + 8%);
+  height: 2px;
+  background: rgba(239, 218, 183, 0.15);
+}
+
+.ep3-route-track > i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #6aa0a0, var(--ep3-gold));
+  box-shadow: 0 0 12px rgba(216, 170, 98, 0.35);
+  transition: width 180ms linear;
+}
+
+.ep3-knowledge-route > span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  color: rgba(244, 234, 215, 0.34);
+  font-size: clamp(0.54rem, 0.95vw, 0.75rem);
+  font-weight: 700;
+  text-align: center;
+  transition: color 400ms ease, transform 400ms ease;
+}
+
+.ep3-knowledge-route > span > i {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  border: 1px solid rgba(244, 234, 215, 0.24);
+  border-radius: 50%;
+  background: #192426;
+  font-size: 0.58rem;
+  font-style: normal;
+  place-items: center;
+  transition: border-color 400ms ease, background 400ms ease;
+}
+
+.ep3-knowledge-route > span.is-active {
+  color: #f4ead7;
+  transform: translateY(-2px);
+}
+
+.ep3-knowledge-route > span.is-active > i {
+  border-color: var(--ep3-gold);
+  background: #76502f;
+}
+
+.ep3-knowledge-result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(5px, 1vw, 12px);
+  color: rgba(244, 234, 215, 0.56);
+  font-size: clamp(0.52rem, 0.9vw, 0.7rem);
+  letter-spacing: 0.07em;
+  opacity: 0.25;
+  text-transform: uppercase;
+  transform: translateY(8px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.ep3-knowledge-result.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ep3-knowledge-result > i {
+  color: var(--ep3-gold);
+  font-style: normal;
+}
+
+.ep3-knowledge-result > strong {
+  margin-left: clamp(4px, 1vw, 14px);
+  color: #f4ead7;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(0.64rem, 1.2vw, 0.94rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .ep3-scene-image-sequence,
 .ep3-sequence-image,
 .ep3-village-haze {
@@ -13383,6 +13551,33 @@ body.cinematic-intro-active {
   }
 
   .ep3-writing-timeline article > small {
+    display: none;
+  }
+
+  .ep3-knowledge-journey {
+    gap: 5px;
+    padding: 48px 10px 10px;
+  }
+
+  .ep3-knowledge-heading strong {
+    display: none;
+  }
+
+  .ep3-knowledge-route {
+    padding-left: 42px;
+  }
+
+  .ep3-route-track {
+    bottom: 24px;
+    left: 52px;
+  }
+
+  .ep3-knowledge-route > span > i {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ep3-knowledge-result > strong {
     display: none;
   }
 

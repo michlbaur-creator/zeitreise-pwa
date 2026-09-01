@@ -30,7 +30,7 @@ type Panel = "sprecher" | "entdecken" | "quiz";
 
 const sceneSymbols = [
   "↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖",
-  "▤", "⚒", "✎", "◉", "◫", "◆",
+  "▤", "⚒", "✎", "◉", "◫", "◆", "◁", "⌘", "▱",
 ];
 
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
@@ -49,7 +49,7 @@ const episodeThreePartOneQuizScenes = episodeThreeFinalQuizScenes.filter(
   (scene) => scene.id <= 9,
 );
 const episodeThreePartTwoQuizScenes = episodeThreeFinalQuizScenes.filter(
-  (scene) => scene.id >= 10,
+  (scene) => scene.id >= 10 && scene.id <= 15,
 );
 const episodeThreePartOne = episodeThreePart(1);
 
@@ -64,6 +64,8 @@ function formatTime(seconds: number) {
 
 function themeForScene(sceneId: number): SceneTheme {
   if (sceneId === 1) return "shore";
+  if (sceneId === 16) return "shore";
+  if (sceneId === 17) return "atmosphere";
   if (sceneId === 4) return "atmosphere";
   if (sceneId >= 8) return "present";
   return "forest";
@@ -139,7 +141,9 @@ export default function EpisodeThreePreview() {
 
   const scene = episodeThreeScenes[currentIndex];
   const isPartEndingScene = scene.id === 9 || scene.id === 15;
-  const partTwoActive = scene.id >= 10;
+  const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : 3;
+  const currentPart = episodeThreePart(activePart);
+  const usesPreviewVoice = scene.id >= 16;
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
   const narrationPath = episodeThreeSceneAudio[
@@ -497,7 +501,7 @@ export default function EpisodeThreePreview() {
           <div className="brand-mark" aria-hidden="true"><span /></div>
           <div>
             <p className="eyebrow">Episode 3</p>
-            <h1>Zeitreise <span>{partTwoActive ? "Städte, Schrift und Macht" : "Vom Wandern zum Bleiben"}</span></h1>
+            <h1>Zeitreise <span>{currentPart.title}</span></h1>
           </div>
         </div>
         <div className="header-actions">
@@ -528,7 +532,13 @@ export default function EpisodeThreePreview() {
               scene={scene}
               isPlaying={isPlaying}
               progress={progress}
-              onChapterContinue={scene.id === 9 ? () => goToScene(9) : undefined}
+              onChapterContinue={
+                scene.id === 9
+                  ? () => goToScene(9)
+                  : scene.id === 15
+                    ? () => goToScene(15)
+                    : undefined
+              }
             />
           </div>
 
@@ -618,9 +628,9 @@ export default function EpisodeThreePreview() {
               <div className="ep2-audio-note">
                 <span aria-hidden="true">◖))</span>
                 <p>
-                  <strong>{partTwoActive ? "Vorläufige Vorschau-Stimme" : "Sprecher: Micha"}</strong>
+                  <strong>{usesPreviewVoice ? "Vorläufige Vorschau-Stimme" : "Sprecher: Micha"}</strong>
                   <small>
-                    {partTwoActive
+                    {usesPreviewVoice
                       ? "Michas endgültige Aufnahme steht für diese Szene noch aus."
                       : "Die Aufnahme ist mit dem Ablauf dieser Szene verbunden."}
                   </small>

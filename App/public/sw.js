@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v122";
+const CACHE_NAME = "zeitreise-v123";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -254,6 +254,18 @@ const EPISODE_THREE_ASSETS = {
     "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
     "/assets/episode3/scene15/hintergrund-macht-buendelt-sich-v1.png",
     "/assets/episode3/audio/sprecher-szene-15-v1.m4a",
+  ],
+  16: [
+    "/assets/episode3/scene16/hintergrund-segelhandel-v1.png",
+    "/assets/episode3/audio/vorschau-szene-16-v1.wav",
+  ],
+  17: [
+    "/assets/episode3/scene17/hintergrund-seidenstrassen-karawane-v1.png",
+    "/assets/episode3/scene17/hintergrund-seidenstrassen-handelsstadt-v1.png",
+    "/assets/episode3/audio/vorschau-szene-17-v1.wav",
+  ],
+  18: [
+    "/assets/episode3/audio/vorschau-szene-18-v1.wav",
   ],
 };
 
