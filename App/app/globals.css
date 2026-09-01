@@ -13178,11 +13178,6 @@ body.cinematic-intro-active {
   transform: none;
 }
 
-.ep3-visual.is-motion-preview .ep3-generated-background {
-  transform-origin: 58% 50%;
-  will-change: transform;
-}
-
 .ep3-writing-timeline {
   position: absolute;
   inset: 0;
@@ -13311,7 +13306,6 @@ body.cinematic-intro-active {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ep3-visual.is-motion-preview .ep3-generated-background,
   .ep3-sequence-image {
     transform: none !important;
     transition-duration: 1ms;

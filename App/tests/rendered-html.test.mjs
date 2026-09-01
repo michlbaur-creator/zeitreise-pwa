@@ -333,16 +333,19 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /episodePart=\{2\}/);
   assert.match(episodeThreeApp, /celebratePerfect/);
   assert.match(episodeThreeVisual, /ClayWritingTimeline/);
-  assert.match(episodeThreeVisual, /is-motion-preview/);
+  assert.match(episodeThreeVisual, /sequenceWindowForScene/);
+  assert.match(episodeThreeVisual, /sceneId === 13\) return \[0\.44, 0\.62\]/);
   assert.match(episodeThreeApp, /scene\.id === 9 \? 1\.2 : 1/);
   assert.match(episodeThreeApp, /audio\.preservesPitch = true/);
   assert.match(episodeThreeApp, /audio\.duration \/ scenePlaybackRate/);
   assert.match(ambientSound, /209: \["footsteps", "goats", "rustle"\]/);
+  assert.match(ambientSound, /210: \["footsteps", "rustle"\]/);
+  assert.match(ambientSound, /215: \["footsteps", "rustle"\]/);
   assert.match(ambientSound, /progress >= 0\.94/);
   assert.match(ambientSound, /from: 92/);
-  assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 9);
-  assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 6);
-  assert.equal((episodeThreeData.match(/vorschau-szene-\d{2}-v1\.m4a/g) ?? []).length, 6);
+  assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 15);
+  assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 7);
+  assert.doesNotMatch(episodeThreeData, /vorschau-szene-\d{2}-v1\.m4a/);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
   assert.doesNotMatch(
     episodeThreeApp,
@@ -362,7 +365,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeSeriesNav, /onSelectCurrentEpisode\(\)/);
   assert.doesNotMatch(episodeSeriesNav, /episode\.id === 3|aria-disabled="true"|Nur per Direktlink|Direktlink geöffnet/);
   assert.match(episodeSeriesNav, /aria-current=\{isCurrent \? "page" : undefined\}/);
-  assert.equal((episodeThreeData.match(/bewegung-[^"\n]+\.mp4/g) ?? []).length, 6);
+  assert.equal((episodeThreeData.match(/bewegung-[^"\n]+\.mp4/g) ?? []).length, 7);
   assert.match(episodeThreeVisual, /playsInline/);
   assert.match(episodeThreeVisual, /element\.currentTime = 0/);
   assert.match(episodeThreeVisual, /element\.play\(\)/);
@@ -476,6 +479,12 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
         import.meta.url,
       ),
     ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene14/bewegung-uruk-kanalstadt-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
   ]);
   await Promise.all(
     [
@@ -510,12 +519,17 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     ),
   );
   await Promise.all(
-    [10, 11, 12, 13, 14, 15].map((sceneId) =>
+    [
+      "sprecher-szene-10-v1.m4a",
+      "sprecher-szene-11-v1.m4a",
+      "sprecher-szene-12-v1.m4a",
+      "sprecher-szene-13-v1.m4a",
+      "sprecher-szene-14-v1.m4a",
+      "sprecher-und-veo-szene-14-v1.m4a",
+      "sprecher-szene-15-v1.m4a",
+    ].map((fileName) =>
       access(
-        new URL(
-          `../public/assets/episode3/audio/vorschau-szene-${sceneId}-v1.m4a`,
-          import.meta.url,
-        ),
+        new URL(`../public/assets/episode3/audio/${fileName}`, import.meta.url),
       ),
     ),
   );
@@ -829,7 +843,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v119"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v120"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1053,7 +1067,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v119"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v120"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
@@ -1212,13 +1226,15 @@ test("verwendet für Episode 1 und das Schlussdorf passende Geräuschkulissen", 
     "utf8",
   );
 
-  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 23);
+  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 28);
   assert.match(audio, /1: \["eruption", "steam"\]/);
   assert.match(audio, /4: \["bubbles", "steam", "waves"\]/);
   assert.match(audio, /18: \["footsteps", "insects", "roar"\]/);
   assert.match(audio, /19: \["impact", "insects", "roar"\]/);
   assert.match(audio, /22: \["birds", "waves"\]/);
   assert.match(audio, /209: \["footsteps", "goats", "rustle"\]/);
+  assert.match(audio, /210: \["footsteps", "rustle"\]/);
+  assert.match(audio, /215: \["footsteps", "rustle"\]/);
   assert.match(app, /const activateAmbientSound = useAmbientSound\(/);
   assert.match(audio, /const activate = useCallback/);
   assert.match(audio, /return activate/);

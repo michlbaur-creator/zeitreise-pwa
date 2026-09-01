@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v119";
+const CACHE_NAME = "zeitreise-v120";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -231,28 +231,29 @@ const EPISODE_THREE_ASSETS = {
   10: [
     "/assets/episode3/scene10/hintergrund-dorfvorrat-v1.png",
     "/assets/episode3/scene10/hintergrund-stadtspeicher-v1.png",
-    "/assets/episode3/audio/vorschau-szene-10-v1.m4a",
+    "/assets/episode3/audio/sprecher-szene-10-v1.m4a",
   ],
   11: [
     "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
     "/assets/episode3/scene12/hintergrund-spezialisierte-werkstaetten-v1.png",
-    "/assets/episode3/audio/vorschau-szene-12-v1.m4a",
+    "/assets/episode3/audio/sprecher-szene-11-v1.m4a",
   ],
   12: [
-    "/assets/episode3/audio/vorschau-szene-13-v1.m4a",
+    "/assets/episode3/audio/sprecher-szene-12-v1.m4a",
   ],
   13: [
     "/assets/episode3/scene14/hintergrund-rationsverwaltung-v1.png",
-    "/assets/episode3/audio/vorschau-szene-14-v1.m4a",
+    "/assets/episode3/scene13/hintergrund-listenmacht-v1.png",
+    "/assets/episode3/audio/sprecher-szene-13-v1.m4a",
   ],
   14: [
     "/assets/episode3/scene11/hintergrund-uruk-kanalstadt-v1.png",
-    "/assets/episode3/audio/vorschau-szene-11-v1.m4a",
+    "/assets/episode3/audio/sprecher-und-veo-szene-14-v1.m4a",
   ],
   15: [
     "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
     "/assets/episode3/scene15/hintergrund-macht-buendelt-sich-v1.png",
-    "/assets/episode3/audio/vorschau-szene-15-v1.m4a",
+    "/assets/episode3/audio/sprecher-szene-15-v1.m4a",
   ],
 };
 

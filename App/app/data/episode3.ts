@@ -22,6 +22,7 @@ export const episodeThreeSceneVideos = {
   4: "/assets/episode3/scene04/bewegung-jericho-veo-v1.mp4",
   6: "/assets/episode3/scene06/bewegung-ziegenherde-veo-v1.mp4",
   8: "/assets/episode3/scene08/bewegung-catalhoeyuek-veo-v1.mp4",
+  14: "/assets/episode3/scene14/bewegung-uruk-kanalstadt-veo-v1.mp4",
 } as const;
 
 export const episodeThreeSceneAudio = {
@@ -34,12 +35,12 @@ export const episodeThreeSceneAudio = {
   7: "/assets/episode3/audio/sprecher-szene-07-v1.m4a",
   8: "/assets/episode3/audio/sprecher-und-veo-szene-08-v1.m4a",
   9: "/assets/episode3/audio/sprecher-szene-09-v1.m4a",
-  10: "/assets/episode3/audio/vorschau-szene-10-v1.m4a",
-  11: "/assets/episode3/audio/vorschau-szene-12-v1.m4a",
-  12: "/assets/episode3/audio/vorschau-szene-13-v1.m4a",
-  13: "/assets/episode3/audio/vorschau-szene-14-v1.m4a",
-  14: "/assets/episode3/audio/vorschau-szene-11-v1.m4a",
-  15: "/assets/episode3/audio/vorschau-szene-15-v1.m4a",
+  10: "/assets/episode3/audio/sprecher-szene-10-v1.m4a",
+  11: "/assets/episode3/audio/sprecher-szene-11-v1.m4a",
+  12: "/assets/episode3/audio/sprecher-szene-12-v1.m4a",
+  13: "/assets/episode3/audio/sprecher-szene-13-v1.m4a",
+  14: "/assets/episode3/audio/sprecher-und-veo-szene-14-v1.m4a",
+  15: "/assets/episode3/audio/sprecher-szene-15-v1.m4a",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -52,12 +53,12 @@ export const episodeThreeSceneDurations = {
   7: 58,
   8: 51,
   9: 82,
-  10: 37,
-  11: 40,
-  12: 40,
-  13: 40,
-  14: 38,
-  15: 42,
+  10: 58,
+  11: 67,
+  12: 65,
+  13: 55,
+  14: 74,
+  15: 66,
 } as const;
 
 export const episodeThreeSceneImages = {
@@ -101,7 +102,6 @@ export const episodeThreeSceneImageSequences = {
 } as const;
 
 export const episodeThreeGraphicScenes = [12] as const;
-export const episodeThreeMotionPreviewScenes = [13, 14] as const;
 
 const episodeThreeSpeakerTexts = {
   1: [

@@ -7,7 +7,6 @@ import {
   episodeThreeSceneImageSequences,
   episodeThreeSceneImages,
   episodeThreeSceneVideos,
-  episodeThreeMotionPreviewScenes,
 } from "../data/episode3";
 import { EpisodeThreeChapterEnding } from "./EpisodeThreePartGuide";
 
@@ -35,10 +34,11 @@ export function EpisodeThreeVisual({
     scene.id as keyof typeof episodeThreeSceneImageSequences
   ];
   const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 12);
-  const isMotionPreview = episodeThreeMotionPreviewScenes.includes(
-    scene.id as 13 | 14,
+  const [sequenceStart, sequenceEnd] = sequenceWindowForScene(scene.id);
+  const sequenceBlend = Math.min(
+    1,
+    Math.max(0, (progress - sequenceStart) / (sequenceEnd - sequenceStart)),
   );
-  const sequenceBlend = Math.min(1, Math.max(0, (progress - 0.38) / 0.24));
   const nextPartId = scene.id === 9 ? 2 : scene.id === 15 ? 3 : null;
   const showPartTransition = nextPartId && progress >= 0.72;
 
@@ -64,7 +64,7 @@ export function EpisodeThreeVisual({
 
   return (
     <div
-      className={`ep2-visual ep3-visual ${isPlaying ? "is-playing" : ""} ${isMotionPreview ? "is-motion-preview" : ""}`}
+      className={`ep2-visual ep3-visual ${isPlaying ? "is-playing" : ""}`}
       style={{ "--ep2-progress": progress } as CSSProperties}
       aria-label={`Szenenbild für Szene ${scene.id}: ${scene.title}`}
     >
@@ -101,9 +101,6 @@ export function EpisodeThreeVisual({
           className="ep2-generated-background ep3-generated-background"
           style={{
             backgroundImage: `url("${image}")`,
-            transform: isMotionPreview
-              ? `scale(${1.035 + progress * 0.055}) translateX(${(0.5 - progress) * 1.2}%)`
-              : undefined,
           }}
           aria-hidden="true"
         />
@@ -131,6 +128,14 @@ export function EpisodeThreeVisual({
       ) : null}
     </div>
   );
+}
+
+function sequenceWindowForScene(sceneId: number): [number, number] {
+  if (sceneId === 10) return [0.24, 0.44];
+  if (sceneId === 11) return [0.2, 0.42];
+  if (sceneId === 13) return [0.44, 0.62];
+  if (sceneId === 15) return [0.34, 0.55];
+  return [0.38, 0.62];
 }
 
 function ClayWritingTimeline({ progress }: { progress: number }) {
