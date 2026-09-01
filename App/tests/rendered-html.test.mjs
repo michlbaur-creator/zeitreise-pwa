@@ -157,7 +157,7 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, /Sprecher: Micha/);
   assert.doesNotMatch(episodeTwoApp, /Arbeitsfassung|noch nicht vollständig/);
   assert.doesNotMatch(episodeTwoApp, /Was ist sicher\?|So sicher ist die Darstellung/);
-  assert.match(home, /href="\/episode-2\/"/);
+  assert.match(home, /href="\/episode-2\/\?start=1"/);
   assert.match(home, /aria-label="Weiter zu Episode 2"/);
   assert.match(episodeTwoApp, /← Episode 1: Geschichte des Lebens/);
   assert.match(episodeTwoApp, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} episode=\{2\} \/>/);
@@ -177,7 +177,7 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
   assert.match(episodeTwoApp, /isEndingQuizScene = scene\.id === 14/);
   assert.match(episodeTwoApp, /panel === "quiz" && !isEndingQuizScene/);
   assert.match(episodeTwoApp, /searchParams\.get\("start"\) === "1"/);
-  assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
+  assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} onSelectCurrentEpisode=\{\(\) => goToScene\(0\)\} \/>/);
   assert.match(episodeTwoApp, /Weiter zu Episode 3/);
   assert.doesNotMatch(episodeTwoApp, /Übergangsentwurf|nur per Direktlink/);
   assert.doesNotMatch(episodeTwoApp, /Quiz-Halt|stopIsOpen|episode2-quizstops/);
@@ -322,6 +322,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /setQuizQuestionIndex\(\(value\) => value \+ 1\)/);
   assert.match(episodeThreeData, /Welche Folgen hatte die Sesshaftigkeit\?/);
   assert.match(episodeThreeData, /episodeThreeSceneImageSequences/);
+  assert.match(episodeThreeData, /scene13\/hintergrund-listenmacht-v1\.png/);
   assert.match(episodeThreeVisual, /ep3-scene-image-sequence/);
   assert.match(episodeThreeVisual, /sequenceBlend/);
   assert.match(episodeThreeApp, /questionCount=\{5\}/);
@@ -351,15 +352,16 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     episodeThreeApp,
     /Öffentliche Vorschau|vollständige technische Bildfolge|Szenenbilder freigegeben|Rekonstruierte Arbeitsgrundlage|Sprecheraufnahme steht noch aus|Freigegebene Texte bleiben unangetastet/,
   );
-  assert.match(episodeOneApp, /<EpisodeSeriesNav currentEpisode=\{1\} \/>/);
-  assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} \/>/);
-  assert.match(episodeThreeApp, /<EpisodeSeriesNav currentEpisode=\{3\} \/>/);
+  assert.match(episodeOneApp, /<EpisodeSeriesNav currentEpisode=\{1\} onSelectCurrentEpisode=\{\(\) => goToScene\(0\)\} \/>/);
+  assert.match(episodeTwoApp, /<EpisodeSeriesNav currentEpisode=\{2\} onSelectCurrentEpisode=\{\(\) => goToScene\(0\)\} \/>/);
+  assert.match(episodeThreeApp, /<EpisodeSeriesNav currentEpisode=\{3\} onSelectCurrentEpisode=\{\(\) => goToScene\(0\)\} \/>/);
   assert.equal((episodeSeriesNav.match(/\{ id: \d,/g) ?? []).length, 3);
-  assert.match(episodeSeriesNav, /href: "\/"/);
-  assert.match(episodeSeriesNav, /href: "\/episode-2\/"/);
-  assert.match(episodeSeriesNav, /href: "\/episode-3\/"/);
+  assert.match(episodeSeriesNav, /href: "\/\?start=1"/);
+  assert.match(episodeSeriesNav, /href: "\/episode-2\/\?start=1"/);
+  assert.match(episodeSeriesNav, /href: "\/episode-3\/\?start=1"/);
+  assert.match(episodeSeriesNav, /onSelectCurrentEpisode\(\)/);
   assert.doesNotMatch(episodeSeriesNav, /episode\.id === 3|aria-disabled="true"|Nur per Direktlink|Direktlink geöffnet/);
-  assert.match(episodeSeriesNav, /aria-current="page"/);
+  assert.match(episodeSeriesNav, /aria-current=\{isCurrent \? "page" : undefined\}/);
   assert.equal((episodeThreeData.match(/bewegung-[^"\n]+\.mp4/g) ?? []).length, 6);
   assert.match(episodeThreeVisual, /playsInline/);
   assert.match(episodeThreeVisual, /element\.currentTime = 0/);
@@ -500,6 +502,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
       "scene12/hintergrund-nahrungsanlieferung-v1.png",
       "scene12/hintergrund-spezialisierte-werkstaetten-v1.png",
       "scene14/hintergrund-rationsverwaltung-v1.png",
+      "scene13/hintergrund-listenmacht-v1.png",
       "scene15/hintergrund-gemeinschaftsarbeit-v1.png",
       "scene15/hintergrund-macht-buendelt-sich-v1.png",
     ].map((assetPath) =>
@@ -826,7 +829,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v117"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v119"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1050,7 +1053,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v117"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v119"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

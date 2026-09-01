@@ -535,7 +535,7 @@ export default function EpisodeTwoApp() {
           </div>
         </div>
         <div className="header-actions">
-          <Link className="quiet-button ep2-episode-link" href="/">← Episode 1: Geschichte des Lebens</Link>
+          <Link className="quiet-button ep2-episode-link" href="/?start=1">← Episode 1: Geschichte des Lebens</Link>
           <button className="quiet-button" type="button" onClick={() => setIntroOpen(true)}>Anfang ansehen</button>
         </div>
       </header>
@@ -632,7 +632,7 @@ export default function EpisodeTwoApp() {
           {isEndingQuizScene ? (
             <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
           ) : null}
-          <EpisodeSeriesNav currentEpisode={2} />
+          <EpisodeSeriesNav currentEpisode={2} onSelectCurrentEpisode={() => goToScene(0)} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode2-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>

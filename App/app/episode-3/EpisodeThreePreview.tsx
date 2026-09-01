@@ -502,7 +502,7 @@ export default function EpisodeThreePreview() {
           </div>
         </div>
         <div className="header-actions">
-          <Link className="quiet-button ep2-episode-link" href="/episode-2/">← Episode 2</Link>
+          <Link className="quiet-button ep2-episode-link" href="/episode-2/?start=1">← Episode 2</Link>
           <button className="quiet-button intro-replay" type="button" onClick={() => { setIsPlaying(false); setIntroOpen(true); }}>Anfang ansehen</button>
         </div>
       </header>
@@ -604,7 +604,7 @@ export default function EpisodeThreePreview() {
               celebratePerfect
             />
           ) : null}
-          <EpisodeSeriesNav currentEpisode={3} />
+          <EpisodeSeriesNav currentEpisode={3} onSelectCurrentEpisode={() => goToScene(0)} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode3-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>

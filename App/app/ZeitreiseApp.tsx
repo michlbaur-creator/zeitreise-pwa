@@ -372,10 +372,21 @@ export default function ZeitreiseApp() {
 
     window.queueMicrotask(() => {
       if (cancelled) return;
-      const storedSceneIndex = loadStoredSceneIndex();
+      const currentUrl = new URL(window.location.href);
+      const startAtBeginning = currentUrl.searchParams.get("start") === "1";
+      const storedSceneIndex = startAtBeginning ? 0 : loadStoredSceneIndex();
       const introWasSeen =
         window.localStorage.getItem("zeitreise-intro-seen") === "1";
       setCurrentIndex(storedSceneIndex);
+      if (startAtBeginning) {
+        window.localStorage.setItem("zeitreise-current-scene", "0");
+        currentUrl.searchParams.delete("start");
+        window.history.replaceState(
+          null,
+          "",
+          `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`,
+        );
+      }
       setCorrectScenes(loadStoredNumbers("zeitreise-correct-scenes"));
       setDiscoveredByScene(loadStoredRecord("zeitreise-discoveries"));
       const continueJourney =
@@ -854,7 +865,7 @@ export default function ZeitreiseApp() {
           </div>
         </div>
         <div className="header-actions">
-          <Link className="quiet-button episode-switch-link" href="/episode-2/">
+          <Link className="quiet-button episode-switch-link" href="/episode-2/?start=1">
             Episode 2 <span aria-hidden="true">→</span>
           </Link>
           <button className="quiet-button intro-replay" type="button" onClick={replayIntro}>
@@ -1062,7 +1073,7 @@ export default function ZeitreiseApp() {
               </button>
             )}
           </div>
-          <EpisodeSeriesNav currentEpisode={1} />
+          <EpisodeSeriesNav currentEpisode={1} onSelectCurrentEpisode={() => goToScene(0)} />
           <p className="keyboard-hint">
             Wischen oder Pfeiltasten wechseln die Szene · Leertaste startet
             oder pausiert

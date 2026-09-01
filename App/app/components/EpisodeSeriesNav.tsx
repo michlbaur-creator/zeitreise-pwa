@@ -1,15 +1,17 @@
 import Link from "next/link";
 
 const episodes = [
-  { id: 1, href: "/", label: "Leben entsteht" },
-  { id: 2, href: "/episode-2/", label: "Der Mensch" },
-  { id: 3, href: "/episode-3/", label: "Vom Wandern zum Bleiben" },
+  { id: 1, href: "/?start=1", label: "Leben entsteht" },
+  { id: 2, href: "/episode-2/?start=1", label: "Der Mensch" },
+  { id: 3, href: "/episode-3/?start=1", label: "Vom Wandern zum Bleiben" },
 ] as const;
 
 export function EpisodeSeriesNav({
   currentEpisode,
+  onSelectCurrentEpisode,
 }: {
   currentEpisode: 1 | 2 | 3;
+  onSelectCurrentEpisode: () => void;
 }) {
   return (
     <nav className="episode-series-nav" aria-label="Zwischen den Episoden wechseln">
@@ -23,19 +25,18 @@ export function EpisodeSeriesNav({
             </>
           );
 
-          return episode.id === currentEpisode ? (
-            <span
-              className="episode-series-button is-current"
-              aria-current="page"
-              key={episode.id}
-            >
-              {content}
-            </span>
-          ) : (
+          const isCurrent = episode.id === currentEpisode;
+
+          return (
             <Link
-              className="episode-series-button"
+              className={`episode-series-button${isCurrent ? " is-current" : ""}`}
               href={episode.href}
-              aria-label={`Episode ${episode.id}: ${episode.label}`}
+              aria-label={`Episode ${episode.id} bei Szene 1 öffnen: ${episode.label}`}
+              aria-current={isCurrent ? "page" : undefined}
+              onClick={isCurrent ? (event) => {
+                event.preventDefault();
+                onSelectCurrentEpisode();
+              } : undefined}
               key={episode.id}
             >
               {content}

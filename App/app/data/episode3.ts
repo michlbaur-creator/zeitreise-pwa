@@ -90,6 +90,10 @@ export const episodeThreeSceneImageSequences = {
     "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
     "/assets/episode3/scene12/hintergrund-spezialisierte-werkstaetten-v1.png",
   ],
+  13: [
+    "/assets/episode3/scene14/hintergrund-rationsverwaltung-v1.png",
+    "/assets/episode3/scene13/hintergrund-listenmacht-v1.png",
+  ],
   15: [
     "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
     "/assets/episode3/scene15/hintergrund-macht-buendelt-sich-v1.png",
