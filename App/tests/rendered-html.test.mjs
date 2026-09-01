@@ -360,9 +360,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(ambientSound, /218: \["rustle"\]/);
   assert.match(ambientSound, /progress >= 0\.94/);
   assert.match(ambientSound, /from: 92/);
-  assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 15);
+  assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 21);
   assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 7);
-  assert.equal((episodeThreeData.match(/vorschau-szene-\d{2}-v1\.wav/g) ?? []).length, 6);
+  assert.doesNotMatch(episodeThreeData, /vorschau-szene-\d{2}-v1\.wav/);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
   assert.doesNotMatch(
     episodeThreeApp,
@@ -552,12 +552,12 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
       "sprecher-szene-14-v1.m4a",
       "sprecher-und-veo-szene-14-v1.m4a",
       "sprecher-szene-15-v1.m4a",
-      "vorschau-szene-16-v1.wav",
-      "vorschau-szene-17-v1.wav",
-      "vorschau-szene-18-v1.wav",
-      "vorschau-szene-19-v1.wav",
-      "vorschau-szene-20-v1.wav",
-      "vorschau-szene-21-v1.wav",
+      "sprecher-szene-16-v1.m4a",
+      "sprecher-szene-17-v1.m4a",
+      "sprecher-szene-18-v1.m4a",
+      "sprecher-szene-19-v1.m4a",
+      "sprecher-szene-20-v1.m4a",
+      "sprecher-szene-21-v1.m4a",
     ].map((fileName) =>
       access(
         new URL(`../public/assets/episode3/audio/${fileName}`, import.meta.url),
@@ -649,7 +649,7 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.doesNotMatch(episodeThreeApp, /<section className="ep3-outlook"/);
   assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
   assert.match(visual, /scene\.id === 9 \? 2 : scene\.id === 15 \? 3 : scene\.id === 21 \? 4/);
-  assert.match(visual, /const transitionStart = scene\.id === 21 \? 0\.84 : 0\.72/);
+  assert.match(visual, /const transitionStart = scene\.id === 21 \? 0\.92 : 0\.72/);
   assert.match(visual, /<EpisodeThreeChapterEnding/);
   assert.match(visual, /onContinue=\{nextPartId === 4 \? undefined : onChapterContinue\}/);
   assert.match(visual, /statusLabel=\{nextPartId === 4 \? "Teil 4 folgt" : undefined\}/);
@@ -875,7 +875,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v124"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v125"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1100,7 +1100,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v124"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v125"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

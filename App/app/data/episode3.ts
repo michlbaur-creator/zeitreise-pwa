@@ -41,12 +41,12 @@ export const episodeThreeSceneAudio = {
   13: "/assets/episode3/audio/sprecher-szene-13-v1.m4a",
   14: "/assets/episode3/audio/sprecher-und-veo-szene-14-v1.m4a",
   15: "/assets/episode3/audio/sprecher-szene-15-v1.m4a",
-  16: "/assets/episode3/audio/vorschau-szene-16-v1.wav",
-  17: "/assets/episode3/audio/vorschau-szene-17-v1.wav",
-  18: "/assets/episode3/audio/vorschau-szene-18-v1.wav",
-  19: "/assets/episode3/audio/vorschau-szene-19-v1.wav",
-  20: "/assets/episode3/audio/vorschau-szene-20-v1.wav",
-  21: "/assets/episode3/audio/vorschau-szene-21-v1.wav",
+  16: "/assets/episode3/audio/sprecher-szene-16-v1.m4a",
+  17: "/assets/episode3/audio/sprecher-szene-17-v1.m4a",
+  18: "/assets/episode3/audio/sprecher-szene-18-v1.m4a",
+  19: "/assets/episode3/audio/sprecher-szene-19-v1.m4a",
+  20: "/assets/episode3/audio/sprecher-szene-20-v1.m4a",
+  21: "/assets/episode3/audio/sprecher-szene-21-v1.m4a",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -65,12 +65,12 @@ export const episodeThreeSceneDurations = {
   13: 55,
   14: 74,
   15: 66,
-  16: 36,
-  17: 36,
-  18: 41,
-  19: 44,
-  20: 44,
-  21: 49,
+  16: 46.4,
+  17: 40.683,
+  18: 48.619,
+  19: 65.941,
+  20: 62.784,
+  21: 80.277,
 } as const;
 
 export const episodeThreeSceneImages = {

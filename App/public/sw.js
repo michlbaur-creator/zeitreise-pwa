@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v124";
+const CACHE_NAME = "zeitreise-v125";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -257,29 +257,29 @@ const EPISODE_THREE_ASSETS = {
   ],
   16: [
     "/assets/episode3/scene16/hintergrund-segelhandel-v1.png",
-    "/assets/episode3/audio/vorschau-szene-16-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-16-v1.m4a",
   ],
   17: [
     "/assets/episode3/scene17/hintergrund-seidenstrassen-karawane-v1.png",
     "/assets/episode3/scene17/hintergrund-seidenstrassen-handelsstadt-v1.png",
-    "/assets/episode3/audio/vorschau-szene-17-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-17-v1.m4a",
   ],
   18: [
-    "/assets/episode3/audio/vorschau-szene-18-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-18-v1.m4a",
   ],
   19: [
     "/assets/episode3/scene19/hintergrund-hafen-vor-pest-v1.png",
     "/assets/episode3/scene19/hintergrund-hafen-nach-pest-v1.png",
-    "/assets/episode3/audio/vorschau-szene-19-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-19-v1.m4a",
   ],
   20: [
     "/assets/episode3/scene20/hintergrund-atlantische-begegnung-v1.png",
-    "/assets/episode3/audio/vorschau-szene-20-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-20-v1.m4a",
   ],
   21: [
     "/assets/episode3/scene21/hintergrund-versklavung-register-v1.png",
     "/assets/episode3/scene21/hintergrund-widerstand-gemeinschaft-v1.png",
-    "/assets/episode3/audio/vorschau-szene-21-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-21-v1.m4a",
   ],
 };
 

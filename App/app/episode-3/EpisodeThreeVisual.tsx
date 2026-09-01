@@ -40,7 +40,7 @@ export function EpisodeThreeVisual({
     Math.max(0, (progress - sequenceStart) / (sequenceEnd - sequenceStart)),
   );
   const nextPartId = scene.id === 9 ? 2 : scene.id === 15 ? 3 : scene.id === 21 ? 4 : null;
-  const transitionStart = scene.id === 21 ? 0.84 : 0.72;
+  const transitionStart = scene.id === 21 ? 0.92 : 0.72;
   const showPartTransition = nextPartId && progress >= transitionStart;
 
   useEffect(() => {
@@ -140,7 +140,7 @@ function sequenceWindowForScene(sceneId: number): [number, number] {
   if (sceneId === 11) return [0.2, 0.42];
   if (sceneId === 13) return [0.44, 0.62];
   if (sceneId === 15) return [0.34, 0.55];
-  if (sceneId === 19) return [0.34, 0.58];
+  if (sceneId === 19) return [0.48, 0.64];
   if (sceneId === 21) return [0.68, 0.8];
   return [0.38, 0.62];
 }
