@@ -192,6 +192,9 @@ const sceneEvents: Record<number, SoundEvent[]> = {
   216: ["waves", "footsteps", "rustle"],
   217: ["footsteps", "rustle"],
   218: ["rustle"],
+  219: ["footsteps", "rustle"],
+  220: ["waves", "rustle"],
+  221: ["footsteps", "rustle"],
 };
 
 function createNoiseBuffer(

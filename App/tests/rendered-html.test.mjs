@@ -245,7 +245,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   );
   assert.deepEqual(
     sceneIds,
-    Array.from({ length: 18 }, (_, index) => index + 1),
+    Array.from({ length: 21 }, (_, index) => index + 1),
   );
   const sceneTitles = [
     ...episodeThreeData.matchAll(/\{ id: \d+, title: "([^"]+)"/g),
@@ -260,6 +260,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     "Ein Segel macht die Welt kleiner",
     "Keine Straße, sondern ein Netz",
     "Ein Blatt macht Karriere",
+    "Unsichtbare Passagiere",
+    "Ein Ozean wird zur Kreuzung",
+    "Menschen werden zur Ware gemacht",
   ]);
   assert.equal(
     [...episodeThreeData.matchAll(/\{ id: \d+, title: [^\n]+imageStatus: "ready" \}/g)].length,
@@ -269,18 +272,18 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeData, /Der Preis des Bleibens/);
   assert.equal(
     [...episodeThreeData.matchAll(/speakerText: episodeThreeSpeakerTexts\[\d+\]/g)].length,
-    18,
+    21,
   );
   assert.equal(
     [...episodeThreeData.matchAll(/discoveries: episodeThreeDiscoveries\[\d+\]/g)].length,
-    18,
+    21,
   );
   assert.equal(
     [...episodeThreeData.matchAll(/quiz: \[episodeThreeQuizzes\[\d+\]\[\d+\], episodeThreeQuizzes\[\d+\]\[\d+\]\]/g)].length,
-    18,
+    21,
   );
-  assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 54);
-  assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 54);
+  assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 60);
+  assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 60);
   assert.match(episodeThreeData, /kein WLAN/);
   assert.match(episodeThreeData, /nicht die Köpfe/);
   assert.match(episodeThreeData, /beachtliche Kulturleistung/);
@@ -308,6 +311,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeData, /Ein Segel macht die Welt kleiner/);
   assert.match(episodeThreeData, /Keine Straße, sondern ein Netz/);
   assert.match(episodeThreeData, /Ein Blatt macht Karriere/);
+  assert.match(episodeThreeData, /Unsichtbare Passagiere/);
+  assert.match(episodeThreeData, /Ein Ozean wird zur Kreuzung/);
+  assert.match(episodeThreeData, /Menschen werden zur Ware gemacht/);
   assert.match(episodeThreeApp, /className="workspace"/);
   assert.match(episodeThreeApp, /className="player-controls"/);
   assert.match(episodeThreeApp, /<EpisodeThreeTimeline/);
@@ -337,6 +343,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeVisual, /partId=\{nextPartId\}/);
   assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
   assert.match(episodeThreeApp, /episodePart=\{2\}/);
+  assert.match(episodeThreeApp, /episodePart=\{3\}/);
   assert.match(episodeThreeApp, /celebratePerfect/);
   assert.match(episodeThreeVisual, /ClayWritingTimeline/);
   assert.match(episodeThreeVisual, /KnowledgeJourney/);
@@ -355,7 +362,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(ambientSound, /from: 92/);
   assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 15);
   assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 7);
-  assert.equal((episodeThreeData.match(/vorschau-szene-\d{2}-v1\.wav/g) ?? []).length, 3);
+  assert.equal((episodeThreeData.match(/vorschau-szene-\d{2}-v1\.wav/g) ?? []).length, 6);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
   assert.doesNotMatch(
     episodeThreeApp,
@@ -527,6 +534,11 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
       "scene16/hintergrund-segelhandel-v1.png",
       "scene17/hintergrund-seidenstrassen-karawane-v1.png",
       "scene17/hintergrund-seidenstrassen-handelsstadt-v1.png",
+      "scene19/hintergrund-hafen-vor-pest-v1.png",
+      "scene19/hintergrund-hafen-nach-pest-v1.png",
+      "scene20/hintergrund-atlantische-begegnung-v1.png",
+      "scene21/hintergrund-versklavung-register-v1.png",
+      "scene21/hintergrund-widerstand-gemeinschaft-v1.png",
     ].map((assetPath) =>
       access(new URL(`../public/assets/episode3/${assetPath}`, import.meta.url)),
     ),
@@ -543,6 +555,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
       "vorschau-szene-16-v1.wav",
       "vorschau-szene-17-v1.wav",
       "vorschau-szene-18-v1.wav",
+      "vorschau-szene-19-v1.wav",
+      "vorschau-szene-20-v1.wav",
+      "vorschau-szene-21-v1.wav",
     ].map((fileName) =>
       access(
         new URL(`../public/assets/episode3/audio/${fileName}`, import.meta.url),
@@ -633,16 +648,16 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.match(episodeThreeApp, /<EpisodeThreePartOverview activePart=\{1\} \/>/);
   assert.doesNotMatch(episodeThreeApp, /<section className="ep3-outlook"/);
   assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
-  assert.match(visual, /scene\.id === 9 \? 2 : scene\.id === 15 \? 3/);
-  assert.match(visual, /progress >= 0\.72/);
+  assert.match(visual, /scene\.id === 9 \? 2 : scene\.id === 15 \? 3 : scene\.id === 21 \? 4/);
+  assert.match(visual, /const transitionStart = scene\.id === 21 \? 0\.84 : 0\.72/);
   assert.match(visual, /<EpisodeThreeChapterEnding/);
-  assert.match(visual, /onContinue=\{onChapterContinue\}/);
-  assert.match(visual, /actionLabel=\{`Teil \$\{nextPartId\} beginnen`\}/);
+  assert.match(visual, /onContinue=\{nextPartId === 4 \? undefined : onChapterContinue\}/);
+  assert.match(visual, /statusLabel=\{nextPartId === 4 \? "Teil 4 folgt" : undefined\}/);
   assert.match(episodeThreeApp, /scene\.id === 15[\s\S]*\? \(\) => goToScene\(15\)/);
   assert.match(guide, /className="ep3-chapter-ending is-clickable"/);
   assert.match(sceneVisual, /className="ending-title is-clickable"/);
   assert.match(sceneVisual, /href="\/episode-2\/\?start=1"/);
-  assert.match(episodeThreeApp, /isPartEndingScene = scene\.id === 9 \|\| scene\.id === 15/);
+  assert.match(episodeThreeApp, /isPartEndingScene = scene\.id === 9 \|\| scene\.id === 15 \|\| scene\.id === 21/);
   assert.match(episodeThreeApp, /panel === "quiz" && !isPartEndingScene/);
   assert.match(episodeThreeApp, /searchParams\.get\("start"\) === "1"/);
   assert.match(styles, /\.player-column > \.final-quiz/);
@@ -860,7 +875,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v123"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v124"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1055,6 +1070,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(finalQuiz, /Das große Episode-1-Quiz/);
   assert.match(finalQuiz, /Das Abschlussquiz zu Teil 1/);
   assert.match(finalQuiz, /Das Abschlussquiz zu Städte, Schrift und Macht/);
+  assert.match(finalQuiz, /Das Abschlussquiz zu „Die Welt rückt zusammen“/);
   assert.match(finalQuiz, /Fünf zufällig ausgewählte Fragen/);
   assert.match(finalQuiz, /final-quiz-fireworks/);
   assert.match(finalQuiz, /playPerfectFanfare/);
@@ -1084,7 +1100,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v123"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v124"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
@@ -1243,7 +1259,7 @@ test("verwendet für Episode 1 und das Schlussdorf passende Geräuschkulissen", 
     "utf8",
   );
 
-  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 31);
+  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 34);
   assert.match(audio, /1: \["eruption", "steam"\]/);
   assert.match(audio, /4: \["bubbles", "steam", "waves"\]/);
   assert.match(audio, /18: \["footsteps", "insects", "roar"\]/);

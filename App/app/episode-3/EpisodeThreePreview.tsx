@@ -30,7 +30,7 @@ type Panel = "sprecher" | "entdecken" | "quiz";
 
 const sceneSymbols = [
   "↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖",
-  "▤", "⚒", "✎", "◉", "◫", "◆", "◁", "⌘", "▱",
+  "▤", "⚒", "✎", "◉", "◫", "◆", "◁", "⌘", "▱", "◌", "⌖", "⛓",
 ];
 
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
@@ -51,6 +51,9 @@ const episodeThreePartOneQuizScenes = episodeThreeFinalQuizScenes.filter(
 const episodeThreePartTwoQuizScenes = episodeThreeFinalQuizScenes.filter(
   (scene) => scene.id >= 10 && scene.id <= 15,
 );
+const episodeThreePartThreeQuizScenes = episodeThreeFinalQuizScenes.filter(
+  (scene) => scene.id >= 16 && scene.id <= 21,
+);
 const episodeThreePartOne = episodeThreePart(1);
 
 function twoDigits(value: number) {
@@ -66,6 +69,8 @@ function themeForScene(sceneId: number): SceneTheme {
   if (sceneId === 1) return "shore";
   if (sceneId === 16) return "shore";
   if (sceneId === 17) return "atmosphere";
+  if (sceneId === 19) return "atmosphere";
+  if (sceneId === 20) return "shore";
   if (sceneId === 4) return "atmosphere";
   if (sceneId >= 8) return "present";
   return "forest";
@@ -140,7 +145,7 @@ export default function EpisodeThreePreview() {
   } | null>(null);
 
   const scene = episodeThreeScenes[currentIndex];
-  const isPartEndingScene = scene.id === 9 || scene.id === 15;
+  const isPartEndingScene = scene.id === 9 || scene.id === 15 || scene.id === 21;
   const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : 3;
   const currentPart = episodeThreePart(activePart);
   const usesPreviewVoice = scene.id >= 16;
@@ -606,6 +611,16 @@ export default function EpisodeThreePreview() {
               scenes={episodeThreePartTwoQuizScenes}
               episode={3}
               episodePart={2}
+              questionCount={5}
+              randomize
+              celebratePerfect
+            />
+          ) : null}
+          {scene.id === 21 ? (
+            <FinalEpisodeQuiz
+              scenes={episodeThreePartThreeQuizScenes}
+              episode={3}
+              episodePart={3}
               questionCount={5}
               randomize
               celebratePerfect

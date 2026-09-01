@@ -39,8 +39,9 @@ export function EpisodeThreeVisual({
     1,
     Math.max(0, (progress - sequenceStart) / (sequenceEnd - sequenceStart)),
   );
-  const nextPartId = scene.id === 9 ? 2 : scene.id === 15 ? 3 : null;
-  const showPartTransition = nextPartId && progress >= 0.72;
+  const nextPartId = scene.id === 9 ? 2 : scene.id === 15 ? 3 : scene.id === 21 ? 4 : null;
+  const transitionStart = scene.id === 21 ? 0.84 : 0.72;
+  const showPartTransition = nextPartId && progress >= transitionStart;
 
   useEffect(() => {
     const element = videoRef.current;
@@ -125,8 +126,9 @@ export function EpisodeThreeVisual({
       {showPartTransition ? (
         <EpisodeThreeChapterEnding
           partId={nextPartId}
-          onContinue={onChapterContinue}
-          actionLabel={`Teil ${nextPartId} beginnen`}
+          onContinue={nextPartId === 4 ? undefined : onChapterContinue}
+          actionLabel={nextPartId === 4 ? undefined : `Teil ${nextPartId} beginnen`}
+          statusLabel={nextPartId === 4 ? "Teil 4 folgt" : undefined}
         />
       ) : null}
     </div>
@@ -138,6 +140,8 @@ function sequenceWindowForScene(sceneId: number): [number, number] {
   if (sceneId === 11) return [0.2, 0.42];
   if (sceneId === 13) return [0.44, 0.62];
   if (sceneId === 15) return [0.34, 0.55];
+  if (sceneId === 19) return [0.34, 0.58];
+  if (sceneId === 21) return [0.68, 0.8];
   return [0.38, 0.62];
 }
 

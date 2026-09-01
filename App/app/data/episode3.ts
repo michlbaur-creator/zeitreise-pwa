@@ -44,6 +44,9 @@ export const episodeThreeSceneAudio = {
   16: "/assets/episode3/audio/vorschau-szene-16-v1.wav",
   17: "/assets/episode3/audio/vorschau-szene-17-v1.wav",
   18: "/assets/episode3/audio/vorschau-szene-18-v1.wav",
+  19: "/assets/episode3/audio/vorschau-szene-19-v1.wav",
+  20: "/assets/episode3/audio/vorschau-szene-20-v1.wav",
+  21: "/assets/episode3/audio/vorschau-szene-21-v1.wav",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -65,6 +68,9 @@ export const episodeThreeSceneDurations = {
   16: 36,
   17: 36,
   18: 41,
+  19: 44,
+  20: 44,
+  21: 49,
 } as const;
 
 export const episodeThreeSceneImages = {
@@ -84,6 +90,9 @@ export const episodeThreeSceneImages = {
   15: "/assets/episode3/scene15/hintergrund-gemeinschaftsarbeit-v1.png",
   16: "/assets/episode3/scene16/hintergrund-segelhandel-v1.png",
   17: "/assets/episode3/scene17/hintergrund-seidenstrassen-karawane-v1.png",
+  19: "/assets/episode3/scene19/hintergrund-hafen-vor-pest-v1.png",
+  20: "/assets/episode3/scene20/hintergrund-atlantische-begegnung-v1.png",
+  21: "/assets/episode3/scene21/hintergrund-versklavung-register-v1.png",
 } as const;
 
 export const episodeThreeSceneImageSequences = {
@@ -110,6 +119,14 @@ export const episodeThreeSceneImageSequences = {
   17: [
     "/assets/episode3/scene17/hintergrund-seidenstrassen-karawane-v1.png",
     "/assets/episode3/scene17/hintergrund-seidenstrassen-handelsstadt-v1.png",
+  ],
+  19: [
+    "/assets/episode3/scene19/hintergrund-hafen-vor-pest-v1.png",
+    "/assets/episode3/scene19/hintergrund-hafen-nach-pest-v1.png",
+  ],
+  21: [
+    "/assets/episode3/scene21/hintergrund-versklavung-register-v1.png",
+    "/assets/episode3/scene21/hintergrund-widerstand-gemeinschaft-v1.png",
   ],
 } as const;
 
@@ -240,6 +257,24 @@ const episodeThreeSpeakerTexts = {
     "Die Papierherstellung entwickelt sich in China und verbreitet sich über Jahrhunderte durch Asien, die arabischsprachige Welt und schließlich nach Europa. Auf Papier lassen sich Verträge, Rechenwege und Geschichten leichter speichern und transportieren.",
     "Dabei wird Wissen nicht einfach kopiert wie eine Datei. Menschen übersetzen, prüfen, ergänzen und bauen es um. Auch unsere Ziffern machen so eine Reise: Sie entstehen in Südasien und gelangen über arabischsprachige Gelehrte nach Europa.",
     "Ideen brauchen eben keinen Pass – aber Menschen, die sie verstehen.",
+  ],
+  19: [
+    "Handelswege transportieren nicht nur das, was ordentlich in Säcken, Kisten oder Körben steckt. Mit Menschen, Tieren und Vorräten reisen auch Krankheitserreger – unsichtbar und ohne Zollkontrolle.",
+    "Im 14. Jahrhundert breitet sich die Pest über viele Land- und Seewege aus. Der Erreger heißt Yersinia pestis. Hafenstädte und Handelsplätze werden zu Knotenpunkten einer Katastrophe, die große Teile Asiens, Nordafrikas und Europas trifft.",
+    "Die Menschen kennen weder das Bakterium noch seine Übertragungswege. Sie erleben nur, wie schnell aus einer fernen Nachricht eine Gefahr vor der eigenen Tür wird.",
+    "Vernetzung bringt Waren und Wissen. Sie teilt aber auch Risiken. Krankheitserreger brauchen eben keine Einladung – eine Reisemöglichkeit genügt.",
+  ],
+  20: [
+    "1492 erreicht Christoph Kolumbus Inseln der Karibik. Entdeckt wird dabei allerdings nur aus europäischer Sicht: In Amerika leben seit Jahrtausenden Menschen mit eigenen Städten, Reichen und Handelsnetzen.",
+    "Von nun an überqueren Schiffe regelmäßig den Atlantik. Mais, Kartoffeln und Tomaten reisen nach Osten. Pferde, Weizen und Zuckerrohr nach Westen. Mit ihnen wechseln auch Krankheitserreger die Kontinente.",
+    "Das ist kein freundlicher Tausch unter Gleichberechtigten. Eroberung, Landraub, Zwangsarbeit und eingeschleppte Krankheiten zerstören viele indigene Gesellschaften und kosten unzählige Menschen das Leben.",
+    "Die Welt rückt enger zusammen. Doch wer von dieser Verbindung profitiert, entscheidet immer häufiger die Macht.",
+  ],
+  21: [
+    "Auf den neuen Atlantikrouten werden nun auch Menschen gegen ihren Willen transportiert. Europäische Händler und Kolonialmächte versklaven Afrikanerinnen und Afrikaner, verkaufen sie und verschleppen sie über den Ozean.",
+    "Zwischen dem 16. und 19. Jahrhundert werden schätzungsweise rund 12,5 Millionen Menschen an Afrikas Küsten auf Schiffe gezwungen. Etwa 10,7 Millionen erreichen die andere Seite. Schon diese Differenz lässt die Gewalt der Überfahrt erahnen – und die Gewalt beginnt lange vor dem Hafen.",
+    "Versklavte Menschen produzieren Zucker, Baumwolle und Tabak. Die Gewinne verbinden Plantagen, Häfen, Werkstätten, Banken und Käufer. In den Listen erscheinen Menschen dabei oft nur noch als Zahlen.",
+    "Aber sie sind niemals bloß Fracht. Sie leisten Widerstand, fliehen, bewahren Wissen und Kultur und kämpfen für ihre Freiheit. Hinter jeder Zahl steht ein Mensch.",
   ],
 } as const;
 
@@ -422,6 +457,36 @@ const episodeThreeDiscoveries = {
     {
       title: "Warum heißen sie „arabische Zahlen“?",
       text: "Unser Zahlensystem entwickelte sich in Südasien. Arabischsprachige Gelehrte übernahmen und erweiterten es; über ihre Schriften gelangte es nach Europa.",
+    },
+  ],
+  19: [
+    {
+      title: "Der Erreger im Zahn",
+      text: "Erbgut aus Zähnen mittelalterlicher Pesttoter belegt, dass das Bakterium Yersinia pestis die Pandemie verursachte.",
+    },
+    {
+      title: "Nicht die eine Route",
+      text: "Pestwellen folgten See-, Land- und Flusswegen. Die genaue Übertragungskette war regional verschieden und lässt sich nicht auf ein einziges Schiff oder Tier reduzieren.",
+    },
+  ],
+  20: [
+    {
+      title: "Keine leere Welt",
+      text: "In Amerika lebten 1492 zahlreiche unterschiedliche Gesellschaften mit eigenen politischen Ordnungen, Sprachen und weitreichenden Handelsnetzen.",
+    },
+    {
+      title: "Pflanzen verändern Speisepläne",
+      text: "Kartoffeln, Mais und Maniok verbreiteten sich weit über Amerika hinaus und wurden später in vielen Weltregionen zu wichtigen Grundnahrungsmitteln.",
+    },
+  ],
+  21: [
+    {
+      title: "Zahlen mit Lücken",
+      text: "Die Angaben von rund 12,5 Millionen Verschleppten und etwa 10,7 Millionen Ankünften sind wissenschaftliche Schätzungen aus unvollständigen Schiffs- und Handelsunterlagen.",
+    },
+    {
+      title: "Widerstand gehört zur Geschichte",
+      text: "Versklavte Menschen widersetzten sich auf Schiffen und Plantagen, flohen, gründeten freie Gemeinschaften und bewahrten kulturelles Wissen.",
     },
   ],
 } as const;
@@ -949,6 +1014,66 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
   ],
+  19: [
+    {
+      question: "Warum konnten weitreichende Handelsnetze die Ausbreitung der Pest beschleunigen?",
+      answers: [
+        "Weil Menschen, Tiere und Waren viele miteinander verbundene Stationen erreichten.",
+        "Weil Krankheitserreger ausschließlich auf Handelsschiffen entstehen.",
+        "Weil mittelalterliche Städte grundsätzlich keine Krankheiten kannten.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Was kann alte Erreger-DNA belegen – und was nicht?",
+      answers: [
+        "Sie kann den Erreger nachweisen, aber nicht jede einzelne Übertragungsroute rekonstruieren.",
+        "Sie nennt den Namen der ersten erkrankten Person.",
+        "Sie beweist, dass nur eine einzige Tierart die Pest verbreitete.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  20: [
+    {
+      question: "Warum kann der Begriff „Austausch“ für die Zeit nach 1492 irreführen?",
+      answers: [
+        "Weil überhaupt keine Pflanzen oder Tiere die Kontinente wechselten.",
+        "Weil er leicht nach einem freiwilligen Tausch klingt, obwohl Eroberung und Zwang entscheidend waren.",
+        "Weil ausschließlich europäische Gesellschaften Folgen des Kontakts erlebten.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Welche Aussage beschreibt die neue Verbindung über den Atlantik am besten?",
+      answers: [
+        "Pflanzen, Tiere, Menschen und Erreger bewegten sich in verschiedene Richtungen – mit sehr ungleichen Folgen.",
+        "Nur Edelmetalle gelangten über den Atlantik.",
+        "Alle beteiligten Gesellschaften gewannen gleich viel Macht und Wohlstand.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  21: [
+    {
+      question: "Was zeigen Handels- und Schiffslisten zur Versklavung – und was zeigen sie nur unzureichend?",
+      answers: [
+        "Sie zeigen Größenordnungen und Handelswege, aber nur begrenzt die Erfahrungen einzelner Menschen.",
+        "Sie erzählen vollständig das Leben jeder verschleppten Person.",
+        "Sie belegen, dass die Verschleppten keinen Widerstand leisteten.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Warum war die transatlantische Versklavung Teil einer vernetzten Wirtschaft?",
+      answers: [
+        "Weil erzwungene Arbeit Plantagen, Häfen, Handel, Verarbeitung und Konsum miteinander verband.",
+        "Weil sie ausschließlich auf einzelnen, abgeschlossenen Inseln stattfand.",
+        "Weil europäische Händler und Käufer daran nicht beteiligt waren.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
 } as const;
 
 export const episodeThreeScenes: EpisodeThreeScene[] = [
@@ -970,6 +1095,9 @@ export const episodeThreeScenes: EpisodeThreeScene[] = [
   { id: 16, title: "Ein Segel macht die Welt kleiner", timeLabel: "Seit dem 3. Jahrtausend v. Chr.", speakerText: episodeThreeSpeakerTexts[16], discoveries: episodeThreeDiscoveries[16], quiz: [episodeThreeQuizzes[16][0], episodeThreeQuizzes[16][1]], imageStatus: "draft" },
   { id: 17, title: "Keine Straße, sondern ein Netz", timeLabel: "Etwa 2. Jahrhundert v. Chr. bis 15. Jahrhundert n. Chr.", speakerText: episodeThreeSpeakerTexts[17], discoveries: episodeThreeDiscoveries[17], quiz: [episodeThreeQuizzes[17][0], episodeThreeQuizzes[17][1]], imageStatus: "draft" },
   { id: 18, title: "Ein Blatt macht Karriere", timeLabel: "Über viele Jahrhunderte bis ins späte Mittelalter", speakerText: episodeThreeSpeakerTexts[18], discoveries: episodeThreeDiscoveries[18], quiz: [episodeThreeQuizzes[18][0], episodeThreeQuizzes[18][1]], imageStatus: "ready" },
+  { id: 19, title: "Unsichtbare Passagiere", timeLabel: "14. Jahrhundert n. Chr.", speakerText: episodeThreeSpeakerTexts[19], discoveries: episodeThreeDiscoveries[19], quiz: [episodeThreeQuizzes[19][0], episodeThreeQuizzes[19][1]], imageStatus: "draft" },
+  { id: 20, title: "Ein Ozean wird zur Kreuzung", timeLabel: "Seit 1492", speakerText: episodeThreeSpeakerTexts[20], discoveries: episodeThreeDiscoveries[20], quiz: [episodeThreeQuizzes[20][0], episodeThreeQuizzes[20][1]], imageStatus: "draft" },
+  { id: 21, title: "Menschen werden zur Ware gemacht", timeLabel: "16. bis 19. Jahrhundert", speakerText: episodeThreeSpeakerTexts[21], discoveries: episodeThreeDiscoveries[21], quiz: [episodeThreeQuizzes[21][0], episodeThreeQuizzes[21][1]], imageStatus: "draft" },
 ];
 
 export const episodeThreeSceneOneImages = {

@@ -29,7 +29,7 @@ export function FinalEpisodeQuiz({
 }: {
   scenes: QuizScene[];
   episode?: 1 | 2 | 3;
-  episodePart?: 1 | 2;
+  episodePart?: 1 | 2 | 3;
   questionCount?: number;
   randomize?: boolean;
   celebratePerfect?: boolean;
@@ -68,6 +68,7 @@ export function FinalEpisodeQuiz({
   const isEpisodeTwo = episode === 2;
   const isEpisodeThree = episode === 3;
   const isEpisodeThreePartTwo = isEpisodeThree && episodePart === 2;
+  const isEpisodeThreePartThree = isEpisodeThree && episodePart === 3;
   const perfectResult = score === questions.length;
   const strongResult = Math.ceil(questions.length * 0.78);
   const solidResult = Math.ceil(questions.length * 0.56);
@@ -113,14 +114,18 @@ export function FinalEpisodeQuiz({
         <div className="final-quiz-intro">
           <div>
             <p className="eyebrow">
-              {isEpisodeThreePartTwo
+              {isEpisodeThreePartThree
+                ? "Teil 3 abgeschlossen"
+                : isEpisodeThreePartTwo
                 ? "Teil 2 abgeschlossen"
                 : isEpisodeThree
                   ? "Teil 1 abgeschlossen"
                   : "Am Ende der Reise"}
             </p>
             <h2 id="final-quiz-title">
-              {isEpisodeThreePartTwo
+              {isEpisodeThreePartThree
+                ? "Das Abschlussquiz zu „Die Welt rückt zusammen“"
+                : isEpisodeThreePartTwo
                 ? "Das Abschlussquiz zu Städte, Schrift und Macht"
                 : isEpisodeThree
                 ? "Das Abschlussquiz zu Teil 1"
@@ -129,7 +134,9 @@ export function FinalEpisodeQuiz({
                 : "Das große Episode-1-Quiz"}
             </h2>
             <p>
-              {isEpisodeThreePartTwo
+              {isEpisodeThreePartThree
+                ? "Fünf zufällig ausgewählte Fragen aus den zwölf Fragen zu Handel, Wissen, Krankheiten, Kolonisierung und Versklavung."
+                : isEpisodeThreePartTwo
                 ? "Fünf zufällig ausgewählte Fragen aus den zwölf Fragen zu Uruk, Arbeitsteilung, Schrift, Verwaltung und Macht."
                 : isEpisodeThree
                 ? "Fünf zufällig ausgewählte Fragen zu Sesshaftigkeit, Landwirtschaft und den ersten großen Siedlungen."
@@ -156,7 +163,15 @@ export function FinalEpisodeQuiz({
           <div>
             <p className="eyebrow">Dein Ergebnis</p>
             <h2 id="final-quiz-title">
-              {isEpisodeThreePartTwo
+              {isEpisodeThreePartThree
+                ? perfectResult
+                  ? "Fünf von fünf – Verbindungen und ihre Folgen im Blick."
+                  : score >= strongResult
+                    ? "Das weltweite Netz ist fast vollständig."
+                    : score >= solidResult
+                      ? "Die Verbindungen werden sichtbar."
+                      : "Noch einmal den Routen folgen?"
+                : isEpisodeThreePartTwo
                 ? perfectResult
                   ? "Fünf von fünf – du hättest den Speicher von Uruk im Griff!"
                   : score >= strongResult
@@ -183,7 +198,11 @@ export function FinalEpisodeQuiz({
                     : "Die Erde gibt dir eine zweite Runde."}
             </h2>
             <p>
-              {isEpisodeThreePartTwo
+              {isEpisodeThreePartThree
+                ? perfectResult
+                  ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
+                  : "Beim zweiten Durchgang erkennst du noch genauer, wie Vernetzung Möglichkeiten und Abhängigkeiten zugleich schuf."
+                : isEpisodeThreePartTwo
                 ? perfectResult
                   ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
                   : "Beim zweiten Durchgang kennst du Speicher, Tafeln und Machtverhältnisse schon genauer."
