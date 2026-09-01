@@ -32,6 +32,7 @@ const sceneSymbols = [
   "↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖",
   "▤", "⚒", "✎", "◉", "◫", "◆", "◁", "⌘", "▱", "◌", "⌖", "⛓",
   "●", "⌁", "✧",
+  "N", "◆", "▣", "?",
 ];
 
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
@@ -54,6 +55,9 @@ const episodeThreePartTwoQuizScenes = episodeThreeFinalQuizScenes.filter(
 );
 const episodeThreePartThreeQuizScenes = episodeThreeFinalQuizScenes.filter(
   (scene) => scene.id >= 16 && scene.id <= 21,
+);
+const episodeThreePartFourQuizScenes = episodeThreeFinalQuizScenes.filter(
+  (scene) => scene.id >= 22 && scene.id <= 28,
 );
 const episodeThreePartOne = episodeThreePart(1);
 
@@ -146,7 +150,7 @@ export default function EpisodeThreePreview() {
   } | null>(null);
 
   const scene = episodeThreeScenes[currentIndex];
-  const isPartEndingScene = scene.id === 9 || scene.id === 15 || scene.id === 21;
+  const isPartEndingScene = scene.id === 9 || scene.id === 15 || scene.id === 21 || scene.id === 28;
   const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : scene.id <= 21 ? 3 : 4;
   const currentPart = episodeThreePart(activePart);
   const usesPreviewVoice = scene.id >= 22;
@@ -624,6 +628,16 @@ export default function EpisodeThreePreview() {
               scenes={episodeThreePartThreeQuizScenes}
               episode={3}
               episodePart={3}
+              questionCount={5}
+              randomize
+              celebratePerfect
+            />
+          ) : null}
+          {scene.id === 28 ? (
+            <FinalEpisodeQuiz
+              scenes={episodeThreePartFourQuizScenes}
+              episode={3}
+              episodePart={4}
               questionCount={5}
               randomize
               celebratePerfect

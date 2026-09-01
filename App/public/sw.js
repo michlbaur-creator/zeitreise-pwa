@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v126";
+const CACHE_NAME = "zeitreise-v127";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -294,6 +294,22 @@ const EPISODE_THREE_ASSETS = {
     "/assets/episode3/scene24/hintergrund-gaslicht-v1.png",
     "/assets/episode3/scene24/hintergrund-elektrisches-licht-v1.png",
     "/assets/episode3/audio/vorschau-szene-24-v1.wav",
+  ],
+  25: [
+    "/assets/episode3/audio/vorschau-szene-25-v1.wav",
+  ],
+  26: [
+    "/assets/episode3/scene26/hintergrund-oel-mobilitaet-v1.png",
+    "/assets/episode3/audio/vorschau-szene-26-v1.wav",
+  ],
+  27: [
+    "/assets/episode3/scene27/hintergrund-computerraum-v1.png",
+    "/assets/episode3/scene27/hintergrund-smartphone-v1.png",
+    "/assets/episode3/audio/vorschau-szene-27-v1.wav",
+  ],
+  28: [
+    "/assets/episode3/scene28/hintergrund-zeitfelsen-gegenwart-v1.png",
+    "/assets/episode3/audio/vorschau-szene-28-v1.wav",
   ],
 };
 

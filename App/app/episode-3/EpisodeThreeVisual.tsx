@@ -33,7 +33,7 @@ export function EpisodeThreeVisual({
   const imageSequence = episodeThreeSceneImageSequences[
     scene.id as keyof typeof episodeThreeSceneImageSequences
   ];
-  const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 12 | 18);
+  const isGraphicScene = episodeThreeGraphicScenes.includes(scene.id as 12 | 18 | 25);
   const [sequenceStart, sequenceEnd] = sequenceWindowForScene(scene.id);
   const sequenceBlend = Math.min(
     1,
@@ -73,7 +73,9 @@ export function EpisodeThreeVisual({
         <span className="time-card">{scene.timeLabel}</span>
       </div>
       {isGraphicScene ? (
-        scene.id === 18 ? (
+        scene.id === 25 ? (
+          <NitrogenJourney progress={progress} />
+        ) : scene.id === 18 ? (
           <KnowledgeJourney progress={progress} />
         ) : (
           <ClayWritingTimeline progress={progress} />
@@ -144,7 +146,40 @@ function sequenceWindowForScene(sceneId: number): [number, number] {
   if (sceneId === 21) return [0.68, 0.8];
   if (sceneId === 23) return [0.36, 0.58];
   if (sceneId === 24) return [0.4, 0.62];
+  if (sceneId === 27) return [0.36, 0.6];
   return [0.38, 0.62];
+}
+
+function NitrogenJourney({ progress }: { progress: number }) {
+  const activeStep = progress < 0.24 ? 0 : progress < 0.47 ? 1 : progress < 0.7 ? 2 : 3;
+  const stages = [
+    { symbol: "N₂", title: "Luft", text: "Stickstoff ist reichlich vorhanden." },
+    { symbol: "NH₃", title: "Ammoniak", text: "Druck, Wärme und Energie binden ihn." },
+    { symbol: "•••", title: "Dünger", text: "Pflanzen erhalten nutzbare Nährstoffe." },
+    { symbol: "≋", title: "Ernte", text: "Mehr Ertrag wird möglich." },
+  ];
+
+  return (
+    <div className="ep3-nitrogen-journey" aria-hidden="true">
+      <div className="ep3-nitrogen-heading">
+        <span>Brot aus Luft?</span>
+        <strong>Stickstoff wird nutzbar – mit hohem Energieeinsatz.</strong>
+      </div>
+      <div className="ep3-nitrogen-track"><i style={{ width: `${progress * 100}%` }} /></div>
+      <div className="ep3-nitrogen-stages">
+        {stages.map((stage, index) => (
+          <article className={index <= activeStep ? "is-active" : ""} key={stage.title}>
+            <i>{stage.symbol}</i>
+            <strong>{stage.title}</strong>
+            <small>{stage.text}</small>
+          </article>
+        ))}
+      </div>
+      <div className={`ep3-nitrogen-balance ${progress > 0.76 ? "is-visible" : ""}`}>
+        <span>mehr Nahrung</span><i>↔</i><span>Energiebedarf · mögliche Überdüngung</span>
+      </div>
+    </div>
+  );
 }
 
 function ClayWritingTimeline({ progress }: { progress: number }) {

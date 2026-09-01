@@ -50,6 +50,10 @@ export const episodeThreeSceneAudio = {
   22: "/assets/episode3/audio/vorschau-szene-22-v1.wav",
   23: "/assets/episode3/audio/vorschau-szene-23-v1.wav",
   24: "/assets/episode3/audio/vorschau-szene-24-v1.wav",
+  25: "/assets/episode3/audio/vorschau-szene-25-v1.wav",
+  26: "/assets/episode3/audio/vorschau-szene-26-v1.wav",
+  27: "/assets/episode3/audio/vorschau-szene-27-v1.wav",
+  28: "/assets/episode3/audio/vorschau-szene-28-v1.wav",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -77,6 +81,10 @@ export const episodeThreeSceneDurations = {
   22: 42.432,
   23: 39.715,
   24: 42.477,
+  25: 46.466,
+  26: 41.77,
+  27: 45.102,
+  28: 45.186,
 } as const;
 
 export const episodeThreeSceneImages = {
@@ -102,6 +110,9 @@ export const episodeThreeSceneImages = {
   22: "/assets/episode3/scene22/hintergrund-kohle-dampfmaschine-v1.png",
   23: "/assets/episode3/scene23/hintergrund-vor-eisenbahn-v1.png",
   24: "/assets/episode3/scene24/hintergrund-gaslicht-v1.png",
+  26: "/assets/episode3/scene26/hintergrund-oel-mobilitaet-v1.png",
+  27: "/assets/episode3/scene27/hintergrund-computerraum-v1.png",
+  28: "/assets/episode3/scene28/hintergrund-zeitfelsen-gegenwart-v1.png",
 } as const;
 
 export const episodeThreeSceneImageSequences = {
@@ -145,9 +156,13 @@ export const episodeThreeSceneImageSequences = {
     "/assets/episode3/scene24/hintergrund-gaslicht-v1.png",
     "/assets/episode3/scene24/hintergrund-elektrisches-licht-v1.png",
   ],
+  27: [
+    "/assets/episode3/scene27/hintergrund-computerraum-v1.png",
+    "/assets/episode3/scene27/hintergrund-smartphone-v1.png",
+  ],
 } as const;
 
-export const episodeThreeGraphicScenes = [12, 18] as const;
+export const episodeThreeGraphicScenes = [12, 18, 25] as const;
 
 const episodeThreeSpeakerTexts = {
   1: [
@@ -310,6 +325,30 @@ const episodeThreeSpeakerTexts = {
     "Kraftwerke erzeugen Elektrizität, Leitungen verteilen sie, und am anderen Ende genügt ein Schalter. Lampen erhellen Straßen und Wohnungen. Elektromotoren treiben Maschinen an. Später kommen Kühlschränke, Radios und eine beeindruckende Sammlung von Ladekabeln hinzu.",
     "Elektrizität ist allerdings keine Energiequelle. Sie transportiert Energie, die vorher irgendwo erzeugt werden muss – aus Kohle, Wasser, Wind, Sonne oder anderen Quellen.",
     "Die Steckdose verrät davon erstaunlich wenig. Sie macht Energie bequem verfügbar und versteckt gleichzeitig den größten Teil des Systems hinter der Wand.",
+  ],
+  25: [
+    "Zu Beginn des 20. Jahrhunderts wird ausgerechnet die Luft zum Rohstoff. Sie besteht größtenteils aus Stickstoff – nur können Pflanzen diesen Stickstoff nicht direkt nutzen. Die Speisekammer ist also voll, aber abgeschlossen.",
+    "Das Haber-Bosch-Verfahren knackt das Schloss. Unter hohem Druck und hoher Temperatur verbindet es Stickstoff mit Wasserstoff zu Ammoniak. Daraus lässt sich Dünger herstellen.",
+    "Die Ernten steigen, und viel mehr Menschen können ernährt werden. Gleichzeitig braucht die Herstellung reichlich Energie. Gelangt zu viel Dünger auf Felder, können überschüssige Nährstoffe Böden, Grundwasser und Gewässer belasten.",
+    "Mehr Nahrung ist eine gewaltige Möglichkeit. Aber auch dieser Fortschritt kommt nicht allein – er bringt Energiebedarf und neue Abhängigkeiten gleich mit.",
+  ],
+  26: [
+    "Die Kohle bekommt einen flüssigen Kollegen: Erdöl. Benzin und Diesel speichern viel Energie in wenig Gewicht – und der Brennstoff fährt praktischerweise im eigenen Tank mit.",
+    "Verbrennungsmotoren bewegen Autos, Lastwagen, Schiffe und Flugzeuge. Menschen und Waren reisen schneller und weiter. Straßen, Vororte, Tankstellen und Lieferketten wachsen gleich mit.",
+    "Das schafft neue Freiheit und verbindet Märkte. Gleichzeitig werden Städte und Wirtschaft vom Öl abhängig. Förderung, Raffinerien und Verkehr verändern Landschaften, und beim Verbrennen entsteht Kohlendioxid.",
+    "Mobilität wird zum Alltag. Nur die Rechnung fährt nicht immer sichtbar auf dem Beifahrersitz mit.",
+  ],
+  27: [
+    "Die ersten elektronischen Computer füllen ganze Räume. Sie rechnen beeindruckend schnell – jedenfalls für ihre Zeit – und benötigen Schränke voller Bauteile.",
+    "Dann werden Transistoren und Mikrochips immer kleiner. Rechenleistung wandert in Büros, Wohnungen und schließlich in die Hosentasche. Ein Smartphone ist Kamera, Karte, Bibliothek, Briefkasten und gelegentlich sogar Telefon.",
+    "Klein bedeutet allerdings nicht unabhängig. Hinter dem Gerät stehen Bergwerke, Fabriken, Unterseekabel, Funkmasten und Rechenzentren. Die digitale Welt wirkt schwerelos, hat aber ein ziemlich handfestes Hinterzimmer.",
+    "Information reist nun beinahe sofort. Und menschliche Möglichkeiten beschleunigen noch einmal kräftig.",
+  ],
+  28: [
+    "Wir sind wieder am Zeitfelsen. Die rund vierzehntausend Jahre dieser Episode passen auf der großen Erdzeituhr in ungefähr 0,13 Sekunden.",
+    "Und fast die gesamte industrielle Beschleunigung drängt sich in den allerletzten winzigen Bruchteil. Mit Kohle, Erdöl und Erdgas bewegen Menschen heute gewaltige Mengen an Energie, Waren und Informationen.",
+    "Dabei verändern wir auch Stoffkreisläufe und Klima – allerdings nicht alle Menschen und Länder im gleichen Maß. Technik schafft Folgen, aber sie bleibt veränderbar. Energie kann anders erzeugt, verteilt und genutzt werden.",
+    "Der Zeitfelsen verteilt deshalb keine Noten. Er stellt nur eine ziemlich große Frage: Wenn wir so viel verändern können – was wollen wir als Nächstes verändern?",
   ],
 } as const;
 
@@ -552,6 +591,46 @@ const episodeThreeDiscoveries = {
     {
       title: "Ein Netz im Gleichgewicht",
       text: "In einem Stromnetz müssen Erzeugung und Verbrauch ständig aufeinander abgestimmt werden.",
+    },
+  ],
+  25: [
+    {
+      title: "Stickstoff überall",
+      text: "Rund 78 Prozent der Luft bestehen aus Stickstoff. Pflanzen benötigen ihn jedoch in chemisch gebundener Form.",
+    },
+    {
+      title: "Dünger mit Energiebedarf",
+      text: "Für die Ammoniakherstellung sind hoher Druck, hohe Temperaturen und viel Energie nötig.",
+    },
+  ],
+  26: [
+    {
+      title: "Aus Rohöl werden viele Stoffe",
+      text: "In Raffinerien wird Rohöl unter anderem zu Benzin, Diesel, Kerosin und Ausgangsstoffen für Kunststoffe verarbeitet.",
+    },
+    {
+      title: "Die Stadt passt sich dem Auto an",
+      text: "Straßen, Parkplätze und Vororte prägen seit dem 20. Jahrhundert zunehmend die Form vieler Städte.",
+    },
+  ],
+  27: [
+    {
+      title: "Der winzige Schalter",
+      text: "Transistoren schalten elektrische Signale. Milliarden davon können heute auf einem einzigen Chip arbeiten.",
+    },
+    {
+      title: "Das Internet liegt nicht in der Luft",
+      text: "Der größte Teil des weltweiten Datenverkehrs läuft durch Glasfaserkabel, darunter viele Kabel auf dem Meeresboden.",
+    },
+  ],
+  28: [
+    {
+      title: "Ein unsichtbarer Wärmespeicher",
+      text: "Treibhausgase halten einen Teil der Wärmestrahlung in der Atmosphäre zurück. Zusätzliche Gase verstärken diesen Effekt.",
+    },
+    {
+      title: "Verantwortung ist ungleich verteilt",
+      text: "Historische Emissionen, heutiger Ausstoß und Möglichkeiten zur Veränderung unterscheiden sich stark zwischen Ländern und Menschen.",
     },
   ],
 } as const;
@@ -1199,6 +1278,86 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
   ],
+  25: [
+    {
+      question: "Warum genügt der Stickstoff in der Luft Pflanzen nicht unmittelbar?",
+      answers: [
+        "Pflanzen benötigen Stickstoff in chemisch gebundener, aufnehmbarer Form.",
+        "Stickstoff kommt ausschließlich nachts in der Luft vor.",
+        "Pflanzen können grundsätzlich keinen Stickstoff verwenden.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welches Tauschgeschäft steckt im künstlichen Dünger?",
+      answers: [
+        "Höhere Erträge sind möglich, aber Herstellung und Überdüngung können Energie und Umwelt belasten.",
+        "Dünger erhöht Erträge ganz ohne Rohstoffe oder Energie.",
+        "Seit seiner Erfindung benötigen Felder weder Wasser noch Böden.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
+  26: [
+    {
+      question: "Warum eigneten sich Erdölprodukte besonders für Motorfahrzeuge?",
+      answers: [
+        "Sie speichern viel Energie und lassen sich im Fahrzeug mitführen.",
+        "Sie entstehen während der Fahrt von selbst neu.",
+        "Sie können ausschließlich in stationären Maschinen genutzt werden.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Wie veränderte Massenmobilität Städte und Wirtschaft?",
+      answers: [
+        "Sie machte Straßen und Lieferketten überflüssig.",
+        "Sie ermöglichte weitere Wege, schuf aber neue Infrastruktur und Abhängigkeit vom Öl.",
+        "Sie verringerte automatisch jeden Rohstoffverbrauch.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  27: [
+    {
+      question: "Was ermöglichte den Weg vom Computerraum zum Smartphone besonders?",
+      answers: [
+        "Immer kleinere Transistoren und Mikrochips bündelten mehr Rechenleistung.",
+        "Computer benötigten nach 1960 keine elektrische Energie mehr.",
+        "Lochkarten wurden einfach immer kleiner gefaltet.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Warum ist ein Smartphone trotz seiner Größe Teil eines großen Systems?",
+      answers: [
+        "Es funktioniert ohne Rohstoffe und Verbindungen.",
+        "Es ist mit Fabriken, Kabeln, Funkmasten und Rechenzentren verbunden.",
+        "Alle Daten werden ausschließlich im Gerät selbst erzeugt.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  28: [
+    {
+      question: "Warum können menschliche Aktivitäten heute das Erdsystem beeinflussen?",
+      answers: [
+        "Weil Milliarden Menschen mit großen Energiemengen Stoffe und Landschaften verändern.",
+        "Weil einzelne Smartphones die Erdachse verschieben.",
+        "Weil natürliche Prozesse vollständig aufgehört haben.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Welche Schlussfolgerung passt zum offenen Ende am Zeitfelsen?",
+      answers: [
+        "Technische Entwicklung hat nur Folgen und bietet keine Wahlmöglichkeiten.",
+        "Alle Menschen tragen exakt gleich viel Verantwortung.",
+        "Große Veränderungsmacht schafft Folgen, kann aber auch für neue Lösungen genutzt werden.",
+      ],
+      correctAnswer: 2,
+    },
+  ],
 } as const;
 
 export const episodeThreeScenes: EpisodeThreeScene[] = [
@@ -1226,6 +1385,10 @@ export const episodeThreeScenes: EpisodeThreeScene[] = [
   { id: 22, title: "Ein schwarzer Stein übernimmt die Schicht", timeLabel: "Seit dem späten 18. Jahrhundert", speakerText: episodeThreeSpeakerTexts[22], discoveries: episodeThreeDiscoveries[22], quiz: [episodeThreeQuizzes[22][0], episodeThreeQuizzes[22][1]], imageStatus: "ready" },
   { id: 23, title: "Die Landschaft bekommt einen Fahrplan", timeLabel: "19. Jahrhundert", speakerText: episodeThreeSpeakerTexts[23], discoveries: episodeThreeDiscoveries[23], quiz: [episodeThreeQuizzes[23][0], episodeThreeQuizzes[23][1]], imageStatus: "ready" },
   { id: 24, title: "Die Nacht bekommt einen Schalter", timeLabel: "Seit dem späten 19. Jahrhundert", speakerText: episodeThreeSpeakerTexts[24], discoveries: episodeThreeDiscoveries[24], quiz: [episodeThreeQuizzes[24][0], episodeThreeQuizzes[24][1]], imageStatus: "ready" },
+  { id: 25, title: "Brot aus Luft?", timeLabel: "Seit dem frühen 20. Jahrhundert", speakerText: episodeThreeSpeakerTexts[25], discoveries: episodeThreeDiscoveries[25], quiz: [episodeThreeQuizzes[25][0], episodeThreeQuizzes[25][1]], imageStatus: "ready" },
+  { id: 26, title: "Der Brennstoff fährt mit", timeLabel: "20. Jahrhundert", speakerText: episodeThreeSpeakerTexts[26], discoveries: episodeThreeDiscoveries[26], quiz: [episodeThreeQuizzes[26][0], episodeThreeQuizzes[26][1]], imageStatus: "ready" },
+  { id: 27, title: "Ein Zimmer schrumpft in die Hosentasche", timeLabel: "Seit der Mitte des 20. Jahrhunderts", speakerText: episodeThreeSpeakerTexts[27], discoveries: episodeThreeDiscoveries[27], quiz: [episodeThreeQuizzes[27][0], episodeThreeQuizzes[27][1]], imageStatus: "ready" },
+  { id: 28, title: "Der Zeitfelsen fragt zurück", timeLabel: "Gegenwart", speakerText: episodeThreeSpeakerTexts[28], discoveries: episodeThreeDiscoveries[28], quiz: [episodeThreeQuizzes[28][0], episodeThreeQuizzes[28][1]], imageStatus: "ready" },
 ];
 
 export const episodeThreeSceneOneImages = {
