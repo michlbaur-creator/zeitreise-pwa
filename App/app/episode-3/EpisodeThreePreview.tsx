@@ -142,7 +142,6 @@ export default function EpisodeThreePreview() {
   const partTwoActive = scene.id >= 10;
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
-  const scenePlaybackRate = scene.id === 9 ? 1.2 : 1;
   const narrationPath = episodeThreeSceneAudio[
     scene.id as keyof typeof episodeThreeSceneAudio
   ];
@@ -541,10 +540,8 @@ export default function EpisodeThreePreview() {
             autoPlay={isPlaying}
             onLoadedMetadata={(event) => {
               const audio = event.currentTarget;
-              audio.playbackRate = scenePlaybackRate;
-              audio.preservesPitch = true;
               if (Number.isFinite(audio.duration) && audio.duration > 0) {
-                setSceneDuration(audio.duration / scenePlaybackRate);
+                setSceneDuration(audio.duration);
               }
             }}
             onCanPlay={(event) => {
