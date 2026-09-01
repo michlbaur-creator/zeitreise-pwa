@@ -126,9 +126,9 @@ export function EpisodeThreeVisual({
       {showPartTransition ? (
         <EpisodeThreeChapterEnding
           partId={nextPartId}
-          onContinue={nextPartId === 4 ? undefined : onChapterContinue}
-          actionLabel={nextPartId === 4 ? undefined : `Teil ${nextPartId} beginnen`}
-          statusLabel={nextPartId === 4 ? "Teil 4 folgt" : undefined}
+          onContinue={onChapterContinue}
+          actionLabel={onChapterContinue ? `Teil ${nextPartId} beginnen` : undefined}
+          statusLabel={!onChapterContinue && nextPartId === 4 ? "Teil 4 folgt" : undefined}
         />
       ) : null}
     </div>
@@ -142,6 +142,8 @@ function sequenceWindowForScene(sceneId: number): [number, number] {
   if (sceneId === 15) return [0.34, 0.55];
   if (sceneId === 19) return [0.48, 0.64];
   if (sceneId === 21) return [0.68, 0.8];
+  if (sceneId === 23) return [0.36, 0.58];
+  if (sceneId === 24) return [0.4, 0.62];
   return [0.38, 0.62];
 }
 

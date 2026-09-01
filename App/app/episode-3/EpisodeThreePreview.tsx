@@ -31,6 +31,7 @@ type Panel = "sprecher" | "entdecken" | "quiz";
 const sceneSymbols = [
   "↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖",
   "▤", "⚒", "✎", "◉", "◫", "◆", "◁", "⌘", "▱", "◌", "⌖", "⛓",
+  "●", "⌁", "✧",
 ];
 
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
@@ -146,9 +147,9 @@ export default function EpisodeThreePreview() {
 
   const scene = episodeThreeScenes[currentIndex];
   const isPartEndingScene = scene.id === 9 || scene.id === 15 || scene.id === 21;
-  const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : 3;
+  const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : scene.id <= 21 ? 3 : 4;
   const currentPart = episodeThreePart(activePart);
-  const usesPreviewVoice = scene.id >= 16;
+  const usesPreviewVoice = scene.id >= 22;
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
   const narrationPath = episodeThreeSceneAudio[
@@ -542,6 +543,8 @@ export default function EpisodeThreePreview() {
                   ? () => goToScene(9)
                   : scene.id === 15
                     ? () => goToScene(15)
+                    : scene.id === 21
+                      ? () => goToScene(21)
                     : undefined
               }
             />

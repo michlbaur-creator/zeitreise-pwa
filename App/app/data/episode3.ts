@@ -47,6 +47,9 @@ export const episodeThreeSceneAudio = {
   19: "/assets/episode3/audio/sprecher-szene-19-v1.m4a",
   20: "/assets/episode3/audio/sprecher-szene-20-v1.m4a",
   21: "/assets/episode3/audio/sprecher-szene-21-v1.m4a",
+  22: "/assets/episode3/audio/vorschau-szene-22-v1.wav",
+  23: "/assets/episode3/audio/vorschau-szene-23-v1.wav",
+  24: "/assets/episode3/audio/vorschau-szene-24-v1.wav",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -71,6 +74,9 @@ export const episodeThreeSceneDurations = {
   19: 65.941,
   20: 62.784,
   21: 80.277,
+  22: 42.432,
+  23: 39.715,
+  24: 42.477,
 } as const;
 
 export const episodeThreeSceneImages = {
@@ -93,6 +99,9 @@ export const episodeThreeSceneImages = {
   19: "/assets/episode3/scene19/hintergrund-hafen-vor-pest-v1.png",
   20: "/assets/episode3/scene20/hintergrund-atlantische-begegnung-v1.png",
   21: "/assets/episode3/scene21/hintergrund-versklavung-register-v1.png",
+  22: "/assets/episode3/scene22/hintergrund-kohle-dampfmaschine-v1.png",
+  23: "/assets/episode3/scene23/hintergrund-vor-eisenbahn-v1.png",
+  24: "/assets/episode3/scene24/hintergrund-gaslicht-v1.png",
 } as const;
 
 export const episodeThreeSceneImageSequences = {
@@ -127,6 +136,14 @@ export const episodeThreeSceneImageSequences = {
   21: [
     "/assets/episode3/scene21/hintergrund-versklavung-register-v1.png",
     "/assets/episode3/scene21/hintergrund-widerstand-gemeinschaft-v1.png",
+  ],
+  23: [
+    "/assets/episode3/scene23/hintergrund-vor-eisenbahn-v1.png",
+    "/assets/episode3/scene23/hintergrund-mit-eisenbahn-v1.png",
+  ],
+  24: [
+    "/assets/episode3/scene24/hintergrund-gaslicht-v1.png",
+    "/assets/episode3/scene24/hintergrund-elektrisches-licht-v1.png",
   ],
 } as const;
 
@@ -275,6 +292,24 @@ const episodeThreeSpeakerTexts = {
     "Zwischen dem 16. und 19. Jahrhundert werden schätzungsweise rund 12,5 Millionen Menschen an Afrikas Küsten auf Schiffe gezwungen. Etwa 10,7 Millionen erreichen die andere Seite. Schon diese Differenz lässt die Gewalt der Überfahrt erahnen – und die Gewalt beginnt lange vor dem Hafen.",
     "Versklavte Menschen produzieren Zucker, Baumwolle und Tabak. Die Gewinne verbinden Plantagen, Häfen, Werkstätten, Banken und Käufer. In den Listen erscheinen Menschen dabei oft nur noch als Zahlen.",
     "Aber sie sind niemals bloß Fracht. Sie leisten Widerstand, fliehen, bewahren Wissen und Kultur und kämpfen für ihre Freiheit. Hinter jeder Zahl steht ein Mensch.",
+  ],
+  22: [
+    "Jahrtausendelang arbeiten Menschen vor allem mit Muskelkraft, Holz, Wind und Wasser. Dann bekommt ein schwarzer Stein einen erstaunlichen Job: Kohle.",
+    "In ihr steckt Energie aus Pflanzen, die vor Millionen Jahren gewachsen sind. Dampfmaschinen verwandeln diese gespeicherte Energie nun in Bewegung. Pumpen, Webstühle und später ganze Fabriken laufen kräftiger und länger als menschliche Muskeln.",
+    "Das ermöglicht mehr Waren, neue Berufe und gewaltige technische Sprünge. Gleichzeitig wachsen Bergwerke und Industriestädte. Viele Menschen arbeiten unter harten und gefährlichen Bedingungen.",
+    "Die Maschine kennt schließlich keinen Feierabend. Sie braucht nur Brennstoff – und jemanden, der sie bedient.",
+  ],
+  23: [
+    "Die Dampfmaschine bleibt nicht lange in der Fabrik. Sie bekommt Räder.",
+    "Eisenbahnen transportieren Menschen, Kohle und Waren schneller und in größeren Mengen. Fabriken erhalten Rohstoffe aus immer größerer Entfernung. Städte wachsen entlang der Strecken, und Lebensmittel erreichen Märkte, bevor sie unterwegs selbst Geschichte werden.",
+    "Doch die Eisenbahn verändert mehr als Entfernungen. Fahrpläne verlangen gemeinsame Uhrzeiten. Aus „irgendwann am Vormittag“ wird plötzlich „Abfahrt 9 Uhr 17“.",
+    "Die Landschaft bekommt Schienen, Bahnhöfe und einen neuen Takt. Entfernung verschwindet noch immer nicht. Aber sie bekommt jetzt ordentlich Termindruck.",
+  ],
+  24: [
+    "Dann lernt Energie einen neuen Trick: Sie reist als elektrischer Strom.",
+    "Kraftwerke erzeugen Elektrizität, Leitungen verteilen sie, und am anderen Ende genügt ein Schalter. Lampen erhellen Straßen und Wohnungen. Elektromotoren treiben Maschinen an. Später kommen Kühlschränke, Radios und eine beeindruckende Sammlung von Ladekabeln hinzu.",
+    "Elektrizität ist allerdings keine Energiequelle. Sie transportiert Energie, die vorher irgendwo erzeugt werden muss – aus Kohle, Wasser, Wind, Sonne oder anderen Quellen.",
+    "Die Steckdose verrät davon erstaunlich wenig. Sie macht Energie bequem verfügbar und versteckt gleichzeitig den größten Teil des Systems hinter der Wand.",
   ],
 } as const;
 
@@ -487,6 +522,36 @@ const episodeThreeDiscoveries = {
     {
       title: "Widerstand gehört zur Geschichte",
       text: "Versklavte Menschen widersetzten sich auf Schiffen und Plantagen, flohen, gründeten freie Gemeinschaften und bewahrten kulturelles Wissen.",
+    },
+  ],
+  22: [
+    {
+      title: "Gespeichertes Sonnenlicht",
+      text: "Die Energie der Kohle stammt ursprünglich aus Pflanzen, die Sonnenenergie chemisch gespeichert haben.",
+    },
+    {
+      title: "Dampf gegen Wasser",
+      text: "Frühe Dampfmaschinen wurden unter anderem eingesetzt, um Wasser aus Bergwerken zu pumpen.",
+    },
+  ],
+  23: [
+    {
+      title: "Warum eine gemeinsame Uhrzeit?",
+      text: "Unterschiedliche Ortszeiten wurden für Fahrpläne und Anschlüsse zunehmend unpraktisch.",
+    },
+    {
+      title: "Städte an den Schienen",
+      text: "Bahnhöfe wurden zu neuen Knotenpunkten für Handel, Arbeit und Bevölkerungswachstum.",
+    },
+  ],
+  24: [
+    {
+      title: "Energieträger statt Quelle",
+      text: "Elektrizität wird aus anderen Energiequellen erzeugt und anschließend transportiert.",
+    },
+    {
+      title: "Ein Netz im Gleichgewicht",
+      text: "In einem Stromnetz müssen Erzeugung und Verbrauch ständig aufeinander abgestimmt werden.",
     },
   ],
 } as const;
@@ -1074,6 +1139,66 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
   ],
+  22: [
+    {
+      question: "Warum war Kohle für Fabriken besonders bedeutsam?",
+      answers: [
+        "Sie konnte nur bei Sonnenschein genutzt werden.",
+        "Sie stellte viel gespeicherte Energie unabhängig von Wind und Muskelkraft bereit.",
+        "Sie machte Maschinen überflüssig.",
+      ],
+      correctAnswer: 1,
+    },
+    {
+      question: "Was zeigt die Dampfmaschine besonders deutlich?",
+      answers: [
+        "Neue Technik beseitigt automatisch schlechte Arbeitsbedingungen.",
+        "Mehr verfügbare Energie kann Produktion und Arbeitsorganisation verändern.",
+        "Maschinen benötigen keine Rohstoffe.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  23: [
+    {
+      question: "Warum förderte die Eisenbahn das Wachstum von Industriestädten?",
+      answers: [
+        "Sie verband Fabriken schneller mit Rohstoffen, Arbeitskräften und Märkten.",
+        "Sie machte den Transport von Gütern unnötig.",
+        "Sie durfte ausschließlich Kohle befördern.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Weshalb unterstützten Eisenbahnen die Einführung gemeinsamer Uhrzeiten?",
+      answers: [
+        "Dampfmaschinen konnten nur zu bestimmten Minuten arbeiten.",
+        "Fahrpläne und Anschlüsse mussten über verschiedene Orte hinweg zusammenpassen.",
+        "Menschen hatten zuvor keine Vorstellung von Zeit.",
+      ],
+      correctAnswer: 1,
+    },
+  ],
+  24: [
+    {
+      question: "Warum ist Elektrizität keine ursprüngliche Energiequelle?",
+      answers: [
+        "Sie muss zunächst aus einer anderen Energieform erzeugt werden.",
+        "Sie kommt ausschließlich in Batterien vor.",
+        "Sie kann keine Maschinen antreiben.",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question: "Was verändert ein Stromnetz gegenüber einer einzelnen Dampfmaschine?",
+      answers: [
+        "Energie kann an vielen weit entfernten Orten genutzt werden.",
+        "Jede Wohnung benötigt ein eigenes Kohlebergwerk.",
+        "Energie geht niemals verloren.",
+      ],
+      correctAnswer: 0,
+    },
+  ],
 } as const;
 
 export const episodeThreeScenes: EpisodeThreeScene[] = [
@@ -1098,6 +1223,9 @@ export const episodeThreeScenes: EpisodeThreeScene[] = [
   { id: 19, title: "Unsichtbare Passagiere", timeLabel: "14. Jahrhundert n. Chr.", speakerText: episodeThreeSpeakerTexts[19], discoveries: episodeThreeDiscoveries[19], quiz: [episodeThreeQuizzes[19][0], episodeThreeQuizzes[19][1]], imageStatus: "draft" },
   { id: 20, title: "Ein Ozean wird zur Kreuzung", timeLabel: "Seit 1492", speakerText: episodeThreeSpeakerTexts[20], discoveries: episodeThreeDiscoveries[20], quiz: [episodeThreeQuizzes[20][0], episodeThreeQuizzes[20][1]], imageStatus: "draft" },
   { id: 21, title: "Menschen werden zur Ware gemacht", timeLabel: "16. bis 19. Jahrhundert", speakerText: episodeThreeSpeakerTexts[21], discoveries: episodeThreeDiscoveries[21], quiz: [episodeThreeQuizzes[21][0], episodeThreeQuizzes[21][1]], imageStatus: "draft" },
+  { id: 22, title: "Ein schwarzer Stein übernimmt die Schicht", timeLabel: "Seit dem späten 18. Jahrhundert", speakerText: episodeThreeSpeakerTexts[22], discoveries: episodeThreeDiscoveries[22], quiz: [episodeThreeQuizzes[22][0], episodeThreeQuizzes[22][1]], imageStatus: "ready" },
+  { id: 23, title: "Die Landschaft bekommt einen Fahrplan", timeLabel: "19. Jahrhundert", speakerText: episodeThreeSpeakerTexts[23], discoveries: episodeThreeDiscoveries[23], quiz: [episodeThreeQuizzes[23][0], episodeThreeQuizzes[23][1]], imageStatus: "ready" },
+  { id: 24, title: "Die Nacht bekommt einen Schalter", timeLabel: "Seit dem späten 19. Jahrhundert", speakerText: episodeThreeSpeakerTexts[24], discoveries: episodeThreeDiscoveries[24], quiz: [episodeThreeQuizzes[24][0], episodeThreeQuizzes[24][1]], imageStatus: "ready" },
 ];
 
 export const episodeThreeSceneOneImages = {

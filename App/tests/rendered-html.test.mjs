@@ -245,7 +245,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   );
   assert.deepEqual(
     sceneIds,
-    Array.from({ length: 21 }, (_, index) => index + 1),
+    Array.from({ length: 24 }, (_, index) => index + 1),
   );
   const sceneTitles = [
     ...episodeThreeData.matchAll(/\{ id: \d+, title: "([^"]+)"/g),
@@ -263,27 +263,30 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     "Unsichtbare Passagiere",
     "Ein Ozean wird zur Kreuzung",
     "Menschen werden zur Ware gemacht",
+    "Ein schwarzer Stein übernimmt die Schicht",
+    "Die Landschaft bekommt einen Fahrplan",
+    "Die Nacht bekommt einen Schalter",
   ]);
   assert.equal(
     [...episodeThreeData.matchAll(/\{ id: \d+, title: [^\n]+imageStatus: "ready" \}/g)].length,
-    16,
+    19,
   );
   assert.match(episodeThreeData, /Noch einmal zurück/);
   assert.match(episodeThreeData, /Der Preis des Bleibens/);
   assert.equal(
     [...episodeThreeData.matchAll(/speakerText: episodeThreeSpeakerTexts\[\d+\]/g)].length,
-    21,
+    24,
   );
   assert.equal(
     [...episodeThreeData.matchAll(/discoveries: episodeThreeDiscoveries\[\d+\]/g)].length,
-    21,
+    24,
   );
   assert.equal(
     [...episodeThreeData.matchAll(/quiz: \[episodeThreeQuizzes\[\d+\]\[\d+\], episodeThreeQuizzes\[\d+\]\[\d+\]\]/g)].length,
-    21,
+    24,
   );
-  assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 60);
-  assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 60);
+  assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 66);
+  assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 66);
   assert.match(episodeThreeData, /kein WLAN/);
   assert.match(episodeThreeData, /nicht die Köpfe/);
   assert.match(episodeThreeData, /beachtliche Kulturleistung/);
@@ -314,6 +317,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeData, /Unsichtbare Passagiere/);
   assert.match(episodeThreeData, /Ein Ozean wird zur Kreuzung/);
   assert.match(episodeThreeData, /Menschen werden zur Ware gemacht/);
+  assert.match(episodeThreeData, /Ein schwarzer Stein übernimmt die Schicht/);
+  assert.match(episodeThreeData, /Die Landschaft bekommt einen Fahrplan/);
+  assert.match(episodeThreeData, /Die Nacht bekommt einen Schalter/);
   assert.match(episodeThreeApp, /className="workspace"/);
   assert.match(episodeThreeApp, /className="player-controls"/);
   assert.match(episodeThreeApp, /<EpisodeThreeTimeline/);
@@ -358,11 +364,12 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(ambientSound, /216: \["waves", "footsteps", "rustle"\]/);
   assert.match(ambientSound, /217: \["footsteps", "rustle"\]/);
   assert.match(ambientSound, /218: \["rustle"\]/);
+  assert.match(ambientSound, /222: \["steam", "footsteps", "rustle"\]/);
   assert.match(ambientSound, /progress >= 0\.94/);
   assert.match(ambientSound, /from: 92/);
   assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 21);
   assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 7);
-  assert.doesNotMatch(episodeThreeData, /vorschau-szene-\d{2}-v1\.wav/);
+  assert.equal((episodeThreeData.match(/vorschau-szene-\d{2}-v1\.wav/g) ?? []).length, 3);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
   assert.doesNotMatch(
     episodeThreeApp,
@@ -651,9 +658,10 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.match(visual, /scene\.id === 9 \? 2 : scene\.id === 15 \? 3 : scene\.id === 21 \? 4/);
   assert.match(visual, /const transitionStart = scene\.id === 21 \? 0\.92 : 0\.72/);
   assert.match(visual, /<EpisodeThreeChapterEnding/);
-  assert.match(visual, /onContinue=\{nextPartId === 4 \? undefined : onChapterContinue\}/);
-  assert.match(visual, /statusLabel=\{nextPartId === 4 \? "Teil 4 folgt" : undefined\}/);
+  assert.match(visual, /onContinue=\{onChapterContinue\}/);
+  assert.match(visual, /statusLabel=\{!onChapterContinue && nextPartId === 4 \? "Teil 4 folgt" : undefined\}/);
   assert.match(episodeThreeApp, /scene\.id === 15[\s\S]*\? \(\) => goToScene\(15\)/);
+  assert.match(episodeThreeApp, /scene\.id === 21[\s\S]*\? \(\) => goToScene\(21\)/);
   assert.match(guide, /className="ep3-chapter-ending is-clickable"/);
   assert.match(sceneVisual, /className="ending-title is-clickable"/);
   assert.match(sceneVisual, /href="\/episode-2\/\?start=1"/);
@@ -875,7 +883,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v125"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v126"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1100,7 +1108,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v125"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v126"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
@@ -1259,7 +1267,7 @@ test("verwendet für Episode 1 und das Schlussdorf passende Geräuschkulissen", 
     "utf8",
   );
 
-  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 34);
+  assert.equal((audio.match(/^\s+\d+: \[/gm) ?? []).length, 37);
   assert.match(audio, /1: \["eruption", "steam"\]/);
   assert.match(audio, /4: \["bubbles", "steam", "waves"\]/);
   assert.match(audio, /18: \["footsteps", "insects", "roar"\]/);
