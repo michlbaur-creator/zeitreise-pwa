@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v127";
+const CACHE_NAME = "zeitreise-v128";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -257,7 +257,8 @@ const EPISODE_THREE_ASSETS = {
   ],
   16: [
     "/assets/episode3/scene16/hintergrund-segelhandel-v1.png",
-    "/assets/episode3/audio/sprecher-szene-16-v1.m4a",
+    "/assets/episode3/scene16/bewegung-segelhandel-veo-v1.mp4",
+    "/assets/episode3/audio/sprecher-und-veo-szene-16-v1.m4a",
   ],
   17: [
     "/assets/episode3/scene17/hintergrund-seidenstrassen-karawane-v1.png",
@@ -283,33 +284,33 @@ const EPISODE_THREE_ASSETS = {
   ],
   22: [
     "/assets/episode3/scene22/hintergrund-kohle-dampfmaschine-v1.png",
-    "/assets/episode3/audio/vorschau-szene-22-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-22-v1.m4a",
   ],
   23: [
     "/assets/episode3/scene23/hintergrund-vor-eisenbahn-v1.png",
     "/assets/episode3/scene23/hintergrund-mit-eisenbahn-v1.png",
-    "/assets/episode3/audio/vorschau-szene-23-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-23-v1.m4a",
   ],
   24: [
     "/assets/episode3/scene24/hintergrund-gaslicht-v1.png",
     "/assets/episode3/scene24/hintergrund-elektrisches-licht-v1.png",
-    "/assets/episode3/audio/vorschau-szene-24-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-24-v1.m4a",
   ],
   25: [
-    "/assets/episode3/audio/vorschau-szene-25-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-25-v1.m4a",
   ],
   26: [
     "/assets/episode3/scene26/hintergrund-oel-mobilitaet-v1.png",
-    "/assets/episode3/audio/vorschau-szene-26-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-26-v1.m4a",
   ],
   27: [
     "/assets/episode3/scene27/hintergrund-computerraum-v1.png",
     "/assets/episode3/scene27/hintergrund-smartphone-v1.png",
-    "/assets/episode3/audio/vorschau-szene-27-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-27-v1.m4a",
   ],
   28: [
     "/assets/episode3/scene28/hintergrund-zeitfelsen-gegenwart-v1.png",
-    "/assets/episode3/audio/vorschau-szene-28-v1.wav",
+    "/assets/episode3/audio/sprecher-szene-28-v1.m4a",
   ],
 };
 

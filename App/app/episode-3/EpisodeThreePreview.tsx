@@ -153,7 +153,7 @@ export default function EpisodeThreePreview() {
   const isPartEndingScene = scene.id === 9 || scene.id === 15 || scene.id === 21 || scene.id === 28;
   const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : scene.id <= 21 ? 3 : 4;
   const currentPart = episodeThreePart(activePart);
-  const usesPreviewVoice = scene.id >= 22;
+  const usesPreviewVoice = false;
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
   const narrationPath = episodeThreeSceneAudio[

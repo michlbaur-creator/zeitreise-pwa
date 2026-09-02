@@ -23,6 +23,7 @@ export const episodeThreeSceneVideos = {
   6: "/assets/episode3/scene06/bewegung-ziegenherde-veo-v1.mp4",
   8: "/assets/episode3/scene08/bewegung-catalhoeyuek-veo-v1.mp4",
   14: "/assets/episode3/scene14/bewegung-uruk-kanalstadt-veo-v1.mp4",
+  16: "/assets/episode3/scene16/bewegung-segelhandel-veo-v1.mp4",
 } as const;
 
 export const episodeThreeSceneAudio = {
@@ -41,19 +42,19 @@ export const episodeThreeSceneAudio = {
   13: "/assets/episode3/audio/sprecher-szene-13-v1.m4a",
   14: "/assets/episode3/audio/sprecher-und-veo-szene-14-v1.m4a",
   15: "/assets/episode3/audio/sprecher-szene-15-v1.m4a",
-  16: "/assets/episode3/audio/sprecher-szene-16-v1.m4a",
+  16: "/assets/episode3/audio/sprecher-und-veo-szene-16-v1.m4a",
   17: "/assets/episode3/audio/sprecher-szene-17-v1.m4a",
   18: "/assets/episode3/audio/sprecher-szene-18-v1.m4a",
   19: "/assets/episode3/audio/sprecher-szene-19-v1.m4a",
   20: "/assets/episode3/audio/sprecher-szene-20-v1.m4a",
   21: "/assets/episode3/audio/sprecher-szene-21-v1.m4a",
-  22: "/assets/episode3/audio/vorschau-szene-22-v1.wav",
-  23: "/assets/episode3/audio/vorschau-szene-23-v1.wav",
-  24: "/assets/episode3/audio/vorschau-szene-24-v1.wav",
-  25: "/assets/episode3/audio/vorschau-szene-25-v1.wav",
-  26: "/assets/episode3/audio/vorschau-szene-26-v1.wav",
-  27: "/assets/episode3/audio/vorschau-szene-27-v1.wav",
-  28: "/assets/episode3/audio/vorschau-szene-28-v1.wav",
+  22: "/assets/episode3/audio/sprecher-szene-22-v1.m4a",
+  23: "/assets/episode3/audio/sprecher-szene-23-v1.m4a",
+  24: "/assets/episode3/audio/sprecher-szene-24-v1.m4a",
+  25: "/assets/episode3/audio/sprecher-szene-25-v1.m4a",
+  26: "/assets/episode3/audio/sprecher-szene-26-v1.m4a",
+  27: "/assets/episode3/audio/sprecher-szene-27-v1.m4a",
+  28: "/assets/episode3/audio/sprecher-szene-28-v1.m4a",
 } as const;
 
 export const episodeThreeSceneDurations = {
@@ -72,19 +73,19 @@ export const episodeThreeSceneDurations = {
   13: 55,
   14: 74,
   15: 66,
-  16: 46.4,
+  16: 46.336,
   17: 40.683,
   18: 48.619,
   19: 65.941,
   20: 62.784,
   21: 80.277,
-  22: 42.432,
-  23: 39.715,
-  24: 42.477,
-  25: 46.466,
-  26: 41.77,
-  27: 45.102,
-  28: 45.186,
+  22: 62.379,
+  23: 29.184,
+  24: 31.573,
+  25: 57.088,
+  26: 70.827,
+  27: 56.917,
+  28: 68.949,
 } as const;
 
 export const episodeThreeSceneImages = {

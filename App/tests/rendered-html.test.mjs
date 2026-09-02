@@ -378,9 +378,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(ambientSound, /228: \["birds", "rustle"\]/);
   assert.match(ambientSound, /progress >= 0\.94/);
   assert.match(ambientSound, /from: 92/);
-  assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 21);
-  assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 7);
-  assert.equal((episodeThreeData.match(/vorschau-szene-\d{2}-v1\.wav/g) ?? []).length, 7);
+  assert.equal((episodeThreeData.match(/sprecher-(?:und-veo-)?szene-\d{2}-v1\.m4a/g) ?? []).length, 28);
+  assert.equal((episodeThreeData.match(/sprecher-und-veo-szene-\d{2}-v1\.m4a/g) ?? []).length, 8);
+  assert.doesNotMatch(episodeThreeData, /vorschau-szene-\d{2}-v1\.wav/);
   assert.match(episodeThreeApp, /Noch nicht richtig/);
   assert.doesNotMatch(
     episodeThreeApp,
@@ -400,7 +400,7 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeSeriesNav, /onSelectCurrentEpisode\(\)/);
   assert.doesNotMatch(episodeSeriesNav, /episode\.id === 3|aria-disabled="true"|Nur per Direktlink|Direktlink geöffnet/);
   assert.match(episodeSeriesNav, /aria-current=\{isCurrent \? "page" : undefined\}/);
-  assert.equal((episodeThreeData.match(/bewegung-[^"\n]+\.mp4/g) ?? []).length, 7);
+  assert.equal((episodeThreeData.match(/bewegung-[^"\n]+\.mp4/g) ?? []).length, 8);
   assert.match(episodeThreeVisual, /playsInline/);
   assert.match(episodeThreeVisual, /element\.currentTime = 0/);
   assert.match(episodeThreeVisual, /element\.play\(\)/);
@@ -520,6 +520,12 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
         import.meta.url,
       ),
     ),
+    access(
+      new URL(
+        "../public/assets/episode3/scene16/bewegung-segelhandel-veo-v1.mp4",
+        import.meta.url,
+      ),
+    ),
   ]);
   await Promise.all(
     [
@@ -571,11 +577,19 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
       "sprecher-und-veo-szene-14-v1.m4a",
       "sprecher-szene-15-v1.m4a",
       "sprecher-szene-16-v1.m4a",
+      "sprecher-und-veo-szene-16-v1.m4a",
       "sprecher-szene-17-v1.m4a",
       "sprecher-szene-18-v1.m4a",
       "sprecher-szene-19-v1.m4a",
       "sprecher-szene-20-v1.m4a",
       "sprecher-szene-21-v1.m4a",
+      "sprecher-szene-22-v1.m4a",
+      "sprecher-szene-23-v1.m4a",
+      "sprecher-szene-24-v1.m4a",
+      "sprecher-szene-25-v1.m4a",
+      "sprecher-szene-26-v1.m4a",
+      "sprecher-szene-27-v1.m4a",
+      "sprecher-szene-28-v1.m4a",
     ].map((fileName) =>
       access(
         new URL(`../public/assets/episode3/audio/${fileName}`, import.meta.url),
@@ -894,7 +908,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v127"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v128"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1119,7 +1133,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v127"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v128"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
