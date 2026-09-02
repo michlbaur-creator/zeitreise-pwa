@@ -70,7 +70,13 @@ export function EpisodeThreeVisual({
       aria-label={`Szenenbild für Szene ${scene.id}: ${scene.title}`}
     >
       <div className="stage-topline">
-        <span className="time-card">{scene.timeLabel}</span>
+        <span
+          className="ep3-focus-card"
+          key={scene.id}
+          aria-label={`Leitobjekt: ${scene.focusLabel}`}
+        >
+          {scene.focusLabel}
+        </span>
       </div>
       {isGraphicScene ? (
         scene.id === 25 ? (

@@ -1712,6 +1712,50 @@ button:disabled {
   color: #9ba6a0;
 }
 
+.ep3-focus-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(72%, 240px);
+  padding: 8px 12px;
+  border: 1px solid rgba(230, 188, 112, 0.42);
+  border-radius: 999px;
+  background: rgba(7, 12, 11, 0.72);
+  color: #f7f0e2;
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 5px 18px rgba(2, 5, 4, 0.18);
+  animation: ep3-focus-card-in 620ms ease-out both;
+}
+
+.ep3-focus-card::before {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #d9a94f;
+  box-shadow: 0 0 0 3px rgba(217, 169, 79, 0.14);
+  content: "";
+}
+
+@keyframes ep3-focus-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .media-state {
   color: #c4cec8;
 }
@@ -10659,6 +10703,13 @@ button:disabled {
   .media-state {
     padding: 6px 8px;
     font-size: 0.58rem;
+  }
+
+  .ep3-focus-card {
+    gap: 6px;
+    max-width: 76%;
+    padding: 7px 9px;
+    font-size: 0.62rem;
   }
 
   .media-state {

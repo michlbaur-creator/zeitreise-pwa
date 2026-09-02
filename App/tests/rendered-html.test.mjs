@@ -289,6 +289,15 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
     [...episodeThreeData.matchAll(/quiz: \[episodeThreeQuizzes\[\d+\]\[\d+\], episodeThreeQuizzes\[\d+\]\[\d+\]\]/g)].length,
     28,
   );
+  assert.equal(
+    [...episodeThreeData.matchAll(/focusLabel: "[^"]+"/g)].length,
+    28,
+  );
+  assert.match(episodeThreeData, /focusLabel: "Tontafel"/);
+  assert.match(episodeThreeData, /focusLabel: "Elektrizität"/);
+  assert.match(episodeThreeVisual, /className="ep3-focus-card"/);
+  assert.match(episodeThreeVisual, /\{scene\.focusLabel\}/);
+  assert.doesNotMatch(episodeThreeVisual, /className="time-card"/);
   assert.equal([...episodeThreeData.matchAll(/question: "/g)].length, 74);
   assert.equal([...episodeThreeData.matchAll(/correctAnswer: \d/g)].length, 74);
   assert.match(episodeThreeData, /kein WLAN/);
@@ -908,7 +917,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v128"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v129"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1133,7 +1142,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v128"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v129"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
