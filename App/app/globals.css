@@ -1616,28 +1616,8 @@ button:disabled {
   font-size: 0.74rem;
 }
 
-.ep3-scene-heading h2 {
-  animation: ep3-scene-heading-in 420ms ease-out both;
-}
-
-.ep3-scene-heading-part-1 h2 { color: #c6d1aa; }
-.ep3-scene-heading-part-2 h2 { color: #e3bd79; }
-.ep3-scene-heading-part-3 h2 { color: #a9c8cb; }
-.ep3-scene-heading-part-4 h2 { color: #e7c181; }
-
 .ep3-scene-heading .scene-facts span {
   font-size: 0.72rem;
-}
-
-@keyframes ep3-scene-heading-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .scene-tree-link {

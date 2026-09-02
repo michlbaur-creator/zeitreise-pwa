@@ -116,7 +116,7 @@ function EpisodeThreeTimeline({
               key={item.id}
             >
               <i aria-hidden="true">{sceneSymbols[index]}</i>
-              <span>{item.title}</span>
+              <span>{item.focusLabel}</span>
               <small>{item.timeLabel}</small>
             </button>
           ))}
@@ -527,10 +527,10 @@ export default function EpisodeThreePreview() {
 
       <div className="workspace">
         <section className="player-column">
-          <div className={`scene-heading ep3-scene-heading ep3-scene-heading-part-${currentPart.id}`}>
+          <div className="scene-heading ep3-scene-heading">
             <div>
               <p className="eyebrow">Szene {twoDigits(scene.id)} von {episodeThreeScenes.length}</p>
-              <h2 key={scene.id}>{scene.focusLabel}</h2>
+              <h2>{scene.title}</h2>
             </div>
             <div className="scene-facts"><span>{scene.timeLabel}</span></div>
           </div>

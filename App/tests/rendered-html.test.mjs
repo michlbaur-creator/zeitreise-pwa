@@ -363,7 +363,8 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /questionCount=\{5\}/);
   assert.match(episodeThreeApp, /randomize/);
   assert.doesNotMatch(episodeThreeVisual, /<EpisodeThreeChapterEnding/);
-  assert.match(episodeThreeApp, /<h2 key=\{scene\.id\}>\{scene\.focusLabel\}<\/h2>/);
+  assert.match(episodeThreeApp, /<span>\{item\.focusLabel\}<\/span>/);
+  assert.match(episodeThreeApp, /<h2>\{scene\.title\}<\/h2>/);
   assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{2\}/);
   assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{3\}/);
   assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{4\}/);
