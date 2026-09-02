@@ -8,20 +8,17 @@ import {
   episodeThreeSceneImages,
   episodeThreeSceneVideos,
 } from "../data/episode3";
-import { EpisodeThreeChapterEnding } from "./EpisodeThreePartGuide";
 
 type Props = {
   scene: EpisodeThreeScene;
   isPlaying: boolean;
   progress: number;
-  onChapterContinue?: () => void;
 };
 
 export function EpisodeThreeVisual({
   scene,
   isPlaying,
   progress,
-  onChapterContinue,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const video = episodeThreeSceneVideos[
@@ -39,10 +36,6 @@ export function EpisodeThreeVisual({
     1,
     Math.max(0, (progress - sequenceStart) / (sequenceEnd - sequenceStart)),
   );
-  const nextPartId = scene.id === 9 ? 2 : scene.id === 15 ? 3 : scene.id === 21 ? 4 : null;
-  const transitionStart = scene.id === 21 ? 0.92 : 0.72;
-  const showPartTransition = nextPartId && progress >= transitionStart;
-
   useEffect(() => {
     const element = videoRef.current;
     if (!element || !video) return;
@@ -129,14 +122,6 @@ export function EpisodeThreeVisual({
           muted
           aria-hidden="true"
           key={video}
-        />
-      ) : null}
-      {showPartTransition ? (
-        <EpisodeThreeChapterEnding
-          partId={nextPartId}
-          onContinue={onChapterContinue}
-          actionLabel={onChapterContinue ? `Teil ${nextPartId} beginnen` : undefined}
-          statusLabel={!onChapterContinue && nextPartId === 4 ? "Teil 4 folgt" : undefined}
         />
       ) : null}
     </div>

@@ -362,8 +362,11 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeVisual, /sequenceBlend/);
   assert.match(episodeThreeApp, /questionCount=\{5\}/);
   assert.match(episodeThreeApp, /randomize/);
-  assert.match(episodeThreeVisual, /<EpisodeThreeChapterEnding/);
-  assert.match(episodeThreeVisual, /partId=\{nextPartId\}/);
+  assert.doesNotMatch(episodeThreeVisual, /<EpisodeThreeChapterEnding/);
+  assert.match(episodeThreeApp, /<h2 key=\{scene\.id\}>\{scene\.focusLabel\}<\/h2>/);
+  assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{2\}/);
+  assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{3\}/);
+  assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{4\}/);
   assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
   assert.match(episodeThreeApp, /episodePart=\{2\}/);
   assert.match(episodeThreeApp, /episodePart=\{3\}/);
@@ -689,14 +692,12 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.match(episodeThreeApp, /<EpisodeThreePartOverview activePart=\{1\} \/>/);
   assert.doesNotMatch(episodeThreeApp, /<section className="ep3-outlook"/);
   assert.doesNotMatch(episodeThreeApp, /Aus Dörfern werden Städte/);
-  assert.match(visual, /scene\.id === 9 \? 2 : scene\.id === 15 \? 3 : scene\.id === 21 \? 4/);
-  assert.match(visual, /const transitionStart = scene\.id === 21 \? 0\.92 : 0\.72/);
-  assert.match(visual, /<EpisodeThreeChapterEnding/);
-  assert.match(visual, /onContinue=\{onChapterContinue\}/);
-  assert.match(visual, /statusLabel=\{!onChapterContinue && nextPartId === 4 \? "Teil 4 folgt" : undefined\}/);
-  assert.match(episodeThreeApp, /scene\.id === 15[\s\S]*\? \(\) => goToScene\(15\)/);
-  assert.match(episodeThreeApp, /scene\.id === 21[\s\S]*\? \(\) => goToScene\(21\)/);
+  assert.doesNotMatch(visual, /const transitionStart|<EpisodeThreeChapterEnding/);
+  assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{2\} onContinue=\{\(\) => goToScene\(9\)\} \/>/);
+  assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{3\} onContinue=\{\(\) => goToScene\(15\)\} \/>/);
+  assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{4\} onContinue=\{\(\) => goToScene\(21\)\} \/>/);
   assert.match(guide, /className="ep3-chapter-ending is-clickable"/);
+  assert.match(guide, /className="ep3-next-part-card"/);
   assert.match(sceneVisual, /className="ending-title is-clickable"/);
   assert.match(sceneVisual, /href="\/episode-2\/\?start=1"/);
   assert.match(episodeThreeApp, /isPartEndingScene = scene\.id === 9 \|\| scene\.id === 15 \|\| scene\.id === 21 \|\| scene\.id === 28/);
@@ -705,6 +706,7 @@ test("führt Episode 3 mit vier Leitfragen und sichtbaren Kapitelübergängen", 
   assert.match(styles, /\.player-column > \.final-quiz/);
   assert.match(styles, /\.ep3-chapter-ending/);
   assert.match(styles, /\.ep3-chapter-ending\.is-clickable/);
+  assert.match(styles, /\.ep3-next-part-card/);
   assert.match(styles, /\.app-shell > \.final-quiz/);
 });
 
@@ -917,7 +919,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v129"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v130"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1142,7 +1144,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v129"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v130"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

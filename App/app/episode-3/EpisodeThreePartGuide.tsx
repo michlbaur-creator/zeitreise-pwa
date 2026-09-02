@@ -79,6 +79,33 @@ export function EpisodeThreeChapterEnding({
   );
 }
 
+export function EpisodeThreeNextPartCard({
+  partId,
+  onContinue,
+}: {
+  partId: EpisodeThreePart["id"];
+  onContinue: () => void;
+}) {
+  const part = episodeThreePart(partId);
+
+  return (
+    <button
+      type="button"
+      className="ep3-next-part-card"
+      onClick={onContinue}
+      aria-label={`Teil ${part.id} beginnen: ${part.title}. ${part.guidingQuestion}`}
+    >
+      <span className="ep3-next-part-symbol" aria-hidden="true">{part.symbol}</span>
+      <span className="ep3-next-part-copy">
+        <small>Die Reise geht weiter · Teil {part.id} von 4</small>
+        <strong>{part.title}</strong>
+        <span>{part.guidingQuestion}</span>
+      </span>
+      <em>Teil {part.id} beginnen <span aria-hidden="true">→</span></em>
+    </button>
+  );
+}
+
 export function EpisodeThreePartOverview({
   activePart,
 }: {

@@ -23,7 +23,10 @@ import {
 } from "../data/episode3";
 import { episodeThreePart } from "../data/episode3Parts";
 import type { SceneTheme } from "../data/scenes";
-import { EpisodeThreePartOverview } from "./EpisodeThreePartGuide";
+import {
+  EpisodeThreeNextPartCard,
+  EpisodeThreePartOverview,
+} from "./EpisodeThreePartGuide";
 import { EpisodeThreeVisual } from "./EpisodeThreeVisual";
 
 type Panel = "sprecher" | "entdecken" | "quiz";
@@ -524,10 +527,10 @@ export default function EpisodeThreePreview() {
 
       <div className="workspace">
         <section className="player-column">
-          <div className="scene-heading">
+          <div className={`scene-heading ep3-scene-heading ep3-scene-heading-part-${currentPart.id}`}>
             <div>
               <p className="eyebrow">Szene {twoDigits(scene.id)} von {episodeThreeScenes.length}</p>
-              <h2>{scene.title}</h2>
+              <h2 key={scene.id}>{scene.focusLabel}</h2>
             </div>
             <div className="scene-facts"><span>{scene.timeLabel}</span></div>
           </div>
@@ -542,15 +545,6 @@ export default function EpisodeThreePreview() {
               scene={scene}
               isPlaying={isPlaying}
               progress={progress}
-              onChapterContinue={
-                scene.id === 9
-                  ? () => goToScene(9)
-                  : scene.id === 15
-                    ? () => goToScene(15)
-                    : scene.id === 21
-                      ? () => goToScene(21)
-                    : undefined
-              }
             />
           </div>
 
@@ -606,32 +600,41 @@ export default function EpisodeThreePreview() {
             <button className="next-control" type="button" onClick={() => { ensureAmbientSound(); goToScene(currentIndex + 1); }} disabled={currentIndex === episodeThreeScenes.length - 1}>Weiter <span aria-hidden="true">→</span></button>
           </div>
           {scene.id === 9 ? (
-            <FinalEpisodeQuiz
-              scenes={episodeThreePartOneQuizScenes}
-              episode={3}
-              questionCount={5}
-              randomize
-            />
+            <>
+              <FinalEpisodeQuiz
+                scenes={episodeThreePartOneQuizScenes}
+                episode={3}
+                questionCount={5}
+                randomize
+              />
+              <EpisodeThreeNextPartCard partId={2} onContinue={() => goToScene(9)} />
+            </>
           ) : null}
           {scene.id === 15 ? (
-            <FinalEpisodeQuiz
-              scenes={episodeThreePartTwoQuizScenes}
-              episode={3}
-              episodePart={2}
-              questionCount={5}
-              randomize
-              celebratePerfect
-            />
+            <>
+              <FinalEpisodeQuiz
+                scenes={episodeThreePartTwoQuizScenes}
+                episode={3}
+                episodePart={2}
+                questionCount={5}
+                randomize
+                celebratePerfect
+              />
+              <EpisodeThreeNextPartCard partId={3} onContinue={() => goToScene(15)} />
+            </>
           ) : null}
           {scene.id === 21 ? (
-            <FinalEpisodeQuiz
-              scenes={episodeThreePartThreeQuizScenes}
-              episode={3}
-              episodePart={3}
-              questionCount={5}
-              randomize
-              celebratePerfect
-            />
+            <>
+              <FinalEpisodeQuiz
+                scenes={episodeThreePartThreeQuizScenes}
+                episode={3}
+                episodePart={3}
+                questionCount={5}
+                randomize
+                celebratePerfect
+              />
+              <EpisodeThreeNextPartCard partId={4} onContinue={() => goToScene(21)} />
+            </>
           ) : null}
           {scene.id === 28 ? (
             <FinalEpisodeQuiz
