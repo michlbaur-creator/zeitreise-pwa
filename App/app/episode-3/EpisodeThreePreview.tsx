@@ -532,7 +532,6 @@ export default function EpisodeThreePreview() {
               <p className="eyebrow">Szene {twoDigits(scene.id)} von {episodeThreeScenes.length}</p>
               <h2>{scene.title}</h2>
             </div>
-            <div className="scene-facts"><span>{scene.timeLabel}</span></div>
           </div>
 
           <div

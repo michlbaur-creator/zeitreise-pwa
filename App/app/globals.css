@@ -1616,10 +1616,6 @@ button:disabled {
   font-size: 0.74rem;
 }
 
-.ep3-scene-heading .scene-facts span {
-  font-size: 0.72rem;
-}
-
 .scene-tree-link {
   display: inline-flex;
   align-items: center;
@@ -13805,12 +13801,6 @@ body.cinematic-intro-active {
 @media (max-width: 760px) {
   .ep3-scene-heading .eyebrow {
     font-size: 0.64rem;
-  }
-
-  .ep3-scene-heading .scene-facts span {
-    display: inline-flex;
-    padding: 6px 8px;
-    font-size: 0.68rem;
   }
 
   .ep3-next-part-card {
