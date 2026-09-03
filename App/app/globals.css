@@ -14087,3 +14087,151 @@ body.cinematic-intro-active {
     white-space: nowrap;
   }
 }
+
+/* Gemeinsamer kompakter Episodenkopf und Zeit-Zoom für Episode 1 bis 3 */
+.compact-brand-subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.compact-brand-subtitle strong {
+  color: var(--amber);
+  font-size: 0.9em;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.compact-app-header .intro-replay {
+  gap: 4px;
+}
+
+.compact-replay-symbol {
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.compact-timeline {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 9px;
+}
+
+.compact-timeline .earth-timeline-current {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0;
+  border-right: 0;
+}
+
+.compact-timeline .earth-timeline-current > strong {
+  overflow: hidden;
+  min-width: 0;
+  margin: 0;
+  color: #f0ca86;
+  font-size: clamp(0.78rem, 1.5vw, 0.96rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 14px rgba(216, 170, 98, 0.13);
+  white-space: nowrap;
+}
+
+.compact-timeline .earth-timeline-current .time-zoom-mark {
+  --amber-soft: #74cbd0;
+  flex: 0 0 auto;
+  gap: 6px;
+  margin: 0;
+  padding: 4px 8px 4px 5px;
+  border: 1px solid rgba(116, 203, 208, 0.48);
+  border-radius: 999px;
+  background: rgba(67, 184, 208, 0.08);
+  box-shadow: 0 0 18px rgba(67, 184, 208, 0.08);
+}
+
+.compact-timeline .earth-timeline-current .time-zoom-mini-clock {
+  width: 32px;
+  height: 32px;
+  border-color: rgba(116, 203, 208, 0.72);
+}
+
+.compact-timeline .earth-timeline-current .time-zoom-mark-copy small {
+  color: #b6d9d9;
+  font-size: 0.52rem;
+}
+
+@media (max-width: 760px) {
+  .compact-app-header {
+    gap: 10px;
+  }
+
+  .compact-brand-lockup {
+    gap: 9px;
+  }
+
+  .compact-brand-subtitle {
+    max-width: 230px;
+    margin-top: 3px;
+    overflow: hidden;
+    font-size: clamp(0.52rem, 2.25vw, 0.62rem);
+    text-overflow: ellipsis;
+  }
+
+  .compact-timeline .earth-timeline-current {
+    display: flex;
+    gap: 8px;
+  }
+
+  .compact-timeline .earth-timeline-current > strong {
+    max-width: none;
+    font-size: clamp(0.72rem, 3.1vw, 0.82rem);
+    text-align: left;
+  }
+
+  .compact-timeline .earth-timeline-current .time-zoom-mark {
+    margin-left: 0;
+  }
+
+  .compact-timeline .earth-timeline-current .time-zoom-mini-clock {
+    width: 29px;
+    height: 29px;
+  }
+
+  .compact-timeline .earth-timeline-current .time-zoom-mark-copy small {
+    font-size: 0.48rem;
+  }
+
+  .compact-timeline:not(.ep3-timeline) .earth-timeline-stops {
+    min-width: 420px;
+    justify-content: flex-start;
+  }
+
+  .compact-timeline:not(.ep3-timeline) .earth-timeline-stops button {
+    width: 60px;
+    min-height: 56px;
+    flex: 0 0 60px;
+  }
+
+  .compact-timeline:not(.ep3-timeline) .earth-timeline-stops button i {
+    width: 34px;
+    height: 34px;
+    font-size: 0.72rem;
+  }
+
+  .compact-timeline:not(.ep3-timeline) .earth-timeline-track {
+    top: 17px;
+    right: 30px;
+    left: 30px;
+  }
+
+  .compact-timeline:not(.ep3-timeline) .earth-timeline-stops button span {
+    margin-top: 5px;
+    font-size: 0.54rem;
+  }
+}

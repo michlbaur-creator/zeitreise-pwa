@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import {
+  type CSSProperties,
   type PointerEvent as ReactPointerEvent,
   useCallback,
   useEffect,
@@ -32,6 +33,16 @@ const finalQuizScenes = episodeTwoScenes.filter((scene) =>
   finalQuizSceneIds.has(scene.id),
 );
 
+const timelineColors = [
+  "#e08a38",
+  "#43b8d0",
+  "#9bc94a",
+  "#6fbcd3",
+  "#d96251",
+  "#c78a4e",
+  "#e0ad54",
+] as const;
+
 function twoDigits(value: number) {
   return String(value).padStart(2, "0");
 }
@@ -39,6 +50,21 @@ function twoDigits(value: number) {
 function formatTime(seconds: number) {
   const safe = Math.max(0, Math.round(seconds));
   return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, "0")}`;
+}
+
+function compactTimelineTimeLabel(label: string) {
+  return label
+    .replace("Früheste bekannte Funde vor etwa", "Funde vor etwa")
+    .replace("Sicher kontrollierte Feuerstellen spätestens vor etwa", "Feuer spätestens vor")
+    .replace(
+      "Vor mehreren hunderttausend bis vor mindestens etwa 50.000 Jahren",
+      "Vor mehreren 100.000–≥50.000 J.",
+    )
+    .replace(/\bmindestens\b/g, "mind.")
+    .replace(/\bungefähr\b/g, "ca.")
+    .replace(/\bMillionen\b/g, "Mio.")
+    .replace(/\s+bis\s+/g, "–")
+    .replace(/\bJahren\b/g, "J.");
 }
 
 function themeForScene(sceneId: number): SceneTheme {
@@ -64,10 +90,11 @@ function EpisodeTwoTimeline({
   const travelled = (activeIndex / (episodeTwoMilestones.length - 1)) * 100;
 
   return (
-    <nav className="earth-timeline ep2-timeline" aria-label="Navigation durch Episode 2">
+    <nav className="earth-timeline ep2-timeline compact-timeline" aria-label="Navigation durch Episode 2">
       <div className="earth-timeline-current">
-        <span>Du bist hier</span>
-        <strong>{scene.timeLabel}</strong>
+        <strong aria-label={`Aktuelle Zeit: ${scene.timeLabel}`}>
+          {compactTimelineTimeLabel(scene.timeLabel)}
+        </strong>
         <TimeZoomMark level={2} progress={travelled / 100} />
       </div>
       <div className="earth-timeline-scroll">
@@ -79,6 +106,9 @@ function EpisodeTwoTimeline({
             <button
               type="button"
               className={index === activeIndex ? "is-current" : ""}
+              style={{
+                "--milestone-color": timelineColors[index % timelineColors.length],
+              } as CSSProperties}
               onClick={() => onSelect(milestone.sceneId - 1)}
               aria-current={index === activeIndex ? "step" : undefined}
               aria-label={`${milestone.label}, ${milestone.age}`}
@@ -526,17 +556,17 @@ export default function EpisodeTwoApp() {
         </section>
       ) : null}
 
-      <header className="app-header">
-        <div className="brand-lockup">
+      <header className="app-header compact-app-header">
+        <div className="brand-lockup compact-brand-lockup">
           <div className="brand-mark" aria-hidden="true"><span /></div>
           <div>
-            <p className="eyebrow">Episode 2</p>
-            <h1>Zeitreise <span>Die Entwicklung des Menschen · Eine verzweigte Geschichte</span></h1>
+            <h1>Zeitreise</h1>
+            <p className="compact-brand-subtitle"><strong>Episode 2</strong><span aria-hidden="true"> · </span>Die Entwicklung des Menschen</p>
           </div>
         </div>
         <div className="header-actions">
           <Link className="quiet-button ep2-episode-link" href="/?start=1">← Episode 1: Geschichte des Lebens</Link>
-          <button className="quiet-button" type="button" onClick={() => setIntroOpen(true)}>Anfang ansehen</button>
+          <button className="quiet-button intro-replay" type="button" aria-label="Anfang ansehen" onClick={() => setIntroOpen(true)}><span className="compact-replay-symbol" aria-hidden="true">↺</span><span>Anfang</span></button>
         </div>
       </header>
 

@@ -120,7 +120,7 @@ function EpisodeThreeTimeline({
   const travelled = (activeIndex / (episodeThreeScenes.length - 1)) * 100;
 
   return (
-    <nav className="earth-timeline ep2-timeline ep3-timeline" aria-label="Navigation durch Episode 3">
+    <nav className="earth-timeline ep2-timeline ep3-timeline compact-timeline" aria-label="Navigation durch Episode 3">
       <div className="earth-timeline-current">
         <strong aria-label={`Aktuelle Zeit: ${scene.timeLabel}`}>
           {compactTimelineTimeLabel(scene.timeLabel)}
@@ -537,17 +537,17 @@ export default function EpisodeThreePreview() {
         </section>
       ) : null}
 
-      <header className="app-header ep3-app-header">
-        <div className="brand-lockup ep3-brand-lockup">
+      <header className="app-header ep3-app-header compact-app-header">
+        <div className="brand-lockup ep3-brand-lockup compact-brand-lockup">
           <div className="brand-mark" aria-hidden="true"><span /></div>
           <div>
             <h1>Zeitreise</h1>
-            <p className="ep3-brand-subtitle"><strong>Episode 3</strong><span aria-hidden="true"> · </span>{currentPart.title}</p>
+            <p className="ep3-brand-subtitle compact-brand-subtitle"><strong>Episode 3</strong><span aria-hidden="true"> · </span>{currentPart.title}</p>
           </div>
         </div>
         <div className="header-actions">
           <Link className="quiet-button ep2-episode-link" href="/episode-2/?start=1">← Episode 2</Link>
-          <button className="quiet-button intro-replay" type="button" aria-label="Anfang ansehen" onClick={() => { setIsPlaying(false); setIntroOpen(true); }}><span className="ep3-replay-symbol" aria-hidden="true">↺</span><span>Anfang</span></button>
+          <button className="quiet-button intro-replay" type="button" aria-label="Anfang ansehen" onClick={() => { setIsPlaying(false); setIntroOpen(true); }}><span className="ep3-replay-symbol compact-replay-symbol" aria-hidden="true">↺</span><span>Anfang</span></button>
         </div>
       </header>
 

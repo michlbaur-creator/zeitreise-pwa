@@ -42,6 +42,16 @@ function formatTime(seconds: number) {
   return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
+function compactTimelineTimeLabel(label: string) {
+  return label
+    .replace(/^Devon,\s*/, "Devon · ")
+    .replace(/\bmindestens\b/g, "mind.")
+    .replace(/\bMilliarden\b/g, "Mrd.")
+    .replace(/\bMilliarde\b/g, "Mrd.")
+    .replace(/\bMillionen\b/g, "Mio.")
+    .replace(/\bJahren\b/g, "J.");
+}
+
 const earthMilestones = [
   {
     sceneId: 1,
@@ -142,10 +152,11 @@ function EarthTimeline({
   }, [activeMilestone]);
 
   return (
-    <nav className="earth-timeline" aria-label="Navigation durch die Erdgeschichte">
+    <nav className="earth-timeline compact-timeline" aria-label="Navigation durch die Erdgeschichte">
       <div className="earth-timeline-current">
-        <span>Du bist hier</span>
-        <strong>{timeLabel ?? earthMilestones[activeMilestone].age}</strong>
+        <strong aria-label={`Aktuelle Zeit: ${timeLabel ?? earthMilestones[activeMilestone].age}`}>
+          {compactTimelineTimeLabel(timeLabel ?? earthMilestones[activeMilestone].age)}
+        </strong>
         <TimeZoomMark level={1} progress={travelled / 100} />
       </div>
       <div className="earth-timeline-scroll">
@@ -852,24 +863,22 @@ export default function ZeitreiseApp() {
         </section>
       ) : null}
 
-      <header className="app-header">
-        <div className="brand-lockup">
+      <header className="app-header compact-app-header">
+        <div className="brand-lockup compact-brand-lockup">
           <div className="brand-mark" aria-hidden="true">
             <span />
           </div>
           <div>
-            <p className="eyebrow">Episode 1</p>
-            <h1>
-              Zeitreise <span>Die Geschichte des Lebens</span>
-            </h1>
+            <h1>Zeitreise</h1>
+            <p className="compact-brand-subtitle"><strong>Episode 1</strong><span aria-hidden="true"> · </span>Die Geschichte des Lebens</p>
           </div>
         </div>
         <div className="header-actions">
           <Link className="quiet-button episode-switch-link" href="/episode-2/?start=1">
             Episode 2 <span aria-hidden="true">→</span>
           </Link>
-          <button className="quiet-button intro-replay" type="button" onClick={replayIntro}>
-            Anfang ansehen
+          <button className="quiet-button intro-replay" type="button" aria-label="Anfang ansehen" onClick={replayIntro}>
+            <span className="compact-replay-symbol" aria-hidden="true">↺</span><span>Anfang</span>
           </button>
           {installPrompt ? (
             <button className="quiet-button" type="button" onClick={install}>
