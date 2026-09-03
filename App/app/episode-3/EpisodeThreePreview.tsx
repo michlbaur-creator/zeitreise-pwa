@@ -73,6 +73,14 @@ function formatTime(seconds: number) {
   return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, "0")}`;
 }
 
+function compactTimelineTimeLabel(label: string) {
+  return label
+    .replace(/^([^,]+),\s*/, "$1 · ")
+    .replace(/\bJahrtausend\b/g, "Jt.")
+    .replace(/\bJahrhundert\b/g, "Jh.")
+    .replace(/\s+bis\s+/g, "–");
+}
+
 function themeForScene(sceneId: number): SceneTheme {
   if (sceneId === 1) return "shore";
   if (sceneId === 16) return "shore";
@@ -97,8 +105,9 @@ function EpisodeThreeTimeline({
   return (
     <nav className="earth-timeline ep2-timeline ep3-timeline" aria-label="Navigation durch Episode 3">
       <div className="earth-timeline-current">
-        <span>Du bist hier</span>
-        <strong>{scene.timeLabel}</strong>
+        <strong aria-label={`Aktuelle Zeit: ${scene.timeLabel}`}>
+          {compactTimelineTimeLabel(scene.timeLabel)}
+        </strong>
         <TimeZoomMark level={3} progress={travelled / 100} />
       </div>
       <div className="earth-timeline-scroll">
@@ -509,17 +518,17 @@ export default function EpisodeThreePreview() {
         </section>
       ) : null}
 
-      <header className="app-header">
-        <div className="brand-lockup">
+      <header className="app-header ep3-app-header">
+        <div className="brand-lockup ep3-brand-lockup">
           <div className="brand-mark" aria-hidden="true"><span /></div>
           <div>
-            <p className="eyebrow">Episode 3</p>
-            <h1>Zeitreise <span>{currentPart.title}</span></h1>
+            <h1>Zeitreise</h1>
+            <p className="ep3-brand-subtitle"><strong>Episode 3</strong><span aria-hidden="true"> · </span>{currentPart.title}</p>
           </div>
         </div>
         <div className="header-actions">
           <Link className="quiet-button ep2-episode-link" href="/episode-2/?start=1">← Episode 2</Link>
-          <button className="quiet-button intro-replay" type="button" onClick={() => { setIsPlaying(false); setIntroOpen(true); }}>Anfang ansehen</button>
+          <button className="quiet-button intro-replay" type="button" aria-label="Anfang ansehen" onClick={() => { setIsPlaying(false); setIntroOpen(true); }}><span className="ep3-replay-symbol" aria-hidden="true">↺</span><span>Anfang</span></button>
         </div>
       </header>
 

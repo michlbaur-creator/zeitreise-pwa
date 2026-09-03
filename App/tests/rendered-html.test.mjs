@@ -309,7 +309,8 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeData, /Der Hund war schon da/);
   assert.match(episodeThreeData, /Leben mit den Verstorbenen/);
   assert.match(episodeThreeData, /unabhängig in mehreren Regionen/);
-  assert.match(episodeThreeApp, /<h1>Zeitreise <span>\{currentPart\.title\}<\/span><\/h1>/);
+  assert.match(episodeThreeApp, /<h1>Zeitreise<\/h1>/);
+  assert.match(episodeThreeApp, /<strong>Episode 3<\/strong><span aria-hidden="true"> · <\/span>\{currentPart\.title\}/);
   assert.match(episodeThreeData, /Leben ohne Acker/);
   assert.match(episodeThreeData, /Steine für die Ewigkeit/);
   assert.match(episodeThreeData, /Ein Ort bleibt/);
@@ -366,6 +367,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /<span>\{item\.focusLabel\}<\/span>/);
   assert.match(episodeThreeApp, /<h2>\{scene\.title\}<\/h2>/);
   assert.doesNotMatch(episodeThreeApp, /<div className="scene-facts"><span>\{scene\.timeLabel\}<\/span><\/div>/);
+  assert.doesNotMatch(episodeThreeApp, /<span>Du bist hier<\/span>/);
+  assert.match(episodeThreeApp, /className="ep3-brand-subtitle"/);
+  assert.match(episodeThreeApp, /aria-label="Anfang ansehen"/);
   assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{2\}/);
   assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{3\}/);
   assert.match(episodeThreeApp, /<EpisodeThreeNextPartCard partId=\{4\}/);
@@ -921,7 +925,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v130"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v131"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1146,7 +1150,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v130"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v131"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
