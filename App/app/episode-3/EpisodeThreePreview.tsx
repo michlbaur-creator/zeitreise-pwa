@@ -32,7 +32,7 @@ import { EpisodeThreeVisual } from "./EpisodeThreeVisual";
 type Panel = "sprecher" | "entdecken" | "quiz";
 
 const sceneSymbols = [
-  "↶", "⌁", "◇", "⌂", "≋", "♑", "◎", "▦", "⚖",
+  "↶", "⌁", "◇", "⌂", "≋", "⋀", "◎", "▦", "⚖",
   "▤", "⚒", "✎", "◉", "◫", "◆", "◁", "⌘", "▱", "◌", "⌖", "⛓",
   "●", "⌁", "✧",
   "N", "◆", "▣", "?",
@@ -47,6 +47,13 @@ const sceneColors = [
   "#c78a4e",
   "#e0ad54",
 ] as const;
+
+const compactSceneLabels: Partial<Record<number, string>> = {
+  6: "Ziegen",
+  7: "Ackerbau",
+  10: "Speicher",
+  11: "Berufe",
+};
 
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
   scene.quiz.map((quiz) => ({
@@ -138,7 +145,7 @@ function EpisodeThreeTimeline({
               key={item.id}
             >
               <i aria-hidden="true">{sceneSymbols[index]}</i>
-              <span>{item.focusLabel}</span>
+              <span>{compactSceneLabels[item.id] ?? item.focusLabel}</span>
               <small>{item.timeLabel}</small>
             </button>
           ))}
@@ -178,7 +185,6 @@ export default function EpisodeThreePreview() {
   const isPartEndingScene = scene.id === 9 || scene.id === 15 || scene.id === 21 || scene.id === 28;
   const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : scene.id <= 21 ? 3 : 4;
   const currentPart = episodeThreePart(activePart);
-  const usesPreviewVoice = false;
   const activeQuiz = scene.quiz[quizQuestionIndex];
   const sceneHasVideo = scene.id in episodeThreeSceneVideos;
   const narrationPath = episodeThreeSceneAudio[
@@ -681,17 +687,6 @@ export default function EpisodeThreePreview() {
 
           {panel === "sprecher" ? (
             <section className="panel-section ep3-speaker-text">
-              <div className="ep2-audio-note">
-                <span aria-hidden="true">◖))</span>
-                <p>
-                  <strong>{usesPreviewVoice ? "Vorläufige Vorschau-Stimme" : "Sprecher: Micha"}</strong>
-                  <small>
-                    {usesPreviewVoice
-                      ? "Michas endgültige Aufnahme steht für diese Szene noch aus."
-                      : "Die Aufnahme ist mit dem Ablauf dieser Szene verbunden."}
-                  </small>
-                </p>
-              </div>
               <blockquote>{scene.speakerText.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</blockquote>
             </section>
           ) : null}
