@@ -13797,20 +13797,36 @@ body.cinematic-intro-active {
 }
 
 .ep3-timeline .earth-timeline-current .time-zoom-mark {
+  --amber-soft: #74cbd0;
   flex: 0 0 auto;
+  gap: 6px;
   margin: 0;
-  padding: 0;
-  border-top: 0;
+  padding: 4px 8px 4px 5px;
+  border: 1px solid rgba(116, 203, 208, 0.48);
+  border-radius: 999px;
+  background: rgba(67, 184, 208, 0.08);
+  box-shadow: 0 0 18px rgba(67, 184, 208, 0.08);
+}
+
+.ep3-timeline .earth-timeline-current .time-zoom-mini-clock {
+  width: 32px;
+  height: 32px;
+  border-color: rgba(116, 203, 208, 0.72);
+}
+
+.ep3-timeline .earth-timeline-current .time-zoom-mark-copy small {
+  color: #b6d9d9;
+  font-size: 0.52rem;
 }
 
 .ep3-timeline .earth-timeline-stops {
-  min-width: 2184px;
+  min-width: 2016px;
   justify-content: flex-start;
 }
 
 .ep3-timeline .earth-timeline-stops button {
-  width: 78px;
-  flex: 0 0 78px;
+  width: 72px;
+  flex: 0 0 72px;
 }
 
 .ep3-timeline .earth-timeline-stops button i {
@@ -13905,25 +13921,25 @@ body.cinematic-intro-active {
   }
 
   .ep3-timeline .earth-timeline-stops {
-    min-width: 2016px;
+    min-width: 1680px;
   }
 
   .ep3-timeline .earth-timeline-stops button {
-    width: 72px;
-    min-height: 62px;
-    flex-basis: 72px;
+    width: 60px;
+    min-height: 56px;
+    flex-basis: 60px;
   }
 
   .ep3-timeline .earth-timeline-stops button i {
-    width: 42px;
-    height: 42px;
-    font-size: 0.82rem;
+    width: 34px;
+    height: 34px;
+    font-size: 0.72rem;
   }
 
   .ep3-timeline .earth-timeline-track {
-    top: 21px;
-    right: 36px;
-    left: 36px;
+    top: 17px;
+    right: 30px;
+    left: 30px;
   }
 
   .ep3-timeline .earth-timeline-stops button span {
@@ -14003,6 +14019,15 @@ body.cinematic-intro-active {
 
   .ep3-timeline .earth-timeline-current .time-zoom-mark {
     margin-left: 0;
+  }
+
+  .ep3-timeline .earth-timeline-current .time-zoom-mini-clock {
+    width: 29px;
+    height: 29px;
+  }
+
+  .ep3-timeline .earth-timeline-current .time-zoom-mark-copy small {
+    font-size: 0.48rem;
   }
 
   .ep3-part-overview ol {

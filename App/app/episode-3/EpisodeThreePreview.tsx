@@ -38,6 +38,16 @@ const sceneSymbols = [
   "N", "◆", "▣", "?",
 ];
 
+const sceneColors = [
+  "#e08a38",
+  "#43b8d0",
+  "#9bc94a",
+  "#6fbcd3",
+  "#d96251",
+  "#c78a4e",
+  "#e0ad54",
+] as const;
+
 const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
   scene.quiz.map((quiz) => ({
     id: scene.id,
@@ -119,6 +129,9 @@ function EpisodeThreeTimeline({
             <button
               type="button"
               className={index === activeIndex ? "is-current" : ""}
+              style={{
+                "--milestone-color": sceneColors[index % sceneColors.length],
+              } as CSSProperties}
               onClick={() => onSelect(index)}
               aria-current={index === activeIndex ? "step" : undefined}
               aria-label={`Szene ${item.id}: ${item.title}, ${item.timeLabel}`}
