@@ -624,6 +624,44 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   );
 });
 
+test("ergänzt Episode 3 um ein kompaktes Personenmenü", async () => {
+  const people = await readFile(
+    new URL("../app/data/episode3People.ts", import.meta.url),
+    "utf8",
+  );
+  const app = await readFile(
+    new URL("../app/episode-3/EpisodeThreePreview.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  for (const name of [
+    "Cai Lun",
+    "Al-Chwarizmi",
+    "Johannes Gutenberg",
+    "Christoph Kolumbus",
+    "James Watt",
+    "George Stephenson",
+    "Michael Faraday",
+    "Werner von Siemens",
+    "Fritz Haber & Carl Bosch",
+    "Gottlieb Daimler & Wilhelm Maybach",
+    "Carl & Bertha Benz",
+  ]) {
+    assert.match(people, new RegExp(name.replace(/[&]/g, "&")));
+  }
+  assert.match(app, /Menschen &amp; Namen/);
+  assert.match(app, /aria-expanded=\{peopleOpen\}/);
+  assert.match(app, /openPersonId === person\.id/);
+  assert.match(app, /setOpenPersonId\(personOpen \? null : person\.id\)/);
+  assert.match(app, /scenePeople\.length === 1 \? "1 Porträt"/);
+  assert.match(styles, /\.ep3-people-summary/);
+  assert.match(styles, /@media \(max-width: 430px\)/);
+});
+
 test("erklärt die drei Zeitebenen mit einem wiederkehrenden Zeit-Zoom", async () => {
   const episodeOneApp = await readFile(
     new URL("../app/ZeitreiseApp.tsx", import.meta.url),
@@ -933,7 +971,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v134"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v135"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1158,7 +1196,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v134"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v135"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

@@ -22,6 +22,7 @@ import {
   episodeThreeScenes,
 } from "../data/episode3";
 import { episodeThreePart } from "../data/episode3Parts";
+import { episodeThreePeopleByScene } from "../data/episode3People";
 import type { SceneTheme } from "../data/scenes";
 import {
   EpisodeThreeNextPartCard,
@@ -160,6 +161,8 @@ export default function EpisodeThreePreview() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [panel, setPanel] = useState<Panel>("entdecken");
+  const [peopleOpen, setPeopleOpen] = useState(false);
+  const [openPersonId, setOpenPersonId] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(true);
   const [introOpen, setIntroOpen] = useState(true);
   const [sceneDuration, setSceneDuration] = useState<number>(episodeThreeSceneDurations[1]);
@@ -182,6 +185,7 @@ export default function EpisodeThreePreview() {
   } | null>(null);
 
   const scene = episodeThreeScenes[currentIndex];
+  const scenePeople = episodeThreePeopleByScene[scene.id] ?? [];
   const isPartEndingScene = scene.id === 9 || scene.id === 15 || scene.id === 21 || scene.id === 28;
   const activePart = scene.id <= 9 ? 1 : scene.id <= 15 ? 2 : scene.id <= 21 ? 3 : 4;
   const currentPart = episodeThreePart(activePart);
@@ -221,6 +225,8 @@ export default function EpisodeThreePreview() {
     setQuizChecked(false);
     setQuizQuestionIndex(0);
     setPanel("entdecken");
+    setPeopleOpen(false);
+    setOpenPersonId(null);
     window.localStorage.setItem("zeitreise-episode3-current-scene", String(nextIndex));
   }, []);
 
@@ -702,6 +708,51 @@ export default function EpisodeThreePreview() {
                   </article>
                 ))}
               </div>
+              {scenePeople.length > 0 ? (
+                <div className={`ep3-people ${peopleOpen ? "is-open" : ""}`}>
+                  <button
+                    type="button"
+                    className="ep3-people-summary"
+                    aria-expanded={peopleOpen}
+                    onClick={() => {
+                      setPeopleOpen((value) => !value);
+                      if (peopleOpen) setOpenPersonId(null);
+                    }}
+                  >
+                    <span>
+                      <small>Zusatzwissen</small>
+                      <strong>Menschen &amp; Namen</strong>
+                    </span>
+                    <em>{scenePeople.length === 1 ? "1 Porträt" : `${scenePeople.length} Porträts`}</em>
+                    <i aria-hidden="true">{peopleOpen ? "−" : "+"}</i>
+                  </button>
+                  {peopleOpen ? (
+                    <div className="ep3-people-list">
+                      {scenePeople.map((person) => {
+                        const personOpen = openPersonId === person.id;
+                        return (
+                          <article className={personOpen ? "is-open" : ""} key={person.id}>
+                            <button
+                              type="button"
+                              className="ep3-person-summary"
+                              aria-expanded={personOpen}
+                              onClick={() => setOpenPersonId(personOpen ? null : person.id)}
+                            >
+                              <span className="ep3-person-initials" aria-hidden="true">{person.initials}</span>
+                              <span className="ep3-person-name">
+                                <strong>{person.name}</strong>
+                                <small>{person.years}</small>
+                              </span>
+                              <i aria-hidden="true">{personOpen ? "−" : "+"}</i>
+                            </button>
+                            {personOpen ? <p>{person.text}</p> : null}
+                          </article>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
             </section>
           ) : null}
 
