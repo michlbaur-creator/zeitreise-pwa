@@ -653,7 +653,9 @@ test("ergänzt Episode 3 um ein kompaktes Personenmenü", async () => {
   ]) {
     assert.match(people, new RegExp(name.replace(/[&]/g, "&")));
   }
+  assert.match(app, /scene\.discoveries\.length \+ 1/);
   assert.match(app, /Menschen &amp; Namen/);
+  assert.match(app, /Kurzporträts öffnen/);
   assert.match(app, /aria-expanded=\{peopleOpen\}/);
   assert.match(app, /openPersonId === person\.id/);
   assert.match(app, /setOpenPersonId\(personOpen \? null : person\.id\)/);
@@ -971,7 +973,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v135"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v136"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1196,7 +1198,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v135"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v136"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

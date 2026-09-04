@@ -707,52 +707,55 @@ export default function EpisodeThreePreview() {
                     <p><strong>{discovery.title}</strong><small>{discovery.text}</small></p>
                   </article>
                 ))}
-              </div>
-              {scenePeople.length > 0 ? (
-                <div className={`ep3-people ${peopleOpen ? "is-open" : ""}`}>
-                  <button
-                    type="button"
-                    className="ep3-people-summary"
-                    aria-expanded={peopleOpen}
-                    onClick={() => {
-                      setPeopleOpen((value) => !value);
-                      if (peopleOpen) setOpenPersonId(null);
-                    }}
-                  >
-                    <span>
-                      <small>Zusatzwissen</small>
-                      <strong>Menschen &amp; Namen</strong>
-                    </span>
-                    <em>{scenePeople.length === 1 ? "1 Porträt" : `${scenePeople.length} Porträts`}</em>
-                    <i aria-hidden="true">{peopleOpen ? "−" : "+"}</i>
-                  </button>
-                  {peopleOpen ? (
-                    <div className="ep3-people-list">
-                      {scenePeople.map((person) => {
-                        const personOpen = openPersonId === person.id;
-                        return (
-                          <article className={personOpen ? "is-open" : ""} key={person.id}>
-                            <button
-                              type="button"
-                              className="ep3-person-summary"
-                              aria-expanded={personOpen}
-                              onClick={() => setOpenPersonId(personOpen ? null : person.id)}
-                            >
-                              <span className="ep3-person-initials" aria-hidden="true">{person.initials}</span>
-                              <span className="ep3-person-name">
-                                <strong>{person.name}</strong>
-                                <small>{person.years}</small>
-                              </span>
-                              <i aria-hidden="true">{personOpen ? "−" : "+"}</i>
-                            </button>
-                            {personOpen ? <p>{person.text}</p> : null}
-                          </article>
-                        );
-                      })}
+                {scenePeople.length > 0 ? (
+                  <div className="ep3-discovery-person-row">
+                    <span>{scene.discoveries.length + 1}</span>
+                    <div className={`ep3-people ${peopleOpen ? "is-open" : ""}`}>
+                      <button
+                        type="button"
+                        className="ep3-people-summary"
+                        aria-expanded={peopleOpen}
+                        onClick={() => {
+                          setPeopleOpen((value) => !value);
+                          if (peopleOpen) setOpenPersonId(null);
+                        }}
+                      >
+                        <span>
+                          <strong>Menschen &amp; Namen</strong>
+                          <small>{peopleOpen ? "Kurzporträts schließen" : "Kurzporträts öffnen"}</small>
+                        </span>
+                        <em>{scenePeople.length === 1 ? "1 Porträt" : `${scenePeople.length} Porträts`}</em>
+                        <i aria-hidden="true">{peopleOpen ? "−" : "+"}</i>
+                      </button>
+                      {peopleOpen ? (
+                        <div className="ep3-people-list">
+                          {scenePeople.map((person) => {
+                            const personOpen = openPersonId === person.id;
+                            return (
+                              <div className={personOpen ? "is-open" : ""} key={person.id}>
+                                <button
+                                  type="button"
+                                  className="ep3-person-summary"
+                                  aria-expanded={personOpen}
+                                  onClick={() => setOpenPersonId(personOpen ? null : person.id)}
+                                >
+                                  <span className="ep3-person-initials" aria-hidden="true">{person.initials}</span>
+                                  <span className="ep3-person-name">
+                                    <strong>{person.name}</strong>
+                                    <small>{person.years}</small>
+                                  </span>
+                                  <i aria-hidden="true">{personOpen ? "−" : "+"}</i>
+                                </button>
+                                {personOpen ? <p>{person.text}</p> : null}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
-                </div>
-              ) : null}
+                  </div>
+                ) : null}
+              </div>
             </section>
           ) : null}
 
