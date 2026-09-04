@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v136";
+const CACHE_NAME = "zeitreise-v137";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -210,6 +210,7 @@ const EPISODE_THREE_ASSETS = {
   ],
   5: [
     "/assets/episode3/scene05/hintergrund-aehre-veraendert-sich-entwurf-v1.png",
+    "/assets/episode3/scene05/hintergrund-kulturaehren-v1.png",
     "/assets/episode3/audio/sprecher-szene-05-v1.m4a",
   ],
   6: [
@@ -218,6 +219,7 @@ const EPISODE_THREE_ASSETS = {
   ],
   7: [
     "/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
+    "/assets/episode3/scene07/hintergrund-kulturpflanzen-auswahl-v1.png",
     "/assets/episode3/audio/sprecher-szene-07-v1.m4a",
   ],
   8: [
@@ -275,6 +277,7 @@ const EPISODE_THREE_ASSETS = {
   ],
   20: [
     "/assets/episode3/scene20/hintergrund-atlantische-begegnung-v1.png",
+    "/assets/episode3/scene20/hintergrund-atlantik-folgen-v1.png",
     "/assets/episode3/audio/sprecher-szene-20-v1.m4a",
   ],
   21: [

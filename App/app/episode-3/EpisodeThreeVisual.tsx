@@ -129,11 +129,14 @@ export function EpisodeThreeVisual({
 }
 
 function sequenceWindowForScene(sceneId: number): [number, number] {
+  if (sceneId === 5) return [0.42, 0.62];
+  if (sceneId === 7) return [0.36, 0.56];
   if (sceneId === 10) return [0.24, 0.44];
   if (sceneId === 11) return [0.2, 0.42];
   if (sceneId === 13) return [0.44, 0.62];
   if (sceneId === 15) return [0.34, 0.55];
   if (sceneId === 19) return [0.48, 0.64];
+  if (sceneId === 20) return [0.24, 0.42];
   if (sceneId === 21) return [0.68, 0.8];
   if (sceneId === 23) return [0.36, 0.58];
   if (sceneId === 24) return [0.4, 0.62];

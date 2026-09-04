@@ -118,6 +118,14 @@ export const episodeThreeSceneImages = {
 } as const;
 
 export const episodeThreeSceneImageSequences = {
+  5: [
+    "/assets/episode3/scene05/hintergrund-aehre-veraendert-sich-entwurf-v1.png",
+    "/assets/episode3/scene05/hintergrund-kulturaehren-v1.png",
+  ],
+  7: [
+    "/assets/episode3/scene07/hintergrund-idee-entsteht-wieder-entwurf-v1.png",
+    "/assets/episode3/scene07/hintergrund-kulturpflanzen-auswahl-v1.png",
+  ],
   9: [
     "/assets/episode3/scene09/hintergrund-dorf-waechst-v1.png",
     "/assets/episode3/scene09/hintergrund-dorf-belastungen-v1.png",
@@ -145,6 +153,10 @@ export const episodeThreeSceneImageSequences = {
   19: [
     "/assets/episode3/scene19/hintergrund-hafen-vor-pest-v1.png",
     "/assets/episode3/scene19/hintergrund-hafen-nach-pest-v1.png",
+  ],
+  20: [
+    "/assets/episode3/scene20/hintergrund-atlantische-begegnung-v1.png",
+    "/assets/episode3/scene20/hintergrund-atlantik-folgen-v1.png",
   ],
   21: [
     "/assets/episode3/scene21/hintergrund-versklavung-register-v1.png",

@@ -391,6 +391,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeVisual, /NitrogenJourney/);
   assert.match(episodeThreeVisual, /sequenceWindowForScene/);
   assert.match(episodeThreeVisual, /sceneId === 13\) return \[0\.44, 0\.62\]/);
+  assert.match(episodeThreeVisual, /sceneId === 5\) return \[0\.42, 0\.62\]/);
+  assert.match(episodeThreeVisual, /sceneId === 7\) return \[0\.36, 0\.56\]/);
+  assert.match(episodeThreeVisual, /sceneId === 20\) return \[0\.24, 0\.42\]/);
   assert.doesNotMatch(episodeThreeApp, /scene\.id === 9 \? 1\.2 : 1/);
   assert.doesNotMatch(episodeThreeApp, /audio\.playbackRate/);
   assert.match(episodeThreeApp, /setSceneDuration\(audio\.duration\)/);
@@ -587,6 +590,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
       "scene19/hintergrund-hafen-vor-pest-v1.png",
       "scene19/hintergrund-hafen-nach-pest-v1.png",
       "scene20/hintergrund-atlantische-begegnung-v1.png",
+      "scene05/hintergrund-kulturaehren-v1.png",
+      "scene07/hintergrund-kulturpflanzen-auswahl-v1.png",
+      "scene20/hintergrund-atlantik-folgen-v1.png",
       "scene21/hintergrund-versklavung-register-v1.png",
       "scene21/hintergrund-widerstand-gemeinschaft-v1.png",
     ].map((assetPath) =>
@@ -973,7 +979,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v136"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v137"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1198,7 +1204,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v136"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v137"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
