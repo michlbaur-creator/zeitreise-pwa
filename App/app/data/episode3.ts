@@ -23,8 +23,11 @@ export const episodeThreeSceneVideos = {
   4: "/assets/episode3/scene04/bewegung-jericho-veo-v1.mp4",
   6: "/assets/episode3/scene06/bewegung-ziegenherde-veo-v1.mp4",
   8: "/assets/episode3/scene08/bewegung-catalhoeyuek-veo-v1.mp4",
+  10: "/assets/episode3/scene10/bewegung-getreidespeicher-veo-v1.mp4",
   14: "/assets/episode3/scene14/bewegung-uruk-kanalstadt-veo-v1.mp4",
   16: "/assets/episode3/scene16/bewegung-segelhandel-veo-v1.mp4",
+  22: "/assets/episode3/scene22/bewegung-kohle-dampfmaschine-veo-v1.mp4",
+  26: "/assets/episode3/scene26/bewegung-oel-mobilitaet-veo-v1.mp4",
 } as const;
 
 export const episodeThreeSceneAudio = {
@@ -37,7 +40,7 @@ export const episodeThreeSceneAudio = {
   7: "/assets/episode3/audio/sprecher-szene-07-v1.m4a",
   8: "/assets/episode3/audio/sprecher-und-veo-szene-08-v1.m4a",
   9: "/assets/episode3/audio/sprecher-szene-09-v1.m4a",
-  10: "/assets/episode3/audio/sprecher-szene-10-v1.m4a",
+  10: "/assets/episode3/audio/sprecher-und-veo-szene-10-v1.m4a",
   11: "/assets/episode3/audio/sprecher-szene-11-v1.m4a",
   12: "/assets/episode3/audio/sprecher-szene-12-v1.m4a",
   13: "/assets/episode3/audio/sprecher-szene-13-v1.m4a",
@@ -49,11 +52,11 @@ export const episodeThreeSceneAudio = {
   19: "/assets/episode3/audio/sprecher-szene-19-v1.m4a",
   20: "/assets/episode3/audio/sprecher-szene-20-v1.m4a",
   21: "/assets/episode3/audio/sprecher-szene-21-v1.m4a",
-  22: "/assets/episode3/audio/sprecher-szene-22-v1.m4a",
+  22: "/assets/episode3/audio/sprecher-und-veo-szene-22-v1.m4a",
   23: "/assets/episode3/audio/sprecher-szene-23-v1.m4a",
   24: "/assets/episode3/audio/sprecher-szene-24-v1.m4a",
   25: "/assets/episode3/audio/sprecher-szene-25-v1.m4a",
-  26: "/assets/episode3/audio/sprecher-szene-26-v1.m4a",
+  26: "/assets/episode3/audio/sprecher-und-veo-szene-26-v1.m4a",
   27: "/assets/episode3/audio/sprecher-szene-27-v1.m4a",
   28: "/assets/episode3/audio/sprecher-szene-28-v1.m4a",
 } as const;

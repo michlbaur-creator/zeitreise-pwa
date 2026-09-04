@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v137";
+const CACHE_NAME = "zeitreise-v138";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -233,7 +233,7 @@ const EPISODE_THREE_ASSETS = {
   10: [
     "/assets/episode3/scene10/hintergrund-dorfvorrat-v1.png",
     "/assets/episode3/scene10/hintergrund-stadtspeicher-v1.png",
-    "/assets/episode3/audio/sprecher-szene-10-v1.m4a",
+    "/assets/episode3/audio/sprecher-und-veo-szene-10-v1.m4a",
   ],
   11: [
     "/assets/episode3/scene12/hintergrund-nahrungsanlieferung-v1.png",
@@ -287,7 +287,7 @@ const EPISODE_THREE_ASSETS = {
   ],
   22: [
     "/assets/episode3/scene22/hintergrund-kohle-dampfmaschine-v1.png",
-    "/assets/episode3/audio/sprecher-szene-22-v1.m4a",
+    "/assets/episode3/audio/sprecher-und-veo-szene-22-v1.m4a",
   ],
   23: [
     "/assets/episode3/scene23/hintergrund-vor-eisenbahn-v1.png",
@@ -304,7 +304,7 @@ const EPISODE_THREE_ASSETS = {
   ],
   26: [
     "/assets/episode3/scene26/hintergrund-oel-mobilitaet-v1.png",
-    "/assets/episode3/audio/sprecher-szene-26-v1.m4a",
+    "/assets/episode3/audio/sprecher-und-veo-szene-26-v1.m4a",
   ],
   27: [
     "/assets/episode3/scene27/hintergrund-computerraum-v1.png",
