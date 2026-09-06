@@ -132,6 +132,14 @@ function EpisodeThreeTimeline({
         <div className="earth-timeline-track" aria-hidden="true">
           <span style={{ width: `${travelled}%` }} />
         </div>
+        <a
+          className="ep3-historia-range"
+          href="https://historia.mibaso.de"
+          aria-label="Historia: historischer Zoom von 3100 vor Christus bis 476 nach Christus"
+        >
+          <strong>Historia</strong>
+          <span>3100 v. Chr.–476 n. Chr.</span>
+        </a>
         <div className="earth-timeline-stops">
           {episodeThreeScenes.map((item, index) => (
             <button
@@ -641,6 +649,15 @@ export default function EpisodeThreePreview() {
                 randomize
               />
               <EpisodeThreeNextPartCard partId={2} onContinue={() => goToScene(9)} />
+              <a className="ep3-historia-zoom-card" href="https://historia.mibaso.de">
+                <span className="ep3-historia-zoom-mark" aria-hidden="true">H</span>
+                <span className="ep3-historia-zoom-copy">
+                  <small>Historia · historischer Zoom</small>
+                  <strong>Diesen Abschnitt genauer ansehen</strong>
+                  <span>Klassische Weltgeschichte · 3100 v. Chr. bis 476 n. Chr.</span>
+                </span>
+                <em>Historia <span aria-hidden="true">→</span></em>
+              </a>
             </>
           ) : null}
           {scene.id === 15 ? (
