@@ -368,12 +368,14 @@ export default function EpisodeThreePreview() {
           Boolean(signature) &&
           knownSignature !== signature;
 
+        const registration = await navigator.serviceWorker?.getRegistration();
+        // Ein Worker-Fehler darf das Laden der bereits erreichbaren Seite nicht verhindern.
+        await registration?.update().catch(() => undefined);
+        if (disposed) return;
+
         if (signature) {
           window.localStorage.setItem("zeitreise-episode3-app-version", signature);
         }
-
-        const registration = await navigator.serviceWorker?.getRegistration();
-        await registration?.update();
 
         if (!pageIsOlder && !versionChanged) return;
         if (isPlayingRef.current) {
@@ -391,11 +393,17 @@ export default function EpisodeThreePreview() {
     const checkWhenVisible = () => {
       if (document.visibilityState === "visible") void checkForUpdate();
     };
+    const onControllerChange = () => {
+      if (disposed) return;
+      if (isPlayingRef.current) updateWaitingRef.current = true;
+      else reloadForUpdate();
+    };
 
     void checkForUpdate();
     const timer = window.setInterval(checkForUpdate, 3 * 60 * 1000);
     window.addEventListener("focus", checkForUpdate);
     window.addEventListener("pageshow", checkForUpdate);
+    navigator.serviceWorker?.addEventListener("controllerchange", onControllerChange);
     document.addEventListener("visibilitychange", checkWhenVisible);
 
     return () => {
@@ -403,6 +411,7 @@ export default function EpisodeThreePreview() {
       window.clearInterval(timer);
       window.removeEventListener("focus", checkForUpdate);
       window.removeEventListener("pageshow", checkForUpdate);
+      navigator.serviceWorker?.removeEventListener("controllerchange", onControllerChange);
       document.removeEventListener("visibilitychange", checkWhenVisible);
     };
   }, [reloadForUpdate]);

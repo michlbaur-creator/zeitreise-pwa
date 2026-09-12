@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v140";
+const CACHE_NAME = "zeitreise-v141";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -352,7 +352,7 @@ self.addEventListener("activate", (event) => {
       );
       await self.clients.claim();
 
-      if (CACHE_NAME === "zeitreise-v117") {
+      if (CACHE_NAME === "zeitreise-v141") {
         const windows = await self.clients.matchAll({
           type: "window",
           includeUncontrolled: true,
