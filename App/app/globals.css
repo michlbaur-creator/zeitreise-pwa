@@ -520,7 +520,10 @@ button:disabled {
     transform 120ms linear;
 }
 
-.ep2-compact-background { transition: opacity 120ms linear, filter 180ms ease, transform 120ms linear; }
+.ep2-compact-background {
+  transform: none;
+  transition: opacity 160ms linear;
+}
 .ep2-compact-background-a { z-index: 2; }
 .ep2-compact-background-b { z-index: 3; }
 

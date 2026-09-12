@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef } from "react";
 import type { EpisodeTwoScene } from "../data/episode2";
 import { episodeTwoCompactVisuals } from "../data/episode2CompactVisuals";
 import { EpisodeThreeChapterEnding } from "../episode-3/EpisodeThreePartGuide";
@@ -29,7 +29,6 @@ export function EpisodeTwoVisual({
   const visual = episodeTwoCompactVisuals.find((item) => item.id === scene.id);
   const secondImageOpacity = Math.min(1, Math.max(0, (progress - 0.46) / 0.16));
   const treeOpacity = Math.min(1, Math.max(0, (progress - 0.38) / 0.18));
-  const style = { "--ep2-progress": progress } as CSSProperties;
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -60,7 +59,6 @@ export function EpisodeTwoVisual({
   return (
     <div
       className={`ep2-visual ep2-${chapter} ep2-compact-scene-${scene.id} ep2-scene-${visual?.overlaySceneId ?? scene.id} ${isPlaying ? "is-playing" : ""}`}
-      style={style}
       aria-label={`Szenenbild für Szene ${scene.id}: ${scene.title}`}
     >
       <div className="stage-topline">

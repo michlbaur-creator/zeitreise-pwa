@@ -1003,7 +1003,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v139"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v140"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1062,6 +1062,23 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   assert.doesNotMatch(worker, /bewegung-neandertaler-veo-v1\.mp4/);
   assert.match(worker, /isStreamingVideo/);
   assert.match(worker, /event\.respondWith\(fetch\(event\.request\)\)/);
+});
+
+test("hält die Standbilder von Episode 2 pixelstabil", async () => {
+  const visual = await readFile(
+    new URL("../app/episode-2/EpisodeTwoVisual.tsx", import.meta.url),
+    "utf8",
+  );
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.doesNotMatch(visual, /--ep2-progress/);
+  assert.match(
+    styles,
+    /\.ep2-compact-background\s*\{[\s\S]*?transform: none;[\s\S]*?transition: opacity 160ms linear;/,
+  );
 });
 
 test("spielt sieben ausgewählte Veo-Clips in Episode 1 mit gemeinsamer Tonspur", async () => {
@@ -1228,7 +1245,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v139"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v140"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
