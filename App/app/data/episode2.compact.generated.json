@@ -108,7 +108,7 @@
     ],
     "quiz": {
       "kind": "optional",
-      "question": "Wie sah die Evolution der Menschenaffen aus?",
+      "question": "Welches Bild passt zur Evolution der Menschenaffen?",
       "options": [
         "Wie eine gerade Treppe",
         "Wie ein Baum mit vielen Zweigen",
@@ -166,11 +166,11 @@
     ],
     "quiz": {
       "kind": "optional",
-      "question": "Von wem stammen Menschen ab?",
+      "question": "Wie sind Menschen mit heutigen Schimpansen verwandt?",
       "options": [
-        "Direkt von heutigen Schimpansen",
-        "Direkt von heutigen Gorillas",
-        "Von älteren Populationen, mit denen auch Schimpansen gemeinsame Vorfahren teilen",
+        "Menschen stammen direkt von heutigen Schimpansen ab",
+        "Schimpansen stammen direkt von heutigen Menschen ab",
+        "Beide Linien gehen auf ältere gemeinsame Vorfahren zurück",
         "Von keiner anderen Lebensform"
       ],
       "correctIndex": 2
@@ -224,7 +224,7 @@
     ],
     "quiz": {
       "kind": "optional",
-      "question": "Was zeigt Ardis Körper besonders gut?",
+      "question": "Welche Merkmalsmischung zeigt Ardis Körper?",
       "options": [
         "Eine fertige moderne Lauftechnik",
         "Eine Mischung aus Klettern und möglicher Zweibeinigkeit",
@@ -545,7 +545,7 @@
     ],
     "quiz": {
       "kind": "optional",
-      "question": "Warum ist die Einteilung dieser Menschenformen schwierig?",
+      "question": "Warum ist die Einteilung früher Menschenfossilien in Arten schwierig?",
       "options": [
         "Weil Fossilien alle gleich aussehen",
         "Weil Funde lückenhaft sind und Merkmale sich mosaikartig verändern",
@@ -596,7 +596,7 @@
     ],
     "quiz": {
       "kind": "optional",
-      "question": "Welche Aussage über Neandertaler ist richtig?",
+      "question": "Was wissen Forschende heute über Neandertaler?",
       "options": [
         "Sie konnten keine Werkzeuge herstellen.",
         "Sie waren direkte primitive Stufen des modernen Menschen.",
@@ -648,7 +648,7 @@
     ],
     "quiz": {
       "kind": "optional",
-      "question": "Warum bleibt unser Bild der Denisova-Menschen trotz des Harbin-Schädels unvollständig?",
+      "question": "Warum wissen wir über Denisova-Menschen noch vergleichsweise wenig?",
       "options": [
         "Ihre DNA ist unbekannt.",
         "Die sicher zugeordneten Funde bleiben selten und stammen aus sehr unterschiedlichen Zeiten und Regionen.",
@@ -759,7 +759,7 @@
     ],
     "quiz": {
       "kind": "optional",
-      "question": "Welche Aussage fasst Episode 2 am besten zusammen?",
+      "question": "Welches Bild beschreibt die menschliche Evolution am besten?",
       "options": [
         "Evolution führte geradlinig und zielgerichtet zum Menschen.",
         "Nur eine Menschenform lebte jemals gleichzeitig.",

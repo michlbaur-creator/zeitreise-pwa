@@ -30,7 +30,7 @@ type QuizAchievement = {
 };
 
 type CubeTopic = {
-  label: "Bleiben" | "Ordnen" | "Vernetzen" | "Beschleunigen";
+  label: "Leben" | "Mensch" | "Bleiben" | "Ordnen" | "Vernetzen" | "Beschleunigen";
   symbol: string;
   className: string;
 };
@@ -45,6 +45,7 @@ export function FinalEpisodeQuiz({
   randomize = false,
   celebratePerfect = false,
   timeFelsenChallenge = false,
+  singleEpisodeChallenge = false,
   soundMuted = false,
 }: {
   scenes: QuizScene[];
@@ -54,6 +55,7 @@ export function FinalEpisodeQuiz({
   randomize?: boolean;
   celebratePerfect?: boolean;
   timeFelsenChallenge?: boolean;
+  singleEpisodeChallenge?: boolean;
   soundMuted?: boolean;
 }) {
   const questionPool = useMemo<FinalQuestion[]>(
@@ -74,6 +76,7 @@ export function FinalEpisodeQuiz({
     timeFelsenChallenge ? 20 : questionCount ?? questionPool.length,
     questionPool.length,
   );
+  const challengeMode = timeFelsenChallenge || singleEpisodeChallenge;
   const [questions, setQuestions] = useState<FinalQuestion[]>(() =>
     questionPool.slice(0, visibleQuestionCount),
   );
@@ -86,20 +89,20 @@ export function FinalEpisodeQuiz({
   const [bestScore, setBestScore] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!timeFelsenChallenge || typeof window === "undefined") return;
+    if (!challengeMode || typeof window === "undefined") return;
     let cancelled = false;
     window.queueMicrotask(() => {
       if (cancelled) return;
       try {
         const storedValue = window.localStorage.getItem(
-          EPISODE_THREE_BEST_SCORE_KEY,
+          challengeBestScoreKey(episode, visibleQuestionCount, timeFelsenChallenge),
         );
         if (storedValue === null) return;
         const storedScore = Number(storedValue);
         if (
           Number.isInteger(storedScore) &&
           storedScore >= 0 &&
-            storedScore <= 20
+            storedScore <= visibleQuestionCount
         ) {
           setBestScore(storedScore);
         }
@@ -110,7 +113,7 @@ export function FinalEpisodeQuiz({
     return () => {
       cancelled = true;
     };
-  }, [timeFelsenChallenge]);
+  }, [challengeMode, episode, timeFelsenChallenge, visibleQuestionCount]);
 
   if (!questionPool.length || !questions.length) return null;
 
@@ -126,12 +129,16 @@ export function FinalEpisodeQuiz({
   const strongResult = Math.ceil(questions.length * 0.78);
   const solidResult = Math.ceil(questions.length * 0.56);
   const achievement = achievementForScore(score, questions.length);
-  const cubeTopic = topicForScene(question.sceneId);
+  const cubeTopic = singleEpisodeChallenge
+    ? topicForEpisode(episode)
+    : topicForScene(question.sceneId);
 
   const reset = () => {
     const nextQuestions = randomize
       ? timeFelsenChallenge
         ? balancedEpisodeThreeQuestions(questionPool, visibleQuestionCount)
+        : singleEpisodeChallenge
+          ? balancedSingleEpisodeQuestions(questionPool, visibleQuestionCount)
         : shuffled(questionPool).slice(0, visibleQuestionCount)
       : questionPool.slice(0, visibleQuestionCount);
     setQuestions(nextQuestions);
@@ -154,12 +161,12 @@ export function FinalEpisodeQuiz({
   const next = () => {
     if (questionIndex === questions.length - 1) {
       setFinished(true);
-      if (timeFelsenChallenge) {
+      if (challengeMode) {
         const nextBestScore = Math.max(bestScore ?? 0, score);
         setBestScore(nextBestScore);
         try {
           window.localStorage.setItem(
-            EPISODE_THREE_BEST_SCORE_KEY,
+            challengeBestScoreKey(episode, visibleQuestionCount, timeFelsenChallenge),
             String(nextBestScore),
           );
         } catch {
@@ -178,28 +185,35 @@ export function FinalEpisodeQuiz({
 
   return (
     <section
-      className={`final-quiz ${isEpisodeThree ? "quiz-learning-light" : ""} ${timeFelsenChallenge ? "final-quiz-timefelsen" : ""}`}
+      className={`final-quiz quiz-learning-light ${challengeMode ? "final-quiz-timefelsen" : ""} ${singleEpisodeChallenge ? `final-quiz-single episode-${episode === 1 ? "one" : "two"}` : ""}`}
       data-part={timeFelsenChallenge ? Math.floor(questionIndex / 5) + 1 : episodePart}
       aria-labelledby="final-quiz-title"
     >
       {!started ? (
-        timeFelsenChallenge ? (
+        challengeMode ? (
           <div className="timefelsen-intro">
             <div className="timefelsen-intro-visual" aria-hidden="true">
-              <TimeCube topic={{ label: "Vernetzen", symbol: "⌁", className: "all" }} />
+              <TimeCube
+                topic={singleEpisodeChallenge ? topicForEpisode(episode) : { label: "Vernetzen", symbol: "⌁", className: "all" }}
+              />
               <span className="timefelsen-intro-orbit" />
             </div>
             <div className="timefelsen-intro-copy">
-              <p className="eyebrow">Episode 3 abgeschlossen</p>
-              <h2 id="final-quiz-title">Die Zeitfelsen-Challenge</h2>
+              <p className="eyebrow">Episode {episode} abgeschlossen</p>
+              <h2 id="final-quiz-title">
+                {singleEpisodeChallenge ? `Die Episode-${episode}-Challenge` : "Die Zeitfelsen-Challenge"}
+              </h2>
               <p>
-                Vier Teile, vier Farben, jeweils fünf Fragen. Nach jedem Teil
-                dreht sich dein Zeitwürfel weiter. Schaffst du alle 20?
+                {singleEpisodeChallenge
+                  ? episode === 1
+                    ? "Eine Episode, eine Würfelfläche: Leben. Neun Fragen führen von der jungen Erde bis zum Wimpernschlag Mensch."
+                    : "Eine Episode, eine Würfelfläche: Mensch. Neun Fragen folgen den vielen Ästen unserer Familiengeschichte."
+                  : "Vier Teile, vier Farben, jeweils fünf Fragen. Nach jedem Teil dreht sich dein Zeitwürfel weiter. Schaffst du alle 20?"}
               </p>
-              <AchievementScale />
+              <AchievementScale total={visibleQuestionCount} />
               {bestScore !== null ? (
                 <p className="timefelsen-best">
-                  Deine bisher beste Runde: <strong>{bestScore} von 20</strong>
+                  Deine bisher beste Runde: <strong>{bestScore} von {visibleQuestionCount}</strong>
                 </p>
               ) : null}
               <button type="button" onClick={reset}>
@@ -254,7 +268,7 @@ export function FinalEpisodeQuiz({
           </div>
         )
       ) : finished ? (
-        timeFelsenChallenge ? (
+        challengeMode ? (
           <div
             className={`timefelsen-result ${perfectResult ? "is-perfect" : ""} ${achievement.className}`}
             aria-live="polite"
@@ -268,25 +282,25 @@ export function FinalEpisodeQuiz({
             ) : null}
             <div className="timefelsen-reward" aria-hidden="true">
               <span className="timefelsen-tablet-mark">▤</span>
-              <small>Tontafel der Zeit</small>
+              <small>{timeFelsenChallenge ? "Tontafel der Zeit" : "Zeitfelsen-Abzeichen"}</small>
               <strong>
-                {score}<span>/20</span>
+                {score}<span>/{questions.length}</span>
               </strong>
             </div>
             <div className="timefelsen-result-copy">
               <p className="eyebrow">Dein Rang</p>
               <h2 id="final-quiz-title">{achievement.title}</h2>
-              <p>{achievement.description}</p>
+              <p>{achievementDescription(achievement.title, episode, questions.length)}</p>
               <QuizStaircase
-                answers={answers.slice(-5)}
-                currentIndex={5}
-                total={5}
+                answers={timeFelsenChallenge ? answers.slice(-5) : answers}
+                currentIndex={timeFelsenChallenge ? 5 : questions.length}
+                total={timeFelsenChallenge ? 5 : questions.length}
                 finished
               />
               <div className="timefelsen-result-meta">
                 <span>{score} richtige Antworten</span>
                 <span>{questions.length - score} offene Spuren</span>
-                <span>Bestwert {Math.max(bestScore ?? 0, score)}/20</span>
+                <span>Bestwert {Math.max(bestScore ?? 0, score)}/{questions.length}</span>
               </div>
               <button type="button" onClick={reset}>
                 Neue Zeitreise-Runde <span aria-hidden="true">↻</span>
@@ -397,14 +411,18 @@ export function FinalEpisodeQuiz({
               ))}
             </ol>
           ) : null}
-          {timeFelsenChallenge ? (
+          {challengeMode ? (
             <div className="timefelsen-dashboard">
               <div className="timefelsen-cube-copy">
                 <TimeCube
                   topic={cubeTopic}
                 />
                 <div>
-                  <small>Teil {Math.floor(questionIndex / 5) + 1} von 4</small>
+                  <small>
+                    {singleEpisodeChallenge
+                      ? `Episode ${episode} · eine Würfelfläche`
+                      : `Teil ${Math.floor(questionIndex / 5) + 1} von 4`}
+                  </small>
                   <strong>{cubeTopic.label}</strong>
                   <span>
                     Thema aus Szene {String(question.sceneId).padStart(2, "0")} · {question.sceneTitle}
@@ -412,9 +430,9 @@ export function FinalEpisodeQuiz({
                 </div>
               </div>
               <QuizStaircase
-                answers={answers.slice(Math.floor(questionIndex / 5) * 5)}
-                currentIndex={questionIndex % 5}
-                total={5}
+                answers={singleEpisodeChallenge ? answers : answers.slice(Math.floor(questionIndex / 5) * 5)}
+                currentIndex={singleEpisodeChallenge ? questionIndex : questionIndex % 5}
+                total={singleEpisodeChallenge ? questions.length : 5}
               />
             </div>
           ) : (
@@ -441,9 +459,11 @@ export function FinalEpisodeQuiz({
             </div>
           )}
 
-          {timeFelsenChallenge ? (
+          {challengeMode ? (
             <p className="timefelsen-question-number eyebrow">
-              Frage {questionIndex % 5 + 1} von 5 · Insgesamt {questionIndex + 1} von 20
+              {singleEpisodeChallenge
+                ? `Frage ${questionIndex + 1} von ${questions.length}`
+                : `Frage ${questionIndex % 5 + 1} von 5 · Insgesamt ${questionIndex + 1} von 20`}
             </p>
           ) : null}
           <h2 id="final-quiz-title">{question.question}</h2>
@@ -504,13 +524,20 @@ export function FinalEpisodeQuiz({
   );
 }
 
-function AchievementScale() {
-  const levels = [
-    { score: "0–10", title: "Zeitstarter" },
-    { score: "11–15", title: "Spurensucher" },
-    { score: "16–19", title: "Zeitkenner" },
-    { score: "20", title: "Zeitmeister" },
-  ];
+function AchievementScale({ total }: { total: number }) {
+  const levels = total === 20
+    ? [
+        { score: "0–10", title: "Zeitstarter" },
+        { score: "11–15", title: "Spurensucher" },
+        { score: "16–19", title: "Zeitkenner" },
+        { score: "20", title: "Zeitmeister" },
+      ]
+    : [
+        { score: "0–4", title: "Zeitstarter" },
+        { score: "5–6", title: "Spurensucher" },
+        { score: "7–8", title: "Zeitkenner" },
+        { score: String(total), title: "Zeitmeister" },
+      ];
 
   return (
     <div className="timefelsen-levels" aria-label="Vier mögliche Belohnungsstufen">
@@ -557,7 +584,9 @@ function QuizStaircase({
           return (
             <li
               className={`${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""} ${current ? "is-current" : ""}`}
-              style={{ "--step-height": `${38 + index * 10}px` } as CSSProperties}
+              style={{
+                "--step-height": `${38 + index * (total > 5 ? 6 : 10)}px`,
+              } as CSSProperties}
               aria-label={`Stufe ${index + 1}: ${status}`}
               aria-current={current ? "step" : undefined}
               key={index}
@@ -573,7 +602,7 @@ function QuizStaircase({
 }
 
 function TimeCube({ topic }: { topic: CubeTopic }) {
-  const faces = ["⌂", "⌁", "▦", "↯", "◎", "◎"];
+  const faces = [topic.symbol, "⌁", "▦", "↯", "◎", "◎"];
   const faceNames = ["front", "back", "right", "left", "top", "bottom"];
 
   return (
@@ -604,6 +633,23 @@ function topicForScene(sceneId: number): CubeTopic {
     return { label: "Vernetzen", symbol: "⌁", className: "network" };
   }
   return { label: "Beschleunigen", symbol: "↯", className: "speed" };
+}
+
+function topicForEpisode(episode: 1 | 2 | 3): CubeTopic {
+  if (episode === 1) {
+    return { label: "Leben", symbol: "✦", className: "life" };
+  }
+  return { label: "Mensch", symbol: "⑂", className: "human" };
+}
+
+function challengeBestScoreKey(
+  episode: 1 | 2 | 3,
+  total: number,
+  timeFelsenChallenge: boolean,
+) {
+  return timeFelsenChallenge
+    ? EPISODE_THREE_BEST_SCORE_KEY
+    : `zeitreise-episode${episode}-final-quiz-best-${total}`;
 }
 
 function achievementForScore(score: number, total: number): QuizAchievement {
@@ -637,6 +683,27 @@ function achievementForScore(score: number, total: number): QuizAchievement {
       "Der Anfang ist gemacht. Beim nächsten Würfelwurf kommen andere Fragen – und manches wirkt plötzlich erstaunlich vertraut.",
     className: "rank-starter",
   };
+}
+
+function achievementDescription(
+  title: QuizAchievement["title"],
+  episode: 1 | 2 | 3,
+  total: number,
+) {
+  if (title === "Zeitmeister") {
+    if (episode === 1) return `${total} von ${total}! Die großen Wendepunkte des Lebens sitzen.`;
+    if (episode === 2) return `${total} von ${total}! Im verzweigten Stammbaum findest du dich bestens zurecht.`;
+    return `${total} von ${total}! Die Tontafel der Zeit gehört dir – und der Zeitfelsen darf ausnahmsweise ein kleines Feuerwerk veranstalten.`;
+  }
+  if (title === "Zeitkenner") {
+    if (episode === 1) return "Von der jungen Erde bis zu den Säugetieren hast du die entscheidenden Spuren im Blick.";
+    if (episode === 2) return "Du erkennst die wichtigsten Verzweigungen und Begegnungen der Menschheitsgeschichte.";
+    return "Du erkennst die großen Zusammenhänge von Vorräten bis zur planetaren Wirkung.";
+  }
+  if (title === "Spurensucher") {
+    return "Die wichtigsten Spuren sind gefunden. Eine neue Runde bringt dich noch höher.";
+  }
+  return "Der Anfang ist gemacht. Beim nächsten Würfelwurf kommen andere Fragen – und manches wirkt plötzlich erstaunlich vertraut.";
 }
 
 function shuffled<T>(items: T[]) {
@@ -675,6 +742,19 @@ function balancedEpisodeThreeQuestions(
       ]);
     })
     .slice(0, count);
+}
+
+function balancedSingleEpisodeQuestions(
+  questionPool: FinalQuestion[],
+  count: number,
+) {
+  const discoveries = shuffled(
+    questionPool.filter((question) => question.source === "discovery"),
+  ).slice(0, Math.min(3, count));
+  const remainder = shuffled(
+    questionPool.filter((question) => !discoveries.includes(question)),
+  ).slice(0, count - discoveries.length);
+  return shuffled([...discoveries, ...remainder]);
 }
 
 function playPerfectFanfare() {

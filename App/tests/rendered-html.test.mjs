@@ -154,13 +154,16 @@ test("enthält Episode 2 vollständig und getrennt von Episode 1", async () => {
       ),
     ),
   );
-  assert.match(episodeTwoApp, /Sprecher: Micha/);
+  assert.doesNotMatch(episodeTwoApp, /Sprecher: Micha/);
   assert.doesNotMatch(episodeTwoApp, /Arbeitsfassung|noch nicht vollständig/);
   assert.doesNotMatch(episodeTwoApp, /Was ist sicher\?|So sicher ist die Darstellung/);
   assert.match(home, /href="\/episode-2\/\?start=1"/);
   assert.match(home, /aria-label="Weiter zu Episode 2"/);
   assert.match(episodeTwoApp, /← Episode 1: Geschichte des Lebens/);
-  assert.match(episodeTwoApp, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} episode=\{2\} \/>/);
+  assert.match(episodeTwoApp, /singleEpisodeChallenge/);
+  assert.match(episodeTwoApp, /source: "discovery" as const/);
+  assert.match(episodeTwoApp, /Richtig ist \{String\.fromCharCode/);
+  assert.match(episodeTwoApp, /isEndingQuizScene \? "is-one-tab"/);
   assert.match(episodeTwoApp, /currentIndex === episodeTwoScenes\.length - 1/);
   assert.match(episodeTwoApp, />Text lesen<\/button>/);
   assert.match(episodeTwoApp, />Entdecken<\/button>/);
@@ -1024,7 +1027,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v145"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v146"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1231,8 +1234,10 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
     "utf8",
   );
 
-  assert.match(app, /new Set\(\[1, 3, 5, 8, 11, 14, 17, 19, 21\]\)/);
-  assert.match(app, /<FinalEpisodeQuiz scenes=\{finalQuizScenes\} \/>/);
+  assert.match(app, /const finalQuizScenes = scenes\.flatMap/);
+  assert.match(app, /singleEpisodeChallenge/);
+  assert.match(app, /source: "discovery" as const/);
+  assert.match(app, /Richtig ist \{String\.fromCharCode/);
   assert.match(finalQuiz, /Das große Episode-1-Quiz/);
   assert.match(finalQuiz, /Das Abschlussquiz zu Teil 1/);
   assert.match(finalQuiz, /Das Abschlussquiz zu Städte, Schrift und Macht/);
@@ -1244,8 +1249,14 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(finalQuiz, /onClick=\{\(\) => answer\(index\)\}/);
   assert.doesNotMatch(finalQuiz, /Antwort prüfen/);
   assert.match(finalQuiz, /Nicht ganz\. Richtig ist/);
+  assert.match(finalQuiz, /Eine Episode, eine Würfelfläche: Leben/);
+  assert.match(finalQuiz, /Eine Episode, eine Würfelfläche: Mensch/);
+  assert.match(finalQuiz, /balancedSingleEpisodeQuestions/);
+  assert.match(finalQuiz, /label: "Leben"/);
+  assert.match(finalQuiz, /label: "Mensch"/);
   assert.match(app, /Quiz · Frage \{quizQuestionIndex \+ 1\} von/);
   assert.match(app, /Die nächste Frage kommt sofort\./);
+  assert.match(app, /isFinalChallengeVisible/);
   assert.match(footer, /Über mich/);
   assert.match(footer, /Impressum &amp; Datenschutz/);
   assert.doesNotMatch(footer, /site-footer-brand|<strong>Zeitreise<\/strong>/);
@@ -1266,7 +1277,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v145"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v146"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
@@ -1409,7 +1420,7 @@ test("vervollständigt die Entdeckungen in Szene 18", async () => {
   );
 
   assert.match(sceneData, /Entdecke fünf Bewohner dieser Welt/);
-  assert.match(sceneData, /Vögel sind die heute lebenden Nachfahren/);
+  assert.match(sceneData, /Sie sind die einzigen Dinosaurier, die bis heute überlebt haben/);
   assert.match(sceneData, /Flugsaurier waren keine Dinosaurier/);
   assert.match(sceneData, /explanations:/);
   assert.match(app, /scene\.discovery\?\.explanations/);

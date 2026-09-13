@@ -28,10 +28,18 @@ import { EpisodeTwoVisual } from "./EpisodeTwoVisual";
 
 type Panel = "sprecher" | "entdecken" | "quiz";
 
-const finalQuizSceneIds = new Set([1, 3, 5, 6, 8, 9, 11, 13, 14]);
-const finalQuizScenes = episodeTwoScenes.filter((scene) =>
-  finalQuizSceneIds.has(scene.id),
-);
+const finalQuizScenes = episodeTwoScenes.flatMap((scene) => [
+  {
+    id: scene.id,
+    title: scene.title,
+    quiz: { ...scene.quiz, source: "scene" as const },
+  },
+  {
+    id: scene.id,
+    title: scene.title,
+    quiz: { ...scene.followUpQuiz, source: "discovery" as const },
+  },
+]);
 
 const timelineColors = [
   "#e08a38",
@@ -188,7 +196,7 @@ export default function EpisodeTwoApp() {
     setSelectedOption(null);
     setQuizChecked(false);
     setQuizQuestionIndex(0);
-    setPanel("entdecken");
+    setPanel(episodeTwoScenes[nextIndex].id === 14 ? "sprecher" : "entdecken");
     window.localStorage.setItem("zeitreise-episode2-current-scene", String(nextIndex));
   }, []);
 
@@ -273,6 +281,7 @@ export default function EpisodeTwoApp() {
         storedIndex < episodeTwoScenes.length
       ) {
         setCurrentIndex(storedIndex);
+        setPanel(episodeTwoScenes[storedIndex].id === 14 ? "sprecher" : "entdecken");
       }
       const introSeen =
         window.localStorage.getItem("zeitreise-episode2-intro-seen") === "1";
@@ -669,23 +678,31 @@ export default function EpisodeTwoApp() {
             )}
           </div>
           {isEndingQuizScene ? (
-            <FinalEpisodeQuiz scenes={finalQuizScenes} episode={2} />
+            <FinalEpisodeQuiz
+              scenes={finalQuizScenes}
+              episode={2}
+              questionCount={9}
+              randomize
+              celebratePerfect
+              singleEpisodeChallenge
+              soundMuted={soundMuted}
+            />
           ) : null}
           <EpisodeSeriesNav currentEpisode={2} onSelectCurrentEpisode={() => goToScene(0)} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode2-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
 
-        <aside id="episode2-details" className={`content-panel ${detailsOpen ? "is-open" : ""}`}>
-          <div className={`panel-tabs ${isEndingQuizScene ? "is-two-tabs" : ""}`} aria-label="Szeneninhalt">
+        <aside id="episode2-details" className={`content-panel learning-light ${detailsOpen ? "is-open" : ""}`}>
+          <div className={`panel-tabs ${isEndingQuizScene ? "is-one-tab" : ""}`} aria-label="Szeneninhalt">
             <button type="button" aria-pressed={panel === "sprecher"} className={panel === "sprecher" ? "is-active" : ""} onClick={() => setPanel("sprecher")}>Text lesen</button>
-            <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button>
+            {!isEndingQuizScene ? <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button> : null}
             {!isEndingQuizScene ? <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button> : null}
           </div>
 
-          {panel === "sprecher" ? <section className="panel-section"><div className="ep2-audio-note"><span aria-hidden="true">◖))</span><p><strong>Sprecher: Micha</strong><small>Die Aufnahme ist mit dem Ablauf dieser Szene verbunden.</small></p></div><blockquote>{scene.speaker}</blockquote></section> : null}
+          {panel === "sprecher" ? <section className="panel-section"><blockquote>{scene.speaker}</blockquote></section> : null}
 
-          {panel === "entdecken" ? <section className="panel-section interactions">
+          {panel === "entdecken" && !isEndingQuizScene ? <section className="panel-section interactions">
             <div className="interaction-block ep2-hotspot-list"><div className="section-label"><span>Im Bild entdecken</span><i>2 Punkte</i></div>{scene.hotspots.map((hotspot, index) => <button type="button" onClick={() => setActiveHotspot(index)} key={hotspot.title}><span>{index + 1}</span><p><strong>{hotspot.title}</strong><small>{hotspot.text}</small></p></button>)}</div>
           </section> : null}
 
@@ -693,8 +710,8 @@ export default function EpisodeTwoApp() {
             <div className="interaction-block quiz-panel">
               <div className="section-label"><span>Quiz · Frage {quizQuestionIndex + 1} von {sceneQuizzes.length}</span></div>
               <h3>{activeQuiz.question}</h3>
-              <div className="quiz-options">{activeQuiz.options.map((option, index) => { const selected = selectedOption === index; const correct = quizChecked && selected && index === activeQuiz.correctIndex; const wrong = quizChecked && selected && index !== activeQuiz.correctIndex; return <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</button>; })}</div>
-              {quizChecked ? <div className={`quiz-result ${selectedOption === activeQuiz.correctIndex ? "is-correct" : "is-wrong"}`} role="status"><strong>{selectedOption === activeQuiz.correctIndex ? "Richtig." : "Noch nicht richtig."}</strong>{selectedOption !== activeQuiz.correctIndex ? <span>Versuch es einfach noch einmal.</span> : quizQuestionIndex < sceneQuizzes.length - 1 ? <span>Die nächste Frage kommt sofort.</span> : <span>Beide Fragen geschafft.</span>}</div> : null}
+              <div className="quiz-options">{activeQuiz.options.map((option, index) => { const selected = selectedOption === index; const correct = quizChecked && index === activeQuiz.correctIndex; const wrong = quizChecked && selected && index !== activeQuiz.correctIndex; return <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</button>; })}</div>
+              {quizChecked ? <div className={`quiz-result ${selectedOption === activeQuiz.correctIndex ? "is-correct" : "is-wrong"}`} role="status"><strong>{selectedOption === activeQuiz.correctIndex ? "Richtig." : "Noch nicht richtig."}</strong>{selectedOption !== activeQuiz.correctIndex ? <span>Richtig ist {String.fromCharCode(65 + activeQuiz.correctIndex)}: {activeQuiz.options[activeQuiz.correctIndex]}</span> : quizQuestionIndex < sceneQuizzes.length - 1 ? <span>Die nächste Frage kommt sofort.</span> : <span>Beide Fragen geschafft.</span>}</div> : null}
             </div>
           </section> : null}
         </aside>

@@ -371,7 +371,7 @@ export const scenes: Scene[] = [
     ],
     quiz: {
       question:
-        "Welcher Schritt machte aus frei treibenden Molekülen eine frühe, eigenständige Zelle?",
+        "Was grenzte in frühen Zellen einen eigenen Reaktionsraum ab?",
       options: [
         "Sie entwickelte sofort einen Zellkern.",
         "Sie begann, sichtbares Licht auszusenden.",
@@ -493,7 +493,7 @@ export const scenes: Scene[] = [
     ],
     quiz: {
       question:
-        "Welches zunächst unscheinbare „Abfallprodukt“ der Cyanobakterien veränderte später den ganzen Planeten?",
+        "Welches Abfallprodukt der Cyanobakterien veränderte später den Planeten?",
       options: ["Methan", "Sauerstoff", "Stickstoff", "Schwefeldioxid"],
       correctIndex: 1,
     },
@@ -601,7 +601,7 @@ export const scenes: Scene[] = [
     ],
     quiz: {
       question:
-        "Welches heutige Zellorganell geht wahrscheinlich auf ein aufgenommenes Bakterium zurück?",
+        "Welches Zellorganell entstand wahrscheinlich aus einem aufgenommenen Bakterium?",
       options: [
         "Das Mitochondrium",
         "Die Zellwand",
@@ -724,7 +724,7 @@ export const scenes: Scene[] = [
     ],
     quiz: {
       question:
-        "Welcher Vorteil entsteht, wenn Zellen eines Vielzellers unterschiedliche Aufgaben übernehmen?",
+        "Was ermöglicht die Spezialisierung verschiedener Zellen im Vielzeller?",
       options: [
         "Jede Zelle kann nun unabhängig vom Rest leben.",
         "Spezialisierung ermöglicht eine wirksame Arbeitsteilung.",
@@ -1205,11 +1205,11 @@ export const scenes: Scene[] = [
     ],
     quiz: {
       question:
-        "Welche Aussage über Dinosaurier ist fachlich richtig?",
+        "Welche Dinosaurierlinie lebt bis heute weiter?",
       options: [
-        "Flugsaurier waren fliegende Dinosaurier.",
-        "Fast alle Dinosaurier waren riesige Pflanzenfresser.",
-        "Vögel sind die heute lebenden Nachfahren einer Dinosaurierlinie.",
+        "Die Flugsaurier",
+        "Die großen Sauropoden",
+        "Die Vögel",
         "Die letzten Dinosaurier begegneten bereits frühen Menschen.",
       ],
       correctIndex: 2,
@@ -1487,7 +1487,7 @@ export const scenes: Scene[] = [
     hotspots: [],
     quiz: {
       question:
-        "Warum wirkt die Geschichte des Menschen auf der Zeitskala der Erde wie ein Wimpernschlag?",
+        "Warum ist die Menschheitsgeschichte auf der Erdzeitskala nur ein Wimpernschlag?",
       options: [
         "Weil Menschen schon vor den ersten Zellen lebten.",
         "Weil die Erdgeschichte erst mit dem Menschen begann.",
@@ -1550,22 +1550,22 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 3,
   },
   5: {
-    question: "Warum war eine Membran für eine frühe Zelle so entscheidend?",
+    question: "Was begann mit den ersten vermehrungsfähigen Zellen?",
     options: [
-      "Sie ersetzte die Erbinformation.",
-      "Sie machte die Zelle sofort vielzellig.",
-      "Sie erzeugte ohne Energie neue Moleküle.",
-      "Sie grenzte einen eigenen Reaktionsraum ab und regelte den Stoffaustausch.",
+      "Die Bildung der ersten Kontinente",
+      "Die Entstehung der ersten Sterne",
+      "Die heutige Sauerstoffatmosphäre",
+      "Die biologische Evolution",
     ],
     correctIndex: 3,
   },
   6: {
-    question: "Was entsteht bei einer gelungenen einfachen Zellteilung?",
+    question: "Wie leben viele Mikroorganismen bis heute zusammen?",
     options: [
-      "Zwei Tochterzellen mit kopierter Erbinformation",
-      "Ein vielzelliger Organismus mit Organen",
-      "Eine Zelle ohne Membran",
-      "Sofort eine neue Tierart",
+      "Als Biofilm auf einer Oberfläche",
+      "Nur einzeln im freien Weltraum",
+      "Ausschließlich im Inneren von Tieren",
+      "Als Organismus mit fertigen Organen",
     ],
     correctIndex: 0,
   },
@@ -1620,12 +1620,12 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 2,
   },
   12: {
-    question: "Welche Aussage über die Ediacara-Lebewesen ist am vorsichtigsten formuliert?",
+    question: "Was wissen Forschende über die Verwandtschaft vieler Ediacara-Lebewesen?",
     options: [
-      "Jede Ediacara-Form war sicher ein direkter Vorfahr heutiger Tiere.",
-      "Viele waren weichkörperig; ihre genaue Verwandtschaft ist teilweise noch unklar.",
-      "Sie lebten ausschließlich an Land.",
-      "Sie besaßen bereits Knochen und Zähne.",
+      "Alle waren direkte Vorfahren heutiger Tiere.",
+      "Die genaue Einordnung ist bei vielen Formen noch unklar.",
+      "Sie gehörten vollständig zu den Landpflanzen.",
+      "Alle besaßen bereits Knochen und Zähne.",
     ],
     correctIndex: 1,
   },
@@ -1640,12 +1640,12 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 3,
   },
   14: {
-    question: "Warum bereiteten Landpflanzen den späteren Tieren gewissermaßen ein „Buffet“?",
+    question: "Wie sahen die ersten Landpflanzen wahrscheinlich aus?",
     options: [
-      "Sie schufen Nahrung und Lebensräume an Land.",
-      "Sie beseitigten jedes Wasser vom Festland.",
-      "Sie verwandelten Tiere in Pflanzenfresser.",
-      "Sie verhinderten die Bildung von Böden.",
+      "Sie waren klein und besaßen weder Blüten noch Samen.",
+      "Sie waren bereits riesige blühende Bäume.",
+      "Sie bestanden nur aus schwimmenden Blättern.",
+      "Sie wuchsen ausschließlich in tiefen Ozeanen.",
     ],
     correctIndex: 0,
   },
@@ -1660,7 +1660,7 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 1,
   },
   16: {
-    question: "Welche Aussage über Tiktaalik vermeidet eine typische Falle?",
+    question: "Was zeigt das Übergangsfossil Tiktaalik?",
     options: [
       "Tiktaalik war bereits ein heutiger Frosch.",
       "Tiktaalik war der erste Dinosaurier.",
@@ -1680,12 +1680,12 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 0,
   },
   18: {
-    question: "Welche Gruppe gehört nicht zu den Dinosauriern, obwohl sie zur gleichen Zeit lebte?",
+    question: "Zu welcher Tiergruppe gehörten die Flugsaurier?",
     options: [
-      "Vögel",
-      "Theropoden",
-      "Sauropoden",
-      "Flugsaurier",
+      "Zu den Vögeln",
+      "Zu den Theropoden",
+      "Zu den Sauropoden",
+      "Zu einer eigenen Gruppe fliegender Reptilien",
     ],
     correctIndex: 3,
   },
@@ -1700,7 +1700,7 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 0,
   },
   20: {
-    question: "Was bedeutet in dieser Szene die „Stunde der Säugetiere“?",
+    question: "Was änderte sich für Säugetiere nach dem Massenaussterben?",
     options: [
       "Alle Säugetiere wurden innerhalb einer Stunde riesig.",
       "Nach dem Aussterben vieler Gruppen eröffneten sich langfristig neue Entwicklungsmöglichkeiten.",
@@ -1710,12 +1710,12 @@ export const followUpQuizzes: Record<number, Quiz> = {
     correctIndex: 1,
   },
   21: {
-    question: "Warum entstanden nach dem Massenaussterben so unterschiedliche Säugetierformen?",
+    question: "Welche Eigenschaften halfen vielen frühen Säugetieren beim Überleben?",
     options: [
-      "Alle Lebensräume waren identisch geworden.",
-      "Freie ökologische Nischen boten Chancen für verschiedene Lebensweisen.",
-      "Jede Art erhielt gleichzeitig dieselben Merkmale.",
-      "Säugetiere lebten fortan nur noch in Bäumen.",
+      "Riesige Körper und eine einzige Nahrungsquelle",
+      "Kleine Körper, Anpassungsfähigkeit und unterschiedliche Nahrung",
+      "Vollständige Unabhängigkeit von Wärme und Nahrung",
+      "Ein Leben ausschließlich in Bäumen",
     ],
     correctIndex: 1,
   },

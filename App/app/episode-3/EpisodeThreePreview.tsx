@@ -796,7 +796,7 @@ export default function EpisodeThreePreview() {
                 <div className="quiz-options">
                   {activeQuiz.answers.map((answer, index) => {
                     const selected = selectedOption === index;
-                    const correct = quizChecked && selected && index === activeQuiz.correctAnswer;
+                    const correct = quizChecked && index === activeQuiz.correctAnswer;
                     const wrong = quizChecked && selected && index !== activeQuiz.correctAnswer;
                     return (
                       <button type="button" className={`${selected ? "is-selected" : ""} ${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`} onClick={() => answerQuiz(index)} aria-pressed={selected} key={answer}>
@@ -809,7 +809,9 @@ export default function EpisodeThreePreview() {
                   <div className={`quiz-result ${selectedOption === activeQuiz.correctAnswer ? "is-correct" : "is-wrong"}`} role="status">
                     <strong>{selectedOption === activeQuiz.correctAnswer ? "Richtig." : "Noch nicht richtig."}</strong>
                     {selectedOption !== activeQuiz.correctAnswer ? (
-                      <span>Versuch es einfach noch einmal.</span>
+                      <span>
+                        Richtig ist {String.fromCharCode(65 + activeQuiz.correctAnswer)}: {activeQuiz.answers[activeQuiz.correctAnswer]}
+                      </span>
                     ) : quizQuestionIndex < scene.quiz.length - 1 ? (
                       <span>Die nächste Frage kommt sofort.</span>
                     ) : (

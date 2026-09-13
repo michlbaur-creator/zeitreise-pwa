@@ -104,10 +104,25 @@ const earthMilestones = [
   },
 ] as const;
 
-const finalQuizSceneIds = new Set([1, 3, 5, 8, 11, 14, 17, 19, 21]);
-const finalQuizScenes = scenes.filter((scene) =>
-  finalQuizSceneIds.has(scene.id),
-);
+const finalQuizScenes = scenes.flatMap((scene) => {
+  const questions = [];
+  if (scene.quiz) {
+    questions.push({
+      id: scene.id,
+      title: scene.title,
+      quiz: { ...scene.quiz, source: "scene" as const },
+    });
+  }
+  const followUpQuiz = followUpQuizzes[scene.id];
+  if (followUpQuiz) {
+    questions.push({
+      id: scene.id,
+      title: scene.title,
+      quiz: { ...followUpQuiz, source: "discovery" as const },
+    });
+  }
+  return questions;
+});
 
 const familyTreeSceneLinks: Record<
   number,
@@ -258,6 +273,9 @@ export default function ZeitreiseApp() {
   } | null>(null);
 
   const scene = scenes[currentIndex];
+  const isFinalChallengeVisible =
+    scene.id === scenes.length && progress >= 0.995;
+  const visiblePanel = isFinalChallengeVisible ? "sprecher" : panel;
   const sceneQuizzes = scene.quiz
     ? [scene.quiz, followUpQuizzes[scene.id]].filter(Boolean)
     : [];
@@ -1110,41 +1128,45 @@ export default function ZeitreiseApp() {
 
         <aside
           id="scene-details"
-          className={`content-panel ${detailsOpen ? "is-open" : ""}`}
+          className={`content-panel learning-light ${detailsOpen ? "is-open" : ""}`}
         >
-          <div className="panel-tabs" aria-label="Szeneninhalt">
+          <div className={`panel-tabs ${isFinalChallengeVisible ? "is-one-tab" : ""}`} aria-label="Szeneninhalt">
             <button
               type="button"
-              aria-pressed={panel === "sprecher"}
-              className={panel === "sprecher" ? "is-active" : ""}
+              aria-pressed={visiblePanel === "sprecher"}
+              className={visiblePanel === "sprecher" ? "is-active" : ""}
               onClick={() => setPanel("sprecher")}
             >
               Text lesen
             </button>
-            <button
-              type="button"
-              aria-pressed={panel === "interaktion"}
-              className={panel === "interaktion" ? "is-active" : ""}
-              onClick={() => setPanel("interaktion")}
-            >
-              Entdecken &amp; Quiz
-            </button>
-            <Link
-              className="panel-tree-nav"
-              href={`/tierstammbaum/#${familyTreeLink?.group ?? "tierreich"}`}
-            >
-              Tierstammbaum &amp; Stationen{" "}
-              <i className="external-link-icon" aria-hidden="true" />
-            </Link>
+            {!isFinalChallengeVisible ? (
+              <>
+                <button
+                  type="button"
+                  aria-pressed={panel === "interaktion"}
+                  className={panel === "interaktion" ? "is-active" : ""}
+                  onClick={() => setPanel("interaktion")}
+                >
+                  Entdecken &amp; Quiz
+                </button>
+                <Link
+                  className="panel-tree-nav"
+                  href={`/tierstammbaum/#${familyTreeLink?.group ?? "tierreich"}`}
+                >
+                  Tierstammbaum &amp; Stationen{" "}
+                  <i className="external-link-icon" aria-hidden="true" />
+                </Link>
+              </>
+            ) : null}
           </div>
 
-          {panel === "sprecher" ? (
+          {visiblePanel === "sprecher" ? (
             <section className="panel-section">
               <blockquote>{scene.speaker}</blockquote>
             </section>
           ) : null}
 
-          {panel === "interaktion" ? (
+          {panel === "interaktion" && !isFinalChallengeVisible ? (
             <section className="panel-section interactions">
               {scene.hotspots.length > 0 ? (
                 <div className="interaction-block hotspot-list">
@@ -1230,9 +1252,7 @@ export default function ZeitreiseApp() {
                     {activeQuiz.options.map((option, index) => {
                       const isSelected = selectedOption === index;
                       const isCorrect =
-                        quizChecked &&
-                        isSelected &&
-                        index === activeQuiz.correctIndex;
+                        quizChecked && index === activeQuiz.correctIndex;
                       const isWrong =
                         quizChecked &&
                         isSelected &&
@@ -1266,7 +1286,9 @@ export default function ZeitreiseApp() {
                           : "Noch nicht richtig."}
                       </strong>
                       {selectedOption !== activeQuiz.correctIndex ? (
-                        <span>Versuch es einfach noch einmal.</span>
+                        <span>
+                          Richtig ist {String.fromCharCode(65 + activeQuiz.correctIndex)}: {activeQuiz.options[activeQuiz.correctIndex]}
+                        </span>
                       ) : quizQuestionIndex < sceneQuizzes.length - 1 ? (
                         <span>Die nächste Frage kommt sofort.</span>
                       ) : null}
@@ -1290,8 +1312,16 @@ export default function ZeitreiseApp() {
         </aside>
       </div>
 
-      {scene.id === scenes.length && progress >= 0.995 ? (
-        <FinalEpisodeQuiz scenes={finalQuizScenes} />
+      {isFinalChallengeVisible ? (
+        <FinalEpisodeQuiz
+          scenes={finalQuizScenes}
+          episode={1}
+          questionCount={9}
+          randomize
+          celebratePerfect
+          singleEpisodeChallenge
+          soundMuted={soundMuted}
+        />
       ) : null}
 
       <SiteFooter />
