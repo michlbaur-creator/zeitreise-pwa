@@ -40,7 +40,11 @@ Lokale Designprobe vom 13. September 2026, noch nicht veröffentlicht.
 - Die Originalgeräusche der sechs Veo-Szenen in Episode 2 sind in den neuen
   Tonmischungen um ungefähr 50 Prozent abgesenkt; die Sprecherlautstärke bleibt
   erhalten.
-- Cache-Version v149. Vor Veröffentlichung gemeinsame Sichtprüfung.
+- Ein neuer Start der installierten App öffnet Episode 1 zuverlässig mit Intro
+  und Szene 1. Der erste Service-Worker-Einsatz löst keinen unnötigen Neustart
+  mehr aus; bei echten Updates gibt es nur noch einen kontrollierten Neustart.
+  Die drei Intro-Hintergründe liegen bereits im Offline-Grundcache.
+- Cache-Version v150. Vor Veröffentlichung gemeinsame Sichtprüfung.
 
 Nach Annahme der Designprobe diese Entscheidung in den gemeinsamen
 Zeitreise-Steckbrief übernehmen.

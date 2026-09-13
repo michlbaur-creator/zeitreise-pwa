@@ -290,7 +290,7 @@ export default function EpisodeTwoApp() {
       if (resumeAfterUpdate) {
         window.localStorage.removeItem("zeitreise-episode2-resume-after-update");
       }
-      setIntroOpen(!introSeen && !resumeAfterUpdate);
+      setIntroOpen(startAtBeginning || (!introSeen && !resumeAfterUpdate));
     });
     return () => {
       cancelled = true;
@@ -376,6 +376,7 @@ export default function EpisodeTwoApp() {
           serverTime > pageTime + 1000;
         const versionChanged =
           Boolean(signature) &&
+          Boolean(knownSignature) &&
           knownSignature !== signature;
 
         const registration = await navigator.serviceWorker?.getRegistration();
@@ -403,8 +404,13 @@ export default function EpisodeTwoApp() {
     const checkWhenVisible = () => {
       if (document.visibilityState === "visible") void checkForUpdate();
     };
+    let hasActiveController = Boolean(navigator.serviceWorker?.controller);
     const onControllerChange = () => {
       if (disposed) return;
+      if (!hasActiveController) {
+        hasActiveController = true;
+        return;
+      }
       if (isPlayingRef.current) updateWaitingRef.current = true;
       else reloadForUpdate();
     };

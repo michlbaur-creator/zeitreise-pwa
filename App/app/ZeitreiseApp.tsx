@@ -403,14 +403,16 @@ export default function ZeitreiseApp() {
       if (cancelled) return;
       const currentUrl = new URL(window.location.href);
       const startAtBeginning = currentUrl.searchParams.get("start") === "1";
-      const storedSceneIndex = startAtBeginning ? 0 : loadStoredSceneIndex();
-      const introWasSeen =
-        window.localStorage.getItem("zeitreise-intro-seen") === "1";
+      const continueJourney = currentUrl.searchParams.get("weiter") === "1";
+      const storedSceneIndex = continueJourney ? loadStoredSceneIndex() : 0;
       setCurrentIndex(storedSceneIndex);
       setDetailsOpen(storedSceneIndex !== scenes.length - 1);
-      if (startAtBeginning) {
+      if (!continueJourney) {
         window.localStorage.setItem("zeitreise-current-scene", "0");
+      }
+      if (startAtBeginning || continueJourney) {
         currentUrl.searchParams.delete("start");
+        currentUrl.searchParams.delete("weiter");
         window.history.replaceState(
           null,
           "",
@@ -419,19 +421,9 @@ export default function ZeitreiseApp() {
       }
       setCorrectScenes(loadStoredNumbers("zeitreise-correct-scenes"));
       setDiscoveredByScene(loadStoredRecord("zeitreise-discoveries"));
-      const continueJourney =
-        new URLSearchParams(window.location.search).get("weiter") === "1";
-      if (
-        introWasSeen ||
-        continueJourney ||
-        window.localStorage.getItem("zeitreise-resume-after-update") === "1"
-      ) {
-        window.localStorage.removeItem("zeitreise-resume-after-update");
-        setIntroOpen(false);
-      }
-      if (continueJourney) {
-        window.history.replaceState(null, "", window.location.pathname);
-      }
+      window.localStorage.removeItem("zeitreise-resume-after-update");
+      window.localStorage.removeItem("zeitreise-intro-seen");
+      setIntroOpen(!continueJourney);
       setIsReady(true);
     });
 
@@ -517,8 +509,9 @@ export default function ZeitreiseApp() {
   const reloadForUpdate = useCallback(() => {
     if (updateReloadingRef.current) return;
     updateReloadingRef.current = true;
-    window.localStorage.setItem("zeitreise-resume-after-update", "1");
+    window.localStorage.removeItem("zeitreise-resume-after-update");
     const updateUrl = new URL(window.location.href);
+    updateUrl.searchParams.set("start", "1");
     updateUrl.searchParams.set("zeitreise-update", String(Date.now()));
     window.location.replace(updateUrl.href);
   }, []);
@@ -556,6 +549,7 @@ export default function ZeitreiseApp() {
           serverTime > pageTime + 1000;
         const versionChanged =
           Boolean(signature) &&
+          Boolean(knownSignature) &&
           knownSignature !== signature;
 
         const registration = await navigator.serviceWorker?.getRegistration();
@@ -583,8 +577,13 @@ export default function ZeitreiseApp() {
     const checkWhenVisible = () => {
       if (document.visibilityState === "visible") void checkForUpdate();
     };
+    let hasActiveController = Boolean(navigator.serviceWorker?.controller);
     const onControllerChange = () => {
       if (disposed) return;
+      if (!hasActiveController) {
+        hasActiveController = true;
+        return;
+      }
       if (isPlayingRef.current) updateWaitingRef.current = true;
       else reloadForUpdate();
     };
@@ -794,7 +793,6 @@ export default function ZeitreiseApp() {
   };
 
   const startJourney = () => {
-    window.localStorage.setItem("zeitreise-intro-seen", "1");
     goToScene(0);
     setIntroClosing(true);
     soundMutedRef.current = false;
@@ -816,7 +814,6 @@ export default function ZeitreiseApp() {
   };
 
   const skipIntro = () => {
-    window.localStorage.setItem("zeitreise-intro-seen", "1");
     setIntroClosing(false);
     setIntroOpen(false);
   };

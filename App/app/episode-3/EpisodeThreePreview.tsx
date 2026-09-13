@@ -270,7 +270,7 @@ export default function EpisodeThreePreview() {
         setCurrentIndex(storedIndex);
         setPanel(episodeThreeScenes[storedIndex].id === 28 ? "sprecher" : "entdecken");
       }
-      setIntroOpen(!introSeen && !resumeAfterUpdate);
+      setIntroOpen(startAtBeginning || (!introSeen && !resumeAfterUpdate));
       setIsPlaying(false);
     });
     return () => {
@@ -365,6 +365,7 @@ export default function EpisodeThreePreview() {
           serverTime > pageTime + 1000;
         const versionChanged =
           Boolean(signature) &&
+          Boolean(knownSignature) &&
           knownSignature !== signature;
 
         const registration = await navigator.serviceWorker?.getRegistration();
@@ -392,8 +393,13 @@ export default function EpisodeThreePreview() {
     const checkWhenVisible = () => {
       if (document.visibilityState === "visible") void checkForUpdate();
     };
+    let hasActiveController = Boolean(navigator.serviceWorker?.controller);
     const onControllerChange = () => {
       if (disposed) return;
+      if (!hasActiveController) {
+        hasActiveController = true;
+        return;
+      }
       if (isPlayingRef.current) updateWaitingRef.current = true;
       else reloadForUpdate();
     };

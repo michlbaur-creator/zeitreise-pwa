@@ -954,7 +954,11 @@ test("hält die Filmsteuerung sichtbar und startet die nächste Szene sofort", a
   assert.match(styles, /animation: intro-stars 15\.5s ease-in-out both/);
   assert.match(styles, /transition: opacity 1500ms ease/);
   assert.match(app, /setIntroReady\(true\), 14800/);
-  assert.match(app, /zeitreise-intro-seen/);
+  assert.match(
+    app,
+    /const storedSceneIndex = continueJourney \? loadStoredSceneIndex\(\) : 0;/,
+  );
+  assert.match(app, /setIntroOpen\(!continueJourney\)/);
   assert.match(app, /Intro überspringen/);
   assert.match(app, /onClick=\{\(\) => answerQuiz\(index\)\}/);
   assert.doesNotMatch(app, /Antwort prüfen/);
@@ -996,7 +1000,9 @@ test("optimiert Film und Bedienung für Smartphones", async () => {
   assert.match(app, /zeitreise-update=\$\{Date\.now\(\)\}/);
   assert.match(app, /window\.setInterval\(checkForUpdate, 3 \* 60 \* 1000\)/);
   assert.match(app, /updateViaCache: "none"/);
-  assert.match(app, /zeitreise-resume-after-update/);
+  assert.match(app, /updateUrl\.searchParams\.set\("start", "1"\)/);
+  assert.match(app, /Boolean\(knownSignature\)/);
+  assert.match(app, /let hasActiveController = Boolean/);
 });
 
 test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprecheraufnahme", async () => {
@@ -1020,16 +1026,19 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(app, /if \(isPlayingRef\.current\)/);
   assert.match(app, /updateUrl\.searchParams\.set\("zeitreise-update"/);
   assert.match(app, /window\.location\.replace\(updateUrl\.href\)/);
-  assert.doesNotMatch(app, /Boolean\(knownSignature\)/);
+  assert.match(app, /Boolean\(knownSignature\)/);
+  assert.match(app, /let hasActiveController = Boolean/);
   assert.match(episodeThreeApp, /\/episode-3\/\?zeitreise-update=\$\{Date\.now\(\)\}/);
   assert.match(episodeThreeApp, /zeitreise-episode3-resume-after-update/);
   assert.match(episodeThreeApp, /zeitreise-episode3-app-version/);
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
-  assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v149"/);
-  assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
-  assert.match(worker, /client\.navigate\(url\.href\)/);
+  assert.match(episodeThreeApp, /Boolean\(knownSignature\)/);
+  assert.match(episodeThreeApp, /let hasActiveController = Boolean/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v150"/);
+  assert.doesNotMatch(worker, /client\.navigate\(url\.href\)/);
+  assert.match(worker, /hintergrund-sternsystem-v1\.png/);
+  assert.match(worker, /hintergrund-feuerplanet-v1\.png/);
 });
 
 test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild", async () => {
@@ -1286,7 +1295,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v149"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v150"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
@@ -1409,8 +1418,8 @@ test("bindet den kompakten Tierstammbaum in Szene 12 ein", async () => {
   assert.match(focus, /<details/);
   assert.doesNotMatch(footer, /Zur Zeitreise/);
   assert.doesNotMatch(footer, /href="\/tierstammbaum\/"/);
-  assert.match(app, /new URLSearchParams\(window\.location\.search\)/);
-  assert.match(app, /setIntroOpen\(false\)/);
+  assert.match(app, /currentUrl\.searchParams\.get\("weiter"\)/);
+  assert.match(app, /setIntroOpen\(!continueJourney\)/);
   assert.match(app, /Tierstammbaum &amp; Stationen/);
   assert.doesNotMatch(app, />\s*Werkstatt\s*</);
   assert.doesNotMatch(app, /Sprechertext – Fassung/);

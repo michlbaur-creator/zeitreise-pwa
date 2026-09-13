@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v149";
+const CACHE_NAME = "zeitreise-v150";
 const APP_SHELL = [
   "/",
   "/episode-2/",
@@ -9,6 +9,9 @@ const APP_SHELL = [
   "/manifest.webmanifest",
   "/icon-192.png",
   "/icon-512.png",
+  "/assets/episode1/scene01/hintergrund-sternsystem-v1.png",
+  "/assets/episode1/scene01/hintergrund-feuerplanet-v1.png",
+  "/assets/episode1/scene01/hintergrund-vulkanische-kueste-neu-v1.png",
 ];
 
 const SCENE_ASSETS = {
@@ -351,20 +354,6 @@ self.addEventListener("activate", (event) => {
           .map((key) => caches.delete(key)),
       );
       await self.clients.claim();
-
-      if (CACHE_NAME === "zeitreise-v149") {
-        const windows = await self.clients.matchAll({
-          type: "window",
-          includeUncontrolled: true,
-        });
-        await Promise.all(
-          windows.map((client) => {
-            const url = new URL(client.url);
-            url.searchParams.set("zeitreise-update", CACHE_NAME);
-            return client.navigate(url.href).catch(() => undefined);
-          }),
-        );
-      }
     })(),
   );
 });
