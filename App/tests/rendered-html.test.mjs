@@ -404,6 +404,9 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(finalEpisodeQuiz, /balancedEpisodeThreeQuestions/);
   assert.match(finalEpisodeQuiz, /zeitreise-episode3-final-quiz-best/);
   assert.match(finalEpisodeQuiz, /soundMuted/);
+  assert.match(finalEpisodeQuiz, /Nicht ganz\. Richtig ist/);
+  assert.match(episodeThreeApp, /scene\.id !== 28 \? <button[^\n]+>Entdecken<\/button> : null/);
+  assert.match(episodeThreeApp, /Sprechertext lesen/);
   assert.match(episodeThreeVisual, /ClayWritingTimeline/);
   assert.match(episodeThreeVisual, /KnowledgeJourney/);
   assert.match(episodeThreeVisual, /NitrogenJourney/);
@@ -1018,7 +1021,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v143"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v144"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1237,7 +1240,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.match(finalQuiz, /Frage \{questionIndex \+ 1\} von/);
   assert.match(finalQuiz, /onClick=\{\(\) => answer\(index\)\}/);
   assert.doesNotMatch(finalQuiz, /Antwort prüfen/);
-  assert.doesNotMatch(finalQuiz, /Richtig ist:/);
+  assert.match(finalQuiz, /Nicht ganz\. Richtig ist/);
   assert.match(app, /Quiz · Frage \{quizQuestionIndex \+ 1\} von/);
   assert.match(app, /Die nächste Frage kommt sofort\./);
   assert.match(footer, /Über mich/);
@@ -1260,7 +1263,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v143"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v144"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

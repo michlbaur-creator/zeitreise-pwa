@@ -11,9 +11,13 @@ Lokale Designprobe vom 13. September 2026, noch nicht veröffentlicht.
   dreht sich der Würfel zum nächsten Teil.
 - Pro Teil gibt es fünf Zeitstufen und eine Ergebnisanzeige. 20 richtige
   Antworten ergeben den Zeitmeister-Rang mit Feuerwerk und Fanfare.
+- Nach einer falschen Antwort werden die gewählte Antwort rot und die richtige
+  Antwort grün markiert; der Lösungstext steht zusätzlich unter den Antworten.
+- In Szene 28 entfällt beim großen Abschlussquiz der Reiter „Entdecken“.
+  Der Sprechertext bleibt über einen eigenen, klar beschrifteten Bereich lesbar.
 - Der neue Bestwert wird getrennt vom bisherigen Fünf-Fragen-Prototyp gespeichert.
 - Die drei bisherigen Teilquizze bleiben jeweils fünf Fragen lang.
-- Cache-Version v143. Vor Veröffentlichung gemeinsame Sichtprüfung.
+- Cache-Version v144. Vor Veröffentlichung gemeinsame Sichtprüfung.
 
 Nach Annahme der Designprobe diese Entscheidung in den gemeinsamen
 Zeitreise-Steckbrief übernehmen.

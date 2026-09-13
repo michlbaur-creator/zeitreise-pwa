@@ -447,7 +447,7 @@ export function FinalEpisodeQuiz({
           <div className="final-quiz-options">
             {question.options.map((option, index) => {
               const optionIsCorrect =
-                checked && selected === index && index === question.correctIndex;
+                checked && index === question.correctIndex;
               const optionIsWrong =
                 checked && selected === index && index !== question.correctIndex;
               return (
@@ -483,9 +483,7 @@ export function FinalEpisodeQuiz({
                         : isEpisodeTwo
                           ? "Richtig – weiter auf der menschlichen Spur."
                           : "Richtig – weiter durch die Erdgeschichte."
-                  : timeFelsenChallenge
-                    ? "Nicht ganz – diese Stufe bleibt noch dunkel."
-                    : "Nicht ganz – die Lösung bleibt noch verborgen."}
+                  : `Nicht ganz. Richtig ist ${String.fromCharCode(65 + question.correctIndex)}: ${question.options[question.correctIndex]}`}
               </p>
               <button type="button" onClick={next}>
                 {questionIndex === questions.length - 1

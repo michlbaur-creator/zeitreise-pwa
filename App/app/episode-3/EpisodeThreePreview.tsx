@@ -229,7 +229,7 @@ export default function EpisodeThreePreview() {
     setSelectedOption(null);
     setQuizChecked(false);
     setQuizQuestionIndex(0);
-    setPanel("entdecken");
+    setPanel(nextSceneId === 28 ? "sprecher" : "entdecken");
     setPeopleOpen(false);
     setOpenPersonId(null);
     window.localStorage.setItem("zeitreise-episode3-current-scene", String(nextIndex));
@@ -267,6 +267,7 @@ export default function EpisodeThreePreview() {
         storedIndex < episodeThreeScenes.length
       ) {
         setCurrentIndex(storedIndex);
+        setPanel(episodeThreeScenes[storedIndex].id === 28 ? "sprecher" : "entdecken");
       }
       setIntroOpen(!introSeen && !resumeAfterUpdate);
       setIsPlaying(false);
@@ -708,13 +709,13 @@ export default function EpisodeThreePreview() {
           ) : null}
           <EpisodeSeriesNav currentEpisode={3} onSelectCurrentEpisode={() => goToScene(0)} />
           <p className="keyboard-hint">Nach links wischen oder Pfeiltasten wechseln die Szene · Leertaste startet oder pausiert</p>
-          <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode3-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
+          <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode3-details"><span>{scene.id === 28 ? (detailsOpen ? "Sprechertext schließen" : "Sprechertext lesen") : (detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken")}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
 
         <aside id="episode3-details" className={`content-panel learning-light ${detailsOpen ? "is-open" : ""}`}>
-          <div className={`panel-tabs ${isPartEndingScene ? "is-two-tabs" : ""}`} aria-label="Szeneninhalt">
+          <div className={`panel-tabs ${scene.id === 28 ? "is-one-tab" : isPartEndingScene ? "is-two-tabs" : ""}`} aria-label="Szeneninhalt">
             <button type="button" aria-pressed={panel === "sprecher"} className={panel === "sprecher" ? "is-active" : ""} onClick={() => setPanel("sprecher")}>Text lesen</button>
-            <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button>
+            {scene.id !== 28 ? <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button> : null}
             {!isPartEndingScene ? <button type="button" aria-pressed={panel === "quiz"} className={panel === "quiz" ? "is-active" : ""} onClick={() => setPanel("quiz")}>Quiz</button> : null}
           </div>
 
@@ -724,7 +725,7 @@ export default function EpisodeThreePreview() {
             </section>
           ) : null}
 
-          {panel === "entdecken" ? (
+          {panel === "entdecken" && scene.id !== 28 ? (
             <section className="panel-section interactions">
               <div className="interaction-block ep3-discovery-list">
                 <div className="section-label"><span>Entdecken</span><i>2 Punkte</i></div>
