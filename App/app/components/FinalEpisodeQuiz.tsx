@@ -33,7 +33,7 @@ type CubeTopic = {
   className: string;
 };
 
-const EPISODE_THREE_BEST_SCORE_KEY = "zeitreise-episode3-final-quiz-best";
+const EPISODE_THREE_BEST_SCORE_KEY = "zeitreise-episode3-final-quiz-best-20";
 
 export function FinalEpisodeQuiz({
   scenes,
@@ -68,7 +68,7 @@ export function FinalEpisodeQuiz({
     [scenes],
   );
   const visibleQuestionCount = Math.min(
-    questionCount ?? questionPool.length,
+    timeFelsenChallenge ? 20 : questionCount ?? questionPool.length,
     questionPool.length,
   );
   const [questions, setQuestions] = useState<FinalQuestion[]>(() =>
@@ -96,7 +96,7 @@ export function FinalEpisodeQuiz({
         if (
           Number.isInteger(storedScore) &&
           storedScore >= 0 &&
-          storedScore <= 5
+            storedScore <= 20
         ) {
           setBestScore(storedScore);
         }
@@ -122,7 +122,7 @@ export function FinalEpisodeQuiz({
   const perfectResult = score === questions.length;
   const strongResult = Math.ceil(questions.length * 0.78);
   const solidResult = Math.ceil(questions.length * 0.56);
-  const achievement = achievementForScore(score);
+  const achievement = achievementForScore(score, questions.length);
   const cubeTopic = topicForScene(question.sceneId);
 
   const reset = () => {
@@ -175,7 +175,8 @@ export function FinalEpisodeQuiz({
 
   return (
     <section
-      className={`final-quiz ${timeFelsenChallenge ? "final-quiz-timefelsen" : ""}`}
+      className={`final-quiz ${isEpisodeThree ? "quiz-learning-light" : ""} ${timeFelsenChallenge ? "final-quiz-timefelsen" : ""}`}
+      data-part={timeFelsenChallenge ? Math.floor(questionIndex / 5) + 1 : episodePart}
       aria-labelledby="final-quiz-title"
     >
       {!started ? (
@@ -189,13 +190,13 @@ export function FinalEpisodeQuiz({
               <p className="eyebrow">Episode 3 abgeschlossen</p>
               <h2 id="final-quiz-title">Die Zeitfelsen-Challenge</h2>
               <p>
-                Der Zeitwürfel zieht fünf Fragen aus allen vier Teilen. Mit jeder
-                richtigen Antwort steigst du eine Stufe höher.
+                Vier Teile, vier Farben, jeweils fünf Fragen. Nach jedem Teil
+                dreht sich dein Zeitwürfel weiter. Schaffst du alle 20?
               </p>
               <AchievementScale />
               {bestScore !== null ? (
                 <p className="timefelsen-best">
-                  Deine bisher beste Runde: <strong>{bestScore} von 5</strong>
+                  Deine bisher beste Runde: <strong>{bestScore} von 20</strong>
                 </p>
               ) : null}
               <button type="button" onClick={reset}>
@@ -266,7 +267,7 @@ export function FinalEpisodeQuiz({
               <span className="timefelsen-tablet-mark">▤</span>
               <small>Tontafel der Zeit</small>
               <strong>
-                {score}<span>/5</span>
+                {score}<span>/20</span>
               </strong>
             </div>
             <div className="timefelsen-result-copy">
@@ -274,18 +275,18 @@ export function FinalEpisodeQuiz({
               <h2 id="final-quiz-title">{achievement.title}</h2>
               <p>{achievement.description}</p>
               <QuizStaircase
-                answers={answers}
-                currentIndex={questions.length}
-                total={questions.length}
+                answers={answers.slice(-5)}
+                currentIndex={5}
+                total={5}
                 finished
               />
               <div className="timefelsen-result-meta">
                 <span>{score} richtige Antworten</span>
                 <span>{questions.length - score} offene Spuren</span>
-                <span>Bestwert {Math.max(bestScore ?? 0, score)}/5</span>
+                <span>Bestwert {Math.max(bestScore ?? 0, score)}/20</span>
               </div>
               <button type="button" onClick={reset}>
-                Neue Fünfer-Runde <span aria-hidden="true">↻</span>
+                Neue Zeitreise-Runde <span aria-hidden="true">↻</span>
               </button>
             </div>
           </div>
@@ -384,14 +385,23 @@ export function FinalEpisodeQuiz({
       ) : (
         <>
           {timeFelsenChallenge ? (
+            <ol className="timefelsen-parts" aria-label="Die vier Teile">
+              {["Bleiben", "Ordnen", "Vernetzen", "Beschleunigen"].map((label, index) => (
+                <li key={label} aria-current={Math.floor(questionIndex / 5) === index ? "step" : undefined}>
+                  <span>{index + 1}</span>{label}
+                  {answers.length >= (index + 1) * 5 ? <small>{answers.slice(index * 5, index * 5 + 5).filter(Boolean).length}/5</small> : null}
+                </li>
+              ))}
+            </ol>
+          ) : null}
+          {timeFelsenChallenge ? (
             <div className="timefelsen-dashboard">
               <div className="timefelsen-cube-copy">
                 <TimeCube
-                  key={`${question.sceneId}-${questionIndex}`}
                   topic={cubeTopic}
                 />
                 <div>
-                  <small>Der Zeitwürfel wählt</small>
+                  <small>Teil {Math.floor(questionIndex / 5) + 1} von 4</small>
                   <strong>{cubeTopic.label}</strong>
                   <span>
                     Szene {String(question.sceneId).padStart(2, "0")} · {question.sceneTitle}
@@ -399,9 +409,9 @@ export function FinalEpisodeQuiz({
                 </div>
               </div>
               <QuizStaircase
-                answers={answers}
-                currentIndex={questionIndex}
-                total={questions.length}
+                answers={answers.slice(Math.floor(questionIndex / 5) * 5)}
+                currentIndex={questionIndex % 5}
+                total={5}
               />
             </div>
           ) : (
@@ -430,7 +440,7 @@ export function FinalEpisodeQuiz({
 
           {timeFelsenChallenge ? (
             <p className="timefelsen-question-number eyebrow">
-              Frage {questionIndex + 1} von {questions.length}
+              Frage {questionIndex % 5 + 1} von 5 · Insgesamt {questionIndex + 1} von 20
             </p>
           ) : null}
           <h2 id="final-quiz-title">{question.question}</h2>
@@ -457,6 +467,11 @@ export function FinalEpisodeQuiz({
 
           {checked ? (
             <div className="final-quiz-actions">
+              {timeFelsenChallenge && (questionIndex + 1) % 5 === 0 ? (
+                <p className="timefelsen-block-result" role="status">
+                  Teil {Math.floor(questionIndex / 5) + 1} geschafft · {answers.slice(-5).filter(Boolean).length} von 5 richtig!
+                </p>
+              ) : null}
               <p className={isCorrect ? "is-correct" : "is-wrong"} role="status">
                 {isCorrect
                   ? timeFelsenChallenge
@@ -475,7 +490,9 @@ export function FinalEpisodeQuiz({
               <button type="button" onClick={next}>
                 {questionIndex === questions.length - 1
                   ? "Ergebnis ansehen"
-                  : "Nächste Frage"}
+                  : timeFelsenChallenge && (questionIndex + 1) % 5 === 0
+                    ? "Nächsten Teil öffnen"
+                    : "Nächste Frage"}
                 <span aria-hidden="true">→</span>
               </button>
             </div>
@@ -488,10 +505,10 @@ export function FinalEpisodeQuiz({
 
 function AchievementScale() {
   const levels = [
-    { score: "0–2", title: "Zeitstarter" },
-    { score: "3", title: "Spurensucher" },
-    { score: "4", title: "Zeitkenner" },
-    { score: "5", title: "Zeitmeister" },
+    { score: "0–10", title: "Zeitstarter" },
+    { score: "11–15", title: "Spurensucher" },
+    { score: "16–19", title: "Zeitkenner" },
+    { score: "20", title: "Zeitmeister" },
   ];
 
   return (
@@ -555,7 +572,7 @@ function QuizStaircase({
 }
 
 function TimeCube({ topic }: { topic: CubeTopic }) {
-  const faces = [topic.symbol, "⌂", "▦", "⌁", "↯", "◎"];
+  const faces = ["⌂", "⌁", "▦", "↯", "◎", "◎"];
   const faceNames = ["front", "back", "right", "left", "top", "bottom"];
 
   return (
@@ -588,28 +605,28 @@ function topicForScene(sceneId: number): CubeTopic {
   return { label: "Beschleunigen", symbol: "↯", className: "speed" };
 }
 
-function achievementForScore(score: number): QuizAchievement {
-  if (score === 5) {
+function achievementForScore(score: number, total: number): QuizAchievement {
+  if (score === total) {
     return {
       title: "Zeitmeister",
       description:
-        "Fünf von fünf! Die Tontafel der Zeit gehört dir – und der Zeitfelsen darf ausnahmsweise ein kleines Feuerwerk veranstalten.",
+        "20 von 20! Die Tontafel der Zeit gehört dir – und der Zeitfelsen darf ausnahmsweise ein kleines Feuerwerk veranstalten.",
       className: "rank-master",
     };
   }
-  if (score === 4) {
+  if (score >= total * 0.8) {
     return {
       title: "Zeitkenner",
       description:
-        "Vier richtige Antworten: Du erkennst die großen Zusammenhänge von Vorräten bis zur planetaren Wirkung.",
+        "Du erkennst die großen Zusammenhänge von Vorräten bis zur planetaren Wirkung.",
       className: "rank-expert",
     };
   }
-  if (score === 3) {
+  if (score >= total * 0.55) {
     return {
       title: "Spurensucher",
       description:
-        "Drei richtige Antworten: Die wichtigsten Spuren sind gefunden. Eine neue Runde bringt dich noch höher.",
+        "Die wichtigsten Spuren sind gefunden. Eine neue Runde bringt dich noch höher.",
       className: "rank-tracker",
     };
   }
@@ -644,15 +661,7 @@ function balancedEpisodeThreeQuestions(
     ),
     questionPool.filter((question) => question.sceneId >= 22),
   ];
-  const selected = groups
-    .map((group) => shuffled(group)[0])
-    .filter((question): question is FinalQuestion => Boolean(question))
-    .slice(0, count);
-  const selectedQuestions = new Set(selected);
-  const remaining = shuffled(
-    questionPool.filter((question) => !selectedQuestions.has(question)),
-  ).slice(0, Math.max(0, count - selected.length));
-  return shuffled([...selected, ...remaining]);
+  return groups.flatMap((group) => shuffled(group).slice(0, 5)).slice(0, count);
 }
 
 function playPerfectFanfare() {

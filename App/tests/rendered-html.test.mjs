@@ -1018,7 +1018,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v142"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v143"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1260,7 +1260,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v142"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v143"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

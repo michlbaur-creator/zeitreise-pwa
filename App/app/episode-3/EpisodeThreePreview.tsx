@@ -699,7 +699,7 @@ export default function EpisodeThreePreview() {
               scenes={episodeThreeFinalQuizScenes}
               episode={3}
               episodePart={4}
-              questionCount={5}
+              questionCount={20}
               randomize
               celebratePerfect
               timeFelsenChallenge
@@ -711,7 +711,7 @@ export default function EpisodeThreePreview() {
           <button className={`details-toggle ${detailsOpen ? "is-open" : ""}`} type="button" onClick={() => setDetailsOpen((value) => !value)} aria-expanded={detailsOpen} aria-controls="episode3-details"><span>{detailsOpen ? "Zusatzwissen schließen" : "Mehr entdecken"}</span><i aria-hidden="true">{detailsOpen ? "−" : "+"}</i></button>
         </section>
 
-        <aside id="episode3-details" className={`content-panel ${detailsOpen ? "is-open" : ""}`}>
+        <aside id="episode3-details" className={`content-panel learning-light ${detailsOpen ? "is-open" : ""}`}>
           <div className={`panel-tabs ${isPartEndingScene ? "is-two-tabs" : ""}`} aria-label="Szeneninhalt">
             <button type="button" aria-pressed={panel === "sprecher"} className={panel === "sprecher" ? "is-active" : ""} onClick={() => setPanel("sprecher")}>Text lesen</button>
             <button type="button" aria-pressed={panel === "entdecken"} className={panel === "entdecken" ? "is-active" : ""} onClick={() => setPanel("entdecken")}>Entdecken</button>
