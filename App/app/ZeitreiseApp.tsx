@@ -1319,6 +1319,7 @@ export default function ZeitreiseApp() {
           randomize
           celebratePerfect
           singleEpisodeChallenge
+          startImmediately
           soundMuted={soundMuted}
         />
       ) : null}

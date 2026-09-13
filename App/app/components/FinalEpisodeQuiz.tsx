@@ -46,6 +46,7 @@ export function FinalEpisodeQuiz({
   celebratePerfect = false,
   timeFelsenChallenge = false,
   singleEpisodeChallenge = false,
+  startImmediately = false,
   soundMuted = false,
 }: {
   scenes: QuizScene[];
@@ -56,6 +57,7 @@ export function FinalEpisodeQuiz({
   celebratePerfect?: boolean;
   timeFelsenChallenge?: boolean;
   singleEpisodeChallenge?: boolean;
+  startImmediately?: boolean;
   soundMuted?: boolean;
 }) {
   const questionPool = useMemo<FinalQuestion[]>(
@@ -87,6 +89,34 @@ export function FinalEpisodeQuiz({
   const [answers, setAnswers] = useState<boolean[]>([]);
   const [finished, setFinished] = useState(false);
   const [bestScore, setBestScore] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!startImmediately) return;
+    let cancelled = false;
+    window.queueMicrotask(() => {
+      if (cancelled) return;
+      setQuestions(
+        pickQuestions(
+          questionPool,
+          visibleQuestionCount,
+          randomize,
+          timeFelsenChallenge,
+          singleEpisodeChallenge,
+        ),
+      );
+      setStarted(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    questionPool,
+    randomize,
+    singleEpisodeChallenge,
+    startImmediately,
+    timeFelsenChallenge,
+    visibleQuestionCount,
+  ]);
 
   useEffect(() => {
     if (!challengeMode || typeof window === "undefined") return;
@@ -134,13 +164,13 @@ export function FinalEpisodeQuiz({
     : topicForScene(question.sceneId);
 
   const reset = () => {
-    const nextQuestions = randomize
-      ? timeFelsenChallenge
-        ? balancedEpisodeThreeQuestions(questionPool, visibleQuestionCount)
-        : singleEpisodeChallenge
-          ? balancedSingleEpisodeQuestions(questionPool, visibleQuestionCount)
-        : shuffled(questionPool).slice(0, visibleQuestionCount)
-      : questionPool.slice(0, visibleQuestionCount);
+    const nextQuestions = pickQuestions(
+      questionPool,
+      visibleQuestionCount,
+      randomize,
+      timeFelsenChallenge,
+      singleEpisodeChallenge,
+    );
     setQuestions(nextQuestions);
     setStarted(true);
     setQuestionIndex(0);
@@ -713,6 +743,23 @@ function shuffled<T>(items: T[]) {
     [result[index], result[target]] = [result[target], result[index]];
   }
   return result;
+}
+
+function pickQuestions(
+  questionPool: FinalQuestion[],
+  visibleQuestionCount: number,
+  randomize: boolean,
+  timeFelsenChallenge: boolean,
+  singleEpisodeChallenge: boolean,
+) {
+  if (!randomize) return questionPool.slice(0, visibleQuestionCount);
+  if (timeFelsenChallenge) {
+    return balancedEpisodeThreeQuestions(questionPool, visibleQuestionCount);
+  }
+  if (singleEpisodeChallenge) {
+    return balancedSingleEpisodeQuestions(questionPool, visibleQuestionCount);
+  }
+  return shuffled(questionPool).slice(0, visibleQuestionCount);
 }
 
 function balancedEpisodeThreeQuestions(

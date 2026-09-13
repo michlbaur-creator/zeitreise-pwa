@@ -34,7 +34,9 @@ Lokale Designprobe vom 13. September 2026, noch nicht veröffentlicht.
   vollständig und enthält in Teil 3 und Teil 4 sicher eine Namensfrage.
 - Die Episode-1-Challenge steht in Szene 22 sofort prominent bereit und muss
   nicht erst durch vollständiges Abspielen der Szene freigeschaltet werden.
-- Cache-Version v147. Vor Veröffentlichung gemeinsame Sichtprüfung.
+- Sie beginnt direkt mit der ersten Quizfrage; die vorgeschaltete Startkarte
+  entfällt in Episode 1.
+- Cache-Version v148. Vor Veröffentlichung gemeinsame Sichtprüfung.
 
 Nach Annahme der Designprobe diese Entscheidung in den gemeinsamen
 Zeitreise-Steckbrief übernehmen.
