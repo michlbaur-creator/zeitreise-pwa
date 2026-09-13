@@ -32,7 +32,9 @@ Lokale Designprobe vom 13. September 2026, noch nicht veröffentlicht.
   ohne das vorherige Szenenbild verständlich und beziehen auch Wissen aus
   „Entdecken“ und „Menschen & Namen“ ein. Die Challenge nennt die Herkunftsszene
   vollständig und enthält in Teil 3 und Teil 4 sicher eine Namensfrage.
-- Cache-Version v146. Vor Veröffentlichung gemeinsame Sichtprüfung.
+- Die Episode-1-Challenge steht in Szene 22 sofort prominent bereit und muss
+  nicht erst durch vollständiges Abspielen der Szene freigeschaltet werden.
+- Cache-Version v147. Vor Veröffentlichung gemeinsame Sichtprüfung.
 
 Nach Annahme der Designprobe diese Entscheidung in den gemeinsamen
 Zeitreise-Steckbrief übernehmen.

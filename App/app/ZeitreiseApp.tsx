@@ -273,8 +273,7 @@ export default function ZeitreiseApp() {
   } | null>(null);
 
   const scene = scenes[currentIndex];
-  const isFinalChallengeVisible =
-    scene.id === scenes.length && progress >= 0.995;
+  const isFinalChallengeVisible = scene.id === scenes.length;
   const visiblePanel = isFinalChallengeVisible ? "sprecher" : panel;
   const sceneQuizzes = scene.quiz
     ? [scene.quiz, followUpQuizzes[scene.id]].filter(Boolean)
