@@ -12,6 +12,7 @@ export type EpisodeThreeScene = {
     question: string;
     answers: readonly string[];
     correctAnswer: number;
+    source?: "scene" | "discovery" | "people";
   }[];
   imageStatus: "ready" | "draft" | "open";
 };
@@ -664,13 +665,14 @@ const episodeThreeQuizzes = {
       correctAnswer: 1,
     },
     {
-      question: "Warum reichen für diesen Zeitsprung ungefähr 14.000 Jahre statt Millionen?",
+      question: "Was verändert sich in Episode 3 besonders stark?",
       answers: [
-        "Weil es nun vor allem um Veränderungen der Lebensweise geht.",
-        "Weil Klima und Landschaft in dieser Zeit unverändert bleiben.",
-        "Weil Menschen erst seit 14.000 Jahren Werkzeuge benutzen.",
+        "Lebensweise, Siedlungen und Technik der Menschen",
+        "der Körperbau von Homo sapiens zu einer neuen Menschenart",
+        "die grundlegenden Naturgesetze der Erde",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
     {
       question: "Welche Entwicklung passt zum Ende der letzten Eiszeit?",
@@ -682,24 +684,26 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Welche Schlussfolgerung wäre trotz fehlender Städte und Felder falsch?",
+      question: "Wie heißt die Warmzeit, die vor rund 11.700 Jahren begann?",
       answers: [
-        "Die Lebensweise unterscheidet sich stark von unserer.",
-        "Die Menschen müssen ihre Umwelt sehr genau kennen.",
-        "Die Menschen sind weniger intelligent als wir.",
+        "Kreidezeit",
+        "Holozän",
+        "Karbon",
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
+      source: "discovery",
     },
   ],
   2: [
     {
-      question: "Warum bedeutet ein jahreszeitlicher Ortswechsel nicht, ziellos umherzuirren?",
+      question: "Warum wechselten viele Wildbeutergruppen je nach Jahreszeit ihren Lagerplatz?",
       answers: [
         "Die Gruppen folgen einem festen Straßennetz.",
         "Die Gruppen kennen Zeiten, Wege und Nahrungsangebote ihrer Landschaft.",
         "Die Gruppen wechseln nur dann den Ort, wenn Nahrung vollständig verschwunden ist.",
       ],
       correctAnswer: 1,
+      source: "scene",
     },
     {
       question: "Welche Fähigkeit machte eine vielfältige Ernährung ohne Ackerbau möglich?",
@@ -720,13 +724,14 @@ const episodeThreeQuizzes = {
       correctAnswer: 1,
     },
     {
-      question: "Welche Aussage trifft die Lebensweise dieser Gruppen am genauesten?",
+      question: "Welches Haustier lebte schon vor Ackerbau und Viehzucht mit Menschen zusammen?",
       answers: [
-        "Sie waren ständig unterwegs und konnten keine Lagerplätze wiederverwenden.",
-        "Sie nutzten ihre Umwelt planvoll, auch ohne Felder und dauerhafte Häuser.",
-        "Sie lebten ausschließlich von der Jagd auf große Tiere.",
+        "das Pferd",
+        "der Hund",
+        "das Rind",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
   ],
   3: [
@@ -740,13 +745,14 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Warum lässt sich die genaue Funktion von Göbekli Tepe nicht sicher angeben?",
+      question: "Was wissen Forschende über den genauen Zweck von Göbekli Tepe?",
       answers: [
-        "Die Anlage ist nur aus modernen Erzählungen bekannt.",
-        "Die Funde erlauben mehrere Deutungen, aber keine eindeutige Erklärung.",
-        "Alle Pfeiler wurden vollständig zerstört.",
+        "Er ist durch eine erhaltene Bauinschrift genau bekannt.",
+        "Die Funde erlauben mehrere Deutungen, aber keine sichere Erklärung.",
+        "Die Anlage war nachweislich ein Königspalast.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
     {
       question: "Was widerlegt der Bau am überzeugendsten?",
@@ -758,13 +764,14 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Welche Aussage trennt gesichertes Wissen und Vermutung korrekt?",
+      question: "Was zeigen die tonnenschweren Steinpfeiler von Göbekli Tepe besonders deutlich?",
       answers: [
-        "Die Pfeiler wurden gemeinsam errichtet; der genaue Zweck bleibt unklar.",
-        "Die Anlage war sicher ein Tempel für eine bekannte Gottheit.",
-        "Die Anlage war nachweislich der Sitz eines frühen Königreichs.",
+        "Viele Menschen konnten schon vor großen Städten gemeinsam planen und bauen.",
+        "Die Erbauer verfügten bereits über Kräne aus Metall.",
+        "Jeder Pfeiler wurde spontan von einer einzelnen Person aufgestellt.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
   ],
   4: [
@@ -778,13 +785,14 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Welche Aussage über die Mauer geht über den Forschungsstand hinaus?",
+      question: "Was weiß man über die Mauer des frühen Jericho?",
       answers: [
-        "Sie könnte vor Hochwasser geschützt haben.",
-        "Sie diente mit Sicherheit ausschließlich der Abwehr von Feinden.",
-        "Sie könnte mehrere Aufgaben erfüllt haben.",
+        "Sie schützte nachweislich nur vor Feinden.",
+        "Sie könnte vor Hochwasser, vor Feinden oder vor mehreren Gefahren geschützt haben.",
+        "Sie war sicher nur ein Schmuckbau ohne praktische Aufgabe.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
     {
       question: "Welche Folge ergibt sich am unmittelbarsten daraus, dauerhaft zu bleiben?",
@@ -796,13 +804,14 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Welche Entwicklungskette passt zur Szene?",
+      question: "Warum eignete sich Jericho besonders gut für eine dauerhafte Siedlung?",
       answers: [
-        "Quelle → wiederkehrendes Lager → dauerhafte Siedlung → aufwendigere Bauten",
-        "wiederkehrendes Lager → Aufgabe des Ortes → Quelle → dauerhafte Siedlung",
-        "dauerhafte Siedlung → Quelle → saisonales Lager → aufwendigere Bauten",
+        "Eine kräftige Quelle lieferte das ganze Jahr Wasser.",
+        "Der Ort besaß bereits gepflasterte Straßen.",
+        "Dort regnete es jeden Tag zuverlässig.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
   ],
   5: [
@@ -814,15 +823,17 @@ const episodeThreeQuizzes = {
         "Sie wuchsen nur weit entfernt von menschlich genutzten Lagerplätzen.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
     {
-      question: "Warum kann man hier von unbewusster Auswahl sprechen?",
+      question: "Warum spricht man bei frühen Kulturpflanzen von unbewusster Auswahl?",
       answers: [
         "Menschen wählten bewusst bestimmte Gene aus, ohne Pflanzen auszusäen.",
         "Wiederholtes Sammeln und Aussäen genügte, ohne die Genetik zu kennen.",
         "Die Merkmale der Pflanzen veränderten sich ausschließlich durch das wärmere Klima.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
     {
       question: "Welche Aussage beschreibt den Beginn des Ackerbaus am besten?",
@@ -841,6 +852,7 @@ const episodeThreeQuizzes = {
         "Körner länger an der Ähre festzuhalten",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
   ],
   6: [
@@ -852,6 +864,7 @@ const episodeThreeQuizzes = {
         "Sie schützten die Herden, ohne Auswahl bei Schlachtung oder Fortpflanzung zu treffen.",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
     {
       question: "Warum ist Domestikation kein einzelner kurzer Vorgang?",
@@ -890,6 +903,7 @@ const episodeThreeQuizzes = {
         "Landwirtschaft entstand einmal und verbreitete sich unverändert über alle Kontinente.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
     {
       question: "Warum unterschieden sich die angebauten Pflanzen zwischen den Regionen?",
@@ -910,13 +924,14 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Welche Erklärung passt am besten zu den ähnlichen Entwicklungen?",
+      question: "Welche Zuordnung von Region und früher Kulturpflanze stimmt?",
       answers: [
-        "Verschiedene Gruppen beobachteten Pflanzen und Tiere und fanden vergleichbare Lösungen.",
-        "Ein genialer Urbauernhof verschickte ein vollständiges Erfindungspaket.",
-        "Landwirtschaft entstand überall exakt zur selben Zeit.",
+        "Vorderasien – Weizen und Gerste",
+        "Ostasien – Kartoffel und Quinoa",
+        "Mittelamerika – Reis und Hirse",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
   ],
   8: [
@@ -939,33 +954,36 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Warum wird Çatalhöyük nicht einfach als Stadt im späteren Sinn bezeichnet?",
+      question: "Wo bestatteten Menschen in Çatalhöyük manche ihrer Verstorbenen?",
       answers: [
-        "Die große und dichte Siedlung besitzt nicht automatisch alle Merkmale späterer Städte.",
-        "Dort lebten höchstens zwei Familien gleichzeitig.",
-        "Die Siedlung wurde nur während der Jagdsaison genutzt.",
+        "unter den Fußböden ihrer Häuser",
+        "ausschließlich auf weit entfernten Friedhöfen",
+        "in den Bewässerungskanälen zwischen den Häusern",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
     {
-      question: "Welche Aussage verbindet Bauweise und Alltag am besten?",
+      question: "Warum verliefen viele Wege in Çatalhöyük über die Dächer?",
       answers: [
-        "Dichte Bebauung verlagerte Wege auf die Dächer und machte das Zusammenleben komplexer.",
-        "Breite Straßen trennten Wohnen, Arbeiten und Lagern vollständig.",
-        "Die Dachwege verhinderten jede Form gemeinschaftlicher Arbeit.",
+        "Die Häuser standen sehr dicht und hatten häufig Zugänge von oben.",
+        "Die Straßen am Boden waren nur für Wagen reserviert.",
+        "Die Häuser durften grundsätzlich keine Türen besitzen.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
   ],
   9: [
     {
-      question: "Welche Folgen hatte die Sesshaftigkeit?",
+      question: "Welche Veränderung brachte die Sesshaftigkeit häufig mit sich?",
       answers: [
         "ausschließlich ein bequemeres und gesünderes Leben",
         "mehr Nahrung und Menschen, aber auch neue Krankheiten und soziale Unterschiede",
         "einen sofortigen Rückgang der Bevölkerung",
       ],
       correctAnswer: 1,
+      source: "scene",
     },
     {
       question: "Warum konnten sich manche Krankheitserreger leichter verbreiten?",
@@ -986,33 +1004,36 @@ const episodeThreeQuizzes = {
       correctAnswer: 0,
     },
     {
-      question: "Welche Aussage vermeidet eine zu einfache Bewertung?",
+      question: "Warum konnten größere Vorräte soziale Unterschiede verstärken?",
       answers: [
-        "Landwirtschaft war weder nur Fortschritt noch nur Rückschritt, sondern veränderte Chancen und Risiken.",
-        "Landwirtschaft hatte ausschließlich gesundheitliche Nachteile.",
-        "Landwirtschaft löste alle Versorgungsprobleme dauerhaft.",
+        "Wer Vorräte kontrollierte, konnte auch über ihre Verteilung entscheiden.",
+        "Vorräte wurden in allen Siedlungen automatisch gleich verteilt.",
+        "Durch Vorräte verschwanden Besitz und Macht vollständig.",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
   ],
   10: [
     {
-      question: "Warum reichen Absprachen allein bei sehr großen Vorräten immer weniger aus?",
+      question: "Warum brauchten große Getreidespeicher Maße und Aufzeichnungen?",
       answers: [
-        "Weil Getreide nur schriftlich haltbar bleibt.",
-        "Weil Lieferungen und Verteilungen über viele Personen und Zeiträume nachvollziehbar sein müssen.",
-        "Weil in Städten niemand mehr rechnen kann.",
+        "Damit Lieferungen und Ausgaben über längere Zeit nachvollziehbar blieben.",
+        "Damit das Getreide durch das Schreiben länger haltbar wurde.",
+        "Damit in der Stadt niemand mehr selbst zählen musste.",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "scene",
     },
     {
-      question: "Was lässt sich aus einem großen zentralen Speicher allein nicht sicher schließen?",
+      question: "Was belegt ein großer zentraler Getreidespeicher sicher?",
       answers: [
-        "Der Zugang zu den Vorräten musste organisiert werden.",
-        "Sämtliches Getreide gehörte einem einzigen König.",
-        "Mengen und Ausgaben spielten eine wichtige Rolle.",
+        "Vorräte und ihre Verteilung mussten organisiert werden.",
+        "Das gesamte Getreide gehörte einem einzigen König.",
+        "Alle Bewohner erhielten genau gleich große Rationen.",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "discovery",
     },
   ],
   11: [
@@ -1024,15 +1045,17 @@ const episodeThreeQuizzes = {
         "Landwirtschaft wird sofort bedeutungslos.",
       ],
       correctAnswer: 1,
+      source: "scene",
     },
     {
-      question: "Welcher Fund wäre der stärkste Hinweis auf organisierte Arbeitsteilung?",
+      question: "Welche Produktion wurde in frühen Städten zu einer großen spezialisierten Aufgabe?",
       answers: [
-        "Ein einzelnes besonders schönes Gefäß.",
-        "Abgegrenzte Werkstattbereiche mit vielen Werkzeugen und Produktionsresten derselben Tätigkeit.",
-        "Mehrere gleich große Wohnhäuser.",
+        "die Verarbeitung von Wolle zu Textilien",
+        "das Drucken von Büchern mit Metalllettern",
+        "der Bau von Eisenbahnlokomotiven",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "discovery",
     },
   ],
   12: [
@@ -1044,35 +1067,39 @@ const episodeThreeQuizzes = {
         "Zur Darstellung heutiger Buchstaben.",
       ],
       correctAnswer: 1,
+      source: "scene",
     },
     {
-      question: "Warum ist Proto-Keilschrift nicht einfach mit späterer Keilschrift gleichzusetzen?",
+      question: "Was gilt für die Entstehung von Schrift?",
       answers: [
-        "Sie wurde ausschließlich auf Holz geschrieben.",
-        "Ihre frühen Zeichen erfassten Informationen noch begrenzter und waren oft schwer eindeutig zu lesen.",
-        "Sie verwendete bereits dasselbe Alphabet wie wir.",
+        "Schriftsysteme entstanden in mehreren Weltregionen unabhängig voneinander.",
+        "Alle Schriftsysteme stammen direkt von den Tafeln aus Uruk ab.",
+        "Schrift entstand erst nach der Erfindung des Papiers.",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "discovery",
     },
   ],
   13: [
     {
-      question: "Wodurch vergrößert ein schriftlicher Eintrag die Reichweite einer Entscheidung?",
+      question: "Wozu diente ein Rollsiegel auf feuchtem Ton?",
       answers: [
-        "Er verhindert jede falsche Angabe.",
-        "Er kann später und auch ohne Anwesenheit aller Beteiligten geprüft werden.",
-        "Er macht mündliche Kommunikation unmöglich.",
-      ],
-      correctAnswer: 1,
-    },
-    {
-      question: "Welche Fundkombination spricht besonders für organisierte Kontrolle?",
-      answers: [
-        "Standardisierte Maße, administrative Tafeln, Siegel und zentrale Speicher.",
-        "Einige unterschiedliche Kochtöpfe in Wohnhäusern.",
-        "Eine unbeschriftete Stadtmauer.",
+        "Es hinterließ eine wiedererkennbare Kennzeichnung.",
+        "Es wog die Getreideration automatisch ab.",
+        "Es löschte ältere Einträge auf der Tafel.",
       ],
       correctAnswer: 0,
+      source: "discovery",
+    },
+    {
+      question: "Warum konnten Verwaltungslisten zu einem Werkzeug der Macht werden?",
+      answers: [
+        "Sie hielten fest, wer Güter ablieferte und wer Rationen erhielt.",
+        "Sie verhinderten grundsätzlich jede ungerechte Verteilung.",
+        "Sie machten Speicher, Maße und Amtsträger überflüssig.",
+      ],
+      correctAnswer: 0,
+      source: "scene",
     },
   ],
   14: [
@@ -1084,6 +1111,7 @@ const episodeThreeQuizzes = {
         "Am Indus im heutigen Pakistan.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
     {
       question: "Warum fördern Kanäle zugleich Zusammenarbeit und Verwaltung?",
@@ -1093,37 +1121,41 @@ const episodeThreeQuizzes = {
         "Bau, Reinigung und Wasserverteilung müssen über einzelne Haushalte hinaus koordiniert werden.",
       ],
       correctAnswer: 2,
+      source: "scene",
     },
   ],
   15: [
     {
-      question: "Warum beweist ein großer Gemeinschaftsbau noch keinen allmächtigen König?",
+      question: "Was belegt ein großer Gemeinschaftsbau in einer frühen Stadt sicher?",
       answers: [
-        "Monumentalbauten können niemals von Herrschern angeordnet werden.",
-        "Auch andere Institutionen oder gemeinschaftliche Formen können große Arbeiten organisieren.",
-        "Könige lebten grundsätzlich außerhalb der Städte.",
+        "Viele Arbeitskräfte und Materialien wurden organisiert.",
+        "Ein einzelner König entschied allein über jedes Bauvorhaben.",
+        "Alle Bewohner waren politisch gleich mächtig.",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "scene",
     },
     {
-      question: "Welche Aussage beschreibt das Verhältnis von Schrift und Macht am besten?",
+      question: "Wie war das südliche Mesopotamien im frühen 3. Jahrtausend v. Chr. politisch gegliedert?",
       answers: [
-        "Schrift diente ausschließlich dazu, Herrscher zu loben.",
-        "Schrift machte Machtunterschiede unmöglich.",
-        "Schrift erleichterte Verwaltung und Kontrolle, überliefert aber häufig besonders die Sicht mächtiger Institutionen.",
+        "in mehrere eigenständige Stadtstaaten",
+        "in einen einzigen Staat mit der Hauptstadt Rom",
+        "in kleine Gruppen ohne größere Siedlungen",
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
+      source: "discovery",
     },
   ],
   16: [
     {
-      question: "Was kann ein weit entfernt abgebauter Stein in einer alten Stadt belegen?",
+      question: "Was zeigen fremdes Holz, Metall oder Edelsteine in einer frühen Stadt?",
       answers: [
-        "Der Stein wurde sicher direkt neben der Stadt gefunden.",
-        "Der Stein kann über mehrere Handelsstationen weitergereicht worden sein.",
-        "Ein einzelner Händler muss die gesamte Strecke gereist sein.",
+        "Die Stadt war über Handelswege mit entfernten Regionen verbunden.",
+        "Alle Materialien wurden direkt vor den Stadttoren gewonnen.",
+        "Ein einziger Händler reiste sicher die gesamte Strecke.",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "discovery",
     },
     {
       question: "Warum veränderten Schiffe den Handel besonders stark?",
@@ -1133,37 +1165,41 @@ const episodeThreeQuizzes = {
         "Durch sie wurden Häfen und Zwischenstationen überflüssig.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
   ],
   17: [
     {
-      question: "Warum ist der Begriff „Seidenstraße“ etwas irreführend?",
+      question: "Was waren die sogenannten Seidenstraßen?",
       answers: [
-        "Auf den Wegen wurde überhaupt keine Seide transportiert.",
-        "Es handelte sich um ein Netz vieler Land- und Seewege.",
-        "Die Straße verband lediglich zwei benachbarte Städte.",
+        "ein Netz aus vielen Land- und Seewegen",
+        "eine einzige gepflasterte Straße von China nach Rom",
+        "eine Route, auf der ausschließlich Seide transportiert wurde",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "discovery",
     },
     {
-      question: "Welche Folge hatten solche Handelsnetze?",
+      question: "Welche Folge hatten die weitreichenden Handelsnetze der Seidenstraßen?",
       answers: [
         "Es reisten ausschließlich Luxuswaren.",
         "Ideen und Religionen blieben auf ihre Herkunftsorte beschränkt.",
         "Waren, Wissen und Vorstellungen veränderten sich unterwegs und beeinflussten neue Regionen.",
       ],
       correctAnswer: 2,
+      source: "scene",
     },
   ],
   18: [
     {
-      question: "Was geschieht normalerweise, wenn Wissen durch verschiedene Kulturen reist?",
+      question: "Wer entwickelte in Europa ein leistungsfähiges Drucksystem mit beweglichen Metalllettern?",
       answers: [
-        "Es bleibt vollkommen unverändert.",
-        "Es wird übersetzt, geprüft und häufig weiterentwickelt.",
-        "Es verschwindet, sobald der ursprüngliche Erfinder stirbt.",
+        "Johannes Gutenberg",
+        "Cai Lun",
+        "Al-Chwarizmi",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "people",
     },
     {
       question: "Welche Beschreibung unserer heutigen Ziffern ist richtig?",
@@ -1173,6 +1209,7 @@ const episodeThreeQuizzes = {
         "Sie wurden zuerst von Seefahrern als Geheimschrift benutzt.",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
   ],
   19: [
@@ -1184,46 +1221,51 @@ const episodeThreeQuizzes = {
         "Weil mittelalterliche Städte grundsätzlich keine Krankheiten kannten.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
     {
-      question: "Was kann alte Erreger-DNA belegen – und was nicht?",
+      question: "Was lässt sich durch Erbgut aus den Zähnen mittelalterlicher Pesttoter belegen?",
       answers: [
-        "Sie kann den Erreger nachweisen, aber nicht jede einzelne Übertragungsroute rekonstruieren.",
-        "Sie nennt den Namen der ersten erkrankten Person.",
-        "Sie beweist, dass nur eine einzige Tierart die Pest verbreitete.",
+        "Das Bakterium Yersinia pestis verursachte die Pest.",
+        "Ein bestimmtes Schiff brachte die Pest zuerst nach Europa.",
+        "Nur Ratten konnten den Erreger übertragen.",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
   ],
   20: [
     {
-      question: "Warum kann der Begriff „Austausch“ für die Zeit nach 1492 irreführen?",
+      question: "Wer erreichte 1492 im Auftrag Spaniens die Karibik?",
       answers: [
-        "Weil überhaupt keine Pflanzen oder Tiere die Kontinente wechselten.",
-        "Weil er leicht nach einem freiwilligen Tausch klingt, obwohl Eroberung und Zwang entscheidend waren.",
-        "Weil ausschließlich europäische Gesellschaften Folgen des Kontakts erlebten.",
+        "Christoph Kolumbus",
+        "Johannes Gutenberg",
+        "George Stephenson",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "people",
     },
     {
-      question: "Welche Aussage beschreibt die neue Verbindung über den Atlantik am besten?",
+      question: "Welche Folge hatten die dauerhaften Verbindungen über den Atlantik seit 1492?",
       answers: [
         "Pflanzen, Tiere, Menschen und Erreger bewegten sich in verschiedene Richtungen – mit sehr ungleichen Folgen.",
         "Nur Edelmetalle gelangten über den Atlantik.",
         "Alle beteiligten Gesellschaften gewannen gleich viel Macht und Wohlstand.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
   ],
   21: [
     {
-      question: "Was zeigen Handels- und Schiffslisten zur Versklavung – und was zeigen sie nur unzureichend?",
+      question: "Was lässt sich aus Handels- und Schiffslisten zur transatlantischen Versklavung ablesen?",
       answers: [
-        "Sie zeigen Größenordnungen und Handelswege, aber nur begrenzt die Erfahrungen einzelner Menschen.",
-        "Sie erzählen vollständig das Leben jeder verschleppten Person.",
-        "Sie belegen, dass die Verschleppten keinen Widerstand leisteten.",
+        "ungefähre Zahlen und Handelswege, aber kaum persönliche Erfahrungen",
+        "die vollständige Lebensgeschichte jeder verschleppten Person",
+        "dass versklavte Menschen keinen Widerstand leisteten",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
     {
       question: "Warum war die transatlantische Versklavung Teil einer vernetzten Wirtschaft?",
@@ -1233,6 +1275,7 @@ const episodeThreeQuizzes = {
         "Weil europäische Händler und Käufer daran nicht beteiligt waren.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
   ],
   22: [
@@ -1244,26 +1287,29 @@ const episodeThreeQuizzes = {
         "Sie machte Maschinen überflüssig.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
     {
-      question: "Was zeigt die Dampfmaschine besonders deutlich?",
+      question: "Wer machte die Dampfmaschine deutlich leistungsfähiger, ohne sie selbst erfunden zu haben?",
       answers: [
-        "Neue Technik beseitigt automatisch schlechte Arbeitsbedingungen.",
-        "Mehr verfügbare Energie kann Produktion und Arbeitsorganisation verändern.",
-        "Maschinen benötigen keine Rohstoffe.",
+        "James Watt",
+        "Carl Benz",
+        "Michael Faraday",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "people",
     },
   ],
   23: [
     {
-      question: "Warum förderte die Eisenbahn das Wachstum von Industriestädten?",
+      question: "Wer baute erfolgreiche Dampflokomotiven und half, die Eisenbahn alltagstauglich zu machen?",
       answers: [
-        "Sie verband Fabriken schneller mit Rohstoffen, Arbeitskräften und Märkten.",
-        "Sie machte den Transport von Gütern unnötig.",
-        "Sie durfte ausschließlich Kohle befördern.",
+        "George Stephenson",
+        "Fritz Haber",
+        "Werner von Siemens",
       ],
       correctAnswer: 0,
+      source: "people",
     },
     {
       question: "Weshalb unterstützten Eisenbahnen die Einführung gemeinsamer Uhrzeiten?",
@@ -1273,26 +1319,29 @@ const episodeThreeQuizzes = {
         "Menschen hatten zuvor keine Vorstellung von Zeit.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
   ],
   24: [
     {
-      question: "Warum ist Elektrizität keine ursprüngliche Energiequelle?",
+      question: "Wer machte Generatoren praktisch nutzbar und half damit beim Aufbau einer Elektroindustrie?",
       answers: [
-        "Sie muss zunächst aus einer anderen Energieform erzeugt werden.",
-        "Sie kommt ausschließlich in Batterien vor.",
-        "Sie kann keine Maschinen antreiben.",
+        "Werner von Siemens",
+        "George Stephenson",
+        "Carl Bosch",
       ],
       correctAnswer: 0,
+      source: "people",
     },
     {
-      question: "Was verändert ein Stromnetz gegenüber einer einzelnen Dampfmaschine?",
+      question: "Wer zeigte, dass Magnetismus elektrischen Strom erzeugen kann?",
       answers: [
-        "Energie kann an vielen weit entfernten Orten genutzt werden.",
-        "Jede Wohnung benötigt ein eigenes Kohlebergwerk.",
-        "Energie geht niemals verloren.",
+        "Michael Faraday",
+        "James Watt",
+        "Johannes Gutenberg",
       ],
       correctAnswer: 0,
+      source: "people",
     },
   ],
   25: [
@@ -1304,15 +1353,17 @@ const episodeThreeQuizzes = {
         "Pflanzen können grundsätzlich keinen Stickstoff verwenden.",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
     {
-      question: "Welches Tauschgeschäft steckt im künstlichen Dünger?",
+      question: "Wer machte Habers Verfahren zur Ammoniakherstellung mit seinem Team fabrikreif?",
       answers: [
-        "Höhere Erträge sind möglich, aber Herstellung und Überdüngung können Energie und Umwelt belasten.",
-        "Dünger erhöht Erträge ganz ohne Rohstoffe oder Energie.",
-        "Seit seiner Erfindung benötigen Felder weder Wasser noch Böden.",
+        "Carl Bosch",
+        "Carl Benz",
+        "Cai Lun",
       ],
       correctAnswer: 0,
+      source: "people",
     },
   ],
   26: [
@@ -1324,15 +1375,17 @@ const episodeThreeQuizzes = {
         "Sie können ausschließlich in stationären Maschinen genutzt werden.",
       ],
       correctAnswer: 0,
+      source: "scene",
     },
     {
-      question: "Wie veränderte Massenmobilität Städte und Wirtschaft?",
+      question: "Wer bewies mit einer Fernfahrt, dass das frühe Automobil alltagstauglich war?",
       answers: [
-        "Sie machte Straßen und Lieferketten überflüssig.",
-        "Sie ermöglichte weitere Wege, schuf aber neue Infrastruktur und Abhängigkeit vom Öl.",
-        "Sie verringerte automatisch jeden Rohstoffverbrauch.",
+        "Bertha Benz",
+        "Michael Faraday",
+        "Cai Lun",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      source: "people",
     },
   ],
   27: [
@@ -1344,6 +1397,7 @@ const episodeThreeQuizzes = {
         "Lochkarten wurden einfach immer kleiner gefaltet.",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
     {
       question: "Warum ist ein Smartphone trotz seiner Größe Teil eines großen Systems?",
@@ -1353,26 +1407,29 @@ const episodeThreeQuizzes = {
         "Alle Daten werden ausschließlich im Gerät selbst erzeugt.",
       ],
       correctAnswer: 1,
+      source: "discovery",
     },
   ],
   28: [
     {
-      question: "Warum können menschliche Aktivitäten heute das Erdsystem beeinflussen?",
+      question: "Wie verstärken zusätzliche Treibhausgase die Erwärmung der Erde?",
       answers: [
-        "Weil Milliarden Menschen mit großen Energiemengen Stoffe und Landschaften verändern.",
-        "Weil einzelne Smartphones die Erdachse verschieben.",
-        "Weil natürliche Prozesse vollständig aufgehört haben.",
+        "Sie halten mehr Wärmestrahlung in der Atmosphäre zurück.",
+        "Sie verlangsamen die Drehung der Erde.",
+        "Sie verhindern vollständig, dass Sonnenlicht die Erde erreicht.",
       ],
       correctAnswer: 0,
+      source: "discovery",
     },
     {
-      question: "Welche Schlussfolgerung passt zum offenen Ende am Zeitfelsen?",
+      question: "Warum ist die Verantwortung für heutige Umweltveränderungen ungleich verteilt?",
       answers: [
-        "Technische Entwicklung hat nur Folgen und bietet keine Wahlmöglichkeiten.",
-        "Alle Menschen tragen exakt gleich viel Verantwortung.",
-        "Große Veränderungsmacht schafft Folgen, kann aber auch für neue Lösungen genutzt werden.",
+        "Länder und Menschen unterscheiden sich bei Emissionen und Handlungsmöglichkeiten stark.",
+        "Alle Menschen haben seit Beginn der Industrialisierung gleich viel ausgestoßen.",
+        "Nur die Bevölkerungszahl eines Landes entscheidet über seine Verantwortung.",
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
+      source: "discovery",
     },
   ],
 } as const;

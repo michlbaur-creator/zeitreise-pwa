@@ -9,6 +9,7 @@ type FinalQuestion = {
   question: string;
   options: string[];
   correctIndex: number;
+  source?: "scene" | "discovery" | "people";
 };
 
 type QuizScene = {
@@ -18,6 +19,7 @@ type QuizScene = {
     question: string;
     options: string[];
     correctIndex: number;
+    source?: "scene" | "discovery" | "people";
   } | null;
 };
 
@@ -64,6 +66,7 @@ export function FinalEpisodeQuiz({
           question: scene.quiz!.question,
           options: scene.quiz!.options,
           correctIndex: scene.quiz!.correctIndex,
+          source: scene.quiz!.source,
         })),
     [scenes],
   );
@@ -404,7 +407,7 @@ export function FinalEpisodeQuiz({
                   <small>Teil {Math.floor(questionIndex / 5) + 1} von 4</small>
                   <strong>{cubeTopic.label}</strong>
                   <span>
-                    Szene {String(question.sceneId).padStart(2, "0")} · {question.sceneTitle}
+                    Thema aus Szene {String(question.sceneId).padStart(2, "0")} · {question.sceneTitle}
                   </span>
                 </div>
               </div>
@@ -659,7 +662,19 @@ function balancedEpisodeThreeQuestions(
     ),
     questionPool.filter((question) => question.sceneId >= 22),
   ];
-  return groups.flatMap((group) => shuffled(group).slice(0, 5)).slice(0, count);
+  return groups
+    .flatMap((group, index) => {
+      const preferredSource = index >= 2 ? "people" : "discovery";
+      const featured = shuffled(
+        group.filter((question) => question.source === preferredSource),
+      )[0];
+      if (!featured) return shuffled(group).slice(0, 5);
+      return shuffled([
+        featured,
+        ...shuffled(group.filter((question) => question !== featured)).slice(0, 4),
+      ]);
+    })
+    .slice(0, count);
 }
 
 function playPerfectFanfare() {

@@ -17,7 +17,11 @@ Lokale Designprobe vom 13. September 2026, noch nicht veröffentlicht.
   Der Sprechertext bleibt über einen eigenen, klar beschrifteten Bereich lesbar.
 - Der neue Bestwert wird getrennt vom bisherigen Fünf-Fragen-Prototyp gespeichert.
 - Die drei bisherigen Teilquizze bleiben jeweils fünf Fragen lang.
-- Cache-Version v144. Vor Veröffentlichung gemeinsame Sichtprüfung.
+- Alle 56 Szenenfragen wurden für die Mittelstufe sprachlich geprüft. Sie sind
+  ohne das vorherige Szenenbild verständlich und beziehen auch Wissen aus
+  „Entdecken“ und „Menschen & Namen“ ein. Die Challenge nennt die Herkunftsszene
+  vollständig und enthält in Teil 3 und Teil 4 sicher eine Namensfrage.
+- Cache-Version v145. Vor Veröffentlichung gemeinsame Sichtprüfung.
 
 Nach Annahme der Designprobe diese Entscheidung in den gemeinsamen
 Zeitreise-Steckbrief übernehmen.

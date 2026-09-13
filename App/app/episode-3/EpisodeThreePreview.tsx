@@ -64,6 +64,7 @@ const episodeThreeFinalQuizScenes = episodeThreeScenes.flatMap((scene) =>
       question: quiz.question,
       options: [...quiz.answers],
       correctIndex: quiz.correctAnswer,
+      source: quiz.source,
     },
   })),
 );

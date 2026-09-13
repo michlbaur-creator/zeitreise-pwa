@@ -14806,12 +14806,10 @@ body.cinematic-intro-active {
 }
 
 .timefelsen-cube-copy span {
-  overflow: hidden;
   color: #8c9a93;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   line-height: 1.35;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .timefelsen-question-number {

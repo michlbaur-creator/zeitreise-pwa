@@ -360,7 +360,10 @@ test("legt Episode 3 mit Sprecheraufnahmen im Format von Episode 2 an", async ()
   assert.match(episodeThreeApp, /Quiz · Frage \{quizQuestionIndex \+ 1\} von \{scene\.quiz\.length\}/);
   assert.match(episodeThreeApp, /Beide Fragen geschafft/);
   assert.match(episodeThreeApp, /setQuizQuestionIndex\(\(value\) => value \+ 1\)/);
-  assert.match(episodeThreeData, /Welche Folgen hatte die Sesshaftigkeit\?/);
+  assert.match(episodeThreeData, /Wie heißt die Warmzeit, die vor rund 11\.700 Jahren begann\?/);
+  assert.match(episodeThreeData, /Wer entwickelte in Europa ein leistungsfähiges Drucksystem/);
+  assert.match(episodeThreeData, /Wer machte Generatoren praktisch nutzbar/);
+  assert.match(episodeThreeData, /source: "people"/);
   assert.match(episodeThreeData, /episodeThreeSceneImageSequences/);
   assert.match(episodeThreeData, /scene13\/hintergrund-listenmacht-v1\.png/);
   assert.match(episodeThreeVisual, /ep3-scene-image-sequence/);
@@ -1021,7 +1024,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v144"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v145"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1263,7 +1266,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v144"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v145"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);
