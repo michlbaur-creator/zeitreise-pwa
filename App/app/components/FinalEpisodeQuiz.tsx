@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import type { CSSProperties } from "react";
+
 type FinalQuestion = {
   sceneId: number;
   sceneTitle: string;
@@ -19,6 +21,20 @@ type QuizScene = {
   } | null;
 };
 
+type QuizAchievement = {
+  title: "Zeitstarter" | "Spurensucher" | "Zeitkenner" | "Zeitmeister";
+  description: string;
+  className: string;
+};
+
+type CubeTopic = {
+  label: "Bleiben" | "Ordnen" | "Vernetzen" | "Beschleunigen";
+  symbol: string;
+  className: string;
+};
+
+const EPISODE_THREE_BEST_SCORE_KEY = "zeitreise-episode3-final-quiz-best";
+
 export function FinalEpisodeQuiz({
   scenes,
   episode = 1,
@@ -26,6 +42,8 @@ export function FinalEpisodeQuiz({
   questionCount,
   randomize = false,
   celebratePerfect = false,
+  timeFelsenChallenge = false,
+  soundMuted = false,
 }: {
   scenes: QuizScene[];
   episode?: 1 | 2 | 3;
@@ -33,6 +51,8 @@ export function FinalEpisodeQuiz({
   questionCount?: number;
   randomize?: boolean;
   celebratePerfect?: boolean;
+  timeFelsenChallenge?: boolean;
+  soundMuted?: boolean;
 }) {
   const questionPool = useMemo<FinalQuestion[]>(
     () =>
@@ -58,8 +78,36 @@ export function FinalEpisodeQuiz({
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [checked, setChecked] = useState(false);
-  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState<boolean[]>([]);
   const [finished, setFinished] = useState(false);
+  const [bestScore, setBestScore] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!timeFelsenChallenge || typeof window === "undefined") return;
+    let cancelled = false;
+    window.queueMicrotask(() => {
+      if (cancelled) return;
+      try {
+        const storedValue = window.localStorage.getItem(
+          EPISODE_THREE_BEST_SCORE_KEY,
+        );
+        if (storedValue === null) return;
+        const storedScore = Number(storedValue);
+        if (
+          Number.isInteger(storedScore) &&
+          storedScore >= 0 &&
+          storedScore <= 5
+        ) {
+          setBestScore(storedScore);
+        }
+      } catch {
+        // Das Quiz bleibt auch dann vollständig spielbar, wenn lokaler Speicher blockiert ist.
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [timeFelsenChallenge]);
 
   if (!questionPool.length || !questions.length) return null;
 
@@ -70,38 +118,54 @@ export function FinalEpisodeQuiz({
   const isEpisodeThreePartTwo = isEpisodeThree && episodePart === 2;
   const isEpisodeThreePartThree = isEpisodeThree && episodePart === 3;
   const isEpisodeThreePartFour = isEpisodeThree && episodePart === 4;
+  const score = answers.filter(Boolean).length;
   const perfectResult = score === questions.length;
   const strongResult = Math.ceil(questions.length * 0.78);
   const solidResult = Math.ceil(questions.length * 0.56);
+  const achievement = achievementForScore(score);
+  const cubeTopic = topicForScene(question.sceneId);
 
   const reset = () => {
     const nextQuestions = randomize
-      ? [...questionPool]
-          .sort(() => Math.random() - 0.5)
-          .slice(0, visibleQuestionCount)
+      ? timeFelsenChallenge
+        ? balancedEpisodeThreeQuestions(questionPool, visibleQuestionCount)
+        : shuffled(questionPool).slice(0, visibleQuestionCount)
       : questionPool.slice(0, visibleQuestionCount);
     setQuestions(nextQuestions);
     setStarted(true);
     setQuestionIndex(0);
     setSelected(null);
     setChecked(false);
-    setScore(0);
+    setAnswers([]);
     setFinished(false);
   };
 
   const answer = (optionIndex: number) => {
     if (checked) return;
+    const correct = optionIndex === question.correctIndex;
     setSelected(optionIndex);
-    if (optionIndex === question.correctIndex) {
-      setScore((value) => value + 1);
-    }
+    setAnswers((values) => [...values, correct]);
     setChecked(true);
   };
 
   const next = () => {
     if (questionIndex === questions.length - 1) {
       setFinished(true);
-      if (celebratePerfect && perfectResult) playPerfectFanfare();
+      if (timeFelsenChallenge) {
+        const nextBestScore = Math.max(bestScore ?? 0, score);
+        setBestScore(nextBestScore);
+        try {
+          window.localStorage.setItem(
+            EPISODE_THREE_BEST_SCORE_KEY,
+            String(nextBestScore),
+          );
+        } catch {
+          // Keine Fehlermeldung nötig: Die aktuelle Belohnung bleibt sichtbar.
+        }
+      }
+      if (celebratePerfect && perfectResult && !soundMuted) {
+        playPerfectFanfare();
+      }
       return;
     }
     setQuestionIndex((value) => value + 1);
@@ -110,169 +174,272 @@ export function FinalEpisodeQuiz({
   };
 
   return (
-    <section className="final-quiz" aria-labelledby="final-quiz-title">
+    <section
+      className={`final-quiz ${timeFelsenChallenge ? "final-quiz-timefelsen" : ""}`}
+      aria-labelledby="final-quiz-title"
+    >
       {!started ? (
-        <div className="final-quiz-intro">
-          <div>
-            <p className="eyebrow">
-              {isEpisodeThreePartFour
-                ? "Teil 4 abgeschlossen"
-                : isEpisodeThreePartThree
-                ? "Teil 3 abgeschlossen"
-                : isEpisodeThreePartTwo
-                ? "Teil 2 abgeschlossen"
-                : isEpisodeThree
-                  ? "Teil 1 abgeschlossen"
-                  : "Am Ende der Reise"}
-            </p>
-            <h2 id="final-quiz-title">
-              {isEpisodeThreePartFour
-                ? "Das Abschlussquiz zu „Der Planet auf Schnellvorlauf“"
-                : isEpisodeThreePartThree
-                ? "Das Abschlussquiz zu „Die Welt rückt zusammen“"
-                : isEpisodeThreePartTwo
-                ? "Das Abschlussquiz zu Städte, Schrift und Macht"
-                : isEpisodeThree
-                ? "Das Abschlussquiz zu Teil 1"
-                : isEpisodeTwo
-                ? "Das große Episode-2-Quiz"
-                : "Das große Episode-1-Quiz"}
-            </h2>
-            <p>
-              {isEpisodeThreePartFour
-                ? "Fünf zufällig ausgewählte Fragen zu Energie, Dünger, Mobilität, Computern und planetarer Wirkung."
-                : isEpisodeThreePartThree
-                ? "Fünf zufällig ausgewählte Fragen aus den zwölf Fragen zu Handel, Wissen, Krankheiten, Kolonisierung und Versklavung."
-                : isEpisodeThreePartTwo
-                ? "Fünf zufällig ausgewählte Fragen aus den zwölf Fragen zu Uruk, Arbeitsteilung, Schrift, Verwaltung und Macht."
-                : isEpisodeThree
-                ? "Fünf zufällig ausgewählte Fragen zu Sesshaftigkeit, Landwirtschaft und den ersten großen Siedlungen."
-                : isEpisodeTwo
-                ? "Neun Fragen zu Primaten, Zweibeinigkeit, Werkzeugen, Wanderungen und unseren menschlichen Verwandten."
-                : "Neun Fragen aus neun Etappen deiner Zeitreise – von der jungen Erde bis zum Asteroideneinschlag."}
-            </p>
-          </div>
-          <button type="button" onClick={reset}>
-            Quiz starten <span aria-hidden="true">→</span>
-          </button>
-        </div>
-      ) : finished ? (
-        <div className={`final-quiz-result ${celebratePerfect && perfectResult ? "is-perfect" : ""}`} aria-live="polite">
-          {celebratePerfect && perfectResult ? (
-            <div className="final-quiz-fireworks" aria-hidden="true">
-              {Array.from({ length: 18 }, (_, index) => <i key={index} />)}
+        timeFelsenChallenge ? (
+          <div className="timefelsen-intro">
+            <div className="timefelsen-intro-visual" aria-hidden="true">
+              <TimeCube topic={{ label: "Vernetzen", symbol: "⌁", className: "all" }} />
+              <span className="timefelsen-intro-orbit" />
             </div>
-          ) : null}
-          <span className="final-score">
-            {score}
-            <small>von {questions.length}</small>
-          </span>
-          <div>
-            <p className="eyebrow">Dein Ergebnis</p>
-            <h2 id="final-quiz-title">
-              {isEpisodeThreePartFour
-                ? perfectResult
-                  ? "Fünf von fünf – den Schnellvorlauf sicher im Blick."
-                  : score >= strongResult
-                    ? "Die Beschleunigung ist fast vollständig entschlüsselt."
-                    : score >= solidResult
-                      ? "Die Energiespuren werden sichtbar."
-                      : "Noch eine Runde durch den Schnellvorlauf?"
-                : isEpisodeThreePartThree
-                ? perfectResult
-                  ? "Fünf von fünf – Verbindungen und ihre Folgen im Blick."
-                  : score >= strongResult
-                    ? "Das weltweite Netz ist fast vollständig."
-                    : score >= solidResult
-                      ? "Die Verbindungen werden sichtbar."
-                      : "Noch einmal den Routen folgen?"
-                : isEpisodeThreePartTwo
-                ? perfectResult
-                  ? "Fünf von fünf – du hättest den Speicher von Uruk im Griff!"
-                  : score >= strongResult
-                    ? "Die Listen sind fast vollständig."
-                    : score >= solidResult
-                      ? "Die Stadtverwaltung nimmt Form an."
-                      : "Noch eine Runde durch Uruk?"
-                : isEpisodeThree
-                ? score >= strongResult
-                  ? "Bereit für die ersten Städte!"
-                  : score >= solidResult
-                    ? "Das Dorf wächst schon in deinem Kopf."
-                    : "Noch eine Runde durchs Dorf?"
-                : isEpisodeTwo
-                ? score >= strongResult
-                  ? "Spurensuche bestanden!"
-                  : score >= solidResult
-                    ? "Im Stammbaum gut orientiert."
-                    : "Ein paar Äste verdienen eine zweite Runde."
-                : score >= strongResult
-                  ? "Zeitreise bestanden!"
-                  : score >= solidResult
-                    ? "Schon ziemlich erdgeschichtsfest."
-                    : "Die Erde gibt dir eine zweite Runde."}
-            </h2>
-            <p>
-              {isEpisodeThreePartFour
-                ? perfectResult
-                  ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
-                  : "Beim zweiten Durchgang erkennst du noch genauer, wie Energie neue Möglichkeiten, Abhängigkeiten und Folgen schuf."
-                : isEpisodeThreePartThree
-                ? perfectResult
-                  ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
-                  : "Beim zweiten Durchgang erkennst du noch genauer, wie Vernetzung Möglichkeiten und Abhängigkeiten zugleich schuf."
-                : isEpisodeThreePartTwo
-                ? perfectResult
-                  ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
-                  : "Beim zweiten Durchgang kennst du Speicher, Tafeln und Machtverhältnisse schon genauer."
-                : isEpisodeThree
-                ? score >= strongResult
-                  ? "Du erkennst Chancen, Belastungen und offene Fragen des neuen Lebens sehr sicher."
-                  : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
-                : isEpisodeTwo
-                ? score >= strongResult
-                  ? "Du behältst selbst in einer verzweigten Geschichte den Überblick."
-                  : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
-                : score >= strongResult
-                  ? "Du hast die großen Wendepunkte der Erdgeschichte sicher im Blick."
-                  : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."}
-            </p>
-            <button type="button" onClick={reset}>
-              Noch einmal spielen
-            </button>
+            <div className="timefelsen-intro-copy">
+              <p className="eyebrow">Episode 3 abgeschlossen</p>
+              <h2 id="final-quiz-title">Die Zeitfelsen-Challenge</h2>
+              <p>
+                Der Zeitwürfel zieht fünf Fragen aus allen vier Teilen. Mit jeder
+                richtigen Antwort steigst du eine Stufe höher.
+              </p>
+              <AchievementScale />
+              {bestScore !== null ? (
+                <p className="timefelsen-best">
+                  Deine bisher beste Runde: <strong>{bestScore} von 5</strong>
+                </p>
+              ) : null}
+              <button type="button" onClick={reset}>
+                Zeitwürfel starten <span aria-hidden="true">→</span>
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <>
-          <div className="final-quiz-head">
+        ) : (
+          <div className="final-quiz-intro">
             <div>
               <p className="eyebrow">
-                Frage {questionIndex + 1} von {questions.length}
+                {isEpisodeThreePartFour
+                  ? "Teil 4 abgeschlossen"
+                  : isEpisodeThreePartThree
+                    ? "Teil 3 abgeschlossen"
+                    : isEpisodeThreePartTwo
+                      ? "Teil 2 abgeschlossen"
+                      : isEpisodeThree
+                        ? "Teil 1 abgeschlossen"
+                        : "Am Ende der Reise"}
               </p>
-              <span>
-                Aus Szene {String(question.sceneId).padStart(2, "0")} ·{" "}
-                {question.sceneTitle}
-              </span>
+              <h2 id="final-quiz-title">
+                {isEpisodeThreePartFour
+                  ? "Das Abschlussquiz zu „Der Planet auf Schnellvorlauf“"
+                  : isEpisodeThreePartThree
+                    ? "Das Abschlussquiz zu „Die Welt rückt zusammen“"
+                    : isEpisodeThreePartTwo
+                      ? "Das Abschlussquiz zu Städte, Schrift und Macht"
+                      : isEpisodeThree
+                        ? "Das Abschlussquiz zu Teil 1"
+                        : isEpisodeTwo
+                          ? "Das große Episode-2-Quiz"
+                          : "Das große Episode-1-Quiz"}
+              </h2>
+              <p>
+                {isEpisodeThreePartFour
+                  ? "Fünf zufällig ausgewählte Fragen zu Energie, Dünger, Mobilität, Computern und planetarer Wirkung."
+                  : isEpisodeThreePartThree
+                    ? "Fünf zufällig ausgewählte Fragen aus den zwölf Fragen zu Handel, Wissen, Krankheiten, Kolonisierung und Versklavung."
+                    : isEpisodeThreePartTwo
+                      ? "Fünf zufällig ausgewählte Fragen aus den zwölf Fragen zu Uruk, Arbeitsteilung, Schrift, Verwaltung und Macht."
+                      : isEpisodeThree
+                        ? "Fünf zufällig ausgewählte Fragen zu Sesshaftigkeit, Landwirtschaft und den ersten großen Siedlungen."
+                        : isEpisodeTwo
+                          ? "Neun Fragen zu Primaten, Zweibeinigkeit, Werkzeugen, Wanderungen und unseren menschlichen Verwandten."
+                          : "Neun Fragen aus neun Etappen deiner Zeitreise – von der jungen Erde bis zum Asteroideneinschlag."}
+              </p>
             </div>
-            <div
-              className="final-quiz-progress"
-              aria-label={`${questionIndex + 1} von ${questions.length} Fragen`}
-            >
-              <i
-                style={{
-                  width: `${((questionIndex + 1) / questions.length) * 100}%`,
-                }}
+            <button type="button" onClick={reset}>
+              Quiz starten <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        )
+      ) : finished ? (
+        timeFelsenChallenge ? (
+          <div
+            className={`timefelsen-result ${perfectResult ? "is-perfect" : ""} ${achievement.className}`}
+            aria-live="polite"
+          >
+            {perfectResult ? (
+              <div className="final-quiz-fireworks timefelsen-fireworks" aria-hidden="true">
+                {Array.from({ length: 36 }, (_, index) => (
+                  <i key={index} />
+                ))}
+              </div>
+            ) : null}
+            <div className="timefelsen-reward" aria-hidden="true">
+              <span className="timefelsen-tablet-mark">▤</span>
+              <small>Tontafel der Zeit</small>
+              <strong>
+                {score}<span>/5</span>
+              </strong>
+            </div>
+            <div className="timefelsen-result-copy">
+              <p className="eyebrow">Dein Rang</p>
+              <h2 id="final-quiz-title">{achievement.title}</h2>
+              <p>{achievement.description}</p>
+              <QuizStaircase
+                answers={answers}
+                currentIndex={questions.length}
+                total={questions.length}
+                finished
               />
+              <div className="timefelsen-result-meta">
+                <span>{score} richtige Antworten</span>
+                <span>{questions.length - score} offene Spuren</span>
+                <span>Bestwert {Math.max(bestScore ?? 0, score)}/5</span>
+              </div>
+              <button type="button" onClick={reset}>
+                Neue Fünfer-Runde <span aria-hidden="true">↻</span>
+              </button>
             </div>
           </div>
+        ) : (
+          <div
+            className={`final-quiz-result ${celebratePerfect && perfectResult ? "is-perfect" : ""}`}
+            aria-live="polite"
+          >
+            {celebratePerfect && perfectResult ? (
+              <div className="final-quiz-fireworks" aria-hidden="true">
+                {Array.from({ length: 18 }, (_, index) => (
+                  <i key={index} />
+                ))}
+              </div>
+            ) : null}
+            <span className="final-score">
+              {score}
+              <small>von {questions.length}</small>
+            </span>
+            <div>
+              <p className="eyebrow">Dein Ergebnis</p>
+              <h2 id="final-quiz-title">
+                {isEpisodeThreePartFour
+                  ? perfectResult
+                    ? "Fünf von fünf – den Schnellvorlauf sicher im Blick."
+                    : score >= strongResult
+                      ? "Die Beschleunigung ist fast vollständig entschlüsselt."
+                      : score >= solidResult
+                        ? "Die Energiespuren werden sichtbar."
+                        : "Noch eine Runde durch den Schnellvorlauf?"
+                  : isEpisodeThreePartThree
+                    ? perfectResult
+                      ? "Fünf von fünf – Verbindungen und ihre Folgen im Blick."
+                      : score >= strongResult
+                        ? "Das weltweite Netz ist fast vollständig."
+                        : score >= solidResult
+                          ? "Die Verbindungen werden sichtbar."
+                          : "Noch einmal den Routen folgen?"
+                    : isEpisodeThreePartTwo
+                      ? perfectResult
+                        ? "Fünf von fünf – du hättest den Speicher von Uruk im Griff!"
+                        : score >= strongResult
+                          ? "Die Listen sind fast vollständig."
+                          : score >= solidResult
+                            ? "Die Stadtverwaltung nimmt Form an."
+                            : "Noch eine Runde durch Uruk?"
+                      : isEpisodeThree
+                        ? score >= strongResult
+                          ? "Bereit für die ersten Städte!"
+                          : score >= solidResult
+                            ? "Das Dorf wächst schon in deinem Kopf."
+                            : "Noch eine Runde durchs Dorf?"
+                        : isEpisodeTwo
+                          ? score >= strongResult
+                            ? "Spurensuche bestanden!"
+                            : score >= solidResult
+                              ? "Im Stammbaum gut orientiert."
+                              : "Ein paar Äste verdienen eine zweite Runde."
+                          : score >= strongResult
+                            ? "Zeitreise bestanden!"
+                            : score >= solidResult
+                              ? "Schon ziemlich erdgeschichtsfest."
+                              : "Die Erde gibt dir eine zweite Runde."}
+              </h2>
+              <p>
+                {isEpisodeThreePartFour
+                  ? perfectResult
+                    ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
+                    : "Beim zweiten Durchgang erkennst du noch genauer, wie Energie neue Möglichkeiten, Abhängigkeiten und Folgen schuf."
+                  : isEpisodeThreePartThree
+                    ? perfectResult
+                      ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
+                      : "Beim zweiten Durchgang erkennst du noch genauer, wie Vernetzung Möglichkeiten und Abhängigkeiten zugleich schuf."
+                    : isEpisodeThreePartTwo
+                      ? perfectResult
+                        ? "Du hast alle fünf zufällig ausgewählten Fragen richtig beantwortet."
+                        : "Beim zweiten Durchgang kennst du Speicher, Tafeln und Machtverhältnisse schon genauer."
+                      : isEpisodeThree
+                        ? score >= strongResult
+                          ? "Du erkennst Chancen, Belastungen und offene Fragen des neuen Lebens sehr sicher."
+                          : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
+                        : isEpisodeTwo
+                          ? score >= strongResult
+                            ? "Du behältst selbst in einer verzweigten Geschichte den Überblick."
+                            : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."
+                          : score >= strongResult
+                            ? "Du hast die großen Wendepunkte der Erdgeschichte sicher im Blick."
+                            : "Beim zweiten Durchgang kennst du die entscheidenden Spuren schon."}
+              </p>
+              <button type="button" onClick={reset}>
+                Noch einmal spielen
+              </button>
+            </div>
+          </div>
+        )
+      ) : (
+        <>
+          {timeFelsenChallenge ? (
+            <div className="timefelsen-dashboard">
+              <div className="timefelsen-cube-copy">
+                <TimeCube
+                  key={`${question.sceneId}-${questionIndex}`}
+                  topic={cubeTopic}
+                />
+                <div>
+                  <small>Der Zeitwürfel wählt</small>
+                  <strong>{cubeTopic.label}</strong>
+                  <span>
+                    Szene {String(question.sceneId).padStart(2, "0")} · {question.sceneTitle}
+                  </span>
+                </div>
+              </div>
+              <QuizStaircase
+                answers={answers}
+                currentIndex={questionIndex}
+                total={questions.length}
+              />
+            </div>
+          ) : (
+            <div className="final-quiz-head">
+              <div>
+                <p className="eyebrow">
+                  Frage {questionIndex + 1} von {questions.length}
+                </p>
+                <span>
+                  Aus Szene {String(question.sceneId).padStart(2, "0")} ·{" "}
+                  {question.sceneTitle}
+                </span>
+              </div>
+              <div
+                className="final-quiz-progress"
+                aria-label={`${questionIndex + 1} von ${questions.length} Fragen`}
+              >
+                <i
+                  style={{
+                    width: `${((questionIndex + 1) / questions.length) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+          )}
 
+          {timeFelsenChallenge ? (
+            <p className="timefelsen-question-number eyebrow">
+              Frage {questionIndex + 1} von {questions.length}
+            </p>
+          ) : null}
           <h2 id="final-quiz-title">{question.question}</h2>
           <div className="final-quiz-options">
             {question.options.map((option, index) => {
               const optionIsCorrect =
                 checked && selected === index && index === question.correctIndex;
               const optionIsWrong =
-                checked && selected === index && !optionIsCorrect;
+                checked && selected === index && index !== question.correctIndex;
               return (
                 <button
                   type="button"
@@ -290,28 +457,27 @@ export function FinalEpisodeQuiz({
 
           {checked ? (
             <div className="final-quiz-actions">
-              <>
-                <p
-                  className={isCorrect ? "is-correct" : "is-wrong"}
-                  role="status"
-                >
-                  {isCorrect
-                    ? isEpisodeThreePartTwo
+              <p className={isCorrect ? "is-correct" : "is-wrong"} role="status">
+                {isCorrect
+                  ? timeFelsenChallenge
+                    ? "Richtig – die nächste Stufe leuchtet."
+                    : isEpisodeThreePartTwo
                       ? "Richtig – die Verwaltung behält den Überblick."
                       : isEpisodeThree
-                      ? "Richtig – das Dorf wächst weiter."
-                      : isEpisodeTwo
-                      ? "Richtig – weiter auf der menschlichen Spur."
-                      : "Richtig – weiter durch die Erdgeschichte."
+                        ? "Richtig – das Dorf wächst weiter."
+                        : isEpisodeTwo
+                          ? "Richtig – weiter auf der menschlichen Spur."
+                          : "Richtig – weiter durch die Erdgeschichte."
+                  : timeFelsenChallenge
+                    ? "Nicht ganz – diese Stufe bleibt noch dunkel."
                     : "Nicht ganz – die Lösung bleibt noch verborgen."}
-                </p>
-                <button type="button" onClick={next}>
-                  {questionIndex === questions.length - 1
-                    ? "Ergebnis ansehen"
-                    : "Nächste Frage"}
-                  <span aria-hidden="true">→</span>
-                </button>
-              </>
+              </p>
+              <button type="button" onClick={next}>
+                {questionIndex === questions.length - 1
+                  ? "Ergebnis ansehen"
+                  : "Nächste Frage"}
+                <span aria-hidden="true">→</span>
+              </button>
             </div>
           ) : null}
         </>
@@ -320,9 +486,181 @@ export function FinalEpisodeQuiz({
   );
 }
 
+function AchievementScale() {
+  const levels = [
+    { score: "0–2", title: "Zeitstarter" },
+    { score: "3", title: "Spurensucher" },
+    { score: "4", title: "Zeitkenner" },
+    { score: "5", title: "Zeitmeister" },
+  ];
+
+  return (
+    <div className="timefelsen-levels" aria-label="Vier mögliche Belohnungsstufen">
+      {levels.map((level) => (
+        <span key={level.title}>
+          <small>{level.score} richtig</small>
+          <strong>{level.title}</strong>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function QuizStaircase({
+  answers,
+  currentIndex,
+  total,
+  finished = false,
+}: {
+  answers: boolean[];
+  currentIndex: number;
+  total: number;
+  finished?: boolean;
+}) {
+  return (
+    <div className="quiz-staircase">
+      <div className="quiz-staircase-head">
+        <span>Deine Zeitstufen</span>
+        <strong>{answers.filter(Boolean).length} richtig</strong>
+      </div>
+      <ol aria-label={`Quiztreppe mit ${total} Stufen`}>
+        {Array.from({ length: total }, (_, index) => {
+          const hasAnswer = index < answers.length;
+          const correct = hasAnswer && answers[index];
+          const wrong = hasAnswer && !answers[index];
+          const current = !finished && index === currentIndex && !hasAnswer;
+          const status = correct
+            ? "richtig beantwortet"
+            : wrong
+              ? "noch offene Spur"
+              : current
+                ? "aktuelle Frage"
+                : "noch nicht erreicht";
+          return (
+            <li
+              className={`${correct ? "is-correct" : ""} ${wrong ? "is-wrong" : ""} ${current ? "is-current" : ""}`}
+              style={{ "--step-height": `${38 + index * 10}px` } as CSSProperties}
+              aria-label={`Stufe ${index + 1}: ${status}`}
+              aria-current={current ? "step" : undefined}
+              key={index}
+            >
+              <small>{index + 1}</small>
+              <span aria-hidden="true">{correct ? "✓" : wrong ? "·" : current ? "◆" : ""}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
+
+function TimeCube({ topic }: { topic: CubeTopic }) {
+  const faces = [topic.symbol, "⌂", "▦", "⌁", "↯", "◎"];
+  const faceNames = ["front", "back", "right", "left", "top", "bottom"];
+
+  return (
+    <div
+      className={`time-cube-stage topic-${topic.className}`}
+      role="img"
+      aria-label={`Zeitwürfel: ${topic.label}`}
+    >
+      <div className="time-cube" aria-hidden="true">
+        {faces.map((face, index) => (
+          <span className={`time-cube-face is-${faceNames[index]}`} key={faceNames[index]}>
+            {face}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function topicForScene(sceneId: number): CubeTopic {
+  if (sceneId <= 9) {
+    return { label: "Bleiben", symbol: "⌂", className: "settlement" };
+  }
+  if (sceneId <= 15) {
+    return { label: "Ordnen", symbol: "▦", className: "order" };
+  }
+  if (sceneId <= 21) {
+    return { label: "Vernetzen", symbol: "⌁", className: "network" };
+  }
+  return { label: "Beschleunigen", symbol: "↯", className: "speed" };
+}
+
+function achievementForScore(score: number): QuizAchievement {
+  if (score === 5) {
+    return {
+      title: "Zeitmeister",
+      description:
+        "Fünf von fünf! Die Tontafel der Zeit gehört dir – und der Zeitfelsen darf ausnahmsweise ein kleines Feuerwerk veranstalten.",
+      className: "rank-master",
+    };
+  }
+  if (score === 4) {
+    return {
+      title: "Zeitkenner",
+      description:
+        "Vier richtige Antworten: Du erkennst die großen Zusammenhänge von Vorräten bis zur planetaren Wirkung.",
+      className: "rank-expert",
+    };
+  }
+  if (score === 3) {
+    return {
+      title: "Spurensucher",
+      description:
+        "Drei richtige Antworten: Die wichtigsten Spuren sind gefunden. Eine neue Runde bringt dich noch höher.",
+      className: "rank-tracker",
+    };
+  }
+  return {
+    title: "Zeitstarter",
+    description:
+      "Der Anfang ist gemacht. Beim nächsten Würfelwurf kommen andere Fragen – und manches wirkt plötzlich erstaunlich vertraut.",
+    className: "rank-starter",
+  };
+}
+
+function shuffled<T>(items: T[]) {
+  const result = [...items];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const target = Math.floor(Math.random() * (index + 1));
+    [result[index], result[target]] = [result[target], result[index]];
+  }
+  return result;
+}
+
+function balancedEpisodeThreeQuestions(
+  questionPool: FinalQuestion[],
+  count: number,
+) {
+  const groups = [
+    questionPool.filter((question) => question.sceneId <= 9),
+    questionPool.filter(
+      (question) => question.sceneId >= 10 && question.sceneId <= 15,
+    ),
+    questionPool.filter(
+      (question) => question.sceneId >= 16 && question.sceneId <= 21,
+    ),
+    questionPool.filter((question) => question.sceneId >= 22),
+  ];
+  const selected = groups
+    .map((group) => shuffled(group)[0])
+    .filter((question): question is FinalQuestion => Boolean(question))
+    .slice(0, count);
+  const selectedQuestions = new Set(selected);
+  const remaining = shuffled(
+    questionPool.filter((question) => !selectedQuestions.has(question)),
+  ).slice(0, Math.max(0, count - selected.length));
+  return shuffled([...selected, ...remaining]);
+}
+
 function playPerfectFanfare() {
   if (typeof window === "undefined") return;
-  const AudioContextClass = window.AudioContext;
+  const AudioContextClass =
+    window.AudioContext ??
+    (window as typeof window & { webkitAudioContext?: typeof AudioContext })
+      .webkitAudioContext;
   if (!AudioContextClass) return;
 
   const context = new AudioContextClass();

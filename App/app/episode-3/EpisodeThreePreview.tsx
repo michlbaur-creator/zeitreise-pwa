@@ -77,9 +77,6 @@ const episodeThreePartTwoQuizScenes = episodeThreeFinalQuizScenes.filter(
 const episodeThreePartThreeQuizScenes = episodeThreeFinalQuizScenes.filter(
   (scene) => scene.id >= 16 && scene.id <= 21,
 );
-const episodeThreePartFourQuizScenes = episodeThreeFinalQuizScenes.filter(
-  (scene) => scene.id >= 22 && scene.id <= 28,
-);
 const episodeThreePartOne = episodeThreePart(1);
 
 function twoDigits(value: number) {
@@ -678,6 +675,7 @@ export default function EpisodeThreePreview() {
                 questionCount={5}
                 randomize
                 celebratePerfect
+                soundMuted={soundMuted}
               />
               <EpisodeThreeNextPartCard partId={3} onContinue={() => goToScene(15)} />
             </>
@@ -691,18 +689,21 @@ export default function EpisodeThreePreview() {
                 questionCount={5}
                 randomize
                 celebratePerfect
+                soundMuted={soundMuted}
               />
               <EpisodeThreeNextPartCard partId={4} onContinue={() => goToScene(21)} />
             </>
           ) : null}
           {scene.id === 28 ? (
             <FinalEpisodeQuiz
-              scenes={episodeThreePartFourQuizScenes}
+              scenes={episodeThreeFinalQuizScenes}
               episode={3}
               episodePart={4}
               questionCount={5}
               randomize
               celebratePerfect
+              timeFelsenChallenge
+              soundMuted={soundMuted}
             />
           ) : null}
           <EpisodeSeriesNav currentEpisode={3} onSelectCurrentEpisode={() => goToScene(0)} />
