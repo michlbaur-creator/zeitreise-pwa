@@ -35,8 +35,12 @@ Lokale Designprobe vom 13. September 2026, noch nicht veröffentlicht.
 - Die Episode-1-Challenge steht in Szene 22 sofort prominent bereit und muss
   nicht erst durch vollständiges Abspielen der Szene freigeschaltet werden.
 - Sie beginnt direkt mit der ersten Quizfrage; die vorgeschaltete Startkarte
-  entfällt in Episode 1.
-- Cache-Version v148. Vor Veröffentlichung gemeinsame Sichtprüfung.
+  entfällt in Episode 1. Der Bereich „Text lesen“ bleibt dabei zunächst
+  geschlossen und kann bei Bedarf geöffnet werden.
+- Die Originalgeräusche der sechs Veo-Szenen in Episode 2 sind in den neuen
+  Tonmischungen um ungefähr 50 Prozent abgesenkt; die Sprecherlautstärke bleibt
+  erhalten.
+- Cache-Version v149. Vor Veröffentlichung gemeinsame Sichtprüfung.
 
 Nach Annahme der Designprobe diese Entscheidung in den gemeinsamen
 Zeitreise-Steckbrief übernehmen.

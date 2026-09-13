@@ -1027,7 +1027,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /if \(isPlayingRef\.current\)/);
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.doesNotMatch(episodeThreeApp, /Boolean\(knownSignature\)/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v148"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v149"/);
   assert.match(worker, /url\.searchParams\.set\("zeitreise-update", CACHE_NAME\)/);
   assert.match(worker, /client\.navigate\(url\.href\)/);
 });
@@ -1058,8 +1058,8 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
   assert.match(visuals, /bewegung-feuer-veo-v1\.mp4/);
   assert.match(visuals, /bewegung-neandertaler-veo-v1\.mp4/);
   assert.match(visuals, /playback: "hold"/);
-  assert.match(visuals, /sprecher-und-veo-szene-01-v2\.m4a/);
-  assert.match(visuals, /sprecher-und-veo-szene-11-v2\.m4a/);
+  assert.match(visuals, /sprecher-und-veo-szene-01-v3\.m4a/);
+  assert.match(visuals, /sprecher-und-veo-szene-11-v3\.m4a/);
   assert.match(app, /episodeTwoSceneSoundtrack\(scene\.id\) \?\? scene\.audioPath/);
   assert.match(visual, /poster=\{visual\.video\.poster\}/);
   assert.match(visual, /video\.pause\(\)/);
@@ -1079,8 +1079,8 @@ test("spielt Veo-Clips in Episode 2 als Schleife oder einmal bis zum Standbild",
       ),
     ),
   );
-  assert.match(worker, /sprecher-und-veo-szene-01-v2\.m4a/);
-  assert.match(worker, /sprecher-und-veo-szene-11-v2\.m4a/);
+  assert.match(worker, /sprecher-und-veo-szene-01-v3\.m4a/);
+  assert.match(worker, /sprecher-und-veo-szene-11-v3\.m4a/);
   assert.doesNotMatch(worker, /bewegung-primaten-veo-v1\.mp4/);
   assert.doesNotMatch(worker, /bewegung-feuer-veo-v1\.mp4/);
   assert.doesNotMatch(worker, /bewegung-neandertaler-veo-v1\.mp4/);
@@ -1261,6 +1261,11 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
     app,
     /const isFinalChallengeVisible = scene\.id === scenes\.length;/,
   );
+  assert.match(app, /setDetailsOpen\(nextIndex !== scenes\.length - 1\)/);
+  assert.match(
+    app,
+    /setDetailsOpen\(storedSceneIndex !== scenes\.length - 1\)/,
+  );
   assert.match(footer, /Über mich/);
   assert.match(footer, /Impressum &amp; Datenschutz/);
   assert.doesNotMatch(footer, /site-footer-brand|<strong>Zeitreise<\/strong>/);
@@ -1281,7 +1286,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v148"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v149"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

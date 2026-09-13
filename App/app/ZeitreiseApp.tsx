@@ -330,6 +330,7 @@ export default function ZeitreiseApp() {
       setQuizChecked(false);
       setQuizQuestionIndex(0);
       setDiscoveryActive(false);
+      setDetailsOpen(nextIndex !== scenes.length - 1);
       window.localStorage.setItem("zeitreise-current-scene", String(nextIndex));
     },
     [],
@@ -406,6 +407,7 @@ export default function ZeitreiseApp() {
       const introWasSeen =
         window.localStorage.getItem("zeitreise-intro-seen") === "1";
       setCurrentIndex(storedSceneIndex);
+      setDetailsOpen(storedSceneIndex !== scenes.length - 1);
       if (startAtBeginning) {
         window.localStorage.setItem("zeitreise-current-scene", "0");
         currentUrl.searchParams.delete("start");
