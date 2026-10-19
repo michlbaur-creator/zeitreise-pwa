@@ -583,6 +583,7 @@ export default function EpisodeThreePreview() {
       </header>
 
       <EpisodeThreeTimeline scene={scene} onSelect={goToScene} />
+      <p style={{ margin: "12px 0" }}><Link className="quiet-button" href="/lernpfad/">Lernpfad ausprobieren: Vom Wandern zum Bleiben →</Link></p>
 
       <div className="workspace">
         <section className={`player-column ${quiet ? "quiet-reading-player" : ""}`}>
