@@ -19,3 +19,9 @@
 Im Ordner `App/`: `pnpm exec tsc --noEmit`, `node --test tests/quiet-reading.test.mjs`, `pnpm test`, `GITHUB_PAGES=true pnpm run build:pages`.
 
 Browserprüfung: `tests/quiet-reading.browser.cjs`, optional `PLAYWRIGHT_PACKAGE` auf die vorhandene lokale Playwright-Runtime setzen, `ZEITREISE_PREVIEW` auf den laufenden Vinext-Server. Die Browserprüfung nutzt Chrome; es muss kein zusätzlicher Browser installiert werden.
+
+## Veröffentlichung
+
+- GitHub Pages erfolgreich: Commit `a4ba63348192f28ed4bb47aa006c7d3cc8959fc3`, Lauf `39295711744`; Cache v151 und komplette Browserprüfung auf `https://evo.mibaso.de` bestätigt. Hauptadresse enthält die vollständige Erweiterung.
+- Ergänzende Sites-Kopie noch **nicht aktualisiert**: Das vorbereitete statische Auslieferungspaket überschreitet nach dem Entfernen unbenutzter Vorschau-WAVs weiterhin die serverseitige 256-MiB-Grenze. Native Speicherung mit `INVALID_ARGUMENT` abgelehnt; keine neue Version gespeichert oder ausgerollt. Bestehende Version 5 bleibt dort aktiv. Die benötigten Medien wurden deshalb nicht zusätzlich verändert oder komprimiert.
+- Die alte Sites-Quellablage wurde unter Beibehaltung ihrer Historie repariert; letzter vorbereiteter Quellstand `d8afd5ad9f2ce98c5b2fae2ec0361325caeeb954`. Root-Manifest statisch, vollständige App unter `App/`, Ausgabe beim Paketieren nach `dist/`. Bei einer späteren Aktualisierung zunächst Medienpaket unter 256 MiB bringen; Hauptprojekt und Hauptadresse sind davon unabhängig.
