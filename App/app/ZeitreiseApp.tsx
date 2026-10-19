@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { ReadingControls, ReadingSubtitles, useQuietReading } from "./components/QuietReading";
+import { captionTracks } from "./data/captions";
 import {
   type PointerEvent as ReactPointerEvent,
   useCallback,
@@ -262,6 +264,7 @@ export default function ZeitreiseApp() {
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const soundMutedRef = useRef(false);
+  const { quiet, changeQuiet } = useQuietReading(audioRef, soundMutedRef, setSoundMuted, setAmbientEnabled);
   const isPlayingRef = useRef(false);
   const updateWaitingRef = useRef(false);
   const updateReloadingRef = useRef(false);
@@ -736,6 +739,7 @@ export default function ZeitreiseApp() {
   };
 
   const toggleSound = () => {
+    if (quiet) { changeQuiet(false); return; }
     const nextMuted = !soundMuted;
     soundMutedRef.current = nextMuted;
     setSoundMuted(nextMuted);
@@ -795,9 +799,9 @@ export default function ZeitreiseApp() {
   const startJourney = () => {
     goToScene(0);
     setIntroClosing(true);
-    soundMutedRef.current = false;
-    setSoundMuted(false);
-    void activateAmbientSound().then((activated) => {
+    soundMutedRef.current = quiet;
+    setSoundMuted(quiet);
+    if (!quiet) void activateAmbientSound().then((activated) => {
       if (activated) setAmbientEnabled(true);
     });
     setIsPlaying(true);
@@ -920,7 +924,7 @@ export default function ZeitreiseApp() {
       />
 
       <div className="workspace">
-        <section className="player-column">
+        <section className={`player-column ${quiet ? "quiet-reading-player" : ""}`}>
           <div className="scene-heading">
             <div>
               <p className="eyebrow">
@@ -943,6 +947,7 @@ export default function ZeitreiseApp() {
             </div>
           </div>
 
+          <ReadingControls quiet={quiet} onChange={changeQuiet} onRewind={() => seek(Math.max(0, progress - 10 / (audioRef.current?.duration || scene.duration)))} />
           <div
             className="scene-swipe-surface"
             onPointerDown={startSceneSwipe}
@@ -953,6 +958,7 @@ export default function ZeitreiseApp() {
           >
             <SceneVisual
               key={scene.id}
+              audioRef={audioRef}
               scene={scene}
               isPlaying={isPlaying}
               progress={progress}
@@ -1014,6 +1020,8 @@ export default function ZeitreiseApp() {
               </button>
             </aside>
           ) : null}
+
+          {quiet && <ReadingSubtitles text={scene.speaker} progress={progress} cues={captionTracks[scene.id]} />}
 
           <div className="player-controls">
             <button

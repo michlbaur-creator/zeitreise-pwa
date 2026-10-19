@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ReadingControls, ReadingSubtitles, useQuietReading } from "../components/QuietReading";
 import {
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
@@ -180,6 +181,7 @@ export default function EpisodeThreePreview() {
   const progressRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const soundMutedRef = useRef(false);
+  const { quiet, changeQuiet } = useQuietReading(audioRef, soundMutedRef, setSoundMuted, setAmbientEnabled);
   const isPlayingRef = useRef(false);
   const updateWaitingRef = useRef(false);
   const updateReloadingRef = useRef(false);
@@ -493,9 +495,9 @@ export default function EpisodeThreePreview() {
   const startJourney = () => {
     window.localStorage.setItem("zeitreise-episode3-intro-seen", "1");
     setIntroOpen(false);
-    soundMutedRef.current = false;
-    setSoundMuted(false);
-    void activateAmbientSound().then((active) => {
+    soundMutedRef.current = quiet;
+    setSoundMuted(quiet);
+    if (!quiet) void activateAmbientSound().then((active) => {
       if (active) setAmbientEnabled(true);
     });
     setCurrentIndex(0);
@@ -517,6 +519,7 @@ export default function EpisodeThreePreview() {
   };
 
   const toggleSound = () => {
+    if (quiet) { changeQuiet(false); return; }
     const nextMuted = !soundMuted;
     soundMutedRef.current = nextMuted;
     setSoundMuted(nextMuted);
@@ -582,7 +585,7 @@ export default function EpisodeThreePreview() {
       <EpisodeThreeTimeline scene={scene} onSelect={goToScene} />
 
       <div className="workspace">
-        <section className="player-column">
+        <section className={`player-column ${quiet ? "quiet-reading-player" : ""}`}>
           <div className="scene-heading ep3-scene-heading">
             <div>
               <p className="eyebrow">Szene {twoDigits(scene.id)} von {episodeThreeScenes.length}</p>
@@ -590,6 +593,7 @@ export default function EpisodeThreePreview() {
             </div>
           </div>
 
+          <ReadingControls quiet={quiet} onChange={changeQuiet} onRewind={() => seek(Math.max(0, progress - 10 / (audioRef.current?.duration || sceneDuration)))} />
           <div
             className="scene-swipe-surface"
             onPointerDown={startSceneSwipe}
@@ -597,6 +601,7 @@ export default function EpisodeThreePreview() {
             onPointerCancel={() => { swipeStartRef.current = null; }}
           >
             <EpisodeThreeVisual
+              audioRef={audioRef}
               scene={scene}
               isPlaying={isPlaying}
               progress={progress}
@@ -633,6 +638,8 @@ export default function EpisodeThreePreview() {
               setIsPlaying(false);
             }}
           />
+
+          {quiet && <ReadingSubtitles text={scene.speakerText.join(" ")} progress={progress} />}
 
           <div className="player-controls">
             <button className="round-control" type="button" onClick={() => goToScene(currentIndex - 1)} disabled={currentIndex === 0} aria-label="Vorherige Szene">←</button>

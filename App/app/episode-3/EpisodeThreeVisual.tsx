@@ -1,5 +1,7 @@
 "use client";
 
+import { useVideoAudioSync } from "../components/QuietReading";
+import type { RefObject } from "react";
 import { useEffect, useRef, type CSSProperties } from "react";
 import {
   type EpisodeThreeScene,
@@ -13,14 +15,17 @@ type Props = {
   scene: EpisodeThreeScene;
   isPlaying: boolean;
   progress: number;
+  audioRef: RefObject<HTMLAudioElement | null>;
 };
 
 export function EpisodeThreeVisual({
   scene,
+  audioRef,
   isPlaying,
   progress,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  useVideoAudioSync(videoRef, audioRef, isPlaying, scene.id);
   const video = episodeThreeSceneVideos[
     scene.id as keyof typeof episodeThreeSceneVideos
   ];

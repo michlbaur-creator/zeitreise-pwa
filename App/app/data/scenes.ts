@@ -110,12 +110,7 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Beschreibung passt am besten zur Erde kurz nach ihrer Entstehung?",
-      options: [
-        "Eine ruhige Welt mit stabilen Kontinenten und Sauerstoff",
-        "Eine heiße Welt mit dünner Kruste, Einschlägen und starkem Vulkanismus",
-        "Ein vollständig vereister Planet unter einer dichten Ozonschicht",
-        "Eine wasserreiche Welt mit ersten Algenmatten",
-      ],
+      options: ["Eine ruhige Welt mit stabilen Kontinenten und Sauerstoff", "Eine heiße Welt mit dünner Kruste, Einschlägen und starkem Vulkanismus", "Ein vollständig vereister Planet unter einer dichten Ozonschicht", "Eine wasserreiche Welt mit ersten Algenmatten"],
       correctIndex: 1,
     },
     transition:
@@ -174,13 +169,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welcher Vorgang verwandelte den Wasserdampf der frühen Atmosphäre in Regen?",
-      options: [
-        "Vulkanische Gase spalteten den Wasserdampf in Tropfen.",
-        "Die Schwerkraft des Mondes zog Wasser aus dem Erdinneren.",
-        "Salzkristalle pressten Wasser aus den Wolken.",
-        "Beim Abkühlen kondensierte Wasserdampf zu flüssigem Wasser.",
-      ],
-      correctIndex: 3,
+      options: ["Beim Abkühlen kondensierte Wasserdampf zu flüssigem Wasser.", "Die Schwerkraft des Mondes zog Wasser aus dem Erdinneren.", "Vulkanische Gase spalteten den Wasserdampf in Tropfen.", "Salzkristalle pressten Wasser aus den Wolken."],
+      correctIndex: 0,
     },
     transition:
       "Die Regentropfen werden dichter. Die Kamera blickt weiter in Richtung Horizont. Das Bild blendet langsam in Szene 3 - Der erste Ozean über, in der aus dem langen Regen allmählich eine wasserbedeckte Erde entsteht.",
@@ -242,13 +232,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Warum waren die ersten Ozeane für die Entstehung des Lebens chemisch so wichtig?",
-      options: [
-        "Wasser löste viele Stoffe und bot Raum für zahlreiche Reaktionen.",
-        "Das Meer erzeugte sofort freien Sauerstoff.",
-        "Salzwasser verhinderte jede schädliche Strahlung.",
-        "Die Ozeane bestanden bereits aus organischen Zellen.",
-      ],
-      correctIndex: 0,
+      options: ["Das Meer erzeugte sofort freien Sauerstoff.", "Wasser löste viele Stoffe und bot Raum für zahlreiche Reaktionen.", "Salzwasser verhinderte jede schädliche Strahlung.", "Die Ozeane bestanden bereits aus organischen Zellen."],
+      correctIndex: 1,
     },
     transition:
       "Die Kamera folgt der Wasseroberfläche langsam in Richtung Horizont. Das Bild wird heller. Eine sanfte Überblendung führt in Szene 4 - Die Ursuppe, wo im warmen Flachwasser die ersten komplexen chemischen Verbindungen entstehen.",
@@ -308,13 +293,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Kombination konnte die chemische Entwicklung in der „Ursuppe“ antreiben?",
-      options: [
-        "Nur reines Wasser ohne weitere Stoffe",
-        "Fertige Zellen und reichlich Sauerstoff",
-        "Wasser, einfache gelöste Stoffe und Energiequellen",
-        "Mineralien, aber weder Wärme noch Strahlung",
-      ],
-      correctIndex: 2,
+      options: ["Wasser, einfache gelöste Stoffe und Energiequellen", "Fertige Zellen und reichlich Sauerstoff", "Nur reines Wasser ohne weitere Stoffe", "Mineralien, aber weder Wärme noch Strahlung"],
+      correctIndex: 0,
     },
     transition:
       "Die Kamera fährt langsam näher an die Wasseroberfläche. Das Sonnenlicht spiegelt sich auf den kleinen Wellen. Die Spiegelung füllt den Bildschirm. Langsame Überblendung.",
@@ -372,13 +352,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Was grenzte in frühen Zellen einen eigenen Reaktionsraum ab?",
-      options: [
-        "Sie entwickelte sofort einen Zellkern.",
-        "Sie begann, sichtbares Licht auszusenden.",
-        "Sie baute eine harte Schale aus Kalk.",
-        "Eine Membran grenzte einen eigenen Reaktionsraum von der Umgebung ab.",
-      ],
-      correctIndex: 3,
+      options: ["Eine Membran grenzte einen eigenen Reaktionsraum von der Umgebung ab.", "Sie begann, sichtbares Licht auszusenden.", "Sie entwickelte sofort einen Zellkern.", "Sie baute eine harte Schale aus Kalk."],
+      correctIndex: 0,
     },
     transition:
       "Die Kamera verfolgt eine einzelne Zelle. Langsamer Zoom. Die Zelle treibt in dunkleres Wasser. Plötzlich erscheinen mehrere ähnliche Zellen.",
@@ -433,13 +408,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Was musste ein früher Einzeller vor der Teilung zuerst zuverlässig erledigen?",
-      options: [
-        "Seine Erbinformation kopieren und anschließend die Zelle teilen",
-        "Pollen und Samen bilden",
-        "Einen zweiten Zellkern von außen aufnehmen",
-        "Seine Membran vollständig auflösen",
-      ],
-      correctIndex: 0,
+      options: ["Einen zweiten Zellkern von außen aufnehmen", "Pollen und Samen bilden", "Seine Erbinformation kopieren und anschließend die Zelle teilen", "Seine Membran vollständig auflösen"],
+      correctIndex: 2,
     },
     mediaNote:
       "Zum ersten Mal entstehen kleine Zellkolonien. Einige Zellen haften an einem Felsen. Andere treiben frei im Wasser. Langsame Zellteilungen sorgen für Bewegung, ohne hektisch zu wirken.",
@@ -494,8 +464,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welches Abfallprodukt der Cyanobakterien veränderte später den Planeten?",
-      options: ["Methan", "Sauerstoff", "Stickstoff", "Schwefeldioxid"],
-      correctIndex: 1,
+      options: ["Sauerstoff", "Methan", "Stickstoff", "Schwefeldioxid"],
+      correctIndex: 0,
     },
     transition:
       "Die Kamera folgt einer Sauerstoffblase bis an die Wasseroberfläche. Beim Platzen der Blase wechselt die Perspektive. Wir verlassen erstmals das Meer und blicken in den Himmel.",
@@ -541,13 +511,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Folge der Sauerstoffanreicherung trifft am ehesten zu?",
-      options: [
-        "Sie machte alle damaligen Lebewesen sofort größer.",
-        "Sie verwandelte Meerwasser in Süßwasser.",
-        "Sie beendete jede Form von Vulkanismus.",
-        "Sie setzte viele anaerobe Organismen unter Druck und ermöglichte später energiereicheres Leben.",
-      ],
-      correctIndex: 3,
+      options: ["Sie setzte viele anaerobe Organismen unter Druck und ermöglichte später energiereicheres Leben.", "Sie verwandelte Meerwasser in Süßwasser.", "Sie machte alle damaligen Lebewesen sofort größer.", "Sie beendete jede Form von Vulkanismus."],
+      correctIndex: 0,
     },
     directorNote:
       "Szene 8 beendet den ersten großen Akt. Der Übergang zur mikroskopischen Zellwelt von Szene 9 erfolgt langsam und ohne neue Erklärungsebene.",
@@ -602,13 +567,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welches Zellorganell entstand wahrscheinlich aus einem aufgenommenen Bakterium?",
-      options: [
-        "Das Mitochondrium",
-        "Die Zellwand",
-        "Der Zellkern",
-        "Die Vakuole",
-      ],
-      correctIndex: 0,
+      options: ["Die Zellwand", "Das Mitochondrium", "Der Zellkern", "Die Vakuole"],
+      correctIndex: 1,
     },
     transition:
       "Die Kamera zoomt langsam aus der Zelle heraus. Immer mehr ähnliche Zellen erscheinen. Die Welt wirkt plötzlich vielfältiger.",
@@ -666,13 +626,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Zellorganisation ist typisch für Eukaryoten, aber nicht für Bakterien?",
-      options: [
-        "Eine Zellmembran und Erbmaterial",
-        "Die Fähigkeit, Stoffe aus der Umgebung aufzunehmen",
-        "Ein Zellkern und weitere membranumhüllte Organellen",
-        "Die Vermehrung durch Zellteilung",
-      ],
-      correctIndex: 2,
+      options: ["Eine Zellmembran und Erbmaterial", "Ein Zellkern und weitere membranumhüllte Organellen", "Die Fähigkeit, Stoffe aus der Umgebung aufzunehmen", "Die Vermehrung durch Zellteilung"],
+      correctIndex: 1,
     },
     transition:
       "Die Kamera fährt immer weiter zurück. Aus den mikroskopischen Organismen wird langsam eine weite Unterwasserlandschaft. Im Hintergrund zeichnen sich erste größere, vielzellige Organismen ab.",
@@ -725,12 +680,7 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Was ermöglicht die Spezialisierung verschiedener Zellen im Vielzeller?",
-      options: [
-        "Jede Zelle kann nun unabhängig vom Rest leben.",
-        "Spezialisierung ermöglicht eine wirksame Arbeitsteilung.",
-        "Der Organismus braucht keine Energie mehr.",
-        "Alle Zellen werden automatisch gleich groß.",
-      ],
+      options: ["Jede Zelle kann nun unabhängig vom Rest leben.", "Spezialisierung ermöglicht eine wirksame Arbeitsteilung.", "Der Organismus braucht keine Energie mehr.", "Alle Zellen werden automatisch gleich groß."],
       correctIndex: 1,
     },
     transition:
@@ -775,13 +725,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Warum hinterließen viele Ediacara-Lebewesen nur schwer deutbare Fossilien?",
-      options: [
-        "Sie waren meist weich und besaßen kaum harte, gut erhaltungsfähige Teile.",
-        "Sie lebten ausschließlich in der Luft.",
-        "Ihre Körper bestanden nur aus flüssigem Wasser.",
-        "Sie entstanden erst nach den ersten Dinosauriern.",
-      ],
-      correctIndex: 0,
+      options: ["Sie lebten ausschließlich in der Luft.", "Sie waren meist weich und besaßen kaum harte, gut erhaltungsfähige Teile.", "Ihre Körper bestanden nur aus flüssigem Wasser.", "Sie entstanden erst nach den ersten Dinosauriern."],
+      correctIndex: 1,
     },
     transition:
       "Der Meeresboden wird plötzlich lebendiger. Immer mehr unterschiedliche Tiere erscheinen.",
@@ -831,13 +776,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Warum ist der Ausdruck „Kambrische Explosion“ ein wenig irreführend?",
-      options: [
-        "Damals explodierten besonders viele Vulkane.",
-        "Das Ereignis betraf nur Pflanzen an Land.",
-        "Alle heutigen Tierarten entstanden an einem einzigen Tag.",
-        "Viele Tierbaupläne wurden über Millionen Jahre vielfältiger – nicht in einem Augenblick.",
-      ],
-      correctIndex: 3,
+      options: ["Damals explodierten besonders viele Vulkane.", "Viele Tierbaupläne wurden über Millionen Jahre vielfältiger – nicht in einem Augenblick.", "Das Ereignis betraf nur Pflanzen an Land.", "Alle heutigen Tierarten entstanden an einem einzigen Tag."],
+      correctIndex: 1,
     },
     transition:
       "Die Kamera folgt einem Trilobiten. Er verschwindet hinter einem Felsen. Beim Auftauchen hat sich die Welt erneut verändert.",
@@ -889,12 +829,7 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Veränderung lösten die ersten Landpflanzen besonders langfristig aus?",
-      options: [
-        "Sie ließen die Ozeane verschwinden.",
-        "Sie machten Tiere sofort unabhängig vom Wasser.",
-        "Sie schufen Böden, Nahrung und neue Lebensräume an Land.",
-        "Sie stoppten die Bewegung der Kontinente.",
-      ],
+      options: ["Sie ließen die Ozeane verschwinden.", "Sie machten Tiere sofort unabhängig vom Wasser.", "Sie schufen Böden, Nahrung und neue Lebensräume an Land.", "Sie stoppten die Bewegung der Kontinente."],
       correctIndex: 2,
     },
     discovery: {
@@ -964,12 +899,7 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Warum folgten die ersten kleinen Tiere den Pflanzen an Land?",
-      options: [
-        "Pflanzen boten Nahrung, Schutz und strukturierte Lebensräume.",
-        "An Land gab es keine Fressfeinde und keine Trockenheit.",
-        "Das Meer hatte seinen gesamten Sauerstoff verloren.",
-        "Die Tiere besaßen bereits wasserdichte Eier.",
-      ],
+      options: ["Pflanzen boten Nahrung, Schutz und strukturierte Lebensräume.", "An Land gab es keine Fressfeinde und keine Trockenheit.", "Das Meer hatte seinen gesamten Sauerstoff verloren.", "Die Tiere besaßen bereits wasserdichte Eier."],
       correctIndex: 0,
     },
     discovery: {
@@ -1040,13 +970,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Merkmalskombination macht Tiktaalik zu einem wichtigen Übergangsfossil?",
-      options: [
-        "Federn und ein zahnloser Schnabel",
-        "Fischmerkmale sowie kräftige, stützfähige Flossen und ein beweglicher Hals",
-        "Ein Amniotenei und vollständig trockene Haut",
-        "Säugetierzähne und ein Fell",
-      ],
-      correctIndex: 1,
+      options: ["Federn und ein zahnloser Schnabel", "Ein Amniotenei und vollständig trockene Haut", "Fischmerkmale sowie kräftige, stützfähige Flossen und ein beweglicher Hals", "Säugetierzähne und ein Fell"],
+      correctIndex: 2,
     },
     discovery: {
       label: "Forscherblick",
@@ -1121,13 +1046,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Leistung des Amnioteneis war für das dauerhafte Leben an Land entscheidend?",
-      options: [
-        "Es machte den Embryo völlig unabhängig von Sauerstoff.",
-        "Es enthielt bereits fertige Nahrung für das erwachsene Tier.",
-        "Es konnte jahrelang ohne Entwicklung liegen bleiben.",
-        "Es schützte und versorgte den Embryo in einer eigenen wässrigen Umgebung.",
-      ],
-      correctIndex: 3,
+      options: ["Es machte den Embryo völlig unabhängig von Sauerstoff.", "Es enthielt bereits fertige Nahrung für das erwachsene Tier.", "Es schützte und versorgte den Embryo in einer eigenen wässrigen Umgebung.", "Es konnte jahrelang ohne Entwicklung liegen bleiben."],
+      correctIndex: 2,
     },
     discovery: {
       label: "Forscherblick",
@@ -1206,12 +1126,7 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche Dinosaurierlinie lebt bis heute weiter?",
-      options: [
-        "Die Flugsaurier",
-        "Die großen Sauropoden",
-        "Die Vögel",
-        "Die letzten Dinosaurier begegneten bereits frühen Menschen.",
-      ],
+      options: ["Die Flugsaurier", "Die großen Sauropoden", "Die Vögel", "Die letzten Dinosaurier begegneten bereits frühen Menschen."],
       correctIndex: 2,
     },
     discovery: {
@@ -1298,13 +1213,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Warum wirkte der Asteroideneinschlag weit über den Einschlagsort hinaus?",
-      options: [
-        "Er schob die Erde dauerhaft näher an die Sonne.",
-        "Er verwandelte alle Ozeane gleichzeitig in Lava.",
-        "Staub und Aerosole veränderten weltweit Licht, Klima und Nahrungsketten.",
-        "Er beseitigte nur große Tiere, ohne Pflanzen zu beeinflussen.",
-      ],
-      correctIndex: 2,
+      options: ["Er schob die Erde dauerhaft näher an die Sonne.", "Staub und Aerosole veränderten weltweit Licht, Klima und Nahrungsketten.", "Er verwandelte alle Ozeane gleichzeitig in Lava.", "Er beseitigte nur große Tiere, ohne Pflanzen zu beeinflussen."],
+      correctIndex: 1,
     },
     discovery: {
       label: "Forscherblick",
@@ -1359,12 +1269,7 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Warum hatten kleine Säugetiere nach dem Massenaussterben einen Vorteil?",
-      options: [
-        "Sie konnten ohne Nahrung mehrere Jahrtausende überleben.",
-        "Kleine Körper, Verstecke und eine vielseitige Lebensweise halfen manchen Arten zu überleben.",
-        "Sie waren gegen jede Klimaveränderung vollständig geschützt.",
-        "Der Asteroid hatte ausschließlich große Tiere getroffen.",
-      ],
+      options: ["Sie konnten ohne Nahrung mehrere Jahrtausende überleben.", "Kleine Körper, Verstecke und eine vielseitige Lebensweise halfen manchen Arten zu überleben.", "Sie waren gegen jede Klimaveränderung vollständig geschützt.", "Der Asteroid hatte ausschließlich große Tiere getroffen."],
       correctIndex: 1,
     },
     directorNote:
@@ -1419,13 +1324,8 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Welche ökologische Chance nutzten Säugetiere nach dem Massenaussterben?",
-      options: [
-        "Sie brauchten plötzlich weder Nahrung noch Wärme.",
-        "Viele frei gewordene ökologische Nischen konnten neu besetzt werden.",
-        "Alle Säugetiere wurden gleichzeitig zu großen Pflanzenfressern.",
-        "Sie verdrängten die noch lebenden Dinosaurier innerhalb weniger Tage.",
-      ],
-      correctIndex: 1,
+      options: ["Sie brauchten plötzlich weder Nahrung noch Wärme.", "Alle Säugetiere wurden gleichzeitig zu großen Pflanzenfressern.", "Viele frei gewordene ökologische Nischen konnten neu besetzt werden.", "Sie verdrängten die noch lebenden Dinosaurier innerhalb weniger Tage."],
+      correctIndex: 2,
     },
     discovery: {
       label: "Forscherblick",
@@ -1488,12 +1388,7 @@ export const scenes: Scene[] = [
     quiz: {
       question:
         "Warum ist die Menschheitsgeschichte auf der Erdzeitskala nur ein Wimpernschlag?",
-      options: [
-        "Weil Menschen schon vor den ersten Zellen lebten.",
-        "Weil die Erdgeschichte erst mit dem Menschen begann.",
-        "Weil Menschen nur einen winzigen Teil der 4,6 Milliarden Jahre langen Erdgeschichte ausmachen.",
-        "Weil sich seit dem Auftreten des Menschen keine Arten mehr verändern.",
-      ],
+      options: ["Weil Menschen schon vor den ersten Zellen lebten.", "Weil die Erdgeschichte erst mit dem Menschen begann.", "Weil Menschen nur einen winzigen Teil der 4,6 Milliarden Jahre langen Erdgeschichte ausmachen.", "Weil sich seit dem Auftreten des Menschen keine Arten mehr verändern."],
       correctIndex: 2,
     },
     directorNote:
@@ -1511,223 +1406,113 @@ export const totalDuration = scenes.reduce(
 export const followUpQuizzes: Record<number, Quiz> = {
   1: {
     question: "Woher stammte ein großer Teil der Gase der frühen Erdatmosphäre?",
-    options: [
-      "Aus den ersten Wäldern",
-      "Aus den Ozeanen fertiger Lebewesen",
-      "Aus vulkanischen Ausgasungen",
-      "Aus einer bereits vorhandenen Ozonschicht",
-    ],
+    options: ["Aus den ersten Wäldern", "Aus den Ozeanen fertiger Lebewesen", "Aus vulkanischen Ausgasungen", "Aus einer bereits vorhandenen Ozonschicht"],
     correctIndex: 2,
   },
   2: {
     question: "Was musste geschehen, bevor aus Wasserdampf dauerhafter Regen werden konnte?",
-    options: [
-      "Die Sonne musste vollständig erlöschen.",
-      "Erste Pflanzen mussten Wolken erzeugen.",
-      "Das Meer musste bereits voller Sauerstoff sein.",
-      "Die Erdoberfläche musste sich ausreichend abkühlen.",
-    ],
-    correctIndex: 3,
+    options: ["Die Sonne musste vollständig erlöschen.", "Die Erdoberfläche musste sich ausreichend abkühlen.", "Erste Pflanzen mussten Wolken erzeugen.", "Das Meer musste bereits voller Sauerstoff sein."],
+    correctIndex: 1,
   },
   3: {
     question: "Wo sammelte sich das kondensierte Wasser zu den ersten Ozeanen?",
-    options: [
-      "Nur in Vulkanen",
-      "Ausschließlich in der Atmosphäre",
-      "In Senken und Becken der Erdoberfläche",
-      "Im Inneren fertiger Zellen",
-    ],
-    correctIndex: 2,
+    options: ["In Senken und Becken der Erdoberfläche", "Ausschließlich in der Atmosphäre", "Nur in Vulkanen", "Im Inneren fertiger Zellen"],
+    correctIndex: 0,
   },
   4: {
     question: "Was war die sogenannte „Ursuppe“ ausdrücklich noch nicht?",
-    options: [
-      "Wasser mit gelösten einfachen Stoffen",
-      "Ein Ort chemischer Reaktionen",
-      "Eine Umgebung mit verschiedenen Energiequellen",
-      "Eine Brühe voller fertiger Tiere und Pflanzen",
-    ],
-    correctIndex: 3,
+    options: ["Eine Brühe voller fertiger Tiere und Pflanzen", "Ein Ort chemischer Reaktionen", "Wasser mit gelösten einfachen Stoffen", "Eine Umgebung mit verschiedenen Energiequellen"],
+    correctIndex: 0,
   },
   5: {
     question: "Was begann mit den ersten vermehrungsfähigen Zellen?",
-    options: [
-      "Die Bildung der ersten Kontinente",
-      "Die Entstehung der ersten Sterne",
-      "Die heutige Sauerstoffatmosphäre",
-      "Die biologische Evolution",
-    ],
-    correctIndex: 3,
+    options: ["Die Bildung der ersten Kontinente", "Die biologische Evolution", "Die Entstehung der ersten Sterne", "Die heutige Sauerstoffatmosphäre"],
+    correctIndex: 1,
   },
   6: {
     question: "Wie leben viele Mikroorganismen bis heute zusammen?",
-    options: [
-      "Als Biofilm auf einer Oberfläche",
-      "Nur einzeln im freien Weltraum",
-      "Ausschließlich im Inneren von Tieren",
-      "Als Organismus mit fertigen Organen",
-    ],
-    correctIndex: 0,
+    options: ["Ausschließlich im Inneren von Tieren", "Nur einzeln im freien Weltraum", "Als Biofilm auf einer Oberfläche", "Als Organismus mit fertigen Organen"],
+    correctIndex: 2,
   },
   7: {
     question: "Wie gewannen Cyanobakterien Energie und setzten dabei Sauerstoff frei?",
-    options: [
-      "Durch das Fressen erster Fische",
-      "Durch Vulkanismus",
-      "Durch Photosynthese",
-      "Durch die Aufnahme fertiger Mitochondrien",
-    ],
-    correctIndex: 2,
+    options: ["Durch Photosynthese", "Durch Vulkanismus", "Durch das Fressen erster Fische", "Durch die Aufnahme fertiger Mitochondrien"],
+    correctIndex: 0,
   },
   8: {
     question: "Welche spätere Schutzwirkung hing mit dem Sauerstoff in der Atmosphäre zusammen?",
-    options: [
-      "Eine Ozonschicht schwächte einen Teil der schädlichen UV-Strahlung ab.",
-      "Sauerstoff stoppte sämtliche Meteoriteneinschläge.",
-      "Eine Sauerstoffdecke verhinderte jede Abkühlung.",
-      "Sauerstoff machte Wasser vollkommen keimfrei.",
-    ],
+    options: ["Eine Ozonschicht schwächte einen Teil der schädlichen UV-Strahlung ab.", "Sauerstoff stoppte sämtliche Meteoriteneinschläge.", "Eine Sauerstoffdecke verhinderte jede Abkühlung.", "Sauerstoff machte Wasser vollkommen keimfrei."],
     correctIndex: 0,
   },
   9: {
     question: "Welcher Befund passt zur Endosymbiontentheorie?",
-    options: [
-      "Mitochondrien besitzen eigenes Erbmaterial.",
-      "Mitochondrien liegen außerhalb jeder Zelle.",
-      "Alle Bakterien besitzen einen Zellkern.",
-      "Tierische Zellen kommen ohne Energie aus.",
-    ],
-    correctIndex: 0,
+    options: ["Alle Bakterien besitzen einen Zellkern.", "Mitochondrien liegen außerhalb jeder Zelle.", "Mitochondrien besitzen eigenes Erbmaterial.", "Tierische Zellen kommen ohne Energie aus."],
+    correctIndex: 2,
   },
   10: {
     question: "Welche Lebewesen bestehen aus eukaryotischen Zellen?",
-    options: [
-      "Nur Bakterien",
-      "Tiere, Pflanzen und Pilze",
-      "Ausschließlich Viren",
-      "Nur Cyanobakterien",
-    ],
-    correctIndex: 1,
+    options: ["Tiere, Pflanzen und Pilze", "Nur Bakterien", "Ausschließlich Viren", "Nur Cyanobakterien"],
+    correctIndex: 0,
   },
   11: {
     question: "Was bedeutet Arbeitsteilung in einem Vielzeller?",
-    options: [
-      "Alle Zellen erledigen immer genau dieselbe Aufgabe.",
-      "Jede Zelle verlässt den Organismus nach der Teilung.",
-      "Spezialisierte Zellen übernehmen unterschiedliche Aufgaben für den Organismus.",
-      "Der Organismus benötigt keine Kommunikation zwischen Zellen.",
-    ],
-    correctIndex: 2,
+    options: ["Alle Zellen erledigen immer genau dieselbe Aufgabe.", "Spezialisierte Zellen übernehmen unterschiedliche Aufgaben für den Organismus.", "Jede Zelle verlässt den Organismus nach der Teilung.", "Der Organismus benötigt keine Kommunikation zwischen Zellen."],
+    correctIndex: 1,
   },
   12: {
     question: "Was wissen Forschende über die Verwandtschaft vieler Ediacara-Lebewesen?",
-    options: [
-      "Alle waren direkte Vorfahren heutiger Tiere.",
-      "Die genaue Einordnung ist bei vielen Formen noch unklar.",
-      "Sie gehörten vollständig zu den Landpflanzen.",
-      "Alle besaßen bereits Knochen und Zähne.",
-    ],
-    correctIndex: 1,
+    options: ["Alle waren direkte Vorfahren heutiger Tiere.", "Sie gehörten vollständig zu den Landpflanzen.", "Die genaue Einordnung ist bei vielen Formen noch unklar.", "Alle besaßen bereits Knochen und Zähne."],
+    correctIndex: 2,
   },
   13: {
     question: "Was wurde im Kambrium besonders vielfältig?",
-    options: [
-      "Nur die Farben der Ozeane",
-      "Ausschließlich Landpflanzen",
-      "Bereits alle heutigen Tierarten in unveränderter Form",
-      "Viele unterschiedliche Körperbaupläne und Lebensweisen von Tieren",
-    ],
-    correctIndex: 3,
+    options: ["Nur die Farben der Ozeane", "Ausschließlich Landpflanzen", "Viele unterschiedliche Körperbaupläne und Lebensweisen von Tieren", "Bereits alle heutigen Tierarten in unveränderter Form"],
+    correctIndex: 2,
   },
   14: {
     question: "Wie sahen die ersten Landpflanzen wahrscheinlich aus?",
-    options: [
-      "Sie waren klein und besaßen weder Blüten noch Samen.",
-      "Sie waren bereits riesige blühende Bäume.",
-      "Sie bestanden nur aus schwimmenden Blättern.",
-      "Sie wuchsen ausschließlich in tiefen Ozeanen.",
-    ],
+    options: ["Sie waren klein und besaßen weder Blüten noch Samen.", "Sie waren bereits riesige blühende Bäume.", "Sie bestanden nur aus schwimmenden Blättern.", "Sie wuchsen ausschließlich in tiefen Ozeanen."],
     correctIndex: 0,
   },
   15: {
     question: "Welche Tiere gehörten zu den frühen kleinen Eroberern des Festlands?",
-    options: [
-      "Wale und Delfine",
-      "Gliederfüßer wie frühe Tausendfüßer und Verwandte",
-      "Dinosaurier und Vögel",
-      "Große Säugetiere",
-    ],
-    correctIndex: 1,
+    options: ["Gliederfüßer wie frühe Tausendfüßer und Verwandte", "Wale und Delfine", "Dinosaurier und Vögel", "Große Säugetiere"],
+    correctIndex: 0,
   },
   16: {
     question: "Was zeigt das Übergangsfossil Tiktaalik?",
-    options: [
-      "Tiktaalik war bereits ein heutiger Frosch.",
-      "Tiktaalik war der erste Dinosaurier.",
-      "Tiktaalik lebte vollständig unabhängig vom Wasser.",
-      "Tiktaalik zeigt ein Merkmalsmosaik zwischen wasserlebenden Fischen und frühen Landwirbeltieren.",
-    ],
-    correctIndex: 3,
+    options: ["Tiktaalik zeigt ein Merkmalsmosaik zwischen wasserlebenden Fischen und frühen Landwirbeltieren.", "Tiktaalik war der erste Dinosaurier.", "Tiktaalik war bereits ein heutiger Frosch.", "Tiktaalik lebte vollständig unabhängig vom Wasser."],
+    correctIndex: 0,
   },
   17: {
     question: "Welche Struktur des Amnioteneis verhinderte vor allem das Austrocknen des Embryos?",
-    options: [
-      "Eine schützende Hülle mit inneren Eihäuten",
-      "Kiemen außerhalb des Eis",
-      "Ein Fell im Ei",
-      "Eine Verbindung zum offenen Meer",
-    ],
-    correctIndex: 0,
+    options: ["Ein Fell im Ei", "Kiemen außerhalb des Eis", "Eine schützende Hülle mit inneren Eihäuten", "Eine Verbindung zum offenen Meer"],
+    correctIndex: 2,
   },
   18: {
     question: "Zu welcher Tiergruppe gehörten die Flugsaurier?",
-    options: [
-      "Zu den Vögeln",
-      "Zu den Theropoden",
-      "Zu den Sauropoden",
-      "Zu einer eigenen Gruppe fliegender Reptilien",
-    ],
-    correctIndex: 3,
+    options: ["Zu einer eigenen Gruppe fliegender Reptilien", "Zu den Theropoden", "Zu den Vögeln", "Zu den Sauropoden"],
+    correctIndex: 0,
   },
   19: {
     question: "Was geschah nach der Verdunkelung zuerst mit vielen Nahrungsketten?",
-    options: [
-      "Weniger Sonnenlicht schwächte Pflanzen und damit zahlreiche weitere Glieder der Nahrungskette.",
-      "Alle Pflanzen wuchsen durch den Staub schneller.",
-      "Nur Tiere am Einschlagsort waren betroffen.",
-      "Die Ozeane verwandelten sich dauerhaft in Süßwasser.",
-    ],
-    correctIndex: 0,
+    options: ["Alle Pflanzen wuchsen durch den Staub schneller.", "Weniger Sonnenlicht schwächte Pflanzen und damit zahlreiche weitere Glieder der Nahrungskette.", "Nur Tiere am Einschlagsort waren betroffen.", "Die Ozeane verwandelten sich dauerhaft in Süßwasser."],
+    correctIndex: 1,
   },
   20: {
     question: "Was änderte sich für Säugetiere nach dem Massenaussterben?",
-    options: [
-      "Alle Säugetiere wurden innerhalb einer Stunde riesig.",
-      "Nach dem Aussterben vieler Gruppen eröffneten sich langfristig neue Entwicklungsmöglichkeiten.",
-      "Säugetiere entstanden erst nach dem Asteroideneinschlag.",
-      "Von nun an gab es keine anderen Wirbeltiere mehr.",
-    ],
-    correctIndex: 1,
+    options: ["Alle Säugetiere wurden innerhalb einer Stunde riesig.", "Säugetiere entstanden erst nach dem Asteroideneinschlag.", "Nach dem Aussterben vieler Gruppen eröffneten sich langfristig neue Entwicklungsmöglichkeiten.", "Von nun an gab es keine anderen Wirbeltiere mehr."],
+    correctIndex: 2,
   },
   21: {
     question: "Welche Eigenschaften halfen vielen frühen Säugetieren beim Überleben?",
-    options: [
-      "Riesige Körper und eine einzige Nahrungsquelle",
-      "Kleine Körper, Anpassungsfähigkeit und unterschiedliche Nahrung",
-      "Vollständige Unabhängigkeit von Wärme und Nahrung",
-      "Ein Leben ausschließlich in Bäumen",
-    ],
+    options: ["Riesige Körper und eine einzige Nahrungsquelle", "Kleine Körper, Anpassungsfähigkeit und unterschiedliche Nahrung", "Vollständige Unabhängigkeit von Wärme und Nahrung", "Ein Leben ausschließlich in Bäumen"],
     correctIndex: 1,
   },
   22: {
     question: "Welche Botschaft fasst das Ende der Episode am besten zusammen?",
-    options: [
-      "Evolution verfolgt seit Beginn einen festen Plan zum Menschen.",
-      "Die Geschichte des Lebens ist abgeschlossen.",
-      "Aus langen Veränderungen entstand Vielfalt – und unsere neugierige Spur ist sehr jung.",
-      "Nur große Katastrophen verändern das Leben.",
-    ],
-    correctIndex: 2,
+    options: ["Evolution verfolgt seit Beginn einen festen Plan zum Menschen.", "Aus langen Veränderungen entstand Vielfalt – und unsere neugierige Spur ist sehr jung.", "Die Geschichte des Lebens ist abgeschlossen.", "Nur große Katastrophen verändern das Leben."],
+    correctIndex: 1,
   },
 };
 

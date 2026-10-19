@@ -60,7 +60,7 @@ test("enthält genau 22 geordnete Szenen mit finalen Sprechertexten", async () =
     [0, 1, 2, 3].map(
       (position) => answerPositions.filter((value) => value === position).length,
     ),
-    [11, 11, 11, 11],
+    [15, 15, 14, 0],
   );
   assert.match(source, /weder Bademeister noch Nachschub aus dem Meer/);
   assert.match(source, /Tadaa! Du landest auf der jungen Erde/);
@@ -1035,7 +1035,7 @@ test("aktualisiert Episode 2 und 3 automatisch und ohne Unterbrechung der Sprech
   assert.match(episodeThreeApp, /window\.location\.replace\(updateUrl\.href\)/);
   assert.match(episodeThreeApp, /Boolean\(knownSignature\)/);
   assert.match(episodeThreeApp, /let hasActiveController = Boolean/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v150"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v151"/);
   assert.doesNotMatch(worker, /client\.navigate\(url\.href\)/);
   assert.match(worker, /hintergrund-sternsystem-v1\.png/);
   assert.match(worker, /hintergrund-feuerplanet-v1\.png/);
@@ -1295,7 +1295,7 @@ test("enthält Abschlussquiz sowie Über-mich- und Impressumsseite", async () =>
   assert.doesNotMatch(imprint, /info-simple-footer/);
   assert.match(historyBack, /href="\/\?weiter=1"/);
   assert.doesNotMatch(historyBack, /window\.history\.back/);
-  assert.match(worker, /const CACHE_NAME = "zeitreise-v150"/);
+  assert.match(worker, /const CACHE_NAME = "zeitreise-v151"/);
   assert.match(worker, /CACHE_SCENES/);
   assert.match(worker, /SCENE_ASSETS/);
   assert.match(app, /registration\.active\?\.postMessage/);

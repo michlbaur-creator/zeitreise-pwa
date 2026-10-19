@@ -1,5 +1,7 @@
 "use client";
 
+import { useVideoAudioSync } from "../components/QuietReading";
+import type { RefObject } from "react";
 import { useEffect, useRef } from "react";
 import type { EpisodeTwoScene } from "../data/episode2";
 import { episodeTwoCompactVisuals } from "../data/episode2CompactVisuals";
@@ -10,6 +12,7 @@ type Props = {
   scene: EpisodeTwoScene;
   isPlaying: boolean;
   progress: number;
+  audioRef: RefObject<HTMLAudioElement | null>;
 };
 
 function chapterForScene(sceneId: number) {
@@ -22,6 +25,7 @@ function chapterForScene(sceneId: number) {
 
 export function EpisodeTwoVisual({
   scene,
+  audioRef,
   isPlaying,
   progress,
 }: Props) {
@@ -30,6 +34,7 @@ export function EpisodeTwoVisual({
   const secondImageOpacity = Math.min(1, Math.max(0, (progress - 0.46) / 0.16));
   const treeOpacity = Math.min(1, Math.max(0, (progress - 0.38) / 0.18));
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  useVideoAudioSync(videoRef, audioRef, isPlaying, scene.id);
 
   useEffect(() => {
     const video = videoRef.current;

@@ -1,0 +1,21 @@
+# Zeitreise – Übergabe
+
+## Leise-Modus, 19. Oktober 2026
+
+- Arbeitsrepository: `/Users/michaelbaur/Documents/Zeitreise-PWA`, Branch `main`, Origin `michlbaur-creator/zeitreise-pwa`. Programm und öffentliche Medien liegen unter `App/`. Historia ist ein eigenständiges Repository und darf nicht pauschal mitgestaged werden.
+- Auf Michas Auftrag den aktuellen Historia-Leise-Modus für alle drei Zeitreise-Episoden übernommen: sichtbarer „🔇 Leise“-Schalter, gespeicherte Einstellung `zeitreise-quiet`, großer Textbereich, Schrift 20–32 px und Textbreite 44ch für ungefähr drei bis vier Zeilen in großer Ansicht. Auf dem Handy entsprechend mehr Zeilen. Fensterhöhe entspricht der zuletzt bestätigten großen Historia-Fassung. Kein langsames Tempo.
+- Die vorhandenen Audioelemente bleiben erhalten. Leise setzt nur `muted` und schaltet die bestehende Geräuschkulisse ab. Introstart, Neuladen, Episodenwechsel und Weiter beachten die Einstellung. Ton einschalten beendet den Leise-Modus. Die mobile Steuerleiste bleibt im Leise-Modus im normalen Dokumentfluss, damit sie keine Textzeilen überlagert.
+- Gemeinsame Logik: `app/components/QuietReading.tsx` und `app/data/readingCues.ts`. Vorhandene E1-Untertitelzeitmarken werden zusammengefasst und erhalten, wenn sie den gesamten beschlossenen Sprechertext abdecken. Sonst werden vollständige Originaltexte in Abschnitte bis 200 Zeichen aufgeteilt und proportional zur Audiozeit angezeigt. Keine wortgenau neu ausgerichteten Transkriptionsuntertitel.
+- Zusätzlicher Knopf „↶ 10 Sek.“; bestehender Zeitregler und Pause bleiben erhalten. Die Videos werden bei Rücksprüngen an die Audiozeit angepasst, mit den bestehenden Schleifen- und Endstandbildregeln. Das dauerhafte Audioelement hat keinen szenenabhängigen Key.
+- Quizantworten in den Daten gleichmäßig angeordnet: E1 **15/15/14** bei 44 Fragen, E2 **10/9/9** bei 28 Fragen, E3 **19/19/18** bei 56 Fragen. Alle 128 Fragen, Antworttexte, richtigen Antwortinhalte und sonstigen Szenendaten per Vergleich mit dem Ausgangsstand unverändert. Keine neue Zufallslogik im Szenenplayer; bestehende Challenges bleiben erhalten.
+- Der beim Arbeitsbeginn aktuelle Commit `5699bfc` („Ton“) hatte `App/app/data/episode3.ts` und alle ursprünglichen Episode-3-Aufnahmen entfernt. Die weiterhin importierte Datendatei wurde aus `HEAD^` wiederhergestellt; die 28 ursprünglichen Aufnahmen wurden unverändert zurückgeholt (17 werden direkt verwendet; die übrigen bleiben als Originale zu den kombinierten Spuren erhalten). Bestehende kombinierte Sprecher-/Veo-Spuren bleiben bevorzugt und unverändert.
+- Technische Prüfung: TypeScript, 41 vorhandene Tests plus vier neue Inhalts-/Medienprüfungen, ESLint der neuen Komponenten/Logik und Produktionsbuild. Alte Quelltexttests auf drei Antwortpositionen und Cache v151 aktualisiert. Der vollständige GitHub-Pages-Build mit Next.js besteht.
+- Browserprüfung mit Chrome im iPhone-13-Profil: alle drei Episoden, gespeicherte Stummschaltung einschließlich Intro, gleicher Audio-DOM-Knoten nach Weiter, Weiter-Autoplay, Pause/Rückspulen, Untertitel, Video-Hold/Rücksprung/Synchronität, Querformat und große Ansicht; kein horizontaler Überlauf oder JavaScript-Fehler. Kein echter iOS-Safari-Gerätetest.
+- Micha hat am 19. Oktober 2026 eine grundsätzliche Browser-Freigabe auch für zukünftige Arbeiten erteilt. Browserprüfungen benötigen keine neue Einzelbestätigung; sonstige Desktopzugriffe sind davon getrennt. Siehe Projekt-AGENTS.md.
+- Cache `zeitreise-v151`. Hauptveröffentlichung über GitHub Pages auf `https://evo.mibaso.de`. Die alte Sites-Quellablage besitzt ein Gesamtprojekt mit App-Unterordner; ihr fehlendes Manifest im Wurzelverzeichnis wird in einem getrennten temporären Checkout repariert. Die ergänzende Sites-Veröffentlichung verwendet nun denselben statischen Export wie GitHub Pages; das Wurzelmanifest verweist dort auf `dist`. Keine Secrets oder `.env`-Dateien übernehmen.
+
+## Prüfkommandos
+
+Im Ordner `App/`: `pnpm exec tsc --noEmit`, `node --test tests/quiet-reading.test.mjs`, `pnpm test`, `GITHUB_PAGES=true pnpm run build:pages`.
+
+Browserprüfung: `tests/quiet-reading.browser.cjs`, optional `PLAYWRIGHT_PACKAGE` auf die vorhandene lokale Playwright-Runtime setzen, `ZEITREISE_PREVIEW` auf den laufenden Vinext-Server. Die Browserprüfung nutzt Chrome; es muss kein zusätzlicher Browser installiert werden.

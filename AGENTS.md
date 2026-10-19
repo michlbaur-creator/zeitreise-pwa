@@ -1,3 +1,8 @@
+# Browser-Freigabe von Micha
+
+- Micha hat am 19. Oktober 2026 die grundsätzliche Browser-Freigabe auch für zukünftige Arbeiten erteilt. Browserzugriffe und Browserprüfungen benötigen keine erneute Einzelbestätigung.
+- Für sonstige Desktop- oder Bildschirmzugriffe durch Computer Use gilt weiterhin die vorherige ausdrückliche Zustimmung.
+
 # Verbindliche Projektregeln
 
 - Vor größeren Arbeiten zusätzlich das gemeinsame Projektgedächtnis unter

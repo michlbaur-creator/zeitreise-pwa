@@ -50,12 +50,12 @@
       "kind": "optional",
       "question": "Welche Kombination ist für viele Primaten typisch?",
       "options": [
-        "Flossen und Kiemen",
-        "Federn und Schnabel",
         "Greifhände und gutes räumliches Sehen",
+        "Federn und Schnabel",
+        "Flossen und Kiemen",
         "Panzer und Stacheln"
       ],
-      "correctIndex": 2
+      "correctIndex": 0
     },
     "transition": "Ein Tier greift nach einer Frucht. Beim Heranziehen füllt ein Blatt das Bild. Dahinter öffnet sich nach der Überblendung ein lichterer Wald mit deutlich größeren Menschenaffen.",
     "science": "Keine Detaildebatte über einzelne frühe Primaten im Sprechertext; Vielfalt und Verwandtschaft erscheinen in den Hotspots."
@@ -111,11 +111,11 @@
       "question": "Welches Bild passt zur Evolution der Menschenaffen?",
       "options": [
         "Wie eine gerade Treppe",
-        "Wie ein Baum mit vielen Zweigen",
         "Wie ein einziger Kreis",
+        "Wie ein Baum mit vielen Zweigen",
         "Ohne ausgestorbene Arten"
       ],
-      "correctIndex": 1
+      "correctIndex": 2
     },
     "transition": "Die Kamera bleibt auf einem Waldweg. Licht und Vegetation wechseln im Zeitraffer. Aus geschlossenem Wald wird ein Mosaik aus Waldinseln, Buschland und offenen Flächen.",
     "science": "Einzelne fossile Menschenaffen und ihre umstrittenen Verwandtschaftsverhältnisse bleiben den Hotspots vorbehalten."
@@ -226,12 +226,12 @@
       "kind": "optional",
       "question": "Welche Merkmalsmischung zeigt Ardis Körper?",
       "options": [
-        "Eine fertige moderne Lauftechnik",
         "Eine Mischung aus Klettern und möglicher Zweibeinigkeit",
+        "Eine fertige moderne Lauftechnik",
         "Den ersten Werkzeugkasten",
         "Den ersten kontrollierten Gebrauch von Feuer"
       ],
-      "correctIndex": 1
+      "correctIndex": 0
     },
     "transition": "Ardi hinterlässt einen einzelnen Abdruck im feuchten Boden. Wind trägt feine Vulkanasche darüber. Die Asche füllt das Bild und wird zur Oberfläche der nächsten Szene.",
     "science": "Die genaue Gangart und Stammbaumposition bleiben als Forschungsfrage sichtbar, werden aber nur einmal knapp benannt."
@@ -285,12 +285,12 @@
       "kind": "optional",
       "question": "Welche Aussage passt zu Australopithecus afarensis?",
       "options": [
-        "Großes modernes Gehirn, aber kein aufrechter Gang",
         "Regelmäßiger aufrechter Gang und weiterhin gute Kletterfähigkeiten",
+        "Großes modernes Gehirn, aber kein aufrechter Gang",
         "Sicherer Gebrauch von Metall",
         "Leben ausschließlich in Eislandschaften"
       ],
-      "correctIndex": 1
+      "correctIndex": 0
     },
     "transition": "Lucy schlägt eine harte Frucht gegen einen Stein. Das Geräusch bleibt stehen, während das Bild abdunkelt. Ein zweiter, gezielterer Steinschlag eröffnet Szene 10.",
     "science": "Die Zuordnung der Laetoli-Spuren zu Australopithecus afarensis bleibt als wahrscheinliche, nicht absolute Aussage formuliert."
@@ -548,11 +548,11 @@
       "question": "Warum ist die Einteilung früher Menschenfossilien in Arten schwierig?",
       "options": [
         "Weil Fossilien alle gleich aussehen",
-        "Weil Funde lückenhaft sind und Merkmale sich mosaikartig verändern",
         "Weil es damals keine Knochen gab",
+        "Weil Funde lückenhaft sind und Merkmale sich mosaikartig verändern",
         "Weil Artennamen verboten sind"
       ],
-      "correctIndex": 1
+      "correctIndex": 2
     },
     "transition": "Das europäische Landschaftsfenster wird größer. Schnee zieht auf, doch das Bild bleibt bewohnt: Rauch steigt aus einem geschützten Lagerplatz.",
     "science": "Strittige Artnamen werden nicht aufgezählt; ein Hotspot erklärt, warum Fossilien nicht immer in klare Schubladen passen."
@@ -598,12 +598,12 @@
       "kind": "optional",
       "question": "Was wissen Forschende heute über Neandertaler?",
       "options": [
-        "Sie konnten keine Werkzeuge herstellen.",
-        "Sie waren direkte primitive Stufen des modernen Menschen.",
         "Sie waren eine eigenständige, anpassungsfähige Menschenlinie.",
+        "Sie waren direkte primitive Stufen des modernen Menschen.",
+        "Sie konnten keine Werkzeuge herstellen.",
         "Sie lebten gleichzeitig mit Dinosauriern."
       ],
-      "correctIndex": 2
+      "correctIndex": 0
     },
     "transition": "Eine Steinspitze wird im Feuerlicht gedreht. Ihre Kante wird zur Kante eines winzigen Knochenfragments in einem modernen Labor.",
     "science": "Rituale und symbolische Handlungen bleiben aus dem Haupttext heraus; gut belegte Tätigkeiten tragen die Szene."
@@ -650,12 +650,12 @@
       "kind": "optional",
       "question": "Warum wissen wir über Denisova-Menschen noch vergleichsweise wenig?",
       "options": [
-        "Ihre DNA ist unbekannt.",
         "Die sicher zugeordneten Funde bleiben selten und stammen aus sehr unterschiedlichen Zeiten und Regionen.",
+        "Ihre DNA ist unbekannt.",
         "Sie lebten ausschließlich im Meer.",
         "Sie hinterließen nur Metallwerkzeuge."
       ],
-      "correctIndex": 1
+      "correctIndex": 0
     },
     "transition": "Die DNA-Linien laufen nicht in einer einzelnen Figur zusammen. Stattdessen führen mehrere afrikanische Fundpunkte in die nächste Szene.",
     "science": "Regionale Vielfalt und Aussehen bleiben offen; der Harbin-Schädel erscheint als sehr wahrscheinlicher, nicht endgültiger Gesamtschlüssel."
@@ -710,11 +710,11 @@
       "question": "Was zeigen genetische Daten über die Begegnungen verschiedener Menschenlinien?",
       "options": [
         "Sie hatten niemals Kontakt.",
-        "Nur Neandertaler überlebten bis heute unverändert.",
         "Einige Populationen vermischten sich und hinterließen Spuren in heutigen Genomen.",
+        "Nur Neandertaler überlebten bis heute unverändert.",
         "Alle Menschenlinien waren genetisch identisch."
       ],
-      "correctIndex": 2
+      "correctIndex": 1
     },
     "transition": "QUIZMOMENT B: Nach der Antwort werden die Verbindungslinien zu einem einzigen, weit verzweigten Netz der heute lebenden Menschheit. Das Netz liegt kurz über einer nächtlichen Erde und löst sich in Morgenlicht auf.",
     "science": "Konkrete Begegnungsabläufe bleiben unerzählt; Sprechertext trennt gesicherte genetische Vermischung von unbekannten persönlichen Situationen."
@@ -762,11 +762,11 @@
       "question": "Welches Bild beschreibt die menschliche Evolution am besten?",
       "options": [
         "Evolution führte geradlinig und zielgerichtet zum Menschen.",
-        "Nur eine Menschenform lebte jemals gleichzeitig.",
         "Menschliche Evolution war verzweigt, und verschiedene Linien begegneten sich.",
+        "Nur eine Menschenform lebte jemals gleichzeitig.",
         "Landwirtschaft gehört zum Beginn der Menschenentwicklung."
       ],
-      "correctIndex": 2
+      "correctIndex": 1
     },
     "transition": "Schlussbild: Die Kinderhand bleibt auf dem golden schimmernden Zeitfelsen. Langsame Rückfahrt. Schriftzug: ‚Zeitreise - Die Geschichte des Lebens‘. Darunter: ‚Episode 2 - Die Entwicklung des Menschen | Eine verzweigte Geschichte‘. Kein Ausblick auf Landwirtschaft im Bild; nur der Hinweis, dass ein neues Kapitel folgen kann.",
     "science": "Keine zusätzliche Forschungsdebatte im Finale; die Aussage zu menschlicher Variation folgt dem wissenschaftlichen Konsens."

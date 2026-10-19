@@ -851,6 +851,9 @@ export function useAmbientSound(
 
     return () => {
       disposed = true;
+      master.gain.cancelScheduledValues(context.currentTime);
+      master.gain.setValueAtTime(0, context.currentTime);
+      master.disconnect();
       if (rainBedGainRef.current === rainBedGain) {
         rainBedGainRef.current = null;
       }

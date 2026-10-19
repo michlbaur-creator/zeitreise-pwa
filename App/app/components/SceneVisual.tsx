@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useVideoAudioSync } from "./QuietReading";
+import type { RefObject } from "react";
 import { useEffect, useRef, type CSSProperties } from "react";
 import {
   SCENE_THIRTEEN_ARMS_RACE_START,
@@ -62,6 +64,7 @@ type SceneVisualProps = {
   scene: Scene;
   isPlaying: boolean;
   progress: number;
+  audioRef: RefObject<HTMLAudioElement | null>;
   hasNarration: boolean;
   narrationVoiceName: string;
   discoveryActive: boolean;
@@ -2087,6 +2090,7 @@ function AftermathSurvivorAnimation({ progress }: { progress: number }) {
 
 export function SceneVisual({
   scene,
+  audioRef,
   isPlaying,
   progress,
   hasNarration,
@@ -2096,6 +2100,7 @@ export function SceneVisual({
   onDiscover,
 }: SceneVisualProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  useVideoAudioSync(videoRef, audioRef, isPlaying, scene.id);
   const sceneVideo = episodeOneSceneVideo(scene.id);
 
   useEffect(() => {
