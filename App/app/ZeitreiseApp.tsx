@@ -903,6 +903,7 @@ export default function ZeitreiseApp() {
           </div>
         </div>
         <div className="header-actions">
+          <Link className="quiet-button" href="/lernpfade/">Mit Lernpfaden lernen</Link>
           <Link className="quiet-button episode-switch-link" href="/episode-2/?start=1">
             Episode 2 <span aria-hidden="true">→</span>
           </Link>

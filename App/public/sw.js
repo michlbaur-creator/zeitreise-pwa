@@ -1,4 +1,4 @@
-const CACHE_NAME = "zeitreise-v152";
+const CACHE_NAME = "zeitreise-v153";
 const APP_SHELL = [
   "/",
   "/episode-2/",

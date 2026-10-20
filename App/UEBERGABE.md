@@ -42,3 +42,15 @@ Browserprüfung: `tests/quiet-reading.browser.cjs`, optional `PLAYWRIGHT_PACKAGE
 ## Freigabe zur Veröffentlichung – 19. Oktober 2026
 
 Micha hat die Veröffentlichung ausdrücklich beauftragt, um den Lernpfad am iPad unter `https://evo.mibaso.de/lernpfad/` auszuprobieren. Veröffentlichung über die bestehende GitHub-Pages-Pipeline; Cache v152. Die zusätzliche Sites-Kopie ist nicht Ziel dieses Auftrags.
+
+## Lernpfad 2 und farbigere Lernpfade – 20. Oktober 2026
+
+- Fertige lokale Vorschau: `/lernpfad-2/` „Vom Dorf zur Stadt – Vorräte, Schrift und Macht“. Fünf Stationen mit den vorhandenen E3-Szenen 10, 11, 12–13, 14 und 15; zehn wortgleiche Originalfragen und Antworten. Kurze neue Beobachtungsaufträge und Erläuterungen ausschließlich aus vorhandenem Szeneninhalt. Sprechertexte, Aufnahmen und Szenenfolge unverändert.
+- Gemeinsame Übersicht `/lernpfade/`, verlinkt im Hauptplayer und Episode 3. Zwei getrennte Lernpässe und Urkunden; alter Pfad `/lernpfad/` und Schlüssel `zeitreise-lernpfad-bleiben-v1` bleiben erhalten. Neuer Schlüssel `zeitreise-lernpfad-stadt-v1`. Gemeinsamer Player und gemeinsame Lernpass-Oberfläche über Pfadkonfiguration.
+- Beide Pfade kräftiger gestaltet: Türkis, Gold und farbige Stationskarten. Großer Wissenspunktezähler mit goldfarbenem Fortschrittsbalken und textlichem Stationsstand; auf Handys volle Breite. Übersicht zeigt gespeicherte Zwischenstände und Fortsetzen.
+- TypeScript, 50 Tests, Vinext-Produktionsbuild und statischer Next/GitHub-Pages-Build erfolgreich. Next benötigt außerhalb der Sandbox einen lokalen CSS-Hilfsport; erneuter Build erfolgreich. Browserprüfung: Start der Originalaufnahme/Leise-Modus, kompletter erster Stationscheck, 2/10 Punkte, Neuladen, getrennte Übersicht, Urkundentitel und Zwischenstand. Darstellung bei 390 px über temporären iframe geprüft, kein echter iOS-Gerätetest. Testfortschritt für Pfad 2 anschließend zurückgesetzt. Temporäre Prüfseite gelöscht.
+- Stand noch nicht veröffentlicht, kein Commit/Push. Cache bleibt v152; vor Veröffentlichung erhöhen und zugehörige Tests anpassen. Vorschau `http://localhost:3003/lernpfad-2/`, Übersicht `http://localhost:3003/lernpfade/`.
+
+## Veröffentlichung freigegeben – 20. Oktober 2026
+
+Micha hat die Einbindung und Veröffentlichung ausdrücklich beauftragt. Die gemeinsame Lernpfadübersicht ist im Hauptplayer und in Episode 3 verlinkt; beide Lernpfade sind darüber erreichbar. Veröffentlichung über GitHub Pages auf evo.mibaso.de, Cache v153. Bestehende Lernpässe bleiben erhalten. Sichtprüfung und beide Produktionsbuilds bereits erfolgreich; die zusätzliche Sites-Kopie ist nicht Teil dieser Veröffentlichung.

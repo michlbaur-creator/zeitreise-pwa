@@ -30,3 +30,21 @@ test('Lernpass übersteht Speichern und Neuladen',()=>{
   assert.deepEqual(readProgress(JSON.stringify(p)),p);
   assert.equal(p.scores.reduce((a,b)=>a+b,0),10);
 });
+
+test('Lernpfad 2 verwendet Szenen 10–15 und unveränderte Fragen; Lernpässe bleiben getrennt',async()=>{
+  const { learningPaths, cityStations } = await loadData('learningPath');
+  assert.deepEqual(cityStations.flatMap(s=>s.sceneIds),[10,11,12,13,14,15]);
+  assert.equal(cityStations.flatMap(s=>s.quizzes).length,10);
+  for(const station of cityStations) for(const q of station.quizzes){
+    const original=station.scenes.flatMap(s=>s.quiz).find(a=>a.question===q.question);
+    assert.ok(original); assert.deepEqual(q.answers,original.answers); assert.equal(q.correctAnswer,original.correctAnswer);
+  }
+  assert.equal(new Set(learningPaths.map(p=>p.key)).size,2);
+  assert.equal(learningPaths[0].key,'zeitreise-lernpfad-bleiben-v1');
+  const pilot=recordResult(emptyProgress(),0,1,'2026-10-20');
+  let city=emptyProgress(cityStations);
+  for(let i=0;i<5;i++) city=recordResult(city,i,2,'2026-10-20',cityStations);
+  assert.deepEqual(readProgress(JSON.stringify(city),cityStations),city);
+  assert.deepEqual(pilot.scores,[1,null,null,null,null]);
+  assert.equal(city.completedAt,'2026-10-20');
+});
