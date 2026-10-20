@@ -39,7 +39,7 @@ test('Lernpfad 2 verwendet Szenen 10–15 und unveränderte Fragen; Lernpässe b
     const original=station.scenes.flatMap(s=>s.quiz).find(a=>a.question===q.question);
     assert.ok(original); assert.deepEqual(q.answers,original.answers); assert.equal(q.correctAnswer,original.correctAnswer);
   }
-  assert.equal(new Set(learningPaths.map(p=>p.key)).size,2);
+  assert.equal(new Set(learningPaths.map(p=>p.key)).size,4);
   assert.equal(learningPaths[0].key,'zeitreise-lernpfad-bleiben-v1');
   const pilot=recordResult(emptyProgress(),0,1,'2026-10-20');
   let city=emptyProgress(cityStations);
@@ -47,4 +47,25 @@ test('Lernpfad 2 verwendet Szenen 10–15 und unveränderte Fragen; Lernpässe b
   assert.deepEqual(readProgress(JSON.stringify(city),cityStations),city);
   assert.deepEqual(pilot.scores,[1,null,null,null,null]);
   assert.equal(city.completedAt,'2026-10-20');
+});
+
+test('Neue Einheiten verwenden Originaltexte, Originalfragen und getrennte Lernpässe', async()=>{
+  const { learningPaths } = await loadData('learningPath');
+  const { scenes, followUpQuizzes } = await loadData('scenes');
+  const { episodeTwoScenes } = await loadData('episode2');
+  for(const path of learningPaths.filter(p=>p.episode!==3)) {
+    assert.equal(path.stations.length,5);
+    const originals=path.episode===1?scenes:episodeTwoScenes;
+    const pool=originals.flatMap(s=>[s.quiz,path.episode===1?followUpQuizzes[s.id]:s.followUpQuiz]);
+    for(const station of path.stations) {
+      assert.equal(station.quizzes.length,2);
+      for(const scene of station.scenes) assert.equal(scene.speakerText.join(' '),originals.find(s=>s.id===scene.id).speaker);
+      for(const question of station.quizzes) {
+        const original=pool.find(q=>q.question===question.question);
+        assert.ok(original);assert.deepEqual(question.answers,original.options);assert.equal(question.correctAnswer,original.correctIndex);
+      }
+    }
+    assert.deepEqual(readProgress(JSON.stringify(recordResult(emptyProgress(path.stations),0,2,'2026-10-20',path.stations)),path.stations).scores,[2,null,null,null,null]);
+    assert.ok(path.opening && path.assignment && path.discussion && path.extension);
+  }
 });

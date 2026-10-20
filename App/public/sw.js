@@ -1,6 +1,12 @@
-const CACHE_NAME = "zeitreise-v153";
+const CACHE_NAME = "zeitreise-v154";
 const APP_SHELL = [
   "/",
+  "/entdecken/",
+  "/lernpfade/",
+  "/lernpfad/",
+  "/lernpfad-2/",
+  "/lernpfad-leben/",
+  "/lernpfad-mensch/",
   "/episode-2/",
   "/episode-3/",
   "/tierstammbaum/",

@@ -1,5 +1,2 @@
-import ZeitreiseApp from "./ZeitreiseApp";
-
-export default function Home() {
-  return <ZeitreiseApp />;
-}
+import Welcome from "./Welcome";
+export default function Home() { return <Welcome />; }

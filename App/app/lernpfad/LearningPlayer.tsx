@@ -4,7 +4,17 @@ import { EpisodeThreeVisual } from "../episode-3/EpisodeThreeVisual";
 import { ReadingControls, ReadingSubtitles, useQuietReading } from "../components/QuietReading";
 import { episodeThreeSceneAudio, type EpisodeThreeScene } from "../data/episode3";
 
-export default function LearningPlayer({ scenes, onQuiz }: { scenes: EpisodeThreeScene[]; onQuiz: () => void }) {
+import { type LearningScene } from "../data/learningPath";
+import { SceneVisual } from "../components/SceneVisual";
+import { EpisodeTwoVisual } from "../episode-2/EpisodeTwoVisual";
+import type { Scene } from "../data/scenes";
+import type { EpisodeTwoScene } from "../data/episode2";
+import { episodeTwoSceneSoundtrack } from "../data/episode2CompactVisuals";
+import { captionTracks } from "../data/captions";
+import { narrationTracks } from "../data/narration";
+import { episodeOneSceneSoundtrack } from "../data/episode1Videos";
+
+export default function LearningPlayer({ scenes, episode = 3, onQuiz }: { scenes: LearningScene[]; episode?: 1 | 2 | 3; onQuiz: () => void }) {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -29,16 +39,16 @@ export default function LearningPlayer({ scenes, onQuiz }: { scenes: EpisodeThre
     setIndex(nextIndex); setProgress(0); setError(false); setPlaying(true);
   }
   function quiz() { audioRef.current?.pause(); setPlaying(false); onQuiz(); }
-  return <section className="lp-media" aria-label="Szenen der Station">
+  return <section className={`lp-media ${quiet ? "quiet-reading-player" : ""}`} aria-label="Szenen der Station">
     <p className="lp-kicker">Szene {index + 1} von {scenes.length} · {scene.timeLabel}</p>
     <h2>{scene.title}</h2>
     <ReadingControls quiet={quiet} onChange={changeQuiet} onRewind={() => seek((audioRef.current?.currentTime ?? 0) - 10)} />
-    <EpisodeThreeVisual scene={scene} isPlaying={playing} progress={progress} audioRef={audioRef} />
-    <audio ref={audioRef} src={episodeThreeSceneAudio[scene.id as keyof typeof episodeThreeSceneAudio]} muted={muted} preload="metadata"
+    {episode === 1 ? <SceneVisual scene={scene.original as Scene} isPlaying={playing} progress={progress} audioRef={audioRef} hasNarration={true} narrationVoiceName="Micha" discoveryActive={false} discovered={[]} onDiscover={() => {}} /> : episode === 2 ? <EpisodeTwoVisual scene={scene.original as EpisodeTwoScene} isPlaying={playing} progress={progress} audioRef={audioRef} /> : <EpisodeThreeVisual scene={scene as EpisodeThreeScene} isPlaying={playing} progress={progress} audioRef={audioRef} />}
+    <audio ref={audioRef} src={episode === 1 ? episodeOneSceneSoundtrack(scene.id) ?? narrationTracks[scene.id] : episode === 2 ? episodeTwoSceneSoundtrack(scene.id) ?? (scene.original as EpisodeTwoScene).audioPath : episodeThreeSceneAudio[scene.id as keyof typeof episodeThreeSceneAudio]} muted={muted} preload="metadata"
       onCanPlay={() => { if (playing) void audioRef.current?.play().catch(() => setPlaying(false)); }}
       onTimeUpdate={e => { const a=e.currentTarget; if (a.duration > 0) setProgress(a.currentTime/a.duration); }}
       onEnded={() => { setPlaying(false); setProgress(1); }} onError={() => { setError(true); setPlaying(false); }} />
-    {quiet && <ReadingSubtitles text={scene.speakerText.join(" ")} progress={progress} />}
+    {quiet && <ReadingSubtitles text={scene.speakerText.join(" ")} progress={progress} cues={episode === 1 ? captionTracks[scene.id] : undefined} />}
     <div className="lp-player-controls">
       <button disabled={index === 0} onClick={() => next(index - 1)} aria-label="Vorherige Szene">←</button>
       <button className="lp-primary" onClick={() => { if(progress >= 1) seek(0); setPlaying(!playing); }}>{playing ? "Pause" : progress >= 1 ? "Noch einmal" : "Szene starten"}</button>
