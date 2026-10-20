@@ -2,8 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
-import { emptyProgress, learningPaths, readProgress, recordResult, type LearningProgress } from "../data/learningPath";
+import { emptyProgress, learningPaths, readProgress, recordResult, type LearningProgress, type LearningScene } from "../data/learningPath";
+import { learningAudioSource } from "../data/learningAudio";
 import QuietEntry from "../components/QuietEntry";
+import CertificateActions from "./CertificateActions";
 import LearningPlayer from "./LearningPlayer";
 import "./learning-path.css";
 
@@ -25,6 +27,21 @@ export default function LearningPath({ pathId = "bleiben" }: { pathId?: string }
   const [certificate, setCertificate] = useState(false);
   const [name, setName] = useState("");
   const [celebrate, setCelebrate] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const playRequest = useRef(0);
+  const [playing, setPlaying] = useState(false);
+  const [mediaError, setMediaError] = useState(false);
+  function startScene(scene: LearningScene) {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const request = ++playRequest.current;
+    audio.pause();
+    // Start within the actual click, retaining the same audio element across checks (iOS).
+    try { audio.muted = localStorage.getItem("zeitreise-quiet") === "true"; } catch { /* Keep current sound choice. */ }
+    audio.src = learningAudioSource(scene, path.episode);
+    setMediaError(false);
+    void audio.play().catch(() => { if (playRequest.current === request) setPlaying(false); });
+  }
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { queueMicrotask(() => {
     try { setSaved(readProgress(localStorage.getItem(learningPathKey), learningStations)); } catch { setStorageError(true); }
@@ -36,8 +53,8 @@ export default function LearningPath({ pathId = "bleiben" }: { pathId?: string }
     setSaved(next);
     try { localStorage.setItem(learningPathKey, JSON.stringify(next)); } catch { setStorageError(true); }
   }
-  function openStation(index: number) { setStationIndex(index); setPhase("learn"); setAnswers([]); setQuestionIndex(0); setCertificate(false); }
-  function overview() { setStationIndex(null); setCertificate(false); setCelebrate(false); }
+  function openStation(index: number) { startScene(learningStations[index].scenes[0]); setStationIndex(index); setPhase("learn"); setAnswers([]); setQuestionIndex(0); setCertificate(false); }
+  function overview() { ++playRequest.current; audioRef.current?.pause(); setStationIndex(null); setCertificate(false); setCelebrate(false); }
   const station=stationIndex === null ? null : learningStations[stationIndex];
   const completed=saved.scores.filter(s => s !== null).length;
   const points=saved.scores.reduce<number>((sum,s) => sum+(s ?? 0),0);
@@ -52,14 +69,15 @@ export default function LearningPath({ pathId = "bleiben" }: { pathId?: string }
     if (next.scores.every(s => s !== null) && completed < 5) setCelebrate(true);
   }
   return <main className="lp-shell">
+    <audio ref={audioRef} preload="metadata" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} onError={() => { setPlaying(false); setMediaError(true); }} />
     <div className="lp-screen">
       <header className="lp-header"><Link href="/">◷ Zeitreise</Link><nav><Link href="/lernpfade/">Alle Lernpfade</Link><Link href={path.episode === 1 ? "/entdecken/" : `/episode-${path.episode}/`}>Frei entdecken →</Link></nav></header>
       <div className="lp-topline"><span className="lp-path-label">Lernpfad {learningPaths.indexOf(path) + 1} · {path.subtitle}</span><div className="lp-score" aria-live="polite"><div><strong>{points}<small> / {totalPoints}</small></strong><span>Wissenspunkte</span></div><progress aria-label="Gesammelte Wissenspunkte" max={totalPoints} value={points} /><small>{completed} von {learningStations.length} Stationen bearbeitet</small></div></div>
       {storageError && <p className="lp-notice" role="status">Dein Browser erlaubt gerade kein Speichern. Du kannst weiterlernen; nach dem Schließen geht dieser Fortschritt verloren.</p>}
       {!ready ? <p>Lernpass wird geladen …</p> : certificate ? <section className="lp-card">
-        <h1 ref={heading} tabIndex={-1}>Deine Urkunde</h1><p>Trage deinen Namen ein oder ergänze ihn später von Hand. Er wird nicht gespeichert oder übertragen.</p>
+        <h1 ref={heading} tabIndex={-1}>Deine Urkunde</h1><p>Trage deinen Namen ein oder ergänze ihn später von Hand. Er bleibt bis zum Schließen in dieser Ansicht. Nur wenn du die PDF sicherst oder teilst, steht er auch in dieser Datei.</p>
         <label className="lp-name">Dein Name (freiwillig)<input maxLength={70} value={name} onChange={e => setName(e.target.value)} autoComplete="off" /></label>
-        <div className="lp-actions"><button className="lp-primary" onClick={() => window.print()}>Urkunde drucken / als PDF sichern</button><button onClick={overview}>Zum Lernpass</button></div>
+        <CertificateActions path={path} saved={saved} name={name} date={new Date(`${saved.completedAt ?? localDate()}T12:00:00`).toLocaleDateString("de-DE")} /><div className="lp-actions"><button onClick={overview}>Zum Lernpass</button></div>
       </section> : !station ? <>
         <section className="lp-hero"><div><p className="lp-kicker">Dein Lernpass · Episode {path.episode}</p><h1>{path.title}</h1><p>{path.intro}</p><p>Fünf Stationen · zehn Fragen · etwa {path.duration} Minuten</p><button className="lp-primary" onClick={() => completed > 0 ? openStation(nextIndex < 0 ? 0 : nextIndex) : document.getElementById("einstieg")?.scrollIntoView()}>{completed === 5 ? "Noch einmal entdecken" : completed ? "Lernpfad fortsetzen →" : "Mit dem Einstieg beginnen ↓"}</button></div><div className="lp-pass-mark" aria-hidden="true"><span>◷</span><strong>{completed} / 5</strong><small>Stationen entdeckt</small></div></section>
         <QuietEntry />
@@ -67,7 +85,7 @@ export default function LearningPath({ pathId = "bleiben" }: { pathId?: string }
         <section className="lp-card"><p className="lp-kicker">2 · Entdecken · etwa 22 Minuten</p><h2>Dein Weg durch fünf Stationen</h2><p>Schau oder lies die Szenen, entdecke die Hintergründe und beantworte je zwei Fragen. Fehler gehören dazu: Du darfst jede Station wiederholen. Dein bester Punktestand bleibt erhalten.</p><button className="lp-primary" onClick={() => openStation(nextIndex < 0 ? 0 : nextIndex)}>Zu den Stationen →</button><progress aria-label="Abgeschlossene Stationen" max={5} value={completed} /><label className="lp-open"><input type="checkbox" checked={allOpen} onChange={e => setAllOpen(e.target.checked)} /> Alle Stationen frei wählen</label>
           <ol className="lp-stations">{learningStations.map((s,i) => { const locked=!allOpen && i>nextIndex && nextIndex >= 0 && saved.scores[i] === null; return <li key={s.id}><button disabled={locked} onClick={() => openStation(i)}><span className="lp-number">{saved.scores[i] !== null ? "✓" : i+1}</span><span><strong>{s.title}</strong><small>{s.scenes.length} {s.scenes.length === 1 ? "Szene" : "Szenen"} · 2 Fragen</small></span><span>{locked ? "Gesperrt" : saved.scores[i] !== null ? `${saved.scores[i]}/2` : "→"}</span></button></li>; })}</ol>
         </section>
-        <section className="lp-card unit-assignment" id="denkaufgabe"><p className="lp-kicker">3 · Selbst erklären · etwa 9 Minuten</p><h2>Jetzt bist du dran</h2><p>{path.assignment}</p><p>Arbeite im Heft oder auf Papier. Tauscht euch zu zweit aus: Sind eure Beispiele passend und eure Erklärungen nachvollziehbar?</p><details><summary>Prüfe deine Erklärung</summary><p>Hast du die Frage beantwortet, Beispiele aus den Szenen verwendet und den Zusammenhang in eigenen Worten erklärt? Ergänze, was noch fehlt. Diese offene Aufgabe wird gemeinsam besprochen und erhält keine automatischen Quizpunkte.</p></details></section>
+        <section className="lp-card unit-assignment" id="denkaufgabe"><p className="lp-kicker">3 · Selbst erklären · etwa 9 Minuten</p><h2>Jetzt bist du dran</h2><p>{path.assignment}</p><p>Arbeite im Heft oder auf Papier. Tauscht euch zu zweit aus: Sind eure Beispiele passend und eure Erklärungen nachvollziehbar?</p></section>
         <section className="lp-card unit-discussion"><p className="lp-kicker">4 · Austauschen · etwa 5 Minuten</p><h2>Das nehmen wir mit</h2><p>{path.discussion}</p><p>Stellt euch eure Ergebnisse vor. Vergleiche mit deiner Vermutung vom Einstieg: Was würdest du jetzt ergänzen oder ändern?</p></section>
         <details className="lp-card unit-extension"><summary>Noch Zeit? Freiwillig weiterdenken ↗</summary><p>{path.extension}</p><p>Nutze dafür „Genauer hinsehen“ in den passenden Stationen. Die Vertiefung liegt außerhalb der geplanten 40 Minuten.</p></details>
         {completed > 0 && <section className="lp-card"><h2>{completed === 5 ? "Dein Lernpfad ist geschafft!" : "Dein Zwischenstand zählt"}</h2><p>{completed} von 5 Stationen bearbeitet · {points} von 10 Wissenspunkten. {completed === 5 ? path.conclusion : "Deine Urkunde zeigt genau, welche Stationen du schon bearbeitet hast."}</p><button onClick={() => setCertificate(true)}>Urkunde ansehen</button></section>}
@@ -76,7 +94,7 @@ export default function LearningPath({ pathId = "bleiben" }: { pathId?: string }
       </> : <>
         <button className="lp-back" onClick={overview}>← Zum Lernpass</button>
         <section className="lp-card"><p className="lp-kicker">Station {stationIndex!+1} von 5</p><h1 ref={phase === "learn" ? heading : undefined} tabIndex={-1}>{station.title}</h1><p><strong>Dein Auftrag:</strong> {station.task}</p></section>
-        {phase === "learn" && <LearningPlayer key={station.id} scenes={station.scenes} episode={path.episode} onQuiz={() => setPhase("quiz")} />}
+        {phase === "learn" && <LearningPlayer key={station.id} scenes={station.scenes} episode={path.episode} audioRef={audioRef} playing={playing} startScene={startScene} error={mediaError} onQuiz={() => setPhase("quiz")} />}
         {phase === "quiz" && question && <section className="lp-card lp-quiz" aria-label="Stations-Check"><p className="lp-kicker">Stations-Check · Frage {questionIndex+1} von 2</p><h2 ref={heading} tabIndex={-1}>{question.question}</h2><div className="lp-answers">{question.answers.map((a,i) => <button key={a} disabled={answered} className={answered ? i===question.correctAnswer ? "lp-correct" : answers[questionIndex]===i ? "lp-wrong" : "" : ""} onClick={() => setAnswers([...answers,i])}><span>{String.fromCharCode(65+i)}</span>{a}</button>)}</div>
           {answered && <div className="lp-feedback" role="status"><strong>{answers[questionIndex]===question.correctAnswer ? "Richtig!" : "Noch nicht richtig."}</strong><p>Richtig ist: {question.answers[question.correctAnswer]}</p><p>{question.explanation}</p><button className="lp-primary" onClick={() => questionIndex < station.quizzes.length-1 ? setQuestionIndex(questionIndex+1) : finish()}>{questionIndex < station.quizzes.length-1 ? "Nächste Frage →" : "Station abschließen"}</button></div>}
         </section>}

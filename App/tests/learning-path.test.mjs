@@ -40,7 +40,7 @@ test('Lernpfad 2 verwendet Szenen 10–15 und unveränderte Fragen; Lernpässe b
     assert.ok(original); assert.deepEqual(q.answers,original.answers); assert.equal(q.correctAnswer,original.correctAnswer);
   }
   assert.equal(new Set(learningPaths.map(p=>p.key)).size,4);
-  assert.equal(learningPaths[0].key,'zeitreise-lernpfad-bleiben-v1');
+  assert.equal(learningPaths.find(p=>p.id==='bleiben').key,'zeitreise-lernpfad-bleiben-v1');
   const pilot=recordResult(emptyProgress(),0,1,'2026-10-20');
   let city=emptyProgress(cityStations);
   for(let i=0;i<5;i++) city=recordResult(city,i,2,'2026-10-20',cityStations);
@@ -69,3 +69,11 @@ test('Neue Einheiten verwenden Originaltexte, Originalfragen und getrennte Lernp
     assert.ok(path.opening && path.assignment && path.discussion && path.extension);
   }
 });
+
+ test('Reihenfolge beginnt mit Episode 1; bestehende Speicher und URLs bleiben stabil',async()=>{
+ const {learningPaths}=await loadData('learningPath');
+ assert.deepEqual(learningPaths.map(p=>p.id),['leben','mensch','bleiben','stadt']);
+ assert.deepEqual(learningPaths.map(p=>p.episode),[1,2,3,3]);
+ assert.equal(learningPaths.find(p=>p.id==='bleiben').href,'/lernpfad/');
+ assert.equal(learningPaths.find(p=>p.id==='stadt').key,'zeitreise-lernpfad-stadt-v1');
+ });
