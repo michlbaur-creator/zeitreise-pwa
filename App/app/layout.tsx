@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import Besucherzaehler from "./components/Besucherzaehler";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://evo.mibaso.de"),
@@ -58,7 +59,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body>{children}</body>
+      <head>
+        {/* Besucherzählung (GoatCounter, ohne Cookies): zählt den Pfad mit Adresse.
+            Einstellung zuerst setzen, dann count.js nachladen. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if(!window.__mibasoZaehler){window.__mibasoZaehler=true;window.goatcounter={path:function(p){return location.host+p}};var s=document.createElement('script');s.async=true;s.src='//gc.zgo.at/count.js';s.setAttribute('data-goatcounter','https://mibaso.goatcounter.com/count');document.head.appendChild(s);}",
+          }}
+        />
+      </head>
+      <body>
+        {children}
+        <Besucherzaehler />
+      </body>
     </html>
   );
 }
