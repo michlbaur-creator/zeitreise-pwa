@@ -54,7 +54,8 @@ export default function ImprintPage() {
             <p>
               Zeitreise Mibaso ist eine reine Web-App ohne Nutzerkonto. Es
               werden keine personenbezogenen Daten erhoben, gespeichert oder an
-              Dritte weitergegeben. Es gibt kein Tracking und keine Werbung.
+              Dritte weitergegeben. Es gibt keine Werbung und kein Tracking, nur
+              eine einfache Besucherzählung ohne Cookies (siehe unten).
             </p>
             <p>
               Dein aktueller Szenenstand, Quiz-Ergebnisse und entdeckte
@@ -77,6 +78,13 @@ export default function ImprintPage() {
                 Datenschutzerklärung von GitHub
               </a>
               . Darauf habe ich keinen Einfluss.
+            </p>
+            <p>
+              <strong>Besucherzählung:</strong> Damit ich sehe, welche Seiten
+              gern genutzt werden, zähle ich die Aufrufe mit GoatCounter. Dabei
+              werden keine Cookies gesetzt, keine Namen gespeichert und keine
+              Profile angelegt. Ich sehe nur Zahlen, zum Beispiel „Seite Vogelpass:
+              12 Aufrufe“. Wer du bist, erfahre ich dadurch nicht.
             </p>
           </section>
 
